@@ -1,0 +1,16 @@
+{
+  "name": "mahavisphot-compositor",
+  "version": "0.3.0",
+  "private": true,
+  "description": "Standalone desktop shell for the Mahavisphot compositor editor.",
+  "main": "electron/main.cjs",
+  "scripts": {
+    "start": "node editor/server.js",
+    "electron": "electron .",
+    "desktop": "electron .",
+    "check": "node --check editor/app.js && node --check editor/server.js && node --check electron/main.cjs && node --check electron/preload.cjs"
+  },
+  "devDependencies": {
+    "electron": "latest"
+  }
+}

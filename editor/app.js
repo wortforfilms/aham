@@ -33,16 +33,82 @@ const state = {
   tool: "select",
   snap: true,
   safeGuides: true,
+  auth: {
+    user: null,
+    subscription: null,
+    license: null,
+    projects: [],
+    selectedProjectId: null,
+    message: "",
+    projectMessage: "",
+  },
   markers: [],
   keyframes: [],
+  dynamicTracks: [],
+  nextDynamicTrackId: 1,
+  compositions: [],
+  nextCompositionId: 1,
+  activeCompositionId: null,
+  selectedCompositionId: null,
+  selectedClipRefs: [],
+  selectedTrackId: null,
+  editPolicy: {
+    duplicateMode: "smart",
+    deleteMode: "ripple",
+  },
+  duplicateDecisions: [],
   markerPointerDrag: null,
-  layerOrder: ["vfx", "captions", "rubab", "video", "audio"],
+  spatial: {
+    enabled: false,
+    shading: "material",
+    activeNode: "actor",
+    transformMode: "translate",
+    mesh: "actor",
+    x: 0,
+    y: 0,
+    z: -54,
+    focal: 35,
+    particlePreset: "ash",
+    particleWindX: 18,
+    particleWindY: -12,
+    particleTurbulence: 62,
+    particleLifetime: 68,
+    particleDrag: 32,
+    trackingConfidence: 72,
+    trackingDepth: 8,
+    faceYaw: 0,
+    facePitch: -4,
+    faceBlend: 58,
+    textureSeam: 64,
+    textureNormal: 48,
+    textureRoughness: 42,
+    fps: 60,
+    runtime: "Canvas WebGL fallback",
+    animationId: null,
+    lastFrameTime: 0,
+  },
+  floatingPanels: {
+    sceneGraph: { open: true, x: 18, y: 50, w: 292, h: 318 },
+    particles: { open: true, x: 612, y: 170, w: 396, h: 350 },
+    nodeGraph: { open: true, x: 228, y: 524, w: 560, h: 300 },
+  },
+  floatingPanelZ: {
+    sceneGraph: 1,
+    particles: 2,
+    nodeGraph: 3,
+    next: 4,
+  },
+  floatingPanelInteraction: null,
+  layerOrder: ["vfx", "captions", "particles", "tracking", "three", "rubab", "video", "audio"],
   draggingLayerKey: null,
   layerPointerDrag: null,
   timelineResize: null,
   layerVisibility: {
     vfx: true,
     captions: true,
+    particles: true,
+    tracking: true,
+    three: true,
     rubab: true,
     video: true,
     audio: true,
@@ -50,6 +116,9 @@ const state = {
   layerLocked: {
     vfx: false,
     captions: false,
+    particles: false,
+    tracking: false,
+    three: false,
     rubab: false,
     video: false,
     audio: false,
@@ -97,17 +166,68 @@ const els = {
   workspace: document.querySelector(".workspace"),
   centerPanel: document.querySelector(".center-panel"),
   resetLayoutBtn: document.getElementById("resetLayoutBtn"),
+  accountStatus: document.getElementById("accountStatus"),
+  authOpenBtn: document.getElementById("authOpenBtn"),
+  planPanelTopBtn: document.getElementById("planPanelTopBtn"),
+  projectPanelTopBtn: document.getElementById("projectPanelTopBtn"),
+  saveProjectTopBtn: document.getElementById("saveProjectTopBtn"),
   leftPanelResizer: document.getElementById("leftPanelResizer"),
   rightPanelResizer: document.getElementById("rightPanelResizer"),
   timelineSplitResizer: document.getElementById("timelineSplitResizer"),
   sceneList: document.getElementById("sceneList"),
   layerStack: document.getElementById("layerStack"),
+  addVideoLayerBtn: document.getElementById("addVideoLayerBtn"),
+  addAudioLayerBtn: document.getElementById("addAudioLayerBtn"),
+  renameLayerBtn: document.getElementById("renameLayerBtn"),
+  duplicateLayerBtn: document.getElementById("duplicateLayerBtn"),
+  deleteLayerBtn: document.getElementById("deleteLayerBtn"),
+  compositionStack: document.getElementById("compositionStack"),
+  openCompositionBtn: document.getElementById("openCompositionBtn"),
+  spatialGraph: document.getElementById("spatialGraph"),
+  spatialGraphStatus: document.getElementById("spatialGraphStatus"),
   activeToolText: document.getElementById("activeToolText"),
   workspaceModeTabs: document.getElementById("workspaceModeTabs"),
   panelTabs: document.getElementById("panelTabs"),
+  rightScroll: document.querySelector(".right-scroll"),
+  accountSummary: document.getElementById("accountSummary"),
+  planSummary: document.getElementById("planSummary"),
+  planGateStatus: document.getElementById("planGateStatus"),
+  authForm: document.getElementById("authForm"),
+  authNameInput: document.getElementById("authNameInput"),
+  authEmailInput: document.getElementById("authEmailInput"),
+  authPasswordInput: document.getElementById("authPasswordInput"),
+  loginBtn: document.getElementById("loginBtn"),
+  registerBtn: document.getElementById("registerBtn"),
+  logoutBtn: document.getElementById("logoutBtn"),
+  subscriptionPlanGrid: document.getElementById("subscriptionPlanGrid"),
+  authMessage: document.getElementById("authMessage"),
+  refreshProjectsBtn: document.getElementById("refreshProjectsBtn"),
+  projectNameInput: document.getElementById("projectNameInput"),
+  saveProjectBtn: document.getElementById("saveProjectBtn"),
+  updateProjectBtn: document.getElementById("updateProjectBtn"),
+  projectMessage: document.getElementById("projectMessage"),
+  projectList: document.getElementById("projectList"),
+  floatingPanelsLayer: document.getElementById("floatingPanelsLayer"),
+  floatingSceneGraph: document.getElementById("floatingSceneGraph"),
+  floatingParticles: document.getElementById("floatingParticles"),
+  floatingNodeGraph: document.getElementById("floatingNodeGraph"),
+  floatingSceneGraphContent: document.getElementById("floatingSceneGraphContent"),
+  floatingParticlesContent: document.getElementById("floatingParticlesContent"),
+  floatingNodeGraphContent: document.getElementById("floatingNodeGraphContent"),
   previewStage: document.getElementById("previewStage"),
   previewImage: document.getElementById("previewImage"),
   rubabOverlay: document.getElementById("rubabOverlay"),
+  spatialViewport: document.getElementById("spatialViewport"),
+  spatialFallback: document.getElementById("spatialFallback"),
+  trackingOverlay: document.getElementById("trackingOverlay"),
+  particleTrackingOverlay: document.getElementById("particleTrackingOverlay"),
+  axisWidget: document.getElementById("axisWidget"),
+  spatialGizmo: document.getElementById("spatialGizmo"),
+  faceTopology: document.getElementById("faceTopology"),
+  spatialToolbar: document.getElementById("spatialToolbar"),
+  spatialFps: document.getElementById("spatialFps"),
+  spatialGpu: document.getElementById("spatialGpu"),
+  spatialSolver: document.getElementById("spatialSolver"),
   effectLayer: document.getElementById("effectLayer"),
   safeGuides: document.getElementById("safeGuides"),
   captionOverlay: document.getElementById("captionOverlay"),
@@ -143,6 +263,13 @@ const els = {
   setEndBtn: document.getElementById("setEndBtn"),
   addMarkerBtn: document.getElementById("addMarkerBtn"),
   addTransitionBtn: document.getElementById("addTransitionBtn"),
+  makeCompositionBtn: document.getElementById("makeCompositionBtn"),
+  makeCompositionPanelBtn: document.getElementById("makeCompositionPanelBtn"),
+  backToMasterBtn: document.getElementById("backToMasterBtn"),
+  deleteModeInput: document.getElementById("deleteModeInput"),
+  deleteSelectedBtn: document.getElementById("deleteSelectedBtn"),
+  duplicatePolicyInput: document.getElementById("duplicatePolicyInput"),
+  applyDuplicatePolicyBtn: document.getElementById("applyDuplicatePolicyBtn"),
   nudgeLeftBtn: document.getElementById("nudgeLeftBtn"),
   nudgeRightBtn: document.getElementById("nudgeRightBtn"),
   rippleBtn: document.getElementById("rippleBtn"),
@@ -169,11 +296,17 @@ const els = {
   timelineCanvas: document.getElementById("timelineCanvas"),
   timelineRuler: document.getElementById("timelineRuler"),
   markerLayer: document.getElementById("markerLayer"),
+  compositionLayer: document.getElementById("compositionLayer"),
   videoLayer: document.getElementById("videoLayer"),
   overlayLayer: document.getElementById("overlayLayer"),
   vfxLayer: document.getElementById("vfxLayer"),
+  threeLayer: document.getElementById("threeLayer"),
+  trackingLayer: document.getElementById("trackingLayer"),
+  particlesLayer: document.getElementById("particlesLayer"),
   captionLayer: document.getElementById("captionLayer"),
   audioLayer: document.getElementById("audioLayer"),
+  dynamicTrackRows: document.getElementById("dynamicTrackRows"),
+  trackCreateRow: document.getElementById("trackCreateRow"),
   playhead: document.getElementById("playhead"),
   audioPlayer: document.getElementById("audioPlayer"),
   titleEnInput: document.getElementById("titleEnInput"),
@@ -251,11 +384,47 @@ const els = {
   baselineTsvBtn: document.getElementById("baselineTsvBtn"),
   baselineBoardBtn: document.getElementById("baselineBoardBtn"),
   matrixInspectBtn: document.getElementById("matrixInspectBtn"),
+  spatialFocusBtn: document.getElementById("spatialFocusBtn"),
+  spatialTransformInput: document.getElementById("spatialTransformInput"),
+  spatialMeshInput: document.getElementById("spatialMeshInput"),
+  spatialXInput: document.getElementById("spatialXInput"),
+  spatialYInput: document.getElementById("spatialYInput"),
+  spatialZInput: document.getElementById("spatialZInput"),
+  spatialFocalInput: document.getElementById("spatialFocalInput"),
+  particlePresetGrid: document.getElementById("particlePresetGrid"),
+  particleApplyBtn: document.getElementById("particleApplyBtn"),
+  particleWindXInput: document.getElementById("particleWindXInput"),
+  particleWindYInput: document.getElementById("particleWindYInput"),
+  particleTurbulenceInput: document.getElementById("particleTurbulenceInput"),
+  particleLifetimeInput: document.getElementById("particleLifetimeInput"),
+  particleDragInput: document.getElementById("particleDragInput"),
+  trackingPreviewBtn: document.getElementById("trackingPreviewBtn"),
+  trackingRigStatus: document.getElementById("trackingRigStatus"),
+  trackingMatrixStatus: document.getElementById("trackingMatrixStatus"),
+  trackingConfidenceInput: document.getElementById("trackingConfidenceInput"),
+  trackingDepthInput: document.getElementById("trackingDepthInput"),
+  facePreviewBtn: document.getElementById("facePreviewBtn"),
+  faceYawInput: document.getElementById("faceYawInput"),
+  facePitchInput: document.getElementById("facePitchInput"),
+  faceBlendInput: document.getElementById("faceBlendInput"),
+  textureBakeBtn: document.getElementById("textureBakeBtn"),
+  textureSeamInput: document.getElementById("textureSeamInput"),
+  textureNormalInput: document.getElementById("textureNormalInput"),
+  textureRoughnessInput: document.getElementById("textureRoughnessInput"),
+  compositionSummary: document.getElementById("compositionSummary"),
+  compositionList: document.getElementById("compositionList"),
+  schemaSummary: document.getElementById("schemaSummary"),
+  schemaList: document.getElementById("schemaList"),
+  schemaJsonBtn: document.getElementById("schemaJsonBtn"),
+  runtimeComparison: document.getElementById("runtimeComparison"),
+  runtimeDocBtn: document.getElementById("runtimeDocBtn"),
+  spatialTelemetry: document.getElementById("spatialTelemetry"),
   statusText: document.getElementById("statusText"),
   lastExportLink: document.getElementById("lastExportLink"),
   exportVideoBtn: document.getElementById("exportVideoBtn"),
   loadGeneratedTimelineBtn: document.getElementById("loadGeneratedTimelineBtn"),
   loadDenseTimelineBtn: document.getElementById("loadDenseTimelineBtn"),
+  loadVargTimelineBtn: document.getElementById("loadVargTimelineBtn"),
   openStorylineBtn: document.getElementById("openStorylineBtn"),
   downloadJsonBtn: document.getElementById("downloadJsonBtn"),
   downloadTsvBtn: document.getElementById("downloadTsvBtn"),
@@ -291,6 +460,7 @@ const LAYOUT_LIMITS = {
   timelineMin: 220,
 };
 const UX_NOTES_STORAGE_KEY = "mahavisphot.uxNotes";
+const PROJECT_SCHEMA_VERSION = "mahavisphot.compositor.schema.v1";
 
 const defaultComposite = {
   x: 0,
@@ -312,6 +482,436 @@ const defaultTransition = {
   type: "cut",
   duration: 0,
 };
+
+const spatialNodes = [
+  { id: "global", icon: "◎", title: "Global Scene", meta: "root / 24fps" },
+  { id: "camera", icon: "O", title: "Main_Cam", meta: "35mm projection" },
+  { id: "particles", icon: "*", title: "Dust_Particles", meta: "GPU instanced field" },
+  { id: "actor", icon: "M", title: "Actor_Mesh_01", meta: "rig preview" },
+  { id: "face", icon: "F", title: "Face_Topology_468", meta: "landmark mesh" },
+  { id: "fixture", icon: "T", title: "Texture_Fixture", meta: "normal / seam maps" },
+];
+
+const particlePresets = {
+  ash: { label: "Sufi Ash Drift", colorA: "#f1d17b", colorB: "#7f6a4d", speed: 0.32 },
+  neon: { label: "Cyber Neon Embers", colorA: "#00e5ff", colorB: "#7c4dff", speed: 0.58 },
+  dust: { label: "Dust Fractures", colorA: "#d7c0a3", colorB: "#ff3b5c", speed: 0.46 },
+  vedic: { label: "Vedic Energy Sparks", colorA: "#00e676", colorB: "#00e5ff", speed: 0.72 },
+};
+
+const floatingPanelDefaults = {
+  sceneGraph: { open: true, x: 18, y: 50, w: 292, h: 318 },
+  particles: { open: true, x: 612, y: 170, w: 396, h: 350 },
+  nodeGraph: { open: true, x: 228, y: 524, w: 560, h: 300 },
+};
+
+const floatingPanelEls = {
+  sceneGraph: "floatingSceneGraph",
+  particles: "floatingParticles",
+  nodeGraph: "floatingNodeGraph",
+};
+
+const nodeGraphNodes = [
+  { id: "plate", title: "Scene Plate", meta: "V1 source", x: 28, y: 50 },
+  { id: "fixture", title: "Texture Fixture", meta: "normal / roughness", x: 190, y: 38 },
+  { id: "track", title: "Motion Track", meta: "Mview solver", x: 190, y: 142 },
+  { id: "particles", title: "Particle Field", meta: "GPU instances", x: 360, y: 30 },
+  { id: "face", title: "Face Swap Pass", meta: "468 landmarks", x: 360, y: 136 },
+  { id: "master", title: "Composite Master", meta: "output", x: 520, y: 84 },
+];
+
+const nodeGraphLinks = [
+  ["plate", "fixture"],
+  ["plate", "track"],
+  ["fixture", "particles"],
+  ["track", "face"],
+  ["particles", "master"],
+  ["face", "master"],
+];
+
+const runtimeComparisonRows = [
+  {
+    area: "Best fit here",
+    electron: "Fastest standalone path for this HTML/JS compositor and existing Node export server.",
+    tauri: "Best when the app needs a smaller signed binary and Rust-native command surface.",
+  },
+  {
+    area: "Packaging",
+    electron: "Bundles Chromium and Node; larger app, fewer rewrites.",
+    tauri: "Uses platform WebView; smaller app, extra Rust setup.",
+  },
+  {
+    area: "Media/export",
+    electron: "Can keep FFmpeg/server process directly in the desktop shell.",
+    tauri: "Can call FFmpeg through Rust commands with stricter permission design.",
+  },
+  {
+    area: "Security",
+    electron: "Needs hardened preload, no Node in renderer, local-only server.",
+    tauri: "Stronger default isolation and allowlisted native commands.",
+  },
+];
+
+const projectSchemaSections = [
+  {
+    name: "Project Root",
+    path: "ProjectExport",
+    fields: [
+      ["schemaVersion", "string", "Export contract version"],
+      ["title", "string", "Project title"],
+      ["sourceTimeline", "object|null", "Loaded generator metadata"],
+      ["duration", "number", "Master duration in seconds"],
+      ["audioPath", "string", "Master audio path"],
+      ["rubabPath", "string", "Rubab stem or overlay path"],
+      ["scenes", "Scene[]", "Ordered master timeline shots"],
+      ["markers", "Marker[]", "Timeline marker pins"],
+      ["keyframes", "Keyframe[]", "Per-scene compositor automation"],
+      ["dynamicTracks", "DynamicTrack[]", "Created audio/video layers"],
+      ["compositions", "Composition[]", "Nested timeline definitions"],
+      ["activeCompositionId", "string|null", "Open nested timeline id"],
+      ["editPolicy", "EditPolicy", "Duplicate and delete behavior state"],
+      ["duplicateDecisions", "DuplicateDecision[]", "Detected duplicate frames and repeated sequences"],
+      ["audioMix", "AudioMix", "Mixer and solo state"],
+      ["accessibility", "AccessibilityState", "Accessible UI/export state"],
+      ["uxNotes", "UxNote[]", "Design notes and sketches"],
+      ["spatial", "SpatialState", "3D, particles, tracking, face, texture state"],
+      ["layers", "LayerState", "Order, visibility, locks, dynamic mirror"],
+    ],
+  },
+  {
+    name: "Scene",
+    path: "ProjectExport.scenes[]",
+    fields: [
+      ["id", "number", "1-based exported scene index"],
+      ["start", "number", "Start time in seconds"],
+      ["end", "number", "End time in seconds"],
+      ["duration", "number", "Computed end minus start"],
+      ["titleHi", "string", "Hindi display title"],
+      ["titleEn", "string", "English display title"],
+      ["frameIndex", "number|string|null", "Source storyboard frame number"],
+      ["imagePath", "string", "Source frame path"],
+      ["rubabOverlay", "boolean", "Rubab overlay enabled"],
+      ["note", "string", "Editor scene note"],
+      ["composite", "CompositeState", "Transform and blending"],
+      ["effects", "EffectState", "Per-scene VFX toggles"],
+      ["transition", "TransitionState", "Outgoing transition"],
+      ["captions", "string", "Burn-in caption text"],
+    ],
+  },
+  {
+    name: "Composite State",
+    path: "Scene.composite",
+    fields: [
+      ["x", "number", "Horizontal offset"],
+      ["y", "number", "Vertical offset"],
+      ["scale", "number", "Percent scale"],
+      ["rotation", "number", "Degrees"],
+      ["opacity", "number", "Percent opacity"],
+      ["blendMode", "enum", "normal, multiply, screen, overlay, luminosity"],
+    ],
+  },
+  {
+    name: "Effect State",
+    path: "Scene.effects",
+    fields: [
+      ["grain", "boolean", "Film grain pass"],
+      ["vignette", "boolean", "Vignette pass"],
+      ["dust", "boolean", "Dust field pass"],
+      ["sonic", "boolean", "Sonic wave pass"],
+    ],
+  },
+  {
+    name: "Transition State",
+    path: "Scene.transition",
+    fields: [
+      ["type", "enum", "cut, crossfade, dip, glow, glitch"],
+      ["duration", "number", "Transition duration in seconds"],
+    ],
+  },
+  {
+    name: "Dynamic Track",
+    path: "ProjectExport.dynamicTracks[]",
+    fields: [
+      ["id", "string", "Layer id"],
+      ["kind", "enum", "video or audio"],
+      ["label", "string", "Timeline label"],
+      ["title", "string", "Inspector/layer display name"],
+      ["visible", "boolean", "Track visibility"],
+      ["locked", "boolean", "Track lock state"],
+      ["createdAt", "string", "ISO creation time"],
+      ["clips", "DynamicClip[]", "Layer clips"],
+    ],
+  },
+  {
+    name: "Dynamic Clip",
+    path: "DynamicTrack.clips[]",
+    fields: [
+      ["id", "string", "Clip id"],
+      ["sourceType", "enum", "scene, audio, master-audio, imported"],
+      ["sceneId", "number|null", "Linked scene id"],
+      ["frameIndex", "number|string|null", "Linked frame number"],
+      ["title", "string", "Clip label"],
+      ["start", "number", "Timeline start"],
+      ["end", "number", "Timeline end"],
+      ["trimIn", "number", "Source trim-in"],
+      ["trimOut", "number", "Source trim-out"],
+      ["image", "string", "Resolved thumbnail/image URL"],
+      ["path", "string", "Source media path"],
+    ],
+  },
+  {
+    name: "Composition",
+    path: "ProjectExport.compositions[]",
+    fields: [
+      ["id", "string", "Nested composition id"],
+      ["name", "string", "Editable composition name"],
+      ["start", "number", "Master timeline start"],
+      ["end", "number", "Master timeline end"],
+      ["duration", "number", "Nested timeline duration"],
+      ["clips", "CompositionClip[]", "Relative nested clips"],
+      ["createdAt", "string", "ISO creation time"],
+    ],
+  },
+  {
+    name: "Composition Clip",
+    path: "Composition.clips[]",
+    fields: [
+      ["id", "string", "Nested clip id"],
+      ["mediaKind", "enum", "video or audio"],
+      ["sourceType", "enum", "scene, dynamic, master-audio"],
+      ["sceneId", "number|null", "Original scene id"],
+      ["frameIndex", "number|string|null", "Original frame number"],
+      ["title", "string", "Nested clip title"],
+      ["trackLabel", "string", "Origin track label"],
+      ["start", "number", "Original timeline start"],
+      ["end", "number", "Original timeline end"],
+      ["relativeStart", "number", "Nested timeline start"],
+      ["relativeEnd", "number", "Nested timeline end"],
+      ["image", "string", "Preview image URL"],
+      ["imagePath", "string", "Source image path"],
+    ],
+  },
+  {
+    name: "Edit Policy",
+    path: "ProjectExport.editPolicy",
+    fields: [
+      ["deleteMode", "enum", "static, ripple, cascade, gap"],
+      ["duplicateMode", "enum", "smart, keep, mark, collapse"],
+    ],
+  },
+  {
+    name: "Duplicate Decision",
+    path: "ProjectExport.duplicateDecisions[]",
+    fields: [
+      ["id", "string", "Decision id"],
+      ["kind", "enum", "frame, title, sequence, adjacent"],
+      ["action", "enum", "keep, mark, collapse"],
+      ["reason", "string", "Editor-readable reason"],
+      ["sceneIds", "number[]", "Scenes affected by the decision"],
+      ["time", "number", "Primary timeline time"],
+      ["confidence", "number", "0-1 confidence score"],
+    ],
+  },
+  {
+    name: "Marker",
+    path: "ProjectExport.markers[]",
+    fields: [
+      ["id", "string", "Marker id"],
+      ["time", "number", "Timeline time in seconds"],
+      ["label", "string", "Visible marker label"],
+      ["kind", "enum", "scene, rubab, manual, note"],
+    ],
+  },
+  {
+    name: "Keyframe",
+    path: "ProjectExport.keyframes[]",
+    fields: [
+      ["id", "string", "Keyframe id"],
+      ["sceneId", "number", "Target scene id"],
+      ["time", "number", "Timeline time"],
+      ["composite", "CompositeState", "Captured transform/blend state"],
+      ["effects", "EffectState", "Captured effect state"],
+    ],
+  },
+  {
+    name: "Audio Mix",
+    path: "ProjectExport.audioMix",
+    fields: [
+      ["master", "number", "Master gain percent"],
+      ["voice", "number", "Voice stem gain percent"],
+      ["music", "number", "Music stem gain percent"],
+      ["rubab", "number", "Rubab stem gain percent"],
+      ["rubabSolo", "boolean", "Solo rubab audition"],
+    ],
+  },
+  {
+    name: "Accessibility State",
+    path: "ProjectExport.accessibility",
+    fields: [
+      ["captions", "boolean", "Captions visible"],
+      ["highContrast", "boolean", "High contrast UI"],
+      ["largeText", "boolean", "Large text UI"],
+      ["reduceMotion", "boolean", "Reduced motion mode"],
+      ["dyslexia", "boolean", "Readable spacing"],
+      ["focusMode", "boolean", "Reduced distraction mode"],
+      ["colorMode", "enum", "none, protan, deutan, tritan"],
+      ["density", "enum", "compact, comfortable, spacious"],
+    ],
+  },
+  {
+    name: "UX Note",
+    path: "ProjectExport.uxNotes[]",
+    fields: [
+      ["id", "string", "Note id"],
+      ["status", "enum", "open, planned, done"],
+      ["priority", "enum", "P0, P1, P2, P3"],
+      ["category", "enum", "layout, timeline, viewer, accessibility, audio, vfx, performance, export"],
+      ["time", "number", "Timeline time"],
+      ["timecode", "string", "Formatted time"],
+      ["sceneId", "number|null", "Linked scene id"],
+      ["sceneTitle", "string", "Linked scene title"],
+      ["text", "string", "Note body"],
+      ["sketch", "string|null", "Handwriting data URL"],
+      ["createdAt", "string", "ISO creation time"],
+    ],
+  },
+  {
+    name: "Spatial State",
+    path: "ProjectExport.spatial",
+    fields: [
+      ["enabled", "boolean", "Spatial mode active"],
+      ["shading", "enum", "wire, solid, material, path"],
+      ["activeNode", "enum", "actor, particles, face, fixture, master"],
+      ["transformMode", "enum", "translate, rotate, scale"],
+      ["mesh", "enum", "actor, face, particles"],
+      ["x", "number", "3D X position"],
+      ["y", "number", "3D Y position"],
+      ["z", "number", "3D Z position"],
+      ["focal", "number", "Camera focal length"],
+      ["particlePreset", "enum", "ash, neon, dust, vedic"],
+      ["particleWindX", "number", "Particle wind X"],
+      ["particleWindY", "number", "Particle wind Y"],
+      ["particleTurbulence", "number", "Particle turbulence"],
+      ["particleLifetime", "number", "Particle lifetime"],
+      ["particleDrag", "number", "Particle drag"],
+      ["trackingConfidence", "number", "Motion tracking confidence"],
+      ["trackingDepth", "number", "Depth bias"],
+      ["faceYaw", "number", "Face yaw offset"],
+      ["facePitch", "number", "Face pitch offset"],
+      ["faceBlend", "number", "Face replacement blend"],
+      ["textureSeam", "number", "UV seam repair amount"],
+      ["textureNormal", "number", "Normal map depth"],
+      ["textureRoughness", "number", "Roughness amount"],
+      ["activePresetLabel", "string", "Resolved particle preset name"],
+      ["matrix", "string", "Projection formula"],
+      ["solver", "string", "Tracking solver state"],
+      ["floatingPanels", "object", "Scene Graph, Particles, Node Graph frames"],
+    ],
+  },
+  {
+    name: "Layer State",
+    path: "ProjectExport.layers",
+    fields: [
+      ["order", "string[]", "Layer stack order"],
+      ["visible", "Record<string, boolean>", "Visibility by layer key"],
+      ["locked", "Record<string, boolean>", "Lock state by layer key"],
+      ["dynamic", "DynamicTrack[]", "Dynamic layer mirror"],
+    ],
+  },
+  {
+    name: "Auth User",
+    path: "AuthStore.users[]",
+    fields: [
+      ["id", "string", "Local user id"],
+      ["email", "string", "Normalized login email"],
+      ["name", "string", "Display name"],
+      ["password", "PasswordHash", "PBKDF2 salt/hash metadata"],
+      ["subscription", "SubscriptionState", "Local subscription record"],
+      ["license", "LicenseState", "Local license entitlement"],
+      ["createdAt", "string", "ISO creation time"],
+    ],
+  },
+  {
+    name: "Subscription State",
+    path: "AuthUser.subscription",
+    fields: [
+      ["plan", "enum", "free, trial, pro, studio"],
+      ["state", "enum", "free, trial, pro, studio"],
+      ["status", "string", "active or trialing"],
+      ["billingMode", "string", "local until gateway is connected"],
+      ["gateway", "string", "not_connected for current build"],
+      ["projectLimit", "number", "Plan project capacity"],
+      ["exportTier", "string", "preview, mp4-preview, mp4, uhd-ready"],
+      ["seats", "number", "Local seat count"],
+      ["features", "string[]", "Enabled local feature flags"],
+      ["activatedAt", "string|null", "ISO plan activation time"],
+    ],
+  },
+  {
+    name: "License State",
+    path: "AuthUser.license",
+    fields: [
+      ["id", "string", "Deterministic local license id"],
+      ["key", "string", "Local license key"],
+      ["status", "string", "active or trialing"],
+      ["tier", "enum", "free, trial, pro, studio"],
+      ["seats", "number", "Licensed local seats"],
+      ["exportTier", "string", "Licensed export tier"],
+      ["issuedAt", "string", "ISO issue time"],
+      ["expiresAt", "string|null", "Trial expiry when applicable"],
+      ["features", "string[]", "Licensed feature flags"],
+    ],
+  },
+  {
+    name: "Saved Project Record",
+    path: "ProjectStore.projects[]",
+    fields: [
+      ["id", "string", "Project id"],
+      ["ownerId", "string", "Auth user id"],
+      ["licenseId", "string", "License id used for save"],
+      ["name", "string", "Project library name"],
+      ["payload.sourceProject", "object", "Source scaffold with frames/assets"],
+      ["payload.edit", "ProjectExport", "Current editor/export payload"],
+      ["schemaVersion", "string", "Edit schema version"],
+      ["sceneCount", "number", "Cached scene count"],
+      ["duration", "number", "Cached duration"],
+      ["duplicatedFrom", "string|null", "Source project id when duplicated"],
+      ["createdAt", "string", "ISO creation time"],
+      ["updatedAt", "string", "ISO update time"],
+    ],
+  },
+  {
+    name: "Runtime Desktop",
+    path: "StandaloneRuntime",
+    fields: [
+      ["electron.main", "string", "electron/main.cjs"],
+      ["electron.preload", "string", "electron/preload.cjs"],
+      ["server.entry", "string", "editor/server.js"],
+      ["npm.start", "string", "node editor/server.js"],
+      ["npm.electron", "string", "node_modules/.bin/electron ."],
+      ["tauri.status", "enum", "comparison documented, scaffold not installed"],
+    ],
+  },
+];
+
+const fallbackSceneTemplates = [
+  [1, 0, 9.86, "द लॉन्ग रोड", "The Long Road", "keyframe_01_01_long_road.jpg"],
+  [2, 9.86, 19.71, "संस्कृत नाद", "Sanskrit Blast", "keyframe_02_02_sanskrit_blast.jpg"],
+  [3, 19.71, 47.21, "वैचारिक प्रहार", "Aggressive Delivery", "keyframe_03_03_aggressive_delivery.jpg"],
+  [4, 47.21, 55.85, "धरातल का बदलाव", "Structural Shift", "keyframe_04_04_structural_shift.jpg"],
+  [5, 55.85, 72.94, "पदचाप की धमक", "Unyielding Stance", "keyframe_05_05_unyielding_stance.jpg"],
+  [6, 72.94, 82.14, "वज्र प्रहार", "Dust Fracture", "keyframe_06_06_dust_fracture.jpg"],
+  [7, 82.14, 88.68, "पख्तून रक्षक", "Pakhtoon Warrior", "keyframe_07_07_pakhtoon_warrior.jpg"],
+  [8, 88.68, 99.22, "रूहानी नमी", "The Shared Tear", "keyframe_08_08_shared_tear.jpg"],
+  [9, 99.22, 107.83, "शापित ग्रंथ", "Shapit Granth", "keyframe_09_09_shapit_granth.jpg"],
+  [10, 107.83, 118.52, "गंगा और तुलसी", "Ganga and Tulsi", "keyframe_10_10_ganga_tulsi.jpg"],
+  [11, 118.52, 158.04, "अटूट जुड़ाव", "One-ness", "keyframe_11_11_oneness.jpg"],
+  [12, 158.04, 171.54, "ब्रह्म की मुस्कान", "Brahman Smirk", "keyframe_12_12_brahman_smirk.jpg"],
+  [13, 171.54, 184.47, "महाशून्य", "The Empty Space", "keyframe_13_13_empty_space.jpg"],
+  [14, 184.47, 192.92, "स्पंदन की गूंज", "Vibration Echo", "keyframe_14_14_vibration_echo.jpg"],
+  [15, 192.92, 201.84, "तर्पण और विसर्जन", "Sanskrit Chant", "keyframe_15_15_sanskrit_chant.jpg"],
+  [16, 201.84, 205.84, "पूर्ण विराम", "Final Silence", "keyframe_16_16_final_silence.jpg"],
+];
 
 function clamp(value, min, max) {
   return Math.min(Math.max(Number(value) || 0, min), max);
@@ -336,6 +936,55 @@ function parseStoryTime(value) {
   return Number(parts[0]) || 0;
 }
 
+function assetUrl(path) {
+  const normalized = String(path || "").replace(/^\/+/, "");
+  if (!normalized) return "";
+  return location.protocol === "file:" ? `../${normalized}` : `/assets/${normalized}`;
+}
+
+function fallbackProject(timelineId = "first-generated") {
+  const scenes = fallbackSceneTemplates.map(([id, start, end, titleHi, titleEn, file]) => {
+    const imagePath = `build_frames/mahavisphot_timestamped/keyframes/${file}`;
+    return {
+      id,
+      start,
+      end,
+      duration: roundTime(end - start),
+      titleHi,
+      titleEn,
+      source: String(id),
+      frameIndex: id,
+      imagePath,
+      image: assetUrl(imagePath),
+      rubabOverlay: [3, 7, 10, 16].includes(id),
+      note: "",
+    };
+  });
+  return {
+    timeline: {
+      id: timelineId,
+      name: timelineId === "prior-board-137-shots" ? "Prior Boards 137-Shot Sequence" : "First Generated Timeline",
+      path: "file fallback",
+      note: "Loaded without local API server",
+      shotCount: scenes.length,
+    },
+    duration: Math.max(...scenes.map((scene) => scene.end)),
+    audio: {
+      path: "अहं ब्रह्मास्मि.wav",
+      url: assetUrl("अहं ब्रह्मास्मि.wav"),
+      duration: 201.84,
+    },
+    rubab: {
+      path: "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0004.jpg",
+      url: assetUrl("build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0004.jpg"),
+    },
+    frames: [],
+    references: [],
+    scenes,
+    exportsUrl: "exports",
+  };
+}
+
 function sceneLength(scene) {
   return Math.max(MIN_SCENE_SECONDS, Number(scene.end) - Number(scene.start));
 }
@@ -343,6 +992,24 @@ function sceneLength(scene) {
 function projectDuration() {
   const sceneEnd = Math.max(0, ...state.scenes.map((scene) => Number(scene.end) || 0));
   return Math.max(sceneEnd, Number(state.project?.duration) || 0);
+}
+
+function activeComposition() {
+  return state.compositions.find((composition) => composition.id === state.activeCompositionId) || null;
+}
+
+function selectedComposition() {
+  return state.compositions.find((composition) => composition.id === state.selectedCompositionId) || activeComposition() || state.compositions[0] || null;
+}
+
+function timelineDuration() {
+  const composition = activeComposition();
+  return composition ? Math.max(MIN_SCENE_SECONDS, Number(composition.duration) || MIN_SCENE_SECONDS) : projectDuration();
+}
+
+function timelineContextLabel() {
+  const composition = activeComposition();
+  return composition ? `Comp ${composition.name}` : "Master";
 }
 
 function pixelsPerSecond() {
@@ -380,7 +1047,7 @@ function visibleTimelineWidth() {
 }
 
 function fitTimelineView() {
-  const duration = projectDuration();
+  const duration = timelineDuration();
   const targetZoom = clamp(visibleTimelineWidth() / Math.max(1, duration) / 12, H_ZOOM_MIN, H_ZOOM_MAX);
   state.timelineZoom = targetZoom;
   els.zoomInput.value = state.timelineZoom;
@@ -438,6 +1105,7 @@ function applyTimelineZoomFactor(factor, axis = state.pinchAxis, anchorClientX =
 function applyTimelineViewState() {
   els.timelineViewport.dataset.mode = state.timelineMode;
   els.timelineViewport.dataset.layout = state.timelineLayout;
+  els.timelineViewport.dataset.context = activeComposition() ? "composition" : "master";
   els.timelineViewport.dataset.thumbnails = state.timelineOptions.thumbnails ? "on" : "off";
   els.timelineViewport.dataset.labels = state.timelineOptions.labels ? "on" : "off";
   els.timelineViewport.style.setProperty("--timeline-row-h", `${timelineRowHeight()}px`);
@@ -462,8 +1130,30 @@ function titleCase(value) {
   return text ? `${text[0].toUpperCase()}${text.slice(1)}` : "";
 }
 
+function isSpatialMode() {
+  return ["3d", "particles", "motion", "face"].includes(state.workspaceMode) ||
+    ["spatial", "particles", "tracking", "face", "texture"].includes(state.activePanel) ||
+    ["3d", "tracking", "particles"].includes(state.timelineMode);
+}
+
 function activeLayerSummary() {
   const scene = selectedScene();
+  const selectedTrack = dynamicTrackById(state.selectedTrackId);
+  if (selectedTrack) {
+    return `${selectedTrack.label} ${selectedTrack.title || titleCase(selectedTrack.kind)}`;
+  }
+  if (state.activePanel === "compositions" || activeComposition()) {
+    return activeComposition() ? `C ${activeComposition().name}` : "C Composition Lane";
+  }
+  if (state.activePanel === "spatial" || state.timelineMode === "3d") {
+    return state.layerVisibility.three ? "3D Actor Mesh" : "3D hidden";
+  }
+  if (state.activePanel === "particles" || state.timelineMode === "particles") {
+    return state.layerVisibility.particles ? "PT Particle Field" : "Particles hidden";
+  }
+  if (state.activePanel === "tracking" || state.activePanel === "face" || state.timelineMode === "tracking") {
+    return state.layerVisibility.tracking ? "MT Tracking Pass" : "Tracking hidden";
+  }
   if (state.activePanel === "audio" || state.timelineMode === "audio") {
     return state.layerVisibility.audio ? "A1 Master Audio" : "A1 hidden";
   }
@@ -480,7 +1170,7 @@ function activeLayerSummary() {
 }
 
 function orderedLayerKeys() {
-  const known = ["vfx", "captions", "rubab", "video", "audio"];
+  const known = ["vfx", "captions", "particles", "tracking", "three", "rubab", "video", "audio"];
   return [...state.layerOrder.filter((key) => known.includes(key)), ...known.filter((key) => !state.layerOrder.includes(key))];
 }
 
@@ -509,6 +1199,32 @@ function moveLayerToEnd(layerKey) {
   renderLayerStack();
   renderPreview();
   showHud(`${titleCase(layerKey)} layer moved`);
+}
+
+function moveDynamicTrackBefore(trackId, targetTrackId) {
+  if (!trackId || !targetTrackId || trackId === targetTrackId) return;
+  const order = state.dynamicTracks.filter((track) => track.id !== trackId);
+  const moving = state.dynamicTracks.find((track) => track.id === trackId);
+  if (!moving) return;
+  const targetIndex = order.findIndex((track) => track.id === targetTrackId);
+  order.splice(targetIndex < 0 ? order.length : targetIndex, 0, moving);
+  state.dynamicTracks = order;
+  state.selectedTrackId = trackId;
+  setDirty();
+  renderLayerStack();
+  renderTimeline();
+  showHud(`${moving.label} moved`);
+}
+
+function moveDynamicTrackToEnd(trackId) {
+  const moving = dynamicTrackById(trackId);
+  if (!moving) return;
+  state.dynamicTracks = [...state.dynamicTracks.filter((track) => track.id !== trackId), moving];
+  state.selectedTrackId = trackId;
+  setDirty();
+  renderLayerStack();
+  renderTimeline();
+  showHud(`${moving.label} moved`);
 }
 
 function beginLayerPointerDrag(event, layerKey) {
@@ -563,20 +1279,21 @@ function renderHud(message = state.hud.message) {
   if (!els.smartHud) return;
   const scene = selectedScene();
   const composite = selectedComposite();
-  const timelineLabel = `${titleCase(state.timelineMode)} / ${titleCase(state.timelineLayout)}`;
+  const timelineLabel = `${timelineContextLabel()} / ${titleCase(state.timelineMode)} / ${titleCase(state.timelineLayout)}`;
   const zoomLabel = `H ${state.timelineZoom.toFixed(1)} / V ${state.timelineVerticalZoom.toFixed(2)}`;
+  const editLabel = `Del ${state.editPolicy.deleteMode} / Dupes ${state.duplicateDecisions.length}`;
   const layoutLabel = `L ${Math.round(state.layout.leftWidth)} R ${Math.round(state.layout.rightWidth)} V ${Math.round(state.layout.viewerHeight)}`;
   const audioLabel = state.audio.rubabSolo
     ? `M${state.audio.master}% Rubab solo`
     : `M${state.audio.master}% R${state.audio.rubab}%`;
 
   els.hudPrimary.textContent = message || "Ready";
-  els.hudTimecode.textContent = `${fmt(state.currentTime)} / ${fmt(projectDuration())}`;
+  els.hudTimecode.textContent = `${fmt(state.currentTime)} / ${fmt(timelineDuration())}`;
   els.hudTool.textContent = `${titleCase(state.tool)} · snap ${state.snap ? "on" : "off"} · guides ${state.safeGuides ? "on" : "off"}`;
   els.hudScene.textContent = scene ? `${String(scene.id).padStart(2, "0")} ${scene.titleEn || "Untitled"}` : "No scene";
   els.hudLayer.textContent = activeLayerSummary();
   els.hudComposite.textContent = `${composite.opacity}% ${composite.blendMode} · scale ${composite.scale}%`;
-  els.hudTimeline.textContent = `${timelineLabel} · ${zoomLabel}`;
+  els.hudTimeline.textContent = `${timelineLabel} · ${zoomLabel} · ${editLabel}`;
   els.hudAudio.textContent = audioLabel;
   els.hudAccess.textContent = accessSummary();
   els.hudLayout.textContent = layoutLabel;
@@ -777,6 +1494,16 @@ function sceneAt(time) {
   return sortedScenes().find((scene) => value >= Number(scene.start) && value < Number(scene.end)) || sortedScenes().at(-1);
 }
 
+function compositionSceneAt(composition, time) {
+  if (!composition) return null;
+  const value = Number(time) || 0;
+  const clip = (composition.clips || []).find((item) => {
+    if (item.mediaKind !== "video" || item.sourceType !== "scene") return false;
+    return value >= Number(item.relativeStart) && value < Number(item.relativeEnd);
+  });
+  return clip ? state.scenes.find((scene) => scene.id === clip.sceneId) || null : null;
+}
+
 function sceneAfter(scene) {
   const scenes = sortedScenes();
   const index = scenes.findIndex((item) => item.id === scene?.id);
@@ -831,6 +1558,452 @@ function setStatus(text) {
 
 function setDirty() {
   setStatus("Edited");
+}
+
+async function apiJson(url, options = {}) {
+  const response = await fetch(url, {
+    credentials: "same-origin",
+    ...options,
+    headers: {
+      ...(options.body ? { "Content-Type": "application/json" } : {}),
+      ...(options.headers || {}),
+    },
+  });
+  const text = await response.text();
+  const data = text ? JSON.parse(text) : {};
+  if (!response.ok || data.ok === false) {
+    throw new Error(data.error || response.statusText || "API request failed");
+  }
+  return data;
+}
+
+function shortDate(value) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
+  return date.toLocaleDateString(undefined, { month: "short", day: "2-digit", year: "numeric" });
+}
+
+function subscriptionLabel(subscription = state.auth.subscription) {
+  if (!subscription) return "Guest";
+  return `${subscription.label || titleCase(subscription.plan)} · ${subscription.state || subscription.status || "active"}`;
+}
+
+function setAuthMessage(message = "", projectMessage = null) {
+  state.auth.message = message;
+  if (projectMessage !== null) state.auth.projectMessage = projectMessage;
+  renderAuthState();
+}
+
+function renderSummary(container, rows) {
+  if (!container) return;
+  container.innerHTML = "";
+  for (const [label, value] of rows) {
+    const row = document.createElement("span");
+    const key = document.createElement("b");
+    const text = document.createElement("em");
+    key.textContent = label;
+    text.textContent = String(value);
+    row.append(key, text);
+    container.appendChild(row);
+  }
+}
+
+function renderAuthState() {
+  const signedIn = Boolean(state.auth.user);
+  if (els.accountStatus) {
+    els.accountStatus.textContent = signedIn
+      ? `${state.auth.user.name || state.auth.user.email} · ${state.auth.subscription?.plan || "free"}`
+      : "Guest";
+    els.accountStatus.title = signedIn ? state.auth.user.email : "Not signed in";
+  }
+  if (els.authOpenBtn) els.authOpenBtn.textContent = signedIn ? "Account" : "Sign In";
+  if (els.saveProjectTopBtn) els.saveProjectTopBtn.disabled = !signedIn;
+  if (els.logoutBtn) els.logoutBtn.hidden = !signedIn;
+  if (els.authForm) els.authForm.hidden = signedIn;
+  if (els.authMessage) els.authMessage.textContent = state.auth.message;
+  if (els.projectMessage) els.projectMessage.textContent = state.auth.projectMessage;
+
+  renderSummary(els.accountSummary, signedIn
+    ? [
+      ["User", state.auth.user.name || state.auth.user.email],
+      ["Email", state.auth.user.email],
+      ["Session", "Active local cookie"],
+      ["License", state.auth.license?.key || state.auth.user.license?.key || "Local pending"],
+    ]
+    : [
+      ["State", "Signed out"],
+      ["Auth", "Register or login to save projects"],
+      ["Billing", "Local subscription records only"],
+    ]);
+
+  renderSummary(els.planSummary, signedIn
+    ? [
+      ["Plan", subscriptionLabel()],
+      ["Projects", `${state.auth.projects.length} / ${state.auth.subscription?.projectLimit || 0}`],
+      ["Export", state.auth.subscription?.exportTier || "preview"],
+      ["Seats", state.auth.subscription?.seats || 1],
+      ["License", state.auth.license?.status || state.auth.user.license?.status || "active"],
+    ]
+    : [
+      ["Plan", "Guest"],
+      ["Projects", "Sign in required"],
+      ["Export", "Preview only"],
+      ["License", "No local license"],
+    ]);
+
+  if (els.planGateStatus) {
+    els.planGateStatus.textContent = signedIn ? (state.auth.license?.tier || state.auth.subscription?.plan || "free") : "Guest";
+  }
+
+  for (const button of els.subscriptionPlanGrid?.querySelectorAll("button[data-plan]") || []) {
+    const active = button.dataset.plan === (state.auth.subscription?.plan || "free");
+    button.classList.toggle("active", signedIn && active);
+    button.disabled = !signedIn;
+  }
+
+  if (els.projectNameInput && !els.projectNameInput.value) {
+    els.projectNameInput.value = state.project?.timeline?.name || "Mahavisphot cut";
+  }
+  if (els.saveProjectBtn) els.saveProjectBtn.disabled = !signedIn || !state.project;
+  if (els.updateProjectBtn) els.updateProjectBtn.disabled = !signedIn || !state.auth.selectedProjectId || !state.project;
+  if (els.saveProjectTopBtn) els.saveProjectTopBtn.title = state.auth.selectedProjectId ? "Save selected project" : "Create saved project";
+  if (els.refreshProjectsBtn) els.refreshProjectsBtn.disabled = !signedIn;
+  renderProjectList();
+}
+
+function renderProjectList() {
+  if (!els.projectList) return;
+  els.projectList.innerHTML = "";
+  if (!state.auth.user) {
+    const empty = document.createElement("p");
+    empty.className = "empty-compositions";
+    empty.textContent = "Sign in to create, load, update, and delete saved projects.";
+    els.projectList.appendChild(empty);
+    return;
+  }
+  if (!state.auth.projects.length) {
+    const empty = document.createElement("p");
+    empty.className = "empty-compositions";
+    empty.textContent = "No saved projects yet.";
+    els.projectList.appendChild(empty);
+    return;
+  }
+  for (const project of state.auth.projects) {
+    const card = document.createElement("article");
+    const title = document.createElement("strong");
+    const meta = document.createElement("span");
+    const schema = document.createElement("em");
+    const actions = document.createElement("div");
+    const load = document.createElement("button");
+    const select = document.createElement("button");
+    const duplicate = document.createElement("button");
+    const remove = document.createElement("button");
+    card.className = `project-card${project.id === state.auth.selectedProjectId ? " selected" : ""}`;
+    title.textContent = project.name || "Untitled Project";
+    meta.textContent = `${project.sceneCount || 0} scenes · ${fmt(project.duration || 0)} · ${shortDate(project.updatedAt)}`;
+    schema.textContent = project.schemaVersion || "local project";
+    actions.className = "project-card-actions";
+    load.type = "button";
+    load.textContent = "Open";
+    load.addEventListener("click", () => loadSavedProject(project.id));
+    select.type = "button";
+    select.textContent = "Select";
+    select.addEventListener("click", () => {
+      state.auth.selectedProjectId = project.id;
+      els.projectNameInput.value = project.name || "";
+      state.activePanel = "projects";
+      renderAuthState();
+      showHud("Project selected");
+    });
+    duplicate.type = "button";
+    duplicate.textContent = "Duplicate";
+    duplicate.addEventListener("click", () => duplicateSavedProject(project.id));
+    remove.type = "button";
+    remove.textContent = "Delete";
+    remove.addEventListener("click", () => deleteSavedProject(project.id));
+    actions.append(load, select, duplicate, remove);
+    card.append(title, meta, schema, actions);
+    els.projectList.appendChild(card);
+  }
+}
+
+async function refreshAuth() {
+  try {
+    const data = await apiJson("/api/auth/me");
+    state.auth.user = data.user || null;
+    state.auth.subscription = data.subscription || data.user?.subscription || null;
+    state.auth.license = data.license || data.user?.license || null;
+    if (state.auth.user) await refreshProjects({ silent: true });
+  } catch (error) {
+    state.auth.user = null;
+    state.auth.subscription = null;
+    state.auth.license = null;
+    state.auth.projects = [];
+    state.auth.message = `Auth unavailable: ${error.message}`;
+  }
+  renderAuthState();
+}
+
+async function loginUser() {
+  try {
+    const data = await apiJson("/api/auth/login", {
+      method: "POST",
+      body: JSON.stringify({
+        email: els.authEmailInput.value,
+        password: els.authPasswordInput.value,
+      }),
+    });
+    state.auth.user = data.user;
+    state.auth.subscription = data.subscription;
+    state.auth.license = data.license || data.user?.license || null;
+    state.auth.message = "Signed in";
+    els.authPasswordInput.value = "";
+    await refreshProjects({ silent: true });
+    state.activePanel = "projects";
+    render();
+    showHud("Signed in");
+  } catch (error) {
+    setAuthMessage(error.message);
+  }
+}
+
+async function registerUser() {
+  try {
+    const data = await apiJson("/api/auth/register", {
+      method: "POST",
+      body: JSON.stringify({
+        name: els.authNameInput.value,
+        email: els.authEmailInput.value,
+        password: els.authPasswordInput.value,
+      }),
+    });
+    state.auth.user = data.user;
+    state.auth.subscription = data.subscription;
+    state.auth.license = data.license || data.user?.license || null;
+    state.auth.message = "Account created";
+    els.authPasswordInput.value = "";
+    await refreshProjects({ silent: true });
+    state.activePanel = "projects";
+    render();
+    showHud("Account created");
+  } catch (error) {
+    setAuthMessage(error.message);
+  }
+}
+
+async function logoutUser() {
+  try {
+    await apiJson("/api/auth/logout", { method: "POST" });
+  } catch {
+    // The local session may already be expired; clear client state either way.
+  }
+  state.auth.user = null;
+  state.auth.subscription = null;
+  state.auth.license = null;
+  state.auth.projects = [];
+  state.auth.selectedProjectId = null;
+  state.auth.message = "Signed out";
+  renderAuthState();
+  showHud("Signed out");
+}
+
+async function updateSubscription(plan) {
+  try {
+    const data = await apiJson("/api/subscription", {
+      method: "POST",
+      body: JSON.stringify({ plan }),
+    });
+    state.auth.user = data.user;
+    state.auth.subscription = data.subscription;
+    state.auth.license = data.license || data.user?.license || null;
+    state.auth.message = `${subscriptionLabel(data.subscription)} selected`;
+    renderAuthState();
+    showHud("Subscription updated");
+  } catch (error) {
+    setAuthMessage(error.message);
+  }
+}
+
+async function refreshProjects(options = {}) {
+  if (!state.auth.user) {
+    state.auth.projects = [];
+    renderAuthState();
+    return;
+  }
+  try {
+    const data = await apiJson("/api/projects");
+    state.auth.projects = data.projects || [];
+    if (state.auth.selectedProjectId && !state.auth.projects.some((project) => project.id === state.auth.selectedProjectId)) {
+      state.auth.selectedProjectId = null;
+    }
+    if (!options.silent) state.auth.projectMessage = `${state.auth.projects.length} projects loaded`;
+  } catch (error) {
+    state.auth.projectMessage = error.message;
+  }
+  renderAuthState();
+}
+
+function savedProjectPayload() {
+  return {
+    sourceProject: structuredClone(state.project),
+    edit: getProjectExportPayload(),
+    savedAt: new Date().toISOString(),
+  };
+}
+
+async function createSavedProject() {
+  if (!state.auth.user) {
+    state.activePanel = "account";
+    render();
+    showHud("Sign in to save projects");
+    return;
+  }
+  try {
+    const data = await apiJson("/api/projects", {
+      method: "POST",
+      body: JSON.stringify({
+        name: els.projectNameInput.value || state.project?.timeline?.name || "Mahavisphot cut",
+        payload: savedProjectPayload(),
+      }),
+    });
+    state.auth.selectedProjectId = data.project.id;
+    state.auth.projectMessage = `Created ${data.project.name}`;
+    await refreshProjects({ silent: true });
+    renderAuthState();
+    showHud("Project created");
+  } catch (error) {
+    state.auth.projectMessage = error.message;
+    renderAuthState();
+  }
+}
+
+async function updateSavedProject() {
+  if (!state.auth.selectedProjectId) {
+    await createSavedProject();
+    return;
+  }
+  try {
+    const data = await apiJson(`/api/projects/${encodeURIComponent(state.auth.selectedProjectId)}`, {
+      method: "PUT",
+      body: JSON.stringify({
+        name: els.projectNameInput.value || "Mahavisphot cut",
+        payload: savedProjectPayload(),
+      }),
+    });
+    state.auth.projectMessage = `Updated ${data.project.name}`;
+    await refreshProjects({ silent: true });
+    renderAuthState();
+    showHud("Project updated");
+  } catch (error) {
+    state.auth.projectMessage = error.message;
+    renderAuthState();
+  }
+}
+
+async function saveCurrentProject() {
+  if (state.auth.selectedProjectId) {
+    await updateSavedProject();
+    return;
+  }
+  await createSavedProject();
+}
+
+async function duplicateSavedProject(projectId) {
+  try {
+    const data = await apiJson(`/api/projects/${encodeURIComponent(projectId)}/duplicate`, { method: "POST" });
+    state.auth.selectedProjectId = data.project.id;
+    state.auth.projectMessage = `Duplicated ${data.project.name}`;
+    await refreshProjects({ silent: true });
+    renderAuthState();
+    showHud("Project duplicated");
+  } catch (error) {
+    state.auth.projectMessage = error.message;
+    renderAuthState();
+  }
+}
+
+function restoreProjectPayload(payload, fallbackName = "Saved Project") {
+  const sourceProject = structuredClone(payload.sourceProject || state.project || fallbackProject());
+  const edit = payload.edit || payload;
+  sourceProject.timeline = {
+    ...(sourceProject.timeline || {}),
+    name: fallbackName,
+    note: "Loaded from saved project CRUD",
+  };
+  sourceProject.duration = Number(edit.duration) || Number(sourceProject.duration) || 0;
+  sourceProject.audio = {
+    ...(sourceProject.audio || {}),
+    path: edit.audioPath || sourceProject.audio?.path || "अहं ब्रह्मास्मि.wav",
+  };
+  sourceProject.audio.url = assetUrl(sourceProject.audio.path);
+  sourceProject.rubab = {
+    ...(sourceProject.rubab || {}),
+    path: edit.rubabPath || sourceProject.rubab?.path || "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0004.jpg",
+  };
+  sourceProject.rubab.url = assetUrl(sourceProject.rubab.path);
+  sourceProject.scenes = (edit.scenes || sourceProject.scenes || []).map((scene) => ensureSceneDefaults({
+    ...scene,
+    source: scene.source || String(scene.frameIndex || scene.id || ""),
+    image: assetUrl(scene.imagePath),
+  }));
+  applyProject(sourceProject, `Loaded ${fallbackName}`);
+  state.markers = structuredClone(edit.markers || state.markers || []);
+  state.keyframes = structuredClone(edit.keyframes || []);
+  const hasSavedDynamicTracks = Array.isArray(edit.dynamicTracks);
+  state.dynamicTracks = (hasSavedDynamicTracks ? structuredClone(edit.dynamicTracks) : []).map((track) => normalizeDynamicTrack(track, track.kind));
+  state.nextDynamicTrackId = Math.max(0, ...state.dynamicTracks.map((track) => Number(String(track.id).replace(/\D+/g, "")) || 0)) + 1;
+  state.selectedTrackId = state.dynamicTracks[0]?.id || null;
+  if (!hasSavedDynamicTracks) ensureDefaultDynamicTracks();
+  state.compositions = structuredClone(edit.compositions || []);
+  state.nextCompositionId = Math.max(0, ...state.compositions.map((composition) => Number(String(composition.id).replace(/\D+/g, "")) || 0)) + 1;
+  state.activeCompositionId = state.compositions.some((composition) => composition.id === edit.activeCompositionId) ? edit.activeCompositionId : null;
+  state.selectedCompositionId = state.activeCompositionId || state.compositions[0]?.id || null;
+  Object.assign(state.audio, edit.audioMix || {});
+  Object.assign(state.access, edit.accessibility || {});
+  Object.assign(state.editPolicy, edit.editPolicy || {});
+  state.duplicateDecisions = Array.isArray(edit.duplicateDecisions) ? structuredClone(edit.duplicateDecisions) : analyzeDuplicateDecisions();
+  state.uxNotes = Array.isArray(edit.uxNotes) ? structuredClone(edit.uxNotes) : state.uxNotes;
+  if (edit.spatial) {
+    const { animationId, lastFrameTime, ...spatial } = edit.spatial;
+    Object.assign(state.spatial, spatial, { animationId: null, lastFrameTime: 0 });
+  }
+  if (edit.layers) {
+    if (Array.isArray(edit.layers.order)) state.layerOrder = edit.layers.order;
+    Object.assign(state.layerVisibility, edit.layers.visible || {});
+    Object.assign(state.layerLocked, edit.layers.locked || {});
+  }
+  saveUxNotes();
+  render();
+}
+
+async function loadSavedProject(projectId) {
+  try {
+    const data = await apiJson(`/api/projects/${encodeURIComponent(projectId)}`);
+    state.auth.selectedProjectId = data.project.id;
+    els.projectNameInput.value = data.project.name || "";
+    restoreProjectPayload(data.project.payload || {}, data.project.name);
+    state.auth.projectMessage = `Loaded ${data.project.name}`;
+    state.activePanel = "projects";
+    renderAuthState();
+    showHud("Project loaded");
+  } catch (error) {
+    state.auth.projectMessage = error.message;
+    renderAuthState();
+  }
+}
+
+async function deleteSavedProject(projectId) {
+  try {
+    await apiJson(`/api/projects/${encodeURIComponent(projectId)}`, { method: "DELETE" });
+    if (state.auth.selectedProjectId === projectId) state.auth.selectedProjectId = null;
+    state.auth.projectMessage = "Project deleted";
+    await refreshProjects({ silent: true });
+    renderAuthState();
+    showHud("Project deleted");
+  } catch (error) {
+    state.auth.projectMessage = error.message;
+    renderAuthState();
+  }
 }
 
 function saveUxNotes() {
@@ -1153,14 +2326,14 @@ function applyAccessibility() {
 
 function updateTransportUi() {
   if (!state.project) return;
-  const duration = projectDuration();
+  const duration = timelineDuration();
   const playheadLeft = 86 + state.currentTime * pixelsPerSecond();
   els.jogSlider.max = String(duration);
   els.jogSlider.value = String(clamp(state.currentTime, 0, duration));
   els.playerClock.textContent = `${fmt(state.currentTime)} / ${fmt(duration)}`;
   els.playPauseBtn.textContent = state.playing ? "II" : "▶";
   els.playhead.style.left = `${playheadLeft}px`;
-  els.timelineReadout.textContent = `Playhead ${fmt(state.currentTime)} / ${fmt(duration)} · ${state.timelineMode} · ${state.timelineLayout} · H ${state.timelineZoom.toFixed(1)} / V ${state.timelineVerticalZoom.toFixed(2)} · pinch ${state.pinchAxis}`;
+  els.timelineReadout.textContent = `${timelineContextLabel()} · Playhead ${fmt(state.currentTime)} / ${fmt(duration)} · ${state.timelineMode} · ${state.timelineLayout} · H ${state.timelineZoom.toFixed(1)} / V ${state.timelineVerticalZoom.toFixed(2)} · pinch ${state.pinchAxis} · del ${state.editPolicy.deleteMode} · dupes ${state.duplicateDecisions.length}`;
   renderMeters();
   renderHud();
   if (state.activePanel === "story") renderStoryline();
@@ -1169,7 +2342,7 @@ function updateTransportUi() {
 }
 
 function setPlayhead(time, options = {}) {
-  const duration = projectDuration();
+  const duration = timelineDuration();
   const nextTime = clamp(time, 0, duration);
   state.currentTime = nextTime;
 
@@ -1179,7 +2352,9 @@ function setPlayhead(time, options = {}) {
     }
   }
 
-  const nextScene = sceneAt(nextTime);
+  const nextScene = activeComposition()
+    ? compositionSceneAt(activeComposition(), nextTime)
+    : sceneAt(nextTime);
   const selectionChanged = Boolean(nextScene && nextScene.id !== state.selectedId && options.select !== false);
   if (selectionChanged) state.selectedId = nextScene.id;
 
@@ -1205,7 +2380,7 @@ function pausePlayback() {
 
 function tickPlayback() {
   if (!state.playing) return;
-  const duration = projectDuration();
+  const duration = timelineDuration();
   const nextTime = clamp(els.audioPlayer.currentTime || state.currentTime, 0, duration);
   setPlayhead(nextTime, { syncAudio: false });
   if (nextTime >= duration - 0.02) {
@@ -1217,7 +2392,7 @@ function tickPlayback() {
 
 async function playPlayback() {
   if (!state.project) return;
-  if (state.currentTime >= projectDuration() - 0.02) state.currentTime = 0;
+    if (state.currentTime >= timelineDuration() - 0.02) state.currentTime = 0;
   els.audioPlayer.currentTime = state.currentTime;
   els.audioPlayer.volume = state.audio.master / 100;
   try {
@@ -1263,6 +2438,7 @@ function allAssets() {
 function assetDragPayload(asset) {
   return {
     type: "asset",
+    mediaKind: "video",
     frameIndex: asset.frameIndex || asset.index || null,
     image: asset.image,
     path: asset.path,
@@ -1271,14 +2447,198 @@ function assetDragPayload(asset) {
 }
 
 function sceneDragPayload(scene) {
+  if (!scene) return null;
   return {
     type: "scene",
+    mediaKind: "video",
     id: scene.id,
   };
 }
 
+function audioClipDragPayload() {
+  return {
+    type: "audio-clip",
+    mediaKind: "audio",
+    title: state.project?.audio?.name || "Master audio",
+    start: 0,
+    end: projectDuration(),
+  };
+}
+
+function clipRefKey(ref) {
+  if (!ref) return "";
+  if (ref.type === "dynamic") return `${ref.type}:${ref.trackId}:${ref.clipId}`;
+  return `${ref.type}:${ref.id || ref.type}`;
+}
+
+function isClipRefSelected(ref) {
+  const key = clipRefKey(ref);
+  return Boolean(key && state.selectedClipRefs.some((item) => clipRefKey(item) === key));
+}
+
+function selectClipRef(ref, event = null) {
+  if (!ref) return;
+  const key = clipRefKey(ref);
+  if (!key) return;
+  if (event?.shiftKey) {
+    if (isClipRefSelected(ref)) {
+      state.selectedClipRefs = state.selectedClipRefs.filter((item) => clipRefKey(item) !== key);
+    } else {
+      state.selectedClipRefs.push(ref);
+    }
+  } else {
+    state.selectedClipRefs = [ref];
+  }
+}
+
+function dynamicTrackById(trackId) {
+  return state.dynamicTracks.find((track) => track.id === trackId) || null;
+}
+
+function normalizeDynamicTrack(track, fallbackKind = "video") {
+  const kind = track?.kind === "audio" ? "audio" : fallbackKind;
+  const label = track?.label || nextTrackLabel(kind);
+  return {
+    id: track?.id || `track-${state.nextDynamicTrackId}`,
+    kind,
+    label,
+    title: track?.title || `${label} ${kind === "audio" ? "Audio" : "Video"} Layer`,
+    visible: track?.visible !== false,
+    locked: Boolean(track?.locked),
+    createdAt: track?.createdAt || new Date().toISOString(),
+    clips: Array.isArray(track?.clips) ? track.clips : [],
+  };
+}
+
+function selectedDynamicTrack() {
+  return dynamicTrackById(state.selectedTrackId) || state.dynamicTracks[0] || null;
+}
+
+function dynamicClipByRef(ref) {
+  const track = dynamicTrackById(ref?.trackId);
+  const clip = track?.clips.find((item) => item.id === ref?.clipId) || null;
+  return { track, clip };
+}
+
+function compositionClipFromRef(ref) {
+  if (!ref) return null;
+  if (ref.type === "scene") {
+    const scene = state.scenes.find((item) => item.id === ref.id);
+    if (!scene) return null;
+    return {
+      mediaKind: "video",
+      sourceType: "scene",
+      sceneId: scene.id,
+      title: scene.titleEn || scene.titleHi || `Scene ${scene.id}`,
+      start: Number(scene.start) || 0,
+      end: Number(scene.end) || 0,
+      image: scene.image || "",
+      imagePath: scene.imagePath || "",
+      trackLabel: "V1",
+    };
+  }
+  if (ref.type === "dynamic") {
+    const { track, clip } = dynamicClipByRef(ref);
+    if (!track || !clip) return null;
+    return {
+      mediaKind: track.kind,
+      sourceType: clip.sourceType || track.kind,
+      sceneId: clip.sceneId || null,
+      frameIndex: clip.frameIndex || null,
+      title: clip.title || track.title,
+      start: Number(clip.start) || 0,
+      end: Number(clip.end) || 0,
+      image: clip.image || "",
+      imagePath: clip.path || "",
+      trackLabel: track.label,
+    };
+  }
+  if (ref.type === "master-audio") {
+    return {
+      mediaKind: "audio",
+      sourceType: "master-audio",
+      title: state.project?.audio?.name || "Master audio",
+      start: 0,
+      end: projectDuration(),
+      trackLabel: "A1",
+    };
+  }
+  return null;
+}
+
+function selectedCompositionClips() {
+  const refs = state.selectedClipRefs.length
+    ? state.selectedClipRefs
+    : selectedScene()
+      ? [{ type: "scene", id: selectedScene().id }]
+      : [];
+  return refs.map(compositionClipFromRef).filter((clip) => clip && clip.end > clip.start);
+}
+
+function createCompositionFromSelection() {
+  const clips = selectedCompositionClips();
+  if (!clips.length) {
+    showHud("Select clips before making a comp");
+    return null;
+  }
+  const start = Math.min(...clips.map((clip) => clip.start));
+  const end = Math.max(...clips.map((clip) => clip.end));
+  const duration = Math.max(MIN_SCENE_SECONDS, roundTime(end - start));
+  const id = `comp-${state.nextCompositionId}`;
+  const title = clips.length === 1 ? `${clips[0].title} Comp` : `${clips.length} Clip Composition`;
+  const composition = {
+    id,
+    name: `${String(state.nextCompositionId).padStart(2, "0")} ${title}`,
+    start: roundTime(start),
+    end: roundTime(end),
+    duration,
+    clips: clips
+      .sort((a, b) => a.start - b.start)
+      .map((clip) => ({
+        ...clip,
+        id: `compclip-${Date.now()}-${Math.random().toString(16).slice(2)}`,
+        relativeStart: roundTime(clip.start - start),
+        relativeEnd: roundTime(clip.end - start),
+      })),
+    createdAt: new Date().toISOString(),
+  };
+  state.nextCompositionId += 1;
+  state.compositions.push(composition);
+  state.selectedCompositionId = id;
+  state.activePanel = "compositions";
+  setDirty();
+  render();
+  showHud(`${composition.name} created`);
+  return composition;
+}
+
+function openComposition(id = state.selectedCompositionId) {
+  const composition = state.compositions.find((item) => item.id === id);
+  if (!composition) {
+    showHud("No composition selected");
+    return;
+  }
+  state.activeCompositionId = composition.id;
+  state.selectedCompositionId = composition.id;
+  state.selectedClipRefs = [];
+  state.currentTime = 0;
+  state.timelineMode = "all";
+  state.activePanel = "compositions";
+  render();
+  showHud(`${composition.name} opened`);
+}
+
+function closeCompositionTimeline() {
+  const composition = activeComposition();
+  state.activeCompositionId = null;
+  state.currentTime = composition ? Number(composition.start) || 0 : state.currentTime;
+  render();
+  showHud("Master timeline");
+}
+
 function setDragPayload(event, payload) {
-  event.dataTransfer.effectAllowed = payload.type === "scene" || payload.type === "layer" ? "move" : "copy";
+  if (!payload) return;
+  event.dataTransfer.effectAllowed = ["scene", "layer", "dynamic-layer"].includes(payload.type) ? "move" : "copy";
   event.dataTransfer.setData("application/json", JSON.stringify(payload));
   event.dataTransfer.setData("text/plain", payload.type);
 }
@@ -1299,6 +2659,199 @@ function applyAssetToScene(scene, payload) {
   scene.image = payload.image;
   scene.imagePath = payload.path;
   setDirty();
+}
+
+function nextTrackLabel(kind) {
+  const base = kind === "audio" ? "A" : "V";
+  const baseIndex = kind === "audio" ? 2 : 3;
+  const used = state.dynamicTracks
+    .filter((track) => track.kind === kind)
+    .map((track) => Number(String(track.label || "").replace(/\D+/g, "")))
+    .filter(Number.isFinite);
+  return `${base}${Math.max(baseIndex - 1, ...used) + 1}`;
+}
+
+function payloadMediaKind(payload) {
+  if (!payload) return null;
+  if (payload.mediaKind) return payload.mediaKind;
+  if (payload.type === "audio-clip") return "audio";
+  if (payload.type === "scene" || payload.type === "asset") return "video";
+  return null;
+}
+
+function clipFromPayload(payload, kind, startTime) {
+  const start = roundTime(clamp(startTime, 0, projectDuration()));
+  if (payload.type === "scene") {
+    const scene = state.scenes.find((item) => item.id === payload.id);
+    const duration = scene ? sceneLength(scene) : 4;
+    return {
+      id: `clip-${Date.now()}-${Math.random().toString(16).slice(2)}`,
+      sourceType: "scene",
+      sceneId: payload.id,
+      title: scene?.titleEn || "Scene clip",
+      start,
+      end: roundTime(Math.min(projectDuration(), start + duration)),
+      image: scene?.image || "",
+    };
+  }
+  if (payload.type === "asset") {
+    return {
+      id: `clip-${Date.now()}-${Math.random().toString(16).slice(2)}`,
+      sourceType: "asset",
+      frameIndex: payload.frameIndex || null,
+      title: payload.title || "Asset clip",
+      start,
+      end: roundTime(Math.min(projectDuration(), start + 5)),
+      image: payload.image || "",
+      path: payload.path || "",
+    };
+  }
+  const duration = Math.min(projectDuration(), Number(payload.end) - Number(payload.start) || projectDuration());
+  return {
+    id: `clip-${Date.now()}-${Math.random().toString(16).slice(2)}`,
+    sourceType: "audio",
+    title: payload.title || "Audio clip",
+    start,
+    end: roundTime(Math.min(projectDuration(), start + Math.max(1, duration))),
+  };
+}
+
+function createDynamicTrack(kind, payload = null, startTime = state.currentTime, options = {}) {
+  if (!["video", "audio"].includes(kind)) return null;
+  const mediaKind = payloadMediaKind(payload);
+  if (mediaKind && mediaKind !== kind) {
+    showHud(`Drop ${kind} media on a ${kind} layer target`);
+    return null;
+  }
+  const label = nextTrackLabel(kind);
+  const track = {
+    id: `track-${state.nextDynamicTrackId}`,
+    kind,
+    label,
+    title: options.title || (kind === "audio" ? `${label} Audio Layer` : `${label} Video Layer`),
+    visible: true,
+    locked: false,
+    createdAt: new Date().toISOString(),
+    clips: payload ? [clipFromPayload(payload, kind, startTime)] : [],
+  };
+  state.nextDynamicTrackId += 1;
+  state.dynamicTracks.push(track);
+  state.selectedTrackId = track.id;
+  if (options.dirty !== false) setDirty();
+  if (options.render !== false) {
+    renderTimeline();
+    renderLayerStack();
+  }
+  if (!options.silent) showHud(`${label} created`);
+  return track;
+}
+
+function addClipToDynamicTrack(track, payload, startTime = state.currentTime) {
+  if (!track || !payload) return;
+  if (track.locked) {
+    showHud(`${track.label} is locked`);
+    return;
+  }
+  const mediaKind = payloadMediaKind(payload);
+  if (mediaKind && mediaKind !== track.kind) {
+    showHud(`This is a ${track.kind} track`);
+    return;
+  }
+  track.clips.push(clipFromPayload(payload, track.kind, startTime));
+  setDirty();
+  renderTimeline();
+  showHud(`${track.label} clip added`);
+}
+
+function ensureDefaultDynamicTracks() {
+  const previousSelection = state.selectedTrackId;
+  if (!state.dynamicTracks.some((track) => track.kind === "video")) {
+    createDynamicTrack("video", null, 0, {
+      title: "V3 Empty Video Layer",
+      dirty: false,
+      render: false,
+      silent: true,
+    });
+  }
+  if (!state.dynamicTracks.some((track) => track.kind === "audio")) {
+    createDynamicTrack("audio", null, 0, {
+      title: "A2 Empty Audio Layer",
+      dirty: false,
+      render: false,
+      silent: true,
+    });
+  }
+  state.selectedTrackId = previousSelection && dynamicTrackById(previousSelection)
+    ? previousSelection
+    : state.dynamicTracks[0]?.id || null;
+}
+
+function createEmptyLayer(kind) {
+  const track = createDynamicTrack(kind, null, state.currentTime);
+  if (track) {
+    setStatus(`${track.label} ${titleCase(kind)} layer ready`);
+    render();
+  }
+}
+
+function renameSelectedLayer() {
+  const track = selectedDynamicTrack();
+  if (!track) {
+    showHud("Select a dynamic layer first");
+    return;
+  }
+  const nextTitle = window.prompt(`Rename ${track.label}`, track.title || track.label);
+  if (nextTitle === null) return;
+  const clean = nextTitle.trim();
+  if (!clean) {
+    showHud("Layer name unchanged");
+    return;
+  }
+  track.title = clean;
+  setDirty();
+  render();
+  showHud(`${track.label} renamed`);
+}
+
+function duplicateSelectedLayer() {
+  const track = selectedDynamicTrack();
+  if (!track) {
+    showHud("Select a dynamic layer first");
+    return;
+  }
+  const label = nextTrackLabel(track.kind);
+  const copy = normalizeDynamicTrack({
+    ...structuredClone(track),
+    id: `track-${state.nextDynamicTrackId}`,
+    label,
+    title: `${track.title || label} Copy`,
+    createdAt: new Date().toISOString(),
+    clips: (track.clips || []).map((clip) => ({
+      ...structuredClone(clip),
+      id: `clip-${Date.now()}-${Math.random().toString(16).slice(2)}`,
+    })),
+  }, track.kind);
+  state.nextDynamicTrackId += 1;
+  const index = state.dynamicTracks.findIndex((item) => item.id === track.id);
+  state.dynamicTracks.splice(index + 1, 0, copy);
+  state.selectedTrackId = copy.id;
+  setDirty();
+  render();
+  showHud(`${copy.label} duplicated`);
+}
+
+function deleteSelectedLayer() {
+  const track = selectedDynamicTrack();
+  if (!track) {
+    showHud("Select a dynamic layer first");
+    return;
+  }
+  state.dynamicTracks = state.dynamicTracks.filter((item) => item.id !== track.id);
+  state.selectedClipRefs = state.selectedClipRefs.filter((ref) => ref.type !== "dynamic" || ref.trackId !== track.id);
+  state.selectedTrackId = state.dynamicTracks[0]?.id || null;
+  setDirty();
+  render();
+  showHud(`${track.label} deleted`);
 }
 
 function applyDropToTimelineLayer(scene, payload, layerId) {
@@ -1325,6 +2878,35 @@ function applyDropToTimelineLayer(scene, payload, layerId) {
       showHud("Caption layer focused");
       return;
     }
+    if (layerId === "threeLayer") {
+      state.workspaceMode = "3d";
+      state.activePanel = "spatial";
+      state.spatial.activeNode = "actor";
+      state.spatial.mesh = "actor";
+      scene.note = scene.note || `3D reference queued from ${payload.title || "asset"}`;
+      setDirty();
+      showHud("3D reference queued");
+      return;
+    }
+    if (layerId === "trackingLayer") {
+      state.workspaceMode = "motion";
+      state.activePanel = "tracking";
+      state.spatial.activeNode = "actor";
+      state.spatial.trackingConfidence = Math.max(state.spatial.trackingConfidence, 78);
+      scene.note = scene.note || `Tracking reference queued from ${payload.title || "asset"}`;
+      setDirty();
+      showHud("Tracking reference queued");
+      return;
+    }
+    if (layerId === "particlesLayer") {
+      state.workspaceMode = "particles";
+      state.activePanel = "particles";
+      state.spatial.activeNode = "particles";
+      state.spatial.particlePreset = payload.title?.toLowerCase().includes("spark") ? "vedic" : state.spatial.particlePreset;
+      setDirty();
+      showHud("Particle pass focused");
+      return;
+    }
     applyAssetToScene(scene, payload);
     showHud("Asset placed on video layer");
   }
@@ -1333,7 +2915,7 @@ function applyDropToTimelineLayer(scene, payload, layerId) {
 function dropTimeFromEvent(event) {
   const source = event.currentTarget?.classList?.contains("layer-lane") ? event.currentTarget : els.videoLayer;
   const rect = source.getBoundingClientRect();
-  return clamp((event.clientX - rect.left) / pixelsPerSecond(), 0, projectDuration());
+  return clamp((event.clientX - rect.left) / pixelsPerSecond(), 0, timelineDuration());
 }
 
 function moveSceneTo(scene, start) {
@@ -1528,6 +3110,8 @@ function renderPreview() {
   els.rubabOverlay.classList.toggle("hidden", !scene.rubabOverlay || !state.layerVisibility.rubab);
   els.rubabOverlay.style.opacity = String((state.audio.rubabSolo ? 100 : state.audio.rubab) / 100);
   els.rubabOverlay.style.zIndex = layerZIndex("rubab");
+  els.spatialViewport.style.zIndex = layerZIndex("three");
+  els.spatialFallback.style.zIndex = layerZIndex("three");
 
   els.effectLayer.className = [
     "effect-layer",
@@ -1551,12 +3135,17 @@ function renderPreview() {
 
 function renderLayerStack() {
   const scene = selectedScene();
+  const dynamicVideoCount = state.dynamicTracks.filter((track) => track.kind === "video").length;
+  const dynamicAudioCount = state.dynamicTracks.filter((track) => track.kind === "audio").length;
   const layerByKey = {
     vfx: { key: "vfx", title: "VFX Bus", meta: "grain, vignette, dust, sonic" },
     captions: { key: "captions", title: "Caption Track", meta: state.access.captions ? "visible captions" : "caption preview off" },
+    particles: { key: "particles", title: "Particle Field", meta: particlePresets[state.spatial.particlePreset]?.label || "GPU field" },
+    tracking: { key: "tracking", title: "Motion / Face Track", meta: `confidence ${state.spatial.trackingConfidence}%` },
+    three: { key: "three", title: "3D Mesh Layer", meta: `${state.spatial.mesh} · ${state.spatial.shading}` },
     rubab: { key: "rubab", title: "Rubab Picture-in-Picture", meta: scene?.rubabOverlay ? "active in selected scene" : "inactive here" },
-    video: { key: "video", title: "Scene Plate", meta: scene?.imagePath || "" },
-    audio: { key: "audio", title: "Master Audio", meta: "voice, music, rubab mix" },
+    video: { key: "video", title: "Scene Plate", meta: `${scene?.imagePath || "board frames"}${dynamicVideoCount ? ` · ${dynamicVideoCount} extra V` : ""}` },
+    audio: { key: "audio", title: "Master Audio", meta: `voice, music, rubab mix${dynamicAudioCount ? ` · ${dynamicAudioCount} extra A` : ""}` },
   };
   els.layerStack.innerHTML = "";
   for (const layer of orderedLayerKeys().map((key) => layerByKey[key]).filter(Boolean)) {
@@ -1607,37 +3196,254 @@ function renderLayerStack() {
     });
     els.layerStack.appendChild(row);
   }
+  for (const track of state.dynamicTracks) {
+    const row = document.createElement("div");
+    row.className = `layer-stack-row dynamic-stack-row${track.id === state.selectedTrackId ? " selected" : ""}${track.locked ? " locked" : ""}`;
+    row.dataset.trackId = track.id;
+    row.dataset.trackKind = track.kind;
+    row.draggable = true;
+    row.innerHTML = `
+      <span class="layer-grip" aria-hidden="true">⋮⋮</span>
+      <button type="button" data-track-action="visible" aria-label="Toggle ${track.title} visibility">${track.visible !== false ? "On" : "Off"}</button>
+      <button type="button" data-track-action="lock" aria-label="Toggle ${track.title} lock">${track.locked ? "Lock" : "Free"}</button>
+      <span><strong>${track.label} · ${track.title || titleCase(track.kind)}</strong><em>${track.clips.length} clip${track.clips.length === 1 ? "" : "s"} · ${track.kind}</em></span>
+    `;
+    row.addEventListener("click", (event) => {
+      if (event.target.closest("button")) return;
+      state.selectedTrackId = track.id;
+      state.selectedClipRefs = [];
+      renderLayerStack();
+      renderHud(`${track.label} selected`);
+      showHud(`${track.label} selected`);
+    });
+    row.addEventListener("dragstart", (event) => {
+      state.selectedTrackId = track.id;
+      row.classList.add("dragging");
+      setDragPayload(event, { type: "dynamic-layer", id: track.id });
+    });
+    row.addEventListener("dragend", () => {
+      row.classList.remove("dragging");
+      for (const item of els.layerStack.querySelectorAll(".drop-target")) item.classList.remove("drop-target");
+    });
+    row.addEventListener("dragover", (event) => {
+      event.preventDefault();
+      row.classList.add("drop-target");
+    });
+    row.addEventListener("dragleave", () => row.classList.remove("drop-target"));
+    row.addEventListener("drop", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      row.classList.remove("drop-target");
+      const payload = readDragPayload(event);
+      if (payload?.type === "dynamic-layer") moveDynamicTrackBefore(payload.id, track.id);
+      if (payload?.type === "layer") moveLayerToEnd(payload.key);
+    });
+    row.querySelector(".layer-grip").addEventListener("pointerdown", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      state.selectedTrackId = track.id;
+      renderLayerStack();
+    });
+    row.querySelector('[data-track-action="visible"]').addEventListener("click", () => {
+      track.visible = track.visible === false ? true : false;
+      state.selectedTrackId = track.id;
+      setDirty();
+      render();
+      showHud(`${track.label} ${track.visible ? "visible" : "hidden"}`);
+    });
+    row.querySelector('[data-track-action="lock"]').addEventListener("click", () => {
+      track.locked = !track.locked;
+      state.selectedTrackId = track.id;
+      setDirty();
+      render();
+      showHud(`${track.label} ${track.locked ? "locked" : "unlocked"}`);
+    });
+    els.layerStack.appendChild(row);
+  }
+}
+
+function renderCompositionStack() {
+  const containers = [els.compositionStack, els.compositionList].filter(Boolean);
+  for (const container of containers) {
+    container.innerHTML = "";
+    if (!state.compositions.length) {
+      const empty = document.createElement("p");
+      empty.className = "empty-compositions";
+      empty.textContent = "Select one or more clips, then Make Comp.";
+      container.appendChild(empty);
+      continue;
+    }
+    for (const composition of state.compositions) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = `composition-card${composition.id === state.selectedCompositionId ? " selected" : ""}${composition.id === state.activeCompositionId ? " active" : ""}`;
+      button.innerHTML = `
+        <strong>${composition.name}</strong>
+        <span>${fmt(composition.start)} - ${fmt(composition.end)} · ${composition.clips.length} clips</span>
+        <em>${composition.id === state.activeCompositionId ? "Open timeline" : "Nested comp"}</em>
+      `;
+      button.addEventListener("click", () => {
+        state.selectedCompositionId = composition.id;
+        state.activePanel = "compositions";
+        renderCompositionStack();
+        renderInspector();
+        showHud(`${composition.name} selected`);
+      });
+      button.addEventListener("dblclick", () => openComposition(composition.id));
+      container.appendChild(button);
+    }
+  }
+
+  if (els.compositionSummary) {
+    const selected = selectedComposition();
+    els.compositionSummary.innerHTML = selected
+      ? `
+        <span><b>Selected</b><em>${selected.name}</em></span>
+        <span><b>Range</b><em>${fmt(selected.start)} - ${fmt(selected.end)} / ${fmt(selected.duration)}</em></span>
+        <span><b>Clips</b><em>${selected.clips.length} nested sources</em></span>
+      `
+      : `
+        <span><b>Selection</b><em>${state.selectedClipRefs.length || 1} clip ready</em></span>
+        <span><b>Workflow</b><em>Shift-click clips, Make Comp, Open</em></span>
+      `;
+  }
+}
+
+function renderRuntimeComparison() {
+  if (!els.runtimeComparison) return;
+  els.runtimeComparison.innerHTML = "";
+  for (const row of runtimeComparisonRows) {
+    const item = document.createElement("div");
+    item.innerHTML = `
+      <strong>${row.area}</strong>
+      <span><b>Electron</b>${row.electron}</span>
+      <span><b>Tauri</b>${row.tauri}</span>
+    `;
+    els.runtimeComparison.appendChild(item);
+  }
+}
+
+function schemaPayload() {
+  return {
+    schemaVersion: PROJECT_SCHEMA_VERSION,
+    generatedAt: new Date().toISOString(),
+    counts: {
+      scenes: state.scenes.length,
+      markers: state.markers.length,
+      keyframes: state.keyframes.length,
+      dynamicTracks: state.dynamicTracks.length,
+      dynamicClips: state.dynamicTracks.reduce((total, track) => total + track.clips.length, 0),
+      compositions: state.compositions.length,
+      compositionClips: state.compositions.reduce((total, composition) => total + composition.clips.length, 0),
+      uxNotes: state.uxNotes.length,
+    },
+    sections: projectSchemaSections,
+  };
+}
+
+function renderSchemaPanel() {
+  if (!els.schemaList || !els.schemaSummary) return;
+  const payload = schemaPayload();
+  els.schemaSummary.innerHTML = "";
+  for (const [label, value] of [
+    ["Version", payload.schemaVersion],
+    ["Sections", payload.sections.length],
+    ["Scenes", payload.counts.scenes],
+    ["Tracks", `${payload.counts.dynamicTracks} / ${payload.counts.dynamicClips} clips`],
+    ["Comps", `${payload.counts.compositions} / ${payload.counts.compositionClips} clips`],
+    ["Notes", payload.counts.uxNotes],
+  ]) {
+    const item = document.createElement("span");
+    const key = document.createElement("b");
+    const val = document.createElement("em");
+    key.textContent = label;
+    val.textContent = String(value);
+    item.append(key, val);
+    els.schemaSummary.appendChild(item);
+  }
+
+  els.schemaList.innerHTML = "";
+  for (const section of payload.sections) {
+    const card = document.createElement("article");
+    const header = document.createElement("header");
+    const title = document.createElement("strong");
+    const path = document.createElement("span");
+    const fields = document.createElement("div");
+    card.className = "schema-card";
+    fields.className = "schema-fields";
+    title.textContent = section.name;
+    path.textContent = section.path;
+    header.append(title, path);
+
+    for (const [field, type, note] of section.fields) {
+      const row = document.createElement("div");
+      const fieldEl = document.createElement("span");
+      const typeEl = document.createElement("code");
+      const noteEl = document.createElement("em");
+      row.className = "schema-field";
+      row.setAttribute("role", "row");
+      row.title = `${section.path}.${field}: ${type} - ${note}`;
+      fieldEl.textContent = field;
+      typeEl.textContent = type;
+      noteEl.textContent = note;
+      row.append(fieldEl, typeEl, noteEl);
+      fields.appendChild(row);
+    }
+
+    card.append(header, fields);
+    els.schemaList.appendChild(card);
+  }
 }
 
 function setTimelineGeometry(laneWidth) {
   els.timelineCanvas.style.width = `${laneWidth + 86}px`;
-  for (const lane of [els.timelineRuler, els.markerLayer, els.videoLayer, els.overlayLayer, els.vfxLayer, els.captionLayer, els.audioLayer]) {
+  for (const lane of [els.timelineRuler, els.markerLayer, els.compositionLayer, els.videoLayer, els.overlayLayer, els.vfxLayer, els.threeLayer, els.trackingLayer, els.particlesLayer, els.captionLayer, els.audioLayer]) {
+    lane.style.width = `${laneWidth}px`;
+  }
+  if (els.trackCreateRow) {
+    els.trackCreateRow.style.width = `${laneWidth + 86}px`;
+  }
+  for (const lane of els.dynamicTrackRows?.querySelectorAll(".layer-lane") || []) {
     lane.style.width = `${laneWidth}px`;
   }
 }
 
 function renderTimelineMinimap() {
   if (!state.project || !els.timelineMiniMapTrack) return;
-  const duration = Math.max(MIN_SCENE_SECONDS, projectDuration());
+  const composition = activeComposition();
+  const duration = Math.max(MIN_SCENE_SECONDS, timelineDuration());
   const trackWidth = Math.max(1, els.timelineMiniMapTrack.clientWidth);
   els.timelineMiniMapTrack.innerHTML = "";
 
-  for (const scene of sortedScenes()) {
-    const segment = document.createElement("button");
-    segment.type = "button";
-    segment.className = `minimap-segment${scene.id === state.selectedId ? " active" : ""}`;
-    segment.style.left = `${(Number(scene.start) / duration) * 100}%`;
-    segment.style.width = `${Math.max(1.2, (sceneLength(scene) / duration) * 100)}%`;
-    segment.title = `${scene.titleEn || "Scene"} · ${fmt(scene.start)}`;
-    segment.addEventListener("click", () => {
-      state.selectedId = scene.id;
-      setPlayhead(Number(scene.start) || 0);
-      showHud("Minimap scene selected");
-    });
-    els.timelineMiniMapTrack.appendChild(segment);
+  if (composition) {
+    for (const clip of composition.clips) {
+      const segment = document.createElement("button");
+      segment.type = "button";
+      segment.className = `minimap-segment ${clip.mediaKind === "audio" ? "pin-audio" : "pin-video"}`;
+      segment.style.left = `${(Number(clip.relativeStart) / duration) * 100}%`;
+      segment.style.width = `${Math.max(1.2, ((Number(clip.relativeEnd) - Number(clip.relativeStart)) / duration) * 100)}%`;
+      segment.title = `${clip.title} · ${fmt(clip.relativeStart)}`;
+      segment.addEventListener("click", () => setPlayhead(Number(clip.relativeStart) || 0));
+      els.timelineMiniMapTrack.appendChild(segment);
+    }
+  } else {
+    for (const scene of sortedScenes()) {
+      const segment = document.createElement("button");
+      segment.type = "button";
+      segment.className = `minimap-segment${scene.id === state.selectedId ? " active" : ""}`;
+      segment.style.left = `${(Number(scene.start) / duration) * 100}%`;
+      segment.style.width = `${Math.max(1.2, (sceneLength(scene) / duration) * 100)}%`;
+      segment.title = `${scene.titleEn || "Scene"} · ${fmt(scene.start)}`;
+      segment.addEventListener("click", () => {
+        state.selectedId = scene.id;
+        setPlayhead(Number(scene.start) || 0);
+        showHud("Minimap scene selected");
+      });
+      els.timelineMiniMapTrack.appendChild(segment);
+    }
   }
 
-  if (state.timelineOptions.markers) {
+  if (!composition && state.timelineOptions.markers) {
     for (const marker of state.markers) {
       const pin = document.createElement("button");
       pin.type = "button";
@@ -1649,7 +3455,7 @@ function renderTimelineMinimap() {
     }
   }
 
-  if (state.timelineOptions.notes) {
+  if (!composition && state.timelineOptions.notes) {
     for (const note of state.uxNotes) {
       const pin = document.createElement("button");
       pin.type = "button";
@@ -1677,7 +3483,7 @@ function renderTimelineMinimap() {
 function jumpTimelineFromMinimap(event) {
   const rect = els.timelineMiniMapTrack.getBoundingClientRect();
   const percent = clamp((event.clientX - rect.left) / rect.width, 0, 1);
-  const time = roundTime(percent * projectDuration());
+  const time = roundTime(percent * timelineDuration());
   setPlayhead(time);
   els.timelineViewport.scrollLeft = Math.max(0, time * pixelsPerSecond() - visibleTimelineWidth() / 2);
   renderTimelineMinimap();
@@ -1899,20 +3705,24 @@ function beginMarkerPointerDrag(event, marker, element) {
 
 function renderTimeline() {
   const current = selectedScene();
-  const duration = projectDuration();
+  const composition = activeComposition();
+  const duration = timelineDuration();
   applyTimelineViewState();
+  if (!composition) state.duplicateDecisions = analyzeDuplicateDecisions();
   const pps = pixelsPerSecond();
   const laneWidth = Math.max(duration * pps, els.timelineViewport.clientWidth - 86, 480);
-  const denseTimeline = state.scenes.length > 80;
+  const denseTimeline = composition ? composition.clips.length > 40 : state.scenes.length > 80;
   const minClipWidth = denseTimeline
     ? state.timelineLayout === "compact" ? 18 : 24
     : 48;
   const tickStep = pps >= 120 ? 2 : pps >= 72 ? 5 : 10;
   setTimelineGeometry(laneWidth);
 
-  for (const lane of [els.timelineRuler, els.markerLayer, els.videoLayer, els.overlayLayer, els.vfxLayer, els.captionLayer, els.audioLayer]) {
+  for (const lane of [els.timelineRuler, els.markerLayer, els.compositionLayer, els.videoLayer, els.overlayLayer, els.vfxLayer, els.threeLayer, els.trackingLayer, els.particlesLayer, els.captionLayer, els.audioLayer]) {
     lane.innerHTML = "";
   }
+  els.dynamicTrackRows.innerHTML = "";
+  if (els.trackCreateRow) els.trackCreateRow.hidden = Boolean(composition);
 
   for (let t = 0; t <= duration + 0.01; t += tickStep) {
     const tick = document.createElement("div");
@@ -1920,6 +3730,13 @@ function renderTimeline() {
     tick.style.left = `${t * pps}px`;
     tick.innerHTML = `<span>${fmt(t)}</span>`;
     els.timelineRuler.appendChild(tick);
+  }
+
+  if (composition) {
+    renderActiveCompositionTimeline(composition, pps, minClipWidth);
+    updateTransportUi();
+    renderTimelineMinimap();
+    return;
   }
 
   if (state.timelineOptions.markers) {
@@ -2008,7 +3825,8 @@ function renderTimeline() {
 
     const clip = document.createElement("button");
     clip.type = "button";
-    clip.className = `clip video-clip${scene.id === current?.id ? " selected" : ""}`;
+    const sceneRef = { type: "scene", id: scene.id };
+    clip.className = `clip video-clip${scene.id === current?.id ? " selected" : ""}${isClipRefSelected(sceneRef) ? " composition-selected" : ""}`;
     clip.dataset.id = scene.id;
     clip.draggable = true;
     clip.style.left = left;
@@ -2020,11 +3838,12 @@ function renderTimeline() {
     `;
     addClipTrimHandle(clip, scene, "start");
     addClipTrimHandle(clip, scene, "end");
-    clip.addEventListener("click", () => {
+    clip.addEventListener("click", (event) => {
+      selectClipRef(sceneRef, event);
       state.selectedId = scene.id;
       state.currentTime = Number(scene.start) || 0;
       render();
-      showHud("Video clip selected");
+      showHud(`${state.selectedClipRefs.length} clip${state.selectedClipRefs.length === 1 ? "" : "s"} selected`);
     });
     clip.addEventListener("dragstart", (event) => {
       clip.classList.add("dragging");
@@ -2063,6 +3882,51 @@ function renderTimeline() {
     });
     els.vfxLayer.appendChild(vfx);
 
+    const three = document.createElement("button");
+    three.type = "button";
+    three.className = `clip three-clip${scene.id === current?.id ? " selected" : ""}`;
+    three.style.left = left;
+    three.style.width = `${width}px`;
+    three.innerHTML = `<span class="clip-label">3D · ${state.spatial.mesh} · ${state.spatial.shading}</span>`;
+    three.addEventListener("click", () => {
+      state.selectedId = scene.id;
+      state.activePanel = "spatial";
+      state.workspaceMode = "3d";
+      render();
+      showHud("3D layer selected");
+    });
+    els.threeLayer.appendChild(three);
+
+    const tracking = document.createElement("button");
+    tracking.type = "button";
+    tracking.className = `clip tracking-clip${scene.id === current?.id ? " selected" : ""}`;
+    tracking.style.left = left;
+    tracking.style.width = `${width}px`;
+    tracking.innerHTML = `<span class="clip-label">MT · Skel_Track_01 · ${state.spatial.trackingConfidence}%</span>`;
+    tracking.addEventListener("click", () => {
+      state.selectedId = scene.id;
+      state.activePanel = "tracking";
+      state.workspaceMode = "motion";
+      render();
+      showHud("Tracking layer selected");
+    });
+    els.trackingLayer.appendChild(tracking);
+
+    const particles = document.createElement("button");
+    particles.type = "button";
+    particles.className = `clip particles-clip${scene.id === current?.id ? " selected" : ""}`;
+    particles.style.left = left;
+    particles.style.width = `${width}px`;
+    particles.innerHTML = `<span class="clip-label">PT · ${particlePresets[state.spatial.particlePreset]?.label || "Particle Field"}</span>`;
+    particles.addEventListener("click", () => {
+      state.selectedId = scene.id;
+      state.activePanel = "particles";
+      state.workspaceMode = "particles";
+      render();
+      showHud("Particle layer selected");
+    });
+    els.particlesLayer.appendChild(particles);
+
     const caption = document.createElement("button");
     caption.type = "button";
     caption.className = `clip caption-clip${scene.id === current?.id ? " selected" : ""}`;
@@ -2078,19 +3942,861 @@ function renderTimeline() {
     els.captionLayer.appendChild(caption);
   }
 
+  for (const compositionClip of state.compositions) {
+    const comp = document.createElement("button");
+    comp.type = "button";
+    comp.className = `clip composition-clip${compositionClip.id === state.selectedCompositionId ? " selected" : ""}`;
+    comp.style.left = `${Number(compositionClip.start) * pps}px`;
+    comp.style.width = `${Math.max(60, Number(compositionClip.duration) * pps)}px`;
+    comp.innerHTML = `
+      <span class="clip-duration-pill">${fmt(compositionClip.duration)}</span>
+      <span class="clip-label">${compositionClip.name}</span>
+    `;
+    comp.addEventListener("click", (event) => {
+      state.selectedCompositionId = compositionClip.id;
+      state.currentTime = Number(compositionClip.start) || 0;
+      state.activePanel = "compositions";
+      render();
+      showHud("Composition clip selected");
+      if (event.detail >= 2) openComposition(compositionClip.id);
+    });
+    comp.addEventListener("dblclick", () => openComposition(compositionClip.id));
+    els.compositionLayer.appendChild(comp);
+  }
+
   const audio = document.createElement("button");
   audio.type = "button";
-  audio.className = "clip audio-clip";
+  const masterAudioRef = { type: "master-audio" };
+  audio.className = `clip audio-clip${isClipRefSelected(masterAudioRef) ? " composition-selected" : ""}`;
+  audio.draggable = true;
   audio.style.left = "0px";
   audio.style.width = `${Math.max(180, duration * pps)}px`;
   audio.innerHTML = `<span class="clip-label">${state.project.audio.name || "Master audio"} · ${fmt(duration)}</span>`;
   audio.addEventListener("click", (event) => {
+    selectClipRef(masterAudioRef, event);
     setPlayhead(dropTimeFromEvent(event));
-    showHud("Audio playhead moved");
+    showHud(`${state.selectedClipRefs.length} clip${state.selectedClipRefs.length === 1 ? "" : "s"} selected`);
   });
+  audio.addEventListener("dragstart", (event) => {
+    audio.classList.add("dragging");
+    setDragPayload(event, audioClipDragPayload());
+  });
+  audio.addEventListener("dragend", () => audio.classList.remove("dragging"));
   els.audioLayer.appendChild(audio);
+  renderDynamicTracks(laneWidth, pps);
   updateTransportUi();
   renderTimelineMinimap();
+}
+
+function renderDynamicTracks(laneWidth, pps) {
+  if (!els.dynamicTrackRows) return;
+  for (const track of state.dynamicTracks) {
+    if (track.visible === false) continue;
+    const row = document.createElement("div");
+    row.className = `layer-row dynamic-layer-row ${track.kind}-dynamic-row${track.id === state.selectedTrackId ? " selected" : ""}${track.locked ? " locked" : ""}`;
+    row.dataset.trackId = track.id;
+    row.innerHTML = `
+      <div class="layer-label">${track.label}<br /><span>${track.locked ? "Locked" : track.kind === "audio" ? "Audio" : "Video"}</span></div>
+      <div class="layer-lane dynamic-layer-lane" data-dynamic-track-id="${track.id}"></div>
+    `;
+    const lane = row.querySelector(".layer-lane");
+    lane.style.width = `${laneWidth}px`;
+    lane.addEventListener("click", () => {
+      state.selectedTrackId = track.id;
+      state.selectedClipRefs = [];
+      renderLayerStack();
+      renderHud(`${track.label} selected`);
+      showHud(`${track.label} selected`);
+    });
+    lane.addEventListener("dragover", (event) => {
+      if (track.locked) return;
+      event.preventDefault();
+      lane.classList.add("drop-ready");
+    });
+    lane.addEventListener("dragleave", () => lane.classList.remove("drop-ready"));
+    lane.addEventListener("drop", (event) => {
+      event.preventDefault();
+      lane.classList.remove("drop-ready");
+      const payload = readDragPayload(event);
+      addClipToDynamicTrack(track, payload, dropTimeFromEvent(event));
+    });
+    if (!track.clips.length) {
+      const empty = document.createElement("span");
+      empty.className = "dynamic-empty-hint";
+      empty.textContent = track.locked ? "Locked empty layer" : `Drop ${track.kind} clips here`;
+      lane.appendChild(empty);
+    }
+    for (const clipData of track.clips) {
+      const clip = document.createElement("button");
+      const dynamicRef = { type: "dynamic", trackId: track.id, clipId: clipData.id };
+      clip.type = "button";
+      clip.className = `clip dynamic-clip ${track.kind === "audio" ? "audio-clip dynamic-audio-clip" : "video-clip dynamic-video-clip"}${isClipRefSelected(dynamicRef) ? " composition-selected" : ""}`;
+      clip.draggable = !track.locked;
+      clip.style.left = `${Number(clipData.start) * pps}px`;
+      clip.style.width = `${Math.max(48, (Number(clipData.end) - Number(clipData.start)) * pps)}px`;
+      clip.innerHTML = track.kind === "video"
+        ? `
+          ${clipData.image ? `<img src="${clipData.image}" alt="">` : ""}
+          <span class="clip-duration-pill">${(Number(clipData.end) - Number(clipData.start)).toFixed(2)}s</span>
+          <span class="clip-label">${clipData.title || track.title}</span>
+        `
+        : `<span class="clip-label">${clipData.title || track.title} · ${fmt(clipData.start)}</span>`;
+      clip.addEventListener("click", (event) => {
+        state.selectedTrackId = track.id;
+        selectClipRef(dynamicRef, event);
+        setPlayhead(clipData.start);
+        showHud(`${state.selectedClipRefs.length} clip${state.selectedClipRefs.length === 1 ? "" : "s"} selected`);
+      });
+      clip.addEventListener("dragstart", (event) => {
+        if (track.locked) {
+          event.preventDefault();
+          showHud(`${track.label} is locked`);
+          return;
+        }
+        clip.classList.add("dragging");
+        if (track.kind === "audio") setDragPayload(event, {
+          type: "audio-clip",
+          mediaKind: "audio",
+          title: clipData.title || track.title,
+          start: clipData.start,
+          end: clipData.end,
+        });
+        else setDragPayload(event, {
+          type: clipData.sourceType === "asset" ? "asset" : "scene",
+          mediaKind: "video",
+          id: clipData.sceneId,
+          frameIndex: clipData.frameIndex || null,
+          image: clipData.image || "",
+          path: clipData.path || "",
+          title: clipData.title || track.title,
+        });
+      });
+      clip.addEventListener("dragend", () => clip.classList.remove("dragging"));
+      lane.appendChild(clip);
+    }
+    els.dynamicTrackRows.appendChild(row);
+  }
+}
+
+function renderActiveCompositionTimeline(composition, pps, minClipWidth) {
+  const shell = document.createElement("button");
+  shell.type = "button";
+  shell.className = "clip composition-clip composition-open-clip selected";
+  shell.style.left = "0px";
+  shell.style.width = `${Math.max(80, Number(composition.duration) * pps)}px`;
+  shell.innerHTML = `
+    <span class="clip-duration-pill">${fmt(composition.duration)}</span>
+    <span class="clip-label">${composition.name} · nested timeline</span>
+  `;
+  shell.addEventListener("click", () => {
+    state.selectedCompositionId = composition.id;
+    showHud("Composition timeline selected");
+  });
+  els.compositionLayer.appendChild(shell);
+
+  for (const clipData of composition.clips) {
+    const left = `${Number(clipData.relativeStart) * pps}px`;
+    const width = `${Math.max(minClipWidth, (Number(clipData.relativeEnd) - Number(clipData.relativeStart)) * pps)}px`;
+    const clip = document.createElement("button");
+    clip.type = "button";
+    clip.className = `clip composition-source-clip ${clipData.mediaKind === "audio" ? "audio-clip composition-audio-source" : "video-clip composition-video-source"}`;
+    clip.style.left = left;
+    clip.style.width = width;
+    clip.innerHTML = clipData.mediaKind === "audio"
+      ? `<span class="clip-label">${clipData.trackLabel} · ${clipData.title}</span>`
+      : `
+        ${clipData.image ? `<img src="${clipData.image}" alt="">` : ""}
+        <span class="clip-duration-pill">${fmt(Number(clipData.relativeEnd) - Number(clipData.relativeStart))}</span>
+        <span class="clip-label">${clipData.trackLabel} · ${clipData.title}</span>
+      `;
+    clip.addEventListener("click", () => {
+      state.currentTime = Number(clipData.relativeStart) || 0;
+      if (clipData.sourceType === "scene" && clipData.sceneId) state.selectedId = clipData.sceneId;
+      updateTransportUi();
+      renderPreview();
+      renderTimeline();
+      showHud(`${clipData.title} in comp`);
+    });
+    if (clipData.mediaKind === "audio") els.audioLayer.appendChild(clip);
+    else els.videoLayer.appendChild(clip);
+  }
+}
+
+function spatialPayload() {
+  const {
+    animationId,
+    lastFrameTime,
+    ...payload
+  } = state.spatial;
+  return {
+    ...payload,
+    activePresetLabel: particlePresets[state.spatial.particlePreset]?.label || "Particle Field",
+    matrix: "v2d = Mprojection x Mview x Mmodel x v3d",
+    solver: "hook-ready",
+    floatingPanels: structuredClone(state.floatingPanels),
+  };
+}
+
+function spatialModeClassState() {
+  const motionActive = state.workspaceMode === "motion" || state.activePanel === "tracking";
+  const faceActive = state.workspaceMode === "face" || state.activePanel === "face";
+  const textureActive = state.activePanel === "texture";
+  document.body.classList.toggle("spatial-mode", isSpatialMode());
+  document.body.classList.toggle("motion-mode", motionActive);
+  document.body.classList.toggle("face-mode", faceActive);
+  document.body.classList.toggle("texture-mode", textureActive);
+}
+
+function renderSpatialGraphInto(container) {
+  if (!container) return;
+  const depthById = {
+    global: 0,
+    camera: 1,
+    particles: 1,
+    actor: 1,
+    face: 2,
+    fixture: 1,
+  };
+  container.innerHTML = "";
+  for (const node of spatialNodes) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = `graph-row depth-${depthById[node.id] || 0}${node.id === state.spatial.activeNode ? " active" : ""}`;
+    button.innerHTML = `
+      <span>${node.icon}</span>
+      <strong>${node.title}</strong>
+      <em>${node.meta}</em>
+    `;
+    button.addEventListener("click", () => {
+      state.spatial.activeNode = node.id;
+      if (node.id === "particles") {
+        state.workspaceMode = "particles";
+        state.activePanel = "particles";
+      } else if (node.id === "face") {
+        state.workspaceMode = "face";
+        state.activePanel = "face";
+      } else if (node.id === "fixture") {
+        state.workspaceMode = "3d";
+        state.activePanel = "texture";
+      } else {
+        state.workspaceMode = "3d";
+        state.activePanel = "spatial";
+        if (node.id === "actor") state.spatial.mesh = "actor";
+      }
+      render();
+      showHud(`${node.title} selected`);
+    });
+    container.appendChild(button);
+  }
+}
+
+function renderSpatialGraph() {
+  renderSpatialGraphInto(els.spatialGraph);
+  renderSpatialGraphInto(els.floatingSceneGraphContent);
+}
+
+function floatingPanelElement(key) {
+  return els[floatingPanelEls[key]];
+}
+
+function clampFloatingPanelState(key) {
+  const panel = state.floatingPanels[key];
+  const layerWidth = Math.max(320, els.centerPanel?.clientWidth || 960);
+  const layerHeight = Math.max(320, els.centerPanel?.clientHeight || 720);
+  panel.w = clamp(panel.w, 220, Math.max(240, layerWidth - 12));
+  panel.h = clamp(panel.h, 160, Math.max(180, layerHeight - 12));
+  panel.x = clamp(panel.x, 6, Math.max(6, layerWidth - panel.w - 6));
+  panel.y = clamp(panel.y, 6, Math.max(6, layerHeight - panel.h - 6));
+}
+
+function applyFloatingPanelFrame(key) {
+  const element = floatingPanelElement(key);
+  const panel = state.floatingPanels[key];
+  if (!element || !panel) return;
+  clampFloatingPanelState(key);
+  element.hidden = !panel.open;
+  element.style.left = `${Math.round(panel.x)}px`;
+  element.style.top = `${Math.round(panel.y)}px`;
+  element.style.width = `${Math.round(panel.w)}px`;
+  element.style.height = `${Math.round(panel.h)}px`;
+  element.style.zIndex = String(state.floatingPanelZ[key] || 1);
+}
+
+function bringFloatingPanelToFront(key) {
+  if (!state.floatingPanelZ[key]) return;
+  state.floatingPanelZ[key] = state.floatingPanelZ.next;
+  state.floatingPanelZ.next += 1;
+  applyFloatingPanelFrame(key);
+}
+
+function renderFloatingParticles() {
+  if (!els.floatingParticlesContent) return;
+  const operators = [
+    ["Vector Fields", state.spatial.particleTurbulence, "particleTurbulence"],
+    ["Wind X", state.spatial.particleWindX + 100, "particleWindX"],
+    ["Wind Y", state.spatial.particleWindY + 100, "particleWindY"],
+    ["Lifetime", state.spatial.particleLifetime, "particleLifetime"],
+    ["Drag", state.spatial.particleDrag, "particleDrag"],
+  ];
+  els.floatingParticlesContent.innerHTML = `
+    <div class="floating-preset-grid">
+      ${Object.entries(particlePresets).map(([key, preset]) => `
+        <button class="floating-preset-card${key === state.spatial.particlePreset ? " active" : ""}" data-floating-preset="${key}" type="button" style="--preset-a:${preset.colorA};--preset-b:${preset.colorB};">
+          <strong>${preset.label}</strong>
+          <span>${key === "ash" ? "embers / slow fall" : key === "neon" ? "lateral glow" : key === "dust" ? "radial fracture" : "spiral field"}</span>
+        </button>
+      `).join("")}
+    </div>
+    <div class="floating-operator-grid">
+      ${operators.map(([label, value]) => {
+        const normalized = clamp(value, 0, 200);
+        const level = label.startsWith("Wind") ? normalized / 2 : normalized;
+        return `
+          <div class="floating-operator">
+            <span>${label}</span>
+            <i style="--level:${clamp(level, 0, 100)}%"></i>
+            <b>${label.startsWith("Wind") ? (value - 100).toFixed(0) : Number(value).toFixed(0)}</b>
+          </div>
+        `;
+      }).join("")}
+    </div>
+  `;
+}
+
+function nodeGraphAction(nodeId) {
+  if (nodeId === "fixture") previewTextureFixture();
+  else if (nodeId === "track") previewMotionTrack();
+  else if (nodeId === "particles") setWorkspaceMode("particles");
+  else if (nodeId === "face") previewFaceTopology();
+  else if (nodeId === "master") setWorkspaceMode("vfx");
+  else setPanel("inspector");
+}
+
+function activeNodeGraphId() {
+  if (state.activePanel === "texture") return "fixture";
+  if (state.activePanel === "tracking") return "track";
+  if (state.activePanel === "face") return "face";
+  if (state.activePanel === "particles") return "particles";
+  if (state.activePanel === "vfx") return "master";
+  return "plate";
+}
+
+function renderFloatingNodeGraph() {
+  if (!els.floatingNodeGraphContent) return;
+  const byId = new Map(nodeGraphNodes.map((node) => [node.id, node]));
+  const paths = nodeGraphLinks.map(([from, to]) => {
+    const a = byId.get(from);
+    const b = byId.get(to);
+    if (!a || !b) return "";
+    const ax = a.x + 136;
+    const ay = a.y + 28;
+    const bx = b.x;
+    const by = b.y + 28;
+    const mid = (bx - ax) * 0.5;
+    return `<path d="M ${ax} ${ay} C ${ax + mid} ${ay}, ${bx - mid} ${by}, ${bx} ${by}" />`;
+  }).join("");
+  const activeId = activeNodeGraphId();
+  els.floatingNodeGraphContent.innerHTML = `
+    <svg class="node-wire" viewBox="0 0 680 248" aria-hidden="true">${paths}</svg>
+    ${nodeGraphNodes.map((node) => `
+      <button class="node-card${node.id === activeId ? " active" : ""}" data-node-action="${node.id}" type="button" style="left:${node.x}px;top:${node.y}px;">
+        <strong>${node.title}</strong>
+        <span>${node.meta}</span>
+      </button>
+    `).join("")}
+  `;
+}
+
+function renderFloatingPanels() {
+  renderFloatingParticles();
+  renderFloatingNodeGraph();
+  for (const key of Object.keys(state.floatingPanels)) applyFloatingPanelFrame(key);
+}
+
+function resetFloatingPanel(key) {
+  state.floatingPanels[key] = { ...floatingPanelDefaults[key], open: true };
+  applyFloatingPanelFrame(key);
+  showHud(`${titleCase(key)} panel reset`);
+}
+
+function openFloatingPanelsForMode(mode) {
+  if (mode === "3d" || mode === "motion" || mode === "face") {
+    state.floatingPanels.sceneGraph.open = true;
+    state.floatingPanels.nodeGraph.open = true;
+  }
+  if (mode === "particles") {
+    state.floatingPanels.sceneGraph.open = true;
+    state.floatingPanels.particles.open = true;
+    state.floatingPanels.nodeGraph.open = true;
+  }
+}
+
+function showAllFloatingPanels() {
+  for (const key of Object.keys(state.floatingPanels)) state.floatingPanels[key].open = true;
+  renderFloatingPanels();
+  showHud("Floating panels shown");
+}
+
+function beginFloatingPanelInteraction(event, key, mode) {
+  const panel = state.floatingPanels[key];
+  if (!panel || event.button > 0) return;
+  event.preventDefault();
+  const start = {
+    x: panel.x,
+    y: panel.y,
+    w: panel.w,
+    h: panel.h,
+    pointerX: event.clientX,
+    pointerY: event.clientY,
+  };
+  state.floatingPanelInteraction = { key, mode, start };
+  document.body.classList.toggle("is-dragging-floating", mode === "drag");
+  document.body.classList.toggle("is-resizing-floating", mode === "resize");
+
+  function move(pointerEvent) {
+    const interaction = state.floatingPanelInteraction;
+    if (!interaction || interaction.key !== key) return;
+    const dx = pointerEvent.clientX - start.pointerX;
+    const dy = pointerEvent.clientY - start.pointerY;
+    if (mode === "drag") {
+      panel.x = start.x + dx;
+      panel.y = start.y + dy;
+    } else {
+      panel.w = start.w + dx;
+      panel.h = start.h + dy;
+    }
+    applyFloatingPanelFrame(key);
+  }
+
+  function stop() {
+    document.body.classList.remove("is-dragging-floating", "is-resizing-floating");
+    document.removeEventListener("pointermove", move);
+    document.removeEventListener("pointerup", stop);
+    document.removeEventListener("pointercancel", stop);
+    state.floatingPanelInteraction = null;
+    showHud(mode === "drag" ? "Floating panel moved" : "Floating panel resized");
+  }
+
+  document.addEventListener("pointermove", move);
+  document.addEventListener("pointerup", stop);
+  document.addEventListener("pointercancel", stop);
+}
+
+function renderSpatialTelemetry() {
+  const preset = particlePresets[state.spatial.particlePreset]?.label || "Particle Field";
+  const fps = Number(state.spatial.fps || 0).toFixed(1);
+  const solver = state.activePanel === "tracking"
+    ? `Tracking hook ${state.spatial.trackingConfidence}%`
+    : state.activePanel === "face"
+      ? `Face mesh blend ${state.spatial.faceBlend}%`
+      : state.activePanel === "texture"
+        ? `Fixture maps ${state.spatial.textureNormal}%`
+        : `${preset}`;
+  if (els.spatialFps) els.spatialFps.textContent = `FPS ${fps}`;
+  if (els.spatialGpu) els.spatialGpu.textContent = `${state.spatial.runtime}`;
+  if (els.spatialSolver) els.spatialSolver.textContent = solver;
+  if (els.spatialTelemetry) els.spatialTelemetry.textContent = `${fps} fps / ${state.spatial.shading}`;
+  if (els.spatialGraphStatus) els.spatialGraphStatus.textContent = state.spatial.runtime.replace("Canvas ", "");
+  if (els.trackingRigStatus) els.trackingRigStatus.textContent = state.activePanel === "tracking"
+    ? `Skel_Track_01 preview ${state.spatial.trackingConfidence}%`
+    : "Skel_Track_01 idle";
+  if (els.trackingMatrixStatus) {
+    els.trackingMatrixStatus.textContent = `${state.spatial.focal}mm / depth ${state.spatial.trackingDepth}`;
+  }
+}
+
+function renderSpatialControls() {
+  spatialModeClassState();
+  if (els.spatialTransformInput) els.spatialTransformInput.value = state.spatial.transformMode;
+  if (els.spatialMeshInput) els.spatialMeshInput.value = state.spatial.mesh;
+  if (els.spatialXInput) els.spatialXInput.value = state.spatial.x;
+  if (els.spatialYInput) els.spatialYInput.value = state.spatial.y;
+  if (els.spatialZInput) els.spatialZInput.value = state.spatial.z;
+  if (els.spatialFocalInput) els.spatialFocalInput.value = state.spatial.focal;
+  if (els.particleWindXInput) els.particleWindXInput.value = state.spatial.particleWindX;
+  if (els.particleWindYInput) els.particleWindYInput.value = state.spatial.particleWindY;
+  if (els.particleTurbulenceInput) els.particleTurbulenceInput.value = state.spatial.particleTurbulence;
+  if (els.particleLifetimeInput) els.particleLifetimeInput.value = state.spatial.particleLifetime;
+  if (els.particleDragInput) els.particleDragInput.value = state.spatial.particleDrag;
+  if (els.trackingConfidenceInput) els.trackingConfidenceInput.value = state.spatial.trackingConfidence;
+  if (els.trackingDepthInput) els.trackingDepthInput.value = state.spatial.trackingDepth;
+  if (els.faceYawInput) els.faceYawInput.value = state.spatial.faceYaw;
+  if (els.facePitchInput) els.facePitchInput.value = state.spatial.facePitch;
+  if (els.faceBlendInput) els.faceBlendInput.value = state.spatial.faceBlend;
+  if (els.textureSeamInput) els.textureSeamInput.value = state.spatial.textureSeam;
+  if (els.textureNormalInput) els.textureNormalInput.value = state.spatial.textureNormal;
+  if (els.textureRoughnessInput) els.textureRoughnessInput.value = state.spatial.textureRoughness;
+
+  for (const button of els.spatialToolbar?.querySelectorAll("button[data-shading]") || []) {
+    button.classList.toggle("active", button.dataset.shading === state.spatial.shading);
+  }
+  for (const button of els.particlePresetGrid?.querySelectorAll("button[data-preset]") || []) {
+    button.classList.toggle("active", button.dataset.preset === state.spatial.particlePreset);
+  }
+
+  const x = 50 + state.spatial.x * 0.16;
+  const y = 50 - state.spatial.y * 0.14;
+  if (els.spatialGizmo) {
+    els.spatialGizmo.style.left = `${clamp(x, 20, 80)}%`;
+    els.spatialGizmo.style.top = `${clamp(y, 20, 80)}%`;
+  }
+  if (els.faceTopology) {
+    els.faceTopology.style.setProperty("--face-yaw", `${state.spatial.faceYaw}deg`);
+    els.faceTopology.style.setProperty("--face-pitch", `${state.spatial.facePitch}deg`);
+    els.faceTopology.style.opacity = String(clamp(state.spatial.faceBlend / 100, 0.28, 1));
+  }
+  if (els.spatialFallback) {
+    const preset = particlePresets[state.spatial.particlePreset] || particlePresets.ash;
+    els.spatialFallback.style.setProperty("--spatial-x", `${state.spatial.x * 1.4}px`);
+    els.spatialFallback.style.setProperty("--spatial-y", `${state.spatial.y * -1.1}px`);
+    els.spatialFallback.style.setProperty("--face-yaw", `${state.spatial.faceYaw}deg`);
+    els.spatialFallback.style.setProperty("--face-pitch", `${state.spatial.facePitch}deg`);
+    els.spatialFallback.style.setProperty("--particle-a", preset.colorA);
+    els.spatialFallback.style.setProperty("--particle-b", preset.colorB);
+  }
+  if (els.particleTrackingOverlay) {
+    const preset = particlePresets[state.spatial.particlePreset] || particlePresets.ash;
+    els.particleTrackingOverlay.style.setProperty("--particle-a", preset.colorA);
+    els.particleTrackingOverlay.style.setProperty("--particle-b", preset.colorB);
+    els.particleTrackingOverlay.style.opacity = String(clamp(0.3 + state.spatial.particleTurbulence / 120, 0.3, 0.95));
+  }
+  if (els.trackingOverlay) {
+    els.trackingOverlay.style.transform = `translate(${state.spatial.x * 0.16}%, ${state.spatial.y * -0.12}%)`;
+  }
+  renderSpatialTelemetry();
+}
+
+function resizeSpatialViewport() {
+  const canvas = els.spatialViewport;
+  if (!canvas) return null;
+  const rect = canvas.getBoundingClientRect();
+  if (rect.width < 2 || rect.height < 2) return null;
+  if (typeof canvas.getContext !== "function") {
+    state.spatial.runtime = "CSS spatial fallback";
+    document.body.classList.add("spatial-canvas-fallback");
+    document.body.classList.remove("spatial-canvas-ok");
+    return null;
+  }
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const width = Math.round(rect.width * dpr);
+  const height = Math.round(rect.height * dpr);
+  if (canvas.width !== width || canvas.height !== height) {
+    canvas.width = width;
+    canvas.height = height;
+  }
+  const ctx = canvas.getContext("2d");
+  if (!ctx) {
+    state.spatial.runtime = "CSS spatial fallback";
+    document.body.classList.add("spatial-canvas-fallback");
+    document.body.classList.remove("spatial-canvas-ok");
+    return null;
+  }
+  state.spatial.runtime = "Canvas WebGL fallback";
+  document.body.classList.add("spatial-canvas-ok");
+  document.body.classList.remove("spatial-canvas-fallback");
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  return { ctx, width: rect.width, height: rect.height };
+}
+
+function drawSpatialGrid(ctx, width, height, time) {
+  const horizon = height * 0.54;
+  ctx.save();
+  ctx.strokeStyle = "rgba(0, 229, 255, 0.16)";
+  ctx.lineWidth = 1;
+  for (let i = -8; i <= 8; i += 1) {
+    const x = width / 2 + i * width * 0.07 + state.spatial.x * 0.6;
+    ctx.beginPath();
+    ctx.moveTo(width / 2 + state.spatial.x * 0.7, horizon);
+    ctx.lineTo(x, height);
+    ctx.stroke();
+  }
+  for (let i = 0; i < 11; i += 1) {
+    const y = horizon + Math.pow(i / 10, 1.7) * height * 0.46;
+    ctx.globalAlpha = 0.22 + i * 0.028;
+    ctx.beginPath();
+    ctx.moveTo(0, y + Math.sin(time + i) * 1.5);
+    ctx.lineTo(width, y + Math.sin(time + i) * 1.5);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+function drawSkeletonRig(ctx, width, height, time) {
+  const rigs = [
+    { x: 0.5, y: 0.42, s: 1, alpha: 0.82 },
+    { x: 0.31, y: 0.46, s: 0.76, alpha: 0.68 },
+    { x: 0.7, y: 0.47, s: 0.68, alpha: 0.6 },
+    { x: 0.83, y: 0.51, s: 0.5, alpha: 0.46 },
+  ];
+  ctx.save();
+  for (const rig of rigs) {
+    const cx = width * rig.x + state.spatial.x * 0.9;
+    const cy = height * rig.y - state.spatial.y * 0.5;
+    const scale = rig.s * clamp(1 + (state.spatial.z + 54) / 280, 0.74, 1.18);
+    const sway = state.access.reduceMotion ? 0 : Math.sin(time * 1.2 + rig.x * 8) * 1.8;
+    ctx.save();
+    ctx.translate(cx, cy + sway);
+    ctx.scale(scale, scale);
+    ctx.globalAlpha = rig.alpha;
+    ctx.strokeStyle = "rgba(0, 229, 255, 0.88)";
+    ctx.fillStyle = "rgba(0, 229, 255, 0.16)";
+    ctx.lineWidth = 1.4;
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    ctx.beginPath();
+    ctx.arc(0, -42, 8, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(0, -34);
+    ctx.lineTo(0, 8);
+    ctx.moveTo(-22, -16);
+    ctx.lineTo(22, -16);
+    ctx.moveTo(-22, -16);
+    ctx.lineTo(-32, 16);
+    ctx.moveTo(22, -16);
+    ctx.lineTo(32, 16);
+    ctx.moveTo(0, 8);
+    ctx.lineTo(-18, 52);
+    ctx.moveTo(0, 8);
+    ctx.lineTo(18, 52);
+    ctx.stroke();
+    if (rig.s > 0.7) {
+      ctx.strokeStyle = "rgba(255, 59, 130, 0.8)";
+      ctx.lineWidth = 0.8;
+      ctx.beginPath();
+      ctx.moveTo(-6, -43);
+      ctx.lineTo(6, -43);
+      ctx.moveTo(-8, -39);
+      ctx.lineTo(8, -39);
+      ctx.moveTo(-4, -35);
+      ctx.lineTo(4, -35);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+  ctx.restore();
+}
+
+function drawActorMesh(ctx, width, height, time) {
+  const cx = width * 0.5 + state.spatial.x * 1.4;
+  const cy = height * 0.48 - state.spatial.y * 1.1;
+  const zScale = clamp(1 + (state.spatial.z + 54) / 220, 0.72, 1.22);
+  const sway = state.access.reduceMotion ? 0 : Math.sin(time * 0.8) * 3;
+  const wire = state.spatial.shading === "wireframe";
+  ctx.save();
+  ctx.translate(cx, cy + sway);
+  ctx.scale(zScale, zScale);
+  ctx.lineWidth = wire ? 1.4 : 1;
+  ctx.strokeStyle = wire ? "rgba(0, 229, 255, 0.88)" : "rgba(217, 251, 255, 0.48)";
+  ctx.fillStyle = state.spatial.shading === "solid"
+    ? "rgba(34, 45, 58, 0.84)"
+    : state.spatial.shading === "path"
+      ? "rgba(241, 209, 123, 0.2)"
+      : "rgba(0, 229, 255, 0.12)";
+
+  ctx.beginPath();
+  ctx.ellipse(0, -62, 34, 43, state.spatial.faceYaw * Math.PI / 360, 0, Math.PI * 2);
+  if (!wire) ctx.fill();
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(-48, -12);
+  ctx.quadraticCurveTo(0, -33, 48, -12);
+  ctx.lineTo(34, 72);
+  ctx.lineTo(-34, 72);
+  ctx.closePath();
+  if (!wire) ctx.fill();
+  ctx.stroke();
+
+  for (let i = -2; i <= 2; i += 1) {
+    ctx.beginPath();
+    ctx.moveTo(i * 17, -102);
+    ctx.lineTo(i * 11, 72);
+    ctx.stroke();
+  }
+  for (let i = 0; i < 8; i += 1) {
+    ctx.beginPath();
+    ctx.moveTo(-42 + i * 12, -92 + i * 15);
+    ctx.lineTo(42 - i * 12, -92 + i * 15);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+function drawFaceTopology(ctx, width, height, time) {
+  const cx = width * 0.5 + state.spatial.x * 1.4;
+  const cy = height * 0.38 - state.spatial.y;
+  const blend = clamp(state.spatial.faceBlend / 100, 0.2, 1);
+  ctx.save();
+  ctx.globalAlpha = blend;
+  ctx.translate(cx, cy);
+  ctx.rotate(state.spatial.faceYaw * Math.PI / 360);
+  ctx.strokeStyle = "rgba(0, 229, 255, 0.62)";
+  ctx.fillStyle = "rgba(0, 229, 255, 0.85)";
+  ctx.lineWidth = 1;
+  for (let row = -3; row <= 4; row += 1) {
+    for (let col = -4; col <= 4; col += 1) {
+      const px = col * 8 + Math.sin(row * 2 + time) * 1.2;
+      const py = row * 8 + Math.cos(col * 2 + time) * 1.1;
+      if ((px / 36) ** 2 + (py / 45) ** 2 > 1) continue;
+      ctx.beginPath();
+      ctx.arc(px, py, 1.4, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+  ctx.beginPath();
+  ctx.ellipse(0, 0, 42, 54, 0, 0, Math.PI * 2);
+  ctx.stroke();
+  ctx.restore();
+}
+
+function drawParticles(ctx, width, height, time) {
+  const preset = particlePresets[state.spatial.particlePreset] || particlePresets.ash;
+  const count = state.activePanel === "particles" || state.timelineMode === "particles" ? 150 : 90;
+  const windX = state.spatial.particleWindX / 100;
+  const windY = state.spatial.particleWindY / 100;
+  const turbulence = state.spatial.particleTurbulence / 100;
+  const lifetime = state.spatial.particleLifetime / 100;
+  const drag = state.spatial.particleDrag / 100;
+  ctx.save();
+  for (let i = 0; i < count; i += 1) {
+    const seed = Math.sin(i * 12.9898) * 43758.5453;
+    const phase = seed - Math.floor(seed);
+    const drift = state.access.reduceMotion ? phase : (phase + time * preset.speed * (0.28 + lifetime)) % 1;
+    const radius = (0.7 + ((i * 17) % 11) / 7) * (1.1 - drag * 0.38);
+    const angle = i * 2.399 + time * turbulence;
+    const x = width * (0.12 + ((i * 37) % 100) / 124) + Math.sin(angle) * turbulence * 54 + windX * drift * width * 0.32;
+    const y = height * (0.12 + drift * 0.78) + Math.cos(angle * 0.7) * turbulence * 34 + windY * drift * height * 0.18;
+    const gradient = ctx.createRadialGradient(x, y, 0, x, y, radius * 4);
+    gradient.addColorStop(0, preset.colorA);
+    gradient.addColorStop(1, `${preset.colorB}00`);
+    ctx.globalAlpha = 0.24 + lifetime * 0.58;
+    ctx.fillStyle = gradient;
+    ctx.beginPath();
+    ctx.arc(x, y, radius * 4, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.restore();
+}
+
+function renderSpatialViewport(now = performance.now()) {
+  const viewport = resizeSpatialViewport();
+  if (!viewport) {
+    renderSpatialTelemetry();
+    return;
+  }
+  const { ctx, width, height } = viewport;
+  const time = state.access.reduceMotion ? 0 : now / 1000;
+  if (state.spatial.lastFrameTime) {
+    const delta = Math.max(1, now - state.spatial.lastFrameTime);
+    state.spatial.fps = state.spatial.fps * 0.88 + (1000 / delta) * 0.12;
+  }
+  state.spatial.lastFrameTime = now;
+
+  const bg = ctx.createLinearGradient(0, 0, width, height);
+  bg.addColorStop(0, state.spatial.shading === "solid" ? "#10151b" : "#020609");
+  bg.addColorStop(0.55, state.spatial.shading === "path" ? "#1f1722" : "#06141a");
+  bg.addColorStop(1, "#010203");
+  ctx.clearRect(0, 0, width, height);
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, width, height);
+
+  if (state.spatial.shading === "path") {
+    const glow = ctx.createRadialGradient(width * 0.58, height * 0.36, 0, width * 0.58, height * 0.36, width * 0.6);
+    glow.addColorStop(0, "rgba(241, 209, 123, 0.28)");
+    glow.addColorStop(1, "rgba(241, 209, 123, 0)");
+    ctx.fillStyle = glow;
+    ctx.fillRect(0, 0, width, height);
+  }
+
+  drawSpatialGrid(ctx, width, height, time);
+  drawSkeletonRig(ctx, width, height, time);
+  drawParticles(ctx, width, height, time);
+  drawActorMesh(ctx, width, height, time);
+  if (state.workspaceMode === "face" || state.activePanel === "face" || state.activePanel === "tracking") {
+    drawFaceTopology(ctx, width, height, time);
+  }
+  if (state.activePanel === "texture") {
+    ctx.save();
+    ctx.globalAlpha = 0.9;
+    ctx.strokeStyle = "rgba(241, 209, 123, 0.72)";
+    ctx.setLineDash([6, 6]);
+    ctx.strokeRect(width * 0.35, height * 0.26, width * 0.3, height * 0.42);
+    ctx.fillStyle = "rgba(241, 209, 123, 0.12)";
+    ctx.fillRect(width * 0.35, height * 0.26, width * 0.3, height * 0.42);
+    ctx.restore();
+  }
+  renderSpatialTelemetry();
+}
+
+function spatialLoop(now) {
+  renderSpatialViewport(now);
+  state.spatial.animationId = requestAnimationFrame(spatialLoop);
+}
+
+function startSpatialLoop() {
+  if (state.spatial.animationId) return;
+  state.spatial.animationId = requestAnimationFrame(spatialLoop);
+}
+
+function stopSpatialLoop() {
+  if (!state.spatial.animationId) return;
+  cancelAnimationFrame(state.spatial.animationId);
+  state.spatial.animationId = null;
+}
+
+function renderSpatialStudio() {
+  renderSpatialGraph();
+  renderSpatialControls();
+  if (isSpatialMode()) {
+    state.spatial.enabled = true;
+    startSpatialLoop();
+  } else {
+    stopSpatialLoop();
+  }
+}
+
+function updateSpatial(patch, options = {}) {
+  Object.assign(state.spatial, patch);
+  state.spatial.enabled = true;
+  setDirty();
+  renderSpatialControls();
+  renderTabs();
+  renderInspector();
+  renderLayerStack();
+  renderSpatialGraph();
+  renderFloatingPanels();
+  renderSpatialViewport();
+  if (options.timeline) renderTimeline();
+  if (options.message) showHud(options.message);
+}
+
+function previewMotionTrack() {
+  state.workspaceMode = "motion";
+  state.activePanel = "tracking";
+  state.timelineMode = state.timelineMode === "all" ? "tracking" : state.timelineMode;
+  state.spatial.activeNode = "actor";
+  render();
+  setStatus("Motion tracking hook ready / model not installed");
+  showHud("Rig preview hook ready");
+}
+
+function previewFaceTopology() {
+  state.workspaceMode = "face";
+  state.activePanel = "face";
+  state.spatial.activeNode = "face";
+  render();
+  setStatus("Face topology preview active");
+  showHud("468-point topology preview");
+}
+
+function previewTextureFixture() {
+  state.workspaceMode = "3d";
+  state.activePanel = "texture";
+  state.spatial.activeNode = "fixture";
+  render();
+  setStatus("Texture fixture preview active");
+  showHud("Fixture maps preview");
 }
 
 function activeEffectsLabel(scene) {
@@ -2352,6 +5058,8 @@ function renderToolState() {
   for (const button of document.querySelectorAll(".viewer-toolbar button[data-tool]")) {
     button.classList.toggle("active", button.dataset.tool === state.tool);
   }
+  if (els.deleteModeInput) els.deleteModeInput.value = state.editPolicy.deleteMode;
+  if (els.duplicatePolicyInput) els.duplicatePolicyInput.value = state.editPolicy.duplicateMode;
   els.snapToggleBtn.classList.toggle("active", state.snap);
   els.safeGuidesBtn.classList.toggle("active", state.safeGuides);
   els.activeToolText.textContent = `${state.tool[0].toUpperCase()}${state.tool.slice(1)} tool`;
@@ -2419,7 +5127,13 @@ function render() {
   applyLayoutState();
   renderScenes();
   renderPreview();
+  renderSpatialStudio();
+  renderFloatingPanels();
   renderLayerStack();
+  renderCompositionStack();
+  renderRuntimeComparison();
+  renderSchemaPanel();
+  renderAuthState();
   renderTimeline();
   renderInspector();
   renderBaselineDock();
@@ -2502,6 +5216,7 @@ function getProjectExportPayload() {
   const scenes = scenePayload();
   return {
     title: "Mahavisphot Advanced Compositor Cut",
+    schemaVersion: PROJECT_SCHEMA_VERSION,
     sourceTimeline: state.project.timeline || null,
     duration: Math.max(...scenes.map((scene) => scene.end)),
     audioPath: state.project.audio.path,
@@ -2509,15 +5224,327 @@ function getProjectExportPayload() {
     scenes,
     markers: state.markers,
     keyframes: state.keyframes,
+    dynamicTracks: structuredClone(state.dynamicTracks),
+    compositions: structuredClone(state.compositions),
+    activeCompositionId: state.activeCompositionId,
+    editPolicy: structuredClone(state.editPolicy),
+    duplicateDecisions: structuredClone(state.duplicateDecisions),
     audioMix: state.audio,
     accessibility: state.access,
     uxNotes: uxNotesPayload(),
+    spatial: spatialPayload(),
     layers: {
       order: orderedLayerKeys(),
       visible: state.layerVisibility,
       locked: state.layerLocked,
+      dynamic: structuredClone(state.dynamicTracks),
     },
   };
+}
+
+function normalizedSceneIdentity(scene, mode = "frame") {
+  const value = mode === "title"
+    ? `${scene.titleHi || ""} ${scene.titleEn || ""}`
+    : scene.imagePath || scene.image || scene.source || scene.frameIndex || "";
+  return String(value || "")
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, " ");
+}
+
+function decisionAction(kind) {
+  if (state.editPolicy.duplicateMode === "keep") return "keep";
+  if (state.editPolicy.duplicateMode === "collapse" && kind === "adjacent") return "collapse";
+  return "mark";
+}
+
+function analyzeDuplicateDecisions() {
+  const decisions = [];
+  const scenes = sortedScenes();
+  const addGroupedDecisions = (kind, groups, reason, confidence) => {
+    for (const [key, items] of groups.entries()) {
+      if (!key || items.length < 2) continue;
+      decisions.push({
+        id: `${kind}-${decisions.length + 1}`,
+        kind,
+        action: decisionAction(kind),
+        reason,
+        key,
+        sceneIds: items.map((scene) => scene.id),
+        time: Number(items[0].start) || 0,
+        confidence,
+      });
+    }
+  };
+
+  const frameGroups = new Map();
+  const titleGroups = new Map();
+  for (const scene of scenes) {
+    const frameKey = normalizedSceneIdentity(scene, "frame");
+    if (frameKey) frameGroups.set(frameKey, [...(frameGroups.get(frameKey) || []), scene]);
+    const titleKey = normalizedSceneIdentity(scene, "title");
+    if (titleKey) titleGroups.set(titleKey, [...(titleGroups.get(titleKey) || []), scene]);
+  }
+  addGroupedDecisions("frame", frameGroups, "Exact frame source reused", 0.98);
+  addGroupedDecisions("title", titleGroups, "Repeated title or reprise candidate", 0.72);
+
+  const sequenceGroups = new Map();
+  for (let index = 0; index <= scenes.length - 3; index += 1) {
+    const windowScenes = scenes.slice(index, index + 3);
+    const sequenceKey = windowScenes.map((scene) => normalizedSceneIdentity(scene, "frame") || normalizedSceneIdentity(scene, "title")).join(">");
+    if (!sequenceKey.replace(/>/g, "")) continue;
+    sequenceGroups.set(sequenceKey, [...(sequenceGroups.get(sequenceKey) || []), windowScenes]);
+  }
+  for (const [key, windows] of sequenceGroups.entries()) {
+    if (windows.length < 2) continue;
+    const firstWindow = windows[0];
+    decisions.push({
+      id: `sequence-${decisions.length + 1}`,
+      kind: "sequence",
+      action: state.editPolicy.duplicateMode === "keep" ? "keep" : "mark",
+      reason: "Repeated three-shot sequence window",
+      key,
+      sceneIds: firstWindow.map((scene) => scene.id),
+      time: Number(firstWindow[0].start) || 0,
+      confidence: 0.82,
+    });
+  }
+
+  for (let index = 1; index < scenes.length; index += 1) {
+    const previous = scenes[index - 1];
+    const current = scenes[index];
+    const previousKey = normalizedSceneIdentity(previous, "frame");
+    const currentKey = normalizedSceneIdentity(current, "frame");
+    if (!previousKey || previousKey !== currentKey) continue;
+    decisions.push({
+      id: `adjacent-${decisions.length + 1}`,
+      kind: "adjacent",
+      action: decisionAction("adjacent"),
+      reason: "Adjacent exact frame repeat",
+      key: currentKey,
+      sceneIds: [previous.id, current.id],
+      time: Number(current.start) || 0,
+      confidence: 1,
+    });
+  }
+
+  return decisions;
+}
+
+function markDuplicateDecisions(decisions) {
+  const existingManual = state.markers.filter((marker) => marker.kind !== "duplicate");
+  const pins = decisions
+    .filter((decision) => decision.action !== "keep")
+    .map((decision, index) => ({
+      id: `dupe-${decision.id}`,
+      time: roundTime(decision.time),
+      label: `D${index + 1}`,
+      kind: "duplicate",
+      decisionId: decision.id,
+    }));
+  state.markers = [...existingManual, ...pins];
+}
+
+function removeRangeArtifacts(start, end) {
+  const inRange = (time) => Number(time) >= start && Number(time) < end;
+  state.markers = state.markers.filter((marker) => !inRange(marker.time));
+  state.keyframes = state.keyframes.filter((keyframe) => !inRange(keyframe.time));
+  state.uxNotes = state.uxNotes.filter((note) => !inRange(note.time));
+  state.compositions = state.compositions.filter((composition) => Number(composition.end) <= start || Number(composition.start) >= end);
+  if (!state.compositions.some((composition) => composition.id === state.activeCompositionId)) state.activeCompositionId = null;
+  if (!state.compositions.some((composition) => composition.id === state.selectedCompositionId)) state.selectedCompositionId = state.compositions[0]?.id || null;
+}
+
+function shiftTimelineAfter(afterTime, amount, options = {}) {
+  const threshold = Number(afterTime) || 0;
+  const shiftItem = (item) => {
+    item.start = roundTime(Math.max(0, Number(item.start) + amount));
+    item.end = roundTime(Math.max(item.start + MIN_SCENE_SECONDS, Number(item.end) + amount));
+  };
+  if (options.scenes !== false) {
+    for (const scene of state.scenes) {
+      if (Number(scene.start) >= threshold) shiftItem(scene);
+    }
+  }
+  for (const track of state.dynamicTracks) {
+    if (options.trackId && track.id !== options.trackId) continue;
+    if (track.locked && options.ignoreLocks !== true) continue;
+    for (const clip of track.clips) {
+      if (Number(clip.start) >= threshold) shiftItem(clip);
+    }
+  }
+  for (const marker of state.markers) {
+    if (Number(marker.time) >= threshold) marker.time = roundTime(Math.max(0, Number(marker.time) + amount));
+  }
+  for (const keyframe of state.keyframes) {
+    if (Number(keyframe.time) >= threshold) keyframe.time = roundTime(Math.max(0, Number(keyframe.time) + amount));
+  }
+  for (const note of state.uxNotes) {
+    if (Number(note.time) >= threshold) note.time = roundTime(Math.max(0, Number(note.time) + amount));
+  }
+  for (const composition of state.compositions) {
+    if (Number(composition.start) >= threshold) {
+      composition.start = roundTime(Math.max(0, Number(composition.start) + amount));
+      composition.end = roundTime(Math.max(composition.start + MIN_SCENE_SECONDS, Number(composition.end) + amount));
+    }
+  }
+  if (state.currentTime >= threshold) {
+    state.currentTime = roundTime(Math.max(0, state.currentTime + amount));
+  }
+}
+
+function removeOverlappingDynamicClips(start, end) {
+  for (const track of state.dynamicTracks) {
+    if (track.locked) continue;
+    track.clips = track.clips.filter((clip) => Number(clip.end) <= start || Number(clip.start) >= end);
+  }
+}
+
+function closeGapAfterScene(scene) {
+  const next = sceneAfter(scene);
+  if (!scene || !next) return 0;
+  const gap = roundTime(Math.max(0, Number(next.start) - Number(scene.end)));
+  if (gap <= 0) return 0;
+  shiftTimelineAfter(Number(next.start), -gap);
+  return gap;
+}
+
+function deleteSceneByMode(scene, mode = state.editPolicy.deleteMode) {
+  if (!scene || state.scenes.length <= 1 || state.layerLocked.video) return false;
+  const start = Number(scene.start) || 0;
+  const end = Number(scene.end) || start;
+  const duration = roundTime(Math.max(0, end - start));
+  const nextSceneId = sceneAfter(scene)?.id;
+  if (mode === "gap") {
+    const gap = closeGapAfterScene(scene);
+    if (gap <= 0) showHud("No gap after selected scene");
+    return gap > 0;
+  }
+  if (mode === "cascade") {
+    removeRangeArtifacts(start, end);
+    removeOverlappingDynamicClips(start, end);
+  }
+  state.scenes = state.scenes.filter((item) => item.id !== scene.id);
+  if (mode === "ripple" || mode === "cascade") {
+    shiftTimelineAfter(end, -duration);
+  }
+  state.selectedId = nextSceneId || sortedScenes()[0]?.id || null;
+  state.selectedClipRefs = state.selectedClipRefs.filter((ref) => ref.type !== "scene" || ref.id !== scene.id);
+  return true;
+}
+
+function closeGapAfterDynamicClip(track, clip) {
+  if (!track || !clip) return 0;
+  const next = track.clips
+    .filter((item) => Number(item.start) >= Number(clip.end))
+    .sort((a, b) => Number(a.start) - Number(b.start))[0];
+  if (!next) return 0;
+  const gap = roundTime(Math.max(0, Number(next.start) - Number(clip.end)));
+  if (gap <= 0) return 0;
+  shiftTimelineAfter(Number(next.start), -gap, { scenes: false, trackId: track.id });
+  return gap;
+}
+
+function deleteDynamicClipByMode(ref, mode = state.editPolicy.deleteMode) {
+  const { track, clip } = dynamicClipByRef(ref);
+  if (!track || !clip || track.locked) return false;
+  const start = Number(clip.start) || 0;
+  const end = Number(clip.end) || start;
+  const duration = roundTime(Math.max(0, end - start));
+  if (mode === "gap") {
+    const gap = closeGapAfterDynamicClip(track, clip);
+    if (gap <= 0) showHud("No gap after selected clip");
+    return gap > 0;
+  }
+  if (mode === "cascade") {
+    removeRangeArtifacts(start, end);
+    removeOverlappingDynamicClips(start, end);
+    shiftTimelineAfter(end, -duration, { scenes: false });
+  } else {
+    track.clips = track.clips.filter((item) => item.id !== clip.id);
+    if (mode === "ripple") shiftTimelineAfter(end, -duration, { scenes: false, trackId: track.id });
+  }
+  state.selectedClipRefs = state.selectedClipRefs.filter((item) => clipRefKey(item) !== clipRefKey(ref));
+  state.selectedTrackId = track.id;
+  return true;
+}
+
+function selectedSceneRefsForDelete() {
+  const refs = state.selectedClipRefs.filter((ref) => ref.type === "scene");
+  if (refs.length) return refs;
+  return state.selectedId ? [{ type: "scene", id: state.selectedId }] : [];
+}
+
+function deleteSelectedTimelineItems(mode = state.editPolicy.deleteMode) {
+  if (activeComposition()) {
+    showHud("Return to Master before deleting timeline clips");
+    return;
+  }
+  const dynamicRefs = state.selectedClipRefs.filter((ref) => ref.type === "dynamic");
+  let changed = false;
+  if (dynamicRefs.length) {
+    for (const ref of dynamicRefs) changed = deleteDynamicClipByMode(ref, mode) || changed;
+  } else {
+    const scenes = selectedSceneRefsForDelete()
+      .map((ref) => state.scenes.find((scene) => scene.id === ref.id))
+      .filter(Boolean)
+      .sort((a, b) => Number(b.start) - Number(a.start));
+    for (const scene of scenes) changed = deleteSceneByMode(scene, mode) || changed;
+  }
+  if (!changed) {
+    showHud("Nothing deleted");
+    return;
+  }
+  if (!state.scenes.some((scene) => scene.id === state.selectedId)) {
+    state.selectedId = sortedScenes()[0]?.id || null;
+  }
+  state.duplicateDecisions = analyzeDuplicateDecisions();
+  setDirty();
+  render();
+  showHud(`${titleCase(mode)} delete applied`);
+}
+
+function collapseAdjacentDuplicateScenes(decisions) {
+  let changed = false;
+  const adjacent = decisions
+    .filter((decision) => decision.kind === "adjacent" && decision.action === "collapse")
+    .sort((a, b) => b.time - a.time);
+  for (const decision of adjacent) {
+    const [, duplicateId] = decision.sceneIds;
+    const scene = state.scenes.find((item) => item.id === duplicateId);
+    if (scene) changed = deleteSceneByMode(scene, "ripple") || changed;
+  }
+  return changed;
+}
+
+function applyDuplicatePolicy() {
+  const decisions = analyzeDuplicateDecisions();
+  state.duplicateDecisions = decisions;
+  if (!decisions.length) {
+    renderTimeline();
+    showHud("No duplicate frames or repeated sequences found");
+    return;
+  }
+  if (state.editPolicy.duplicateMode === "keep") {
+    renderTimeline();
+    showHud(`${decisions.length} duplicate decisions kept`);
+    return;
+  }
+  if (state.editPolicy.duplicateMode === "collapse") {
+    const collapsed = collapseAdjacentDuplicateScenes(decisions);
+    if (!collapsed) {
+      markDuplicateDecisions(decisions);
+      showHud("No adjacent exact duplicate to collapse; marked instead");
+    } else {
+      state.duplicateDecisions = analyzeDuplicateDecisions();
+      showHud("Adjacent duplicate frames collapsed");
+    }
+  } else {
+    markDuplicateDecisions(decisions);
+    showHud(`${decisions.length} duplicate decisions marked`);
+  }
+  setDirty();
+  render();
 }
 
 function splitSceneAtPlayhead() {
@@ -2607,7 +5634,7 @@ function addKeyframe() {
 
 function handleTimelineDrop(event) {
   event.preventDefault();
-  for (const lane of [els.videoLayer, els.overlayLayer, els.vfxLayer, els.captionLayer]) {
+  for (const lane of [els.videoLayer, els.overlayLayer, els.vfxLayer, els.threeLayer, els.trackingLayer, els.particlesLayer, els.captionLayer]) {
     lane.classList.remove("drop-ready");
   }
   const payload = readDragPayload(event);
@@ -2741,10 +5768,22 @@ async function exportVideo() {
 
 function setWorkspaceMode(mode) {
   state.workspaceMode = mode;
-  if (mode === "audio") state.activePanel = "audio";
-  if (mode === "vfx") state.activePanel = "vfx";
-  if (mode === "accessibility") state.activePanel = "accessibility";
-  if (mode === "edit") state.activePanel = "inspector";
+  const panelByMode = {
+    edit: "inspector",
+    audio: "audio",
+    vfx: "vfx",
+    accessibility: "accessibility",
+    "3d": "spatial",
+    particles: "particles",
+    motion: "tracking",
+    face: "face",
+  };
+  state.activePanel = panelByMode[mode] || state.activePanel;
+  if (mode === "3d") state.spatial.activeNode = state.spatial.mesh === "face" ? "face" : "actor";
+  if (mode === "particles") state.spatial.activeNode = "particles";
+  if (mode === "motion") state.spatial.activeNode = "actor";
+  if (mode === "face") state.spatial.activeNode = "face";
+  openFloatingPanelsForMode(mode);
   setStatus(`${mode} workspace`);
   render();
   showHud(`${titleCase(mode)} workspace`);
@@ -2752,7 +5791,28 @@ function setWorkspaceMode(mode) {
 
 function setPanel(panel) {
   state.activePanel = panel;
+  if (els.rightScroll) els.rightScroll.scrollTop = 0;
+  const modeByPanel = {
+    spatial: "3d",
+    particles: "particles",
+    tracking: "motion",
+    face: "face",
+    texture: "3d",
+  };
+  if (modeByPanel[panel]) state.workspaceMode = modeByPanel[panel];
+  if (panel === "particles") state.spatial.activeNode = "particles";
+  if (panel === "tracking") state.spatial.activeNode = "actor";
+  if (panel === "face") state.spatial.activeNode = "face";
+  if (panel === "texture") state.spatial.activeNode = "fixture";
+  if (modeByPanel[panel]) openFloatingPanelsForMode(modeByPanel[panel]);
+  renderTabs();
   renderInspector();
+  renderSpatialStudio();
+  renderLayerStack();
+  renderCompositionStack();
+  renderRuntimeComparison();
+  renderSchemaPanel();
+  renderAuthState();
   if (panel === "notes") renderUxNotes();
   if (panel === "story") renderStoryline();
   showHud(`${titleCase(panel)} panel`);
@@ -2787,9 +5847,25 @@ function setTool(tool) {
 
 function setTimelineMode(mode) {
   state.timelineMode = mode;
-  if (mode === "audio") state.activePanel = "audio";
-  if (mode === "vfx") state.activePanel = "vfx";
-  if (mode === "captions") state.activePanel = "accessibility";
+  const panelByMode = {
+    audio: "audio",
+    vfx: "vfx",
+    captions: "accessibility",
+    "3d": "spatial",
+    particles: "particles",
+    tracking: "tracking",
+  };
+  const workspaceByMode = {
+    "3d": "3d",
+    particles: "particles",
+    tracking: "motion",
+  };
+  if (panelByMode[mode]) state.activePanel = panelByMode[mode];
+  if (workspaceByMode[mode]) state.workspaceMode = workspaceByMode[mode];
+  if (mode === "3d") state.spatial.activeNode = "actor";
+  if (mode === "particles") state.spatial.activeNode = "particles";
+  if (mode === "tracking") state.spatial.activeNode = "actor";
+  if (workspaceByMode[mode]) openFloatingPanelsForMode(workspaceByMode[mode]);
   setStatus(`${mode} timeline mode`);
   render();
   showHud(`${titleCase(mode)} timeline`);
@@ -2816,21 +5892,70 @@ function resetTimelineView() {
   showHud("Timeline view reset");
 }
 
+function setDeleteMode(mode) {
+  if (!["static", "ripple", "cascade", "gap"].includes(mode)) return;
+  state.editPolicy.deleteMode = mode;
+  setDirty();
+  renderToolState();
+  updateTransportUi();
+  showHud(`${titleCase(mode)} delete mode`);
+}
+
+function setDuplicateMode(mode) {
+  if (!["smart", "keep", "mark", "collapse"].includes(mode)) return;
+  state.editPolicy.duplicateMode = mode;
+  state.duplicateDecisions = analyzeDuplicateDecisions();
+  setDirty();
+  renderToolState();
+  updateTransportUi();
+  showHud(`${titleCase(mode)} duplicate policy`);
+}
+
 function commandActions() {
   return [
     { label: "Play or pause", shortcut: "Space", run: togglePlayback },
     { label: "Split scene at playhead", shortcut: "B", run: splitSceneAtPlayhead },
     { label: "Add marker", shortcut: "M", run: () => addMarker("Command marker", "manual") },
     { label: "Add or cycle transition", shortcut: "T", run: cycleTransition },
+    { label: "Make composition from selected clips", shortcut: "Comp", run: createCompositionFromSelection },
+    { label: "Open selected composition", shortcut: "Open Comp", run: () => openComposition() },
+    { label: "Return to master timeline", shortcut: "Master", run: closeCompositionTimeline },
+    { label: "Delete selected using current mode", shortcut: "Delete", run: () => deleteSelectedTimelineItems() },
+    { label: "Set delete mode static", run: () => setDeleteMode("static") },
+    { label: "Set delete mode ripple", run: () => setDeleteMode("ripple") },
+    { label: "Set delete mode cascade", run: () => setDeleteMode("cascade") },
+    { label: "Set delete mode gap", run: () => setDeleteMode("gap") },
+    { label: "Decide duplicate frames and sequences", shortcut: "Dupes", run: applyDuplicatePolicy },
+    { label: "Add empty video layer", shortcut: "+V", run: () => createEmptyLayer("video") },
+    { label: "Add empty audio layer", shortcut: "+A", run: () => createEmptyLayer("audio") },
     { label: "Nudge selected clip left", shortcut: "-1f", run: () => nudgeSelectedScene(-1) },
     { label: "Nudge selected clip right", shortcut: "+1f", run: () => nudgeSelectedScene(1) },
     { label: "Center selected clip", shortcut: "Zoom Sel", run: fitSelectedClip },
     { label: "Add keyframe", shortcut: "K", run: addKeyframe },
     { label: "Open VFX panel", run: () => setWorkspaceMode("vfx") },
     { label: "Open audio mixer", run: () => setWorkspaceMode("audio") },
+    { label: "Open 3D Studio", shortcut: "3D", run: () => setWorkspaceMode("3d") },
+    { label: "Open particles gallery", shortcut: "Particles", run: () => setWorkspaceMode("particles") },
+    { label: "Preview motion tracking", shortcut: "Track", run: previewMotionTrack },
+    { label: "Preview face topology", shortcut: "Face", run: previewFaceTopology },
+    { label: "Preview texture fixture", shortcut: "Texture", run: previewTextureFixture },
+    { label: "Show floating panels", shortcut: "Panels", run: showAllFloatingPanels },
+    { label: "Reset floating panels", shortcut: "Panels reset", run: () => {
+      state.floatingPanels = structuredClone(floatingPanelDefaults);
+      renderFloatingPanels();
+      showHud("Floating panels reset");
+    } },
     { label: "Open accessibility panel", run: () => setWorkspaceMode("accessibility") },
     { label: "Show reconstructed storyline", shortcut: "Story", run: openStorylinePanel },
     { label: "Open feature matrix", shortcut: "Matrix", run: () => setPanel("matrix") },
+    { label: "Open full schema", shortcut: "Schema", run: () => setPanel("schema") },
+    { label: "Open account", shortcut: "Auth", run: () => setPanel("account") },
+    { label: "Open plan and license", shortcut: "Plan", run: () => setPanel("plan") },
+    { label: "Open project CRUD", shortcut: "Projects", run: () => setPanel("projects") },
+    { label: "Save project", shortcut: "Save", run: createSavedProject },
+    { label: "Update selected project", shortcut: "Update", run: updateSavedProject },
+    { label: "Open composition panel", shortcut: "Comps", run: () => setPanel("compositions") },
+    { label: "Compare Electron and Tauri", shortcut: "Runtime", run: () => setPanel("runtime") },
     { label: "Open baseline inspector fields", shortcut: "Inspect", run: () => setPanel("inspector") },
     { label: "Open UX notes", run: openUxNotesTool },
     { label: "Add UX note", shortcut: "Note tool", run: addUxNote },
@@ -2987,6 +6112,26 @@ function isTypingTarget(target) {
 
 function bindEvents() {
   els.resetLayoutBtn.addEventListener("click", resetLayout);
+  els.authOpenBtn.addEventListener("click", () => setPanel("account"));
+  els.planPanelTopBtn.addEventListener("click", () => setPanel("plan"));
+  els.projectPanelTopBtn.addEventListener("click", () => setPanel("projects"));
+  els.saveProjectTopBtn.addEventListener("click", saveCurrentProject);
+  els.loginBtn.addEventListener("click", loginUser);
+  els.registerBtn.addEventListener("click", registerUser);
+  els.logoutBtn.addEventListener("click", logoutUser);
+  els.refreshProjectsBtn.addEventListener("click", () => refreshProjects());
+  els.saveProjectBtn.addEventListener("click", createSavedProject);
+  els.updateProjectBtn.addEventListener("click", updateSavedProject);
+  els.authPasswordInput.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter") return;
+    event.preventDefault();
+    if (els.authNameInput.value.trim()) registerUser();
+    else loginUser();
+  });
+  els.subscriptionPlanGrid?.addEventListener("click", (event) => {
+    const button = event.target.closest("button[data-plan]");
+    if (button) updateSubscription(button.dataset.plan);
+  });
   els.baselineInspectBtn.addEventListener("click", () => setPanel("inspector"));
   els.matrixInspectBtn.addEventListener("click", () => setPanel("inspector"));
   els.baselineResetBtn.addEventListener("click", resetLayout);
@@ -3002,7 +6147,59 @@ function bindEvents() {
   els.leftPanelResizer.addEventListener("dblclick", resetLayout);
   els.rightPanelResizer.addEventListener("dblclick", resetLayout);
   els.timelineSplitResizer.addEventListener("dblclick", resetLayout);
-  window.addEventListener("resize", () => applyLayoutState({ rerenderTimeline: true }));
+  window.addEventListener("resize", () => {
+    applyLayoutState({ rerenderTimeline: true });
+    renderFloatingPanels();
+    renderSpatialViewport();
+  });
+  els.floatingPanelsLayer.addEventListener("click", (event) => {
+    const panel = event.target.closest("[data-floating-panel]");
+    const key = panel?.dataset.floatingPanel;
+    if (!key) return;
+    if (event.target.closest("[data-floating-close]")) {
+      state.floatingPanels[key].open = false;
+      applyFloatingPanelFrame(key);
+      showHud(`${titleCase(key)} panel closed`);
+      return;
+    }
+    if (event.target.closest("[data-floating-reset]")) {
+      resetFloatingPanel(key);
+      return;
+    }
+    const preset = event.target.closest("[data-floating-preset]");
+    if (preset) {
+      state.workspaceMode = "particles";
+      state.activePanel = "particles";
+      updateSpatial({
+        particlePreset: preset.dataset.floatingPreset,
+        activeNode: "particles",
+      }, {
+        timeline: true,
+        message: particlePresets[preset.dataset.floatingPreset]?.label || "Particle preset",
+      });
+      return;
+    }
+    const node = event.target.closest("[data-node-action]");
+    if (node) {
+      nodeGraphAction(node.dataset.nodeAction);
+    }
+  });
+  els.floatingPanelsLayer.addEventListener("pointerdown", (event) => {
+    const panel = event.target.closest("[data-floating-panel]");
+    const key = panel?.dataset.floatingPanel;
+    if (!key) return;
+    if (event.target.closest("button, input, select, textarea")) return;
+    bringFloatingPanelToFront(key);
+    const rect = panel.getBoundingClientRect();
+    const nearResizeCorner = event.clientX >= rect.right - 30 && event.clientY >= rect.bottom - 30;
+    if (event.target.closest("[data-floating-resize-handle]") || nearResizeCorner) {
+      beginFloatingPanelInteraction(event, key, "resize");
+      return;
+    }
+    if (event.target.closest("[data-floating-drag-handle]")) {
+      beginFloatingPanelInteraction(event, key, "drag");
+    }
+  });
   els.previewStage.addEventListener("pointerenter", () => showHud("Viewer HUD", { announce: false }));
   els.previewStage.addEventListener("focus", () => showHud("Viewer focused", { announce: false }));
   els.timelineViewport.addEventListener("pointerenter", () => showHud("Timeline HUD", { announce: false }));
@@ -3065,10 +6262,37 @@ function bindEvents() {
   els.setEndBtn.addEventListener("click", setSelectedEndToPlayhead);
   els.addMarkerBtn.addEventListener("click", () => addMarker("Manual marker", "manual"));
   els.addTransitionBtn.addEventListener("click", cycleTransition);
+  els.makeCompositionBtn.addEventListener("click", createCompositionFromSelection);
+  els.makeCompositionPanelBtn.addEventListener("click", createCompositionFromSelection);
+  els.openCompositionBtn.addEventListener("click", () => openComposition());
+  els.backToMasterBtn.addEventListener("click", closeCompositionTimeline);
+  els.runtimeDocBtn.addEventListener("click", () => {
+    state.activePanel = "runtime";
+    renderInspector();
+    renderRuntimeComparison();
+    showHud("Electron vs Tauri comparison");
+  });
+  els.schemaJsonBtn.addEventListener("click", () => {
+    downloadBlob("mahavisphot_compositor_schema.json", JSON.stringify(schemaPayload(), null, 2), "application/json");
+    showHud("Schema JSON exported");
+  });
   els.nudgeLeftBtn.addEventListener("click", () => nudgeSelectedScene(-1));
   els.nudgeRightBtn.addEventListener("click", () => nudgeSelectedScene(1));
   els.rippleBtn.addEventListener("click", rippleScenes);
+  els.deleteSelectedBtn.addEventListener("click", () => deleteSelectedTimelineItems());
+  els.deleteModeInput.addEventListener("change", () => {
+    setDeleteMode(els.deleteModeInput.value);
+  });
+  els.duplicatePolicyInput.addEventListener("change", () => {
+    setDuplicateMode(els.duplicatePolicyInput.value);
+  });
+  els.applyDuplicatePolicyBtn.addEventListener("click", applyDuplicatePolicy);
   els.fitSelectionBtn.addEventListener("click", fitSelectedClip);
+  els.addVideoLayerBtn.addEventListener("click", () => createEmptyLayer("video"));
+  els.addAudioLayerBtn.addEventListener("click", () => createEmptyLayer("audio"));
+  els.renameLayerBtn.addEventListener("click", renameSelectedLayer);
+  els.duplicateLayerBtn.addEventListener("click", duplicateSelectedLayer);
+  els.deleteLayerBtn.addEventListener("click", deleteSelectedLayer);
 
   els.workspaceModeTabs.addEventListener("click", (event) => {
     const button = event.target.closest("button[data-mode]");
@@ -3096,6 +6320,70 @@ function bindEvents() {
     showHud(`Guides ${state.safeGuides ? "on" : "off"}`);
   });
 
+  els.spatialToolbar.addEventListener("click", (event) => {
+    const button = event.target.closest("button[data-shading]");
+    if (!button) return;
+    updateSpatial({ shading: button.dataset.shading }, {
+      timeline: true,
+      message: `${titleCase(button.dataset.shading)} viewport`,
+    });
+  });
+  els.spatialFocusBtn.addEventListener("click", () => setWorkspaceMode("3d"));
+  els.spatialTransformInput.addEventListener("change", () => {
+    updateSpatial({ transformMode: els.spatialTransformInput.value }, { message: "Transform mode changed" });
+  });
+  els.spatialMeshInput.addEventListener("change", () => {
+    const mesh = els.spatialMeshInput.value;
+    updateSpatial({
+      mesh,
+      activeNode: mesh === "face" ? "face" : mesh === "particles" ? "particles" : "actor",
+    }, { timeline: true, message: "Active mesh changed" });
+  });
+  for (const [input, key, label] of [
+    [els.spatialXInput, "x", "Position X"],
+    [els.spatialYInput, "y", "Position Y"],
+    [els.spatialZInput, "z", "Position Z"],
+    [els.spatialFocalInput, "focal", "Focal length"],
+    [els.particleWindXInput, "particleWindX", "Wind X"],
+    [els.particleWindYInput, "particleWindY", "Wind Y"],
+    [els.particleTurbulenceInput, "particleTurbulence", "Turbulence"],
+    [els.particleLifetimeInput, "particleLifetime", "Lifetime"],
+    [els.particleDragInput, "particleDrag", "Drag"],
+    [els.trackingConfidenceInput, "trackingConfidence", "Track confidence"],
+    [els.trackingDepthInput, "trackingDepth", "Depth bias"],
+    [els.faceYawInput, "faceYaw", "Face yaw"],
+    [els.facePitchInput, "facePitch", "Face pitch"],
+    [els.faceBlendInput, "faceBlend", "Face blend"],
+    [els.textureSeamInput, "textureSeam", "Seam stitch"],
+    [els.textureNormalInput, "textureNormal", "Normal depth"],
+    [els.textureRoughnessInput, "textureRoughness", "Roughness"],
+  ]) {
+    input.addEventListener("input", () => updateSpatial({ [key]: Number(input.value) }, { message: `${label} ${input.value}` }));
+  }
+  els.particlePresetGrid.addEventListener("click", (event) => {
+    const button = event.target.closest("button[data-preset]");
+    if (!button) return;
+    updateSpatial({
+      particlePreset: button.dataset.preset,
+      activeNode: "particles",
+    }, {
+      timeline: true,
+      message: particlePresets[button.dataset.preset]?.label || "Particle preset",
+    });
+  });
+  els.particleApplyBtn.addEventListener("click", () => {
+    state.workspaceMode = "particles";
+    state.activePanel = "particles";
+    state.timelineMode = "particles";
+    updateSpatial({ activeNode: "particles" }, {
+      timeline: true,
+      message: "Particle pass applied",
+    });
+  });
+  els.trackingPreviewBtn.addEventListener("click", previewMotionTrack);
+  els.facePreviewBtn.addEventListener("click", previewFaceTopology);
+  els.textureBakeBtn.addEventListener("click", previewTextureFixture);
+
   els.timelineRuler.addEventListener("click", (event) => {
     setPlayhead(dropTimeFromEvent(event));
     showHud("Playhead moved");
@@ -3121,7 +6409,37 @@ function bindEvents() {
   els.timelineViewport.addEventListener("pointercancel", handleTimelinePointerEnd);
   els.timelineViewport.addEventListener("gesturestart", handleGestureStart, { passive: false });
   els.timelineViewport.addEventListener("gesturechange", handleGestureChange, { passive: false });
-  for (const lane of [els.videoLayer, els.overlayLayer, els.vfxLayer, els.captionLayer]) {
+  els.trackCreateRow.addEventListener("dragover", (event) => {
+    const target = event.target.closest("[data-create-track-kind]");
+    if (!target) return;
+    event.preventDefault();
+    target.classList.add("drop-ready");
+  });
+  els.trackCreateRow.addEventListener("dragleave", (event) => {
+    const target = event.target.closest("[data-create-track-kind]");
+    if (target) target.classList.remove("drop-ready");
+  });
+  els.trackCreateRow.addEventListener("drop", (event) => {
+    const target = event.target.closest("[data-create-track-kind]");
+    if (!target) return;
+    event.preventDefault();
+    target.classList.remove("drop-ready");
+    const payload = readDragPayload(event);
+    createDynamicTrack(target.dataset.createTrackKind, payload, dropTimeFromEvent(event));
+  });
+  els.trackCreateRow.addEventListener("click", (event) => {
+    const target = event.target.closest("[data-create-track-kind]");
+    if (!target) return;
+    const kind = target.dataset.createTrackKind;
+    const scene = selectedScene();
+    const payload = kind === "audio" ? audioClipDragPayload() : sceneDragPayload(scene);
+    if (!payload) {
+      createDynamicTrack(kind, null, state.currentTime);
+      return;
+    }
+    createDynamicTrack(kind, payload, state.currentTime);
+  });
+  for (const lane of [els.videoLayer, els.overlayLayer, els.vfxLayer, els.threeLayer, els.trackingLayer, els.particlesLayer, els.captionLayer]) {
     lane.addEventListener("dragover", (event) => {
       event.preventDefault();
       lane.classList.add("drop-ready");
@@ -3135,6 +6453,7 @@ function bindEvents() {
   els.layerStack.addEventListener("drop", (event) => {
     const payload = readDragPayload(event);
     if (payload?.type === "layer") moveLayerToEnd(payload.key);
+    if (payload?.type === "dynamic-layer") moveDynamicTrackToEnd(payload.id);
   });
   els.previewStage.addEventListener("dragover", (event) => {
     event.preventDefault();
@@ -3265,12 +6584,7 @@ function bindEvents() {
   });
 
   els.deleteSceneBtn.addEventListener("click", () => {
-    if (state.scenes.length <= 1) return;
-    state.scenes = state.scenes.filter((scene) => scene.id !== state.selectedId);
-    state.selectedId = sortedScenes()[0].id;
-    setDirty();
-    render();
-    showHud("Scene deleted");
+    deleteSelectedTimelineItems();
   });
 
   els.commandPaletteBtn.addEventListener("click", openCommandPalette);
@@ -3292,6 +6606,11 @@ function bindEvents() {
     if (event.code === "Space") {
       event.preventDefault();
       togglePlayback();
+    }
+    if ((event.key === "Delete" || event.key === "Backspace") && !event.target.closest(".marker-clip, .marker-editor")) {
+      event.preventDefault();
+      deleteSelectedTimelineItems();
+      return;
     }
     if (event.key === "ArrowLeft") {
       setPlayhead(state.currentTime - 1 / FPS);
@@ -3322,6 +6641,7 @@ function bindEvents() {
   els.exportVideoBtn.addEventListener("click", exportVideo);
   els.loadGeneratedTimelineBtn.addEventListener("click", () => loadFirstGeneratedTimeline());
   els.loadDenseTimelineBtn.addEventListener("click", () => loadDenseShotTimeline());
+  els.loadVargTimelineBtn.addEventListener("click", () => loadVargKaKhelTimeline());
   els.openStorylineBtn.addEventListener("click", openStorylinePanel);
   els.fitStorylineBtn.addEventListener("click", fitStorylineView);
 }
@@ -3343,6 +6663,15 @@ function applyProject(project, statusText = "Loaded") {
   state.project = project;
   state.scenes = state.project.scenes.map((scene) => ensureSceneDefaults({ ...scene }));
   state.selectedId = state.scenes[0]?.id || null;
+  state.compositions = [];
+  state.nextCompositionId = 1;
+  state.activeCompositionId = null;
+  state.selectedCompositionId = null;
+  state.selectedClipRefs = [];
+  state.dynamicTracks = [];
+  state.nextDynamicTrackId = 1;
+  state.selectedTrackId = null;
+  state.duplicateDecisions = [];
   state.currentTime = Number(state.scenes[0]?.start) || 0;
   state.playing = false;
   if (state.playTimer) cancelAnimationFrame(state.playTimer);
@@ -3355,24 +6684,40 @@ function applyProject(project, statusText = "Loaded") {
   els.audioPlayer.src = state.project.audio.url;
   els.jogSlider.max = String(projectDuration());
   seedMarkers();
+  ensureDefaultDynamicTracks();
+  state.duplicateDecisions = analyzeDuplicateDecisions();
   setStatus(statusText);
   render();
 }
 
 async function loadProjectFromTimeline(timelineId = "first-generated", options = {}) {
-  const response = await fetch(`/api/project?timeline=${encodeURIComponent(timelineId)}`);
-  const project = await response.json();
-  if (!response.ok || project.ok === false) {
-    throw new Error(project.error || "Timeline load failed");
+  let project;
+  try {
+    const response = await fetch(`/api/project?timeline=${encodeURIComponent(timelineId)}`);
+    project = await response.json();
+    if (!response.ok || project.ok === false) {
+      throw new Error(project.error || "Timeline load failed");
+    }
+  } catch (error) {
+    project = fallbackProject(timelineId);
+    if (location.protocol !== "file:") {
+      setStatus(`API fallback: ${error.message || error}`);
+    }
   }
   const timelineName = project.timeline?.name || "generated timeline";
   applyProject(project, options.statusText || `Loaded ${timelineName}`);
   if (options.hud !== false) showHud(`${timelineName} loaded`);
 }
 
+function loadVargKaKhelTimeline() {
+  return loadProjectFromTimeline("varg-ka-khel", {
+    statusText: "Loaded Varg Ka Khel song edit",
+  });
+}
+
 async function loadStoryline() {
   try {
-    const response = await fetch("/reconstructed_storyline.json");
+    const response = await fetch("reconstructed_storyline.json");
     const data = await response.json();
     if (!response.ok || !data.beats) throw new Error(data.error || "Storyline load failed");
     state.storyline = normalizeStoryline(data);
@@ -3419,6 +6764,7 @@ async function init() {
   loadLayoutState();
   loadUxNotes();
   clearHandwriting(false);
+  await refreshAuth();
   await loadStoryline();
   await loadProjectFromTimeline("first-generated", { statusText: "Loaded first generated timeline", hud: false });
 }

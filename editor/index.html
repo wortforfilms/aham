@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Mahavisphot Compositor</title>
-    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <a class="skip-link" href="#previewStage">Skip to viewer</a>
@@ -23,12 +23,22 @@
           <button data-mode="edit" class="active" type="button">Edit</button>
           <button data-mode="audio" type="button">Audio</button>
           <button data-mode="vfx" type="button">VFX</button>
+          <button data-mode="3d" type="button">3D Studio</button>
+          <button data-mode="particles" type="button">Particles</button>
+          <button data-mode="motion" type="button">Motion Track</button>
+          <button data-mode="face" type="button">Face Swap</button>
           <button data-mode="accessibility" type="button">Access</button>
         </nav>
 
         <div class="top-actions">
+          <span class="account-status" id="accountStatus">Guest</span>
+          <button class="ghost" id="authOpenBtn" type="button" title="Open account and subscription panel">Sign In</button>
+          <button class="ghost" id="planPanelTopBtn" type="button" title="Open local plan and license panel">Plan</button>
+          <button class="ghost" id="projectPanelTopBtn" type="button" title="Open saved project library">Projects</button>
+          <button class="ghost" id="saveProjectTopBtn" type="button" title="Save current project to your library">Save</button>
           <button class="ghost" id="loadGeneratedTimelineBtn" type="button" title="Load first generated timeline">Load Gen 1</button>
           <button class="ghost" id="loadDenseTimelineBtn" type="button" title="Load extracted prior board shot timeline">Load 137 Shots</button>
+          <button class="ghost" id="loadVargTimelineBtn" type="button" title="Load Varg Ka Khel song edit">Load Varg</button>
           <button class="ghost" id="openStorylineBtn" type="button" title="Show reconstructed storyline">Storyline</button>
           <button class="ghost" id="resetLayoutBtn" type="button" title="Reset panel layout">Reset Layout</button>
           <button class="ghost" id="commandPaletteBtn" type="button" title="Open command palette">Commands</button>
@@ -52,7 +62,30 @@
               <h2>Layers</h2>
               <span id="activeToolText">Select</span>
             </div>
+            <div class="layer-crud-actions" aria-label="Layer controls">
+              <button id="addVideoLayerBtn" type="button" title="Create empty video layer">+V</button>
+              <button id="addAudioLayerBtn" type="button" title="Create empty audio layer">+A</button>
+              <button id="renameLayerBtn" type="button" title="Rename selected dynamic layer">Name</button>
+              <button id="duplicateLayerBtn" type="button" title="Duplicate selected dynamic layer">Dup</button>
+              <button id="deleteLayerBtn" type="button" title="Delete selected dynamic layer">Del</button>
+            </div>
             <div class="layer-stack" id="layerStack"></div>
+          </section>
+
+          <section class="composition-stack-panel" aria-label="Nested compositions">
+            <div class="panel-head compact">
+              <h2>Comps</h2>
+              <button id="openCompositionBtn" type="button" title="Open selected composition timeline">Open</button>
+            </div>
+            <div class="composition-stack" id="compositionStack"></div>
+          </section>
+
+          <section class="spatial-graph-panel" aria-label="3D scene graph">
+            <div class="panel-head compact">
+              <h2>3D Graph</h2>
+              <span id="spatialGraphStatus">WebGL</span>
+            </div>
+            <div class="spatial-graph" id="spatialGraph"></div>
           </section>
         </aside>
 
@@ -81,12 +114,64 @@
             <div class="preview-stage" id="previewStage" tabindex="0" aria-label="Compositor viewer">
               <img id="previewImage" alt="Selected scene visual" />
               <img id="rubabOverlay" alt="Rubab overlay" />
+              <canvas id="spatialViewport" class="spatial-viewport" aria-label="Three.js spatial viewport"></canvas>
+              <div id="spatialFallback" class="spatial-fallback" aria-hidden="true">
+                <span class="fallback-grid"></span>
+                <span class="fallback-mesh"></span>
+                <span class="fallback-particles"></span>
+              </div>
+              <svg id="trackingOverlay" class="tracking-overlay" viewBox="0 0 100 56.25" aria-hidden="true">
+                <g class="skeleton skeleton-main">
+                  <circle cx="51" cy="16.5" r="2.7" />
+                  <path d="M51 19.4 51 34.5 M42.5 24.5 59.5 24.5 M42.5 24.5 37.5 35 M59.5 24.5 64 34.5 M51 34.5 45.5 47 M51 34.5 57 47" />
+                  <path class="face-track-line" d="M48.4 16.2 53.6 16.2 M47.6 17.6 54.2 17.6 M49.2 19.2 53 19.2" />
+                </g>
+                <g class="skeleton skeleton-left">
+                  <circle cx="31" cy="22" r="2.2" />
+                  <path d="M31 24.2 31 37 M24.8 28.8 37.2 28.8 M24.8 28.8 21.2 38.2 M37.2 28.8 41 38 M31 37 26.5 49 M31 37 35.5 49" />
+                </g>
+                <g class="skeleton skeleton-right">
+                  <circle cx="70" cy="23" r="2" />
+                  <path d="M70 25 70 37 M64.8 29.4 75.2 29.4 M64.8 29.4 61.5 39 M75.2 29.4 78 38.5 M70 37 66 49 M70 37 74.5 49" />
+                </g>
+                <g class="skeleton skeleton-far">
+                  <circle cx="83" cy="26.6" r="1.6" />
+                  <path d="M83 28.2 83 38 M79.2 31.2 86.8 31.2 M79.2 31.2 77 39 M86.8 31.2 89 39 M83 38 80.2 48 M83 38 86 48" />
+                </g>
+              </svg>
+              <div class="particle-tracking-overlay" id="particleTrackingOverlay" aria-hidden="true">
+                <span></span><span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span><span></span>
+              </div>
+              <div class="axis-widget" id="axisWidget" aria-hidden="true">
+                <span class="axis-core"></span>
+                <span class="axis-arrow axis-widget-x">X</span>
+                <span class="axis-arrow axis-widget-y">Y</span>
+                <span class="axis-arrow axis-widget-z">Z</span>
+              </div>
               <div class="effect-layer" id="effectLayer" aria-hidden="true"></div>
               <div class="safe-guides" id="safeGuides" aria-hidden="true"></div>
               <div class="caption-overlay" id="captionOverlay"></div>
+              <div class="spatial-gizmo" id="spatialGizmo" aria-hidden="true">
+                <span class="axis axis-x">X</span>
+                <span class="axis axis-y">Y</span>
+                <span class="axis axis-z">Z</span>
+              </div>
+              <div class="face-topology" id="faceTopology" aria-hidden="true"></div>
               <div class="preview-meta">
                 <span id="previewTime"></span>
                 <span id="previewTitle"></span>
+              </div>
+              <div class="spatial-toolbar" id="spatialToolbar" role="toolbar" aria-label="3D viewport shading controls">
+                <button data-shading="wireframe" type="button" title="Wireframe shading">Wire</button>
+                <button data-shading="solid" type="button" title="Solid shading">Solid</button>
+                <button data-shading="material" class="active" type="button" title="Material preview">Mat</button>
+                <button data-shading="path" type="button" title="Path-traced preview">Path</button>
+              </div>
+              <div class="spatial-readout" id="spatialReadout" aria-live="polite">
+                <span id="spatialFps">FPS 60.0</span>
+                <span id="spatialGpu">WebGL 2.0</span>
+                <span id="spatialSolver">Tracking hook idle</span>
               </div>
               <div class="viewer-hud" aria-hidden="true">
                 <span id="viewerZoom">Fit</span>
@@ -123,6 +208,51 @@
 
           </div>
 
+          <div class="floating-panels-layer" id="floatingPanelsLayer" aria-label="Floating compositor panels">
+            <section class="floating-panel scene-graph-float" id="floatingSceneGraph" data-floating-panel="sceneGraph" aria-label="Floating Scene Graph">
+              <div class="floating-panel-head" data-floating-drag-handle>
+                <strong>Scene Graph</strong>
+                <span>
+                  <button data-floating-reset type="button" title="Reset panel">Reset</button>
+                  <button data-floating-close type="button" title="Close panel">×</button>
+                </span>
+              </div>
+              <div class="floating-panel-body">
+                <label class="floating-search">
+                  <input type="search" value="" placeholder="Search" aria-label="Search scene graph" />
+                </label>
+                <div class="floating-graph" id="floatingSceneGraphContent"></div>
+              </div>
+              <span class="floating-resize-handle" data-floating-resize-handle></span>
+            </section>
+
+            <section class="floating-panel particles-float" id="floatingParticles" data-floating-panel="particles" aria-label="Floating Particles Gallery">
+              <div class="floating-panel-head" data-floating-drag-handle>
+                <strong>Particles Gallery</strong>
+                <span>
+                  <button data-floating-reset type="button" title="Reset panel">Reset</button>
+                  <button data-floating-close type="button" title="Close panel">×</button>
+                </span>
+              </div>
+              <div class="floating-panel-body" id="floatingParticlesContent"></div>
+              <span class="floating-resize-handle" data-floating-resize-handle></span>
+            </section>
+
+            <section class="floating-panel node-graph-float" id="floatingNodeGraph" data-floating-panel="nodeGraph" aria-label="Floating Node Graph">
+              <div class="floating-panel-head" data-floating-drag-handle>
+                <strong>Node Graph</strong>
+                <span>
+                  <button data-floating-reset type="button" title="Reset panel">Reset</button>
+                  <button data-floating-close type="button" title="Close panel">×</button>
+                </span>
+              </div>
+              <div class="floating-panel-body">
+                <div class="node-canvas" id="floatingNodeGraphContent"></div>
+              </div>
+              <span class="floating-resize-handle" data-floating-resize-handle></span>
+            </section>
+          </div>
+
           <div
             class="panel-resizer horizontal-resizer timeline-split-resizer"
             id="timelineSplitResizer"
@@ -144,6 +274,28 @@
                 <button id="setEndBtn" type="button" title="Set selected end to playhead">Set Out</button>
                 <button id="addMarkerBtn" type="button" title="Add marker at playhead">Marker</button>
                 <button id="addTransitionBtn" type="button" title="Add or cycle transition after selected scene">Transition</button>
+                <button id="makeCompositionBtn" type="button" title="Convert selected clip or shift-selected clips into a nested composition">Make Comp</button>
+                <button id="backToMasterBtn" type="button" title="Return to master timeline">Master</button>
+                <button id="deleteSelectedBtn" type="button" title="Delete selected clip using the current delete mode">Delete</button>
+                <label class="edit-policy-control" title="Delete behavior">
+                  Del
+                  <select id="deleteModeInput" aria-label="Delete mode">
+                    <option value="ripple">Ripple</option>
+                    <option value="static">Static</option>
+                    <option value="cascade">Cascade</option>
+                    <option value="gap">Gap</option>
+                  </select>
+                </label>
+                <label class="edit-policy-control" title="Duplicate frame and sequence policy">
+                  Dupes
+                  <select id="duplicatePolicyInput" aria-label="Duplicate decision policy">
+                    <option value="smart">Smart mark</option>
+                    <option value="keep">Keep</option>
+                    <option value="mark">Mark</option>
+                    <option value="collapse">Collapse adjacent</option>
+                  </select>
+                </label>
+                <button id="applyDuplicatePolicyBtn" type="button" title="Analyze duplicate frames and repeated sequences">Decide</button>
                 <button id="nudgeLeftBtn" type="button" title="Nudge selected clip left one frame">−1f</button>
                 <button id="nudgeRightBtn" type="button" title="Nudge selected clip right one frame">+1f</button>
                 <button id="rippleBtn" type="button" title="Ripple scenes to remove gaps">Ripple</button>
@@ -168,6 +320,9 @@
                   <button data-timeline-mode="video" type="button">Video</button>
                   <button data-timeline-mode="audio" type="button">Audio</button>
                   <button data-timeline-mode="vfx" type="button">VFX</button>
+                  <button data-timeline-mode="3d" type="button">3D</button>
+                  <button data-timeline-mode="tracking" type="button">Track</button>
+                  <button data-timeline-mode="particles" type="button">Part</button>
                   <button data-timeline-mode="captions" type="button">CC</button>
                 </div>
                 <div class="timeline-view-options" id="timelineViewOptions" role="toolbar" aria-label="Timeline view options">
@@ -204,6 +359,10 @@
                   <div class="layer-label">M<br /><span>Marks</span></div>
                   <div class="layer-lane" id="markerLayer"></div>
                 </div>
+                <div class="layer-row composition-row">
+                  <div class="layer-label">C<br /><span>Comps</span></div>
+                  <div class="layer-lane" id="compositionLayer"></div>
+                </div>
                 <div class="layer-row video-row">
                   <div class="layer-label">V1<br /><span>Scenes</span></div>
                   <div class="layer-lane" id="videoLayer"></div>
@@ -216,6 +375,18 @@
                   <div class="layer-label">FX<br /><span>VFX</span></div>
                   <div class="layer-lane" id="vfxLayer"></div>
                 </div>
+                <div class="layer-row three-row">
+                  <div class="layer-label">3D<br /><span>Meshes</span></div>
+                  <div class="layer-lane" id="threeLayer"></div>
+                </div>
+                <div class="layer-row tracking-row">
+                  <div class="layer-label">MT<br /><span>Track</span></div>
+                  <div class="layer-lane" id="trackingLayer"></div>
+                </div>
+                <div class="layer-row particles-row">
+                  <div class="layer-label">PT<br /><span>Part</span></div>
+                  <div class="layer-lane" id="particlesLayer"></div>
+                </div>
                 <div class="layer-row caption-row">
                   <div class="layer-label">CC<br /><span>Captions</span></div>
                   <div class="layer-lane" id="captionLayer"></div>
@@ -223,6 +394,14 @@
                 <div class="layer-row audio-row">
                   <div class="layer-label">A1<br /><span>Audio</span></div>
                   <div class="layer-lane audio-lane" id="audioLayer"></div>
+                </div>
+                <div class="dynamic-track-rows" id="dynamicTrackRows"></div>
+                <div class="track-create-row" id="trackCreateRow" aria-label="Create new audio or video layers by dropping clips">
+                  <div class="layer-label">+<br /><span>Layer</span></div>
+                  <div class="track-create-lanes">
+                    <button class="track-create-lane video-create" data-create-track-kind="video" type="button">Drop video clip here for new V layer</button>
+                    <button class="track-create-lane audio-create" data-create-track-kind="audio" type="button">Drop audio clip here for new A layer</button>
+                  </div>
                 </div>
                 <div class="playhead" id="playhead"></div>
               </div>
@@ -265,6 +444,9 @@
             </div>
           </section>
           <nav class="panel-tabs" id="panelTabs" aria-label="Inspector panels">
+            <button data-panel="account" type="button">Account</button>
+            <button data-panel="plan" type="button">Plan</button>
+            <button data-panel="projects" type="button">Projects</button>
             <button data-panel="inspector" class="active" type="button">Inspect</button>
             <button data-panel="vfx" type="button">VFX</button>
             <button data-panel="audio" type="button">Audio</button>
@@ -272,10 +454,78 @@
             <button data-panel="assets" type="button">Assets</button>
             <button data-panel="story" type="button">Story</button>
             <button data-panel="matrix" type="button">Matrix</button>
+            <button data-panel="schema" type="button">Schema</button>
+            <button data-panel="spatial" type="button">3D</button>
+            <button data-panel="particles" type="button">Particles</button>
+            <button data-panel="tracking" type="button">Track</button>
+            <button data-panel="face" type="button">Face</button>
+            <button data-panel="texture" type="button">Texture</button>
+            <button data-panel="compositions" type="button">Comps</button>
+            <button data-panel="runtime" type="button">Runtime</button>
             <button data-panel="notes" type="button">Notes</button>
           </nav>
 
           <div class="right-scroll">
+            <section class="account-panel panel-card" data-panel-section="account">
+              <div class="panel-head">
+                <h2>Local Auth</h2>
+                <button id="logoutBtn" type="button" title="Sign out">Logout</button>
+              </div>
+              <div class="account-summary" id="accountSummary" aria-live="polite"></div>
+              <div class="auth-form" id="authForm">
+                <label>
+                  Name
+                  <input id="authNameInput" type="text" autocomplete="name" placeholder="Editor name" />
+                </label>
+                <label>
+                  Email
+                  <input id="authEmailInput" type="email" autocomplete="email" placeholder="you@example.com" />
+                </label>
+                <label>
+                  Password
+                  <input id="authPasswordInput" type="password" autocomplete="current-password" placeholder="8+ characters" />
+                </label>
+                <div class="auth-actions">
+                  <button id="loginBtn" type="button">Login</button>
+                  <button id="registerBtn" type="button">Register</button>
+                </div>
+              </div>
+              <div class="auth-message" id="authMessage" role="status" aria-live="polite"></div>
+            </section>
+
+            <section class="plan-panel panel-card" data-panel-section="plan">
+              <div class="panel-head">
+                <h2>Plan & License</h2>
+                <span id="planGateStatus">Local</span>
+              </div>
+              <div class="account-summary" id="planSummary" aria-live="polite"></div>
+              <div class="subscription-grid" id="subscriptionPlanGrid" aria-label="Subscription plans">
+                <button data-plan="free" type="button"><strong>Free</strong><span>3 projects / preview exports</span></button>
+                <button data-plan="trial" type="button"><strong>Trial</strong><span>12 projects / MP4 preview</span></button>
+                <button data-plan="pro" type="button"><strong>Pro</strong><span>60 projects / MP4 + schema parity</span></button>
+                <button data-plan="studio" type="button"><strong>Studio</strong><span>500 projects / UHD-ready</span></button>
+              </div>
+            </section>
+
+            <section class="projects-panel panel-card" data-panel-section="projects">
+              <div class="panel-head">
+                <h2>Project CRUD</h2>
+                <button id="refreshProjectsBtn" type="button" title="Refresh project library">Refresh</button>
+              </div>
+              <div class="project-editor">
+                <label>
+                  Project Name
+                  <input id="projectNameInput" type="text" placeholder="Mahavisphot cut v1" />
+                </label>
+                <div class="project-actions">
+                  <button id="saveProjectBtn" type="button">Create</button>
+                  <button id="updateProjectBtn" type="button">Save</button>
+                </div>
+              </div>
+              <div class="project-message" id="projectMessage" role="status" aria-live="polite"></div>
+              <div class="project-list" id="projectList" aria-label="Saved projects"></div>
+            </section>
+
             <section class="inspector panel-card" data-panel-section="inspector">
               <div class="panel-head">
                 <h2>Inspector</h2>
@@ -518,7 +768,11 @@
                 <strong>Meta, Timeline, Commands</strong>
               </div>
               <div class="feature-table" role="table" aria-label="Baseline and pro feature matrix">
-                <div role="row"><span>3D COMP</span><b>Planned</b><em>Spatial multi-planar compositor hook</em></div>
+                <div role="row"><span>3D COMP</span><b>Present</b><em>Interactive spatial viewport, graph, transform controls</em></div>
+                <div role="row"><span>Particles</span><b>Present</b><em>Preset gallery, field operators, animated pass lane</em></div>
+                <div role="row"><span>Motion Track</span><b>Hook Ready</b><em>Rig preview UI, matrix controls, solver not installed</em></div>
+                <div role="row"><span>Face Swap</span><b>Hook Ready</b><em>468-point topology preview, swap model source pending</em></div>
+                <div role="row"><span>Texture Fixture</span><b>Hook Ready</b><em>Seam, normal, roughness preview controls</em></div>
                 <div role="row"><span>FX</span><b>Present</b><em>VFX bus, grain, vignette, dust, sonic wave</em></div>
                 <div role="row"><span>Load Gen 1</span><b>Present</b><em>Generated 16-beat master timeline</em></div>
                 <div role="row"><span>Load 137 Shots</span><b>Present</b><em>Prior board dense shot sequence</em></div>
@@ -533,6 +787,135 @@
                 <article><strong>Top Commands</strong><span>Reset Layout, Commands, TSV, and Board PNG are kept in the header and duplicated in Baseline Meta recovery controls.</span></article>
               </div>
             </section>
+
+            <section class="schema-panel panel-card" data-panel-section="schema">
+              <div class="panel-head">
+                <h2>Full Schema</h2>
+                <button id="schemaJsonBtn" type="button" title="Download full schema JSON">JSON</button>
+              </div>
+              <div class="schema-summary" id="schemaSummary" aria-live="polite"></div>
+              <div class="schema-list" id="schemaList" role="table" aria-label="Full project export schema"></div>
+            </section>
+
+            <section class="spatial-panel panel-card" data-panel-section="spatial">
+              <div class="panel-head">
+                <h2>3D Studio</h2>
+                <button id="spatialFocusBtn" type="button" title="Open spatial viewport">Focus</button>
+              </div>
+              <div class="spatial-control-grid">
+                <label>
+                  Transform
+                  <select id="spatialTransformInput">
+                    <option value="translate">Translate</option>
+                    <option value="rotate">Rotate</option>
+                    <option value="scale">Scale</option>
+                  </select>
+                </label>
+                <label>
+                  Active Mesh
+                  <select id="spatialMeshInput">
+                    <option value="actor">Actor_Mesh_01</option>
+                    <option value="face">Face_Topology_468</option>
+                    <option value="particles">Dust_Particles</option>
+                  </select>
+                </label>
+                <label>Position X <input id="spatialXInput" type="range" min="-100" max="100" value="0" /></label>
+                <label>Position Y <input id="spatialYInput" type="range" min="-100" max="100" value="0" /></label>
+                <label>Position Z <input id="spatialZInput" type="range" min="-140" max="40" value="-54" /></label>
+                <label>Focal Length <input id="spatialFocalInput" type="range" min="18" max="85" value="35" /></label>
+              </div>
+            </section>
+
+            <section class="particles-panel panel-card" data-panel-section="particles">
+              <div class="panel-head">
+                <h2>Particles Gallery</h2>
+                <button id="particleApplyBtn" type="button" title="Apply selected particle preset">Apply</button>
+              </div>
+              <div class="particle-presets" id="particlePresetGrid" aria-label="Particle preset library">
+                <button data-preset="ash" class="active" type="button"><strong>Sufi Ash Drift</strong><span>embers / slow fall</span></button>
+                <button data-preset="neon" type="button"><strong>Cyber Neon Embers</strong><span>violet / lateral wind</span></button>
+                <button data-preset="dust" type="button"><strong>Dust Fractures</strong><span>stone / radial burst</span></button>
+                <button data-preset="vedic" type="button"><strong>Vedic Sparks</strong><span>teal / spiral field</span></button>
+              </div>
+              <div class="spatial-control-grid">
+                <label>Wind X <input id="particleWindXInput" type="range" min="-100" max="100" value="18" /></label>
+                <label>Wind Y <input id="particleWindYInput" type="range" min="-100" max="100" value="-12" /></label>
+                <label>Turbulence <input id="particleTurbulenceInput" type="range" min="0" max="100" value="62" /></label>
+                <label>Lifetime <input id="particleLifetimeInput" type="range" min="10" max="100" value="68" /></label>
+                <label>Drag <input id="particleDragInput" type="range" min="0" max="100" value="32" /></label>
+              </div>
+            </section>
+
+            <section class="tracking-panel panel-card" data-panel-section="tracking">
+              <div class="panel-head">
+                <h2>Motion Track</h2>
+                <button id="trackingPreviewBtn" type="button" title="Preview markerless rig overlay">Preview Rig</button>
+              </div>
+              <div class="ai-status-grid">
+                <span><b>Solver</b><em>Hook ready / model not installed</em></span>
+                <span><b>Rig</b><em id="trackingRigStatus">Skel_Track_01 idle</em></span>
+                <span><b>Camera Matrix</b><em id="trackingMatrixStatus">Mproj x Mview x Mmodel</em></span>
+              </div>
+              <div class="spatial-control-grid">
+                <label>Track Confidence <input id="trackingConfidenceInput" type="range" min="0" max="100" value="72" /></label>
+                <label>Depth Bias <input id="trackingDepthInput" type="range" min="-50" max="50" value="8" /></label>
+              </div>
+            </section>
+
+            <section class="face-panel panel-card" data-panel-section="face">
+              <div class="panel-head">
+                <h2>Face Replacer</h2>
+                <button id="facePreviewBtn" type="button" title="Preview topology mesh">Topology</button>
+              </div>
+              <div class="ai-status-grid">
+                <span><b>Landmarks</b><em>468-point mesh preview</em></span>
+                <span><b>Swap</b><em>Offline until model source is assigned</em></span>
+                <span><b>Lighting</b><em>Anisotropic map preview</em></span>
+              </div>
+              <div class="spatial-control-grid">
+                <label>Yaw <input id="faceYawInput" type="range" min="-45" max="45" value="0" /></label>
+                <label>Pitch <input id="facePitchInput" type="range" min="-35" max="35" value="-4" /></label>
+                <label>Blend <input id="faceBlendInput" type="range" min="0" max="100" value="58" /></label>
+              </div>
+            </section>
+
+            <section class="texture-panel panel-card" data-panel-section="texture">
+              <div class="panel-head">
+                <h2>Texture Fixture</h2>
+                <button id="textureBakeBtn" type="button" title="Preview fixture maps">Preview Maps</button>
+              </div>
+              <div class="ai-status-grid">
+                <span><b>UV Seams</b><em>Context fill queued</em></span>
+                <span><b>Normals</b><em>Dynamic map preview</em></span>
+                <span><b>Roughness</b><em>Cinematic profile</em></span>
+              </div>
+              <div class="spatial-control-grid">
+                <label>Seam Stitch <input id="textureSeamInput" type="range" min="0" max="100" value="64" /></label>
+                <label>Normal Depth <input id="textureNormalInput" type="range" min="0" max="100" value="48" /></label>
+                <label>Roughness <input id="textureRoughnessInput" type="range" min="0" max="100" value="42" /></label>
+              </div>
+            </section>
+
+            <section class="compositions-panel panel-card" data-panel-section="compositions">
+              <div class="panel-head">
+                <h2>Compositions</h2>
+                <button id="makeCompositionPanelBtn" type="button" title="Create a composition from selected clips">Make Comp</button>
+              </div>
+              <div class="composition-summary" id="compositionSummary"></div>
+              <div class="composition-list" id="compositionList"></div>
+            </section>
+
+            <section class="runtime-panel panel-card" data-panel-section="runtime">
+              <div class="panel-head">
+                <h2>Standalone Runtime</h2>
+                <button id="runtimeDocBtn" type="button" title="Show runtime comparison">Compare</button>
+              </div>
+              <div class="runtime-summary">
+                <span><b>Electron</b><em>Prepared: local server shell, desktop window, export bridge</em></span>
+                <span><b>Tauri</b><em>Lean binary option, Rust command shell, stronger native footprint</em></span>
+              </div>
+              <div class="runtime-table" id="runtimeComparison"></div>
+            </section>
           </div>
         </aside>
       </section>
@@ -543,6 +926,7 @@
           <div class="scope-card"><span>Waveform</span><div class="scope-bars" id="waveformScope"></div></div>
           <div class="scope-card"><span>Vector</span><div class="vector-scope" id="vectorScope"></div></div>
           <div class="scope-card"><span>Loudness</span><strong id="loudnessReadout">-18 LUFS</strong></div>
+          <div class="scope-card spatial-scope"><span>Spatial</span><strong id="spatialTelemetry">WebGL idle</strong></div>
         </div>
         <a id="lastExportLink" href="#" hidden>Open export</a>
       </footer>
@@ -558,6 +942,6 @@
       </section>
     </main>
 
-    <script src="/app.js"></script>
+    <script src="app.js"></script>
   </body>
 </html>

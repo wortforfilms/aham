@@ -2,16 +2,63 @@ const http = require("node:http");
 const fs = require("node:fs");
 const fsp = require("node:fs/promises");
 const path = require("node:path");
+const crypto = require("node:crypto");
 const { spawn } = require("node:child_process");
 
 const ROOT = path.resolve(__dirname, "..");
 const EDITOR_DIR = __dirname;
 const PORT = Number(process.env.PORT || 8177);
+const DATA_DIR = path.join(ROOT, "data");
+const AUTH_FILE = path.join(DATA_DIR, "auth.json");
+const PROJECTS_DIR = path.join(DATA_DIR, "projects");
+const SESSION_COOKIE = "mahavisphot_session";
+const SESSION_MAX_AGE_SECONDS = 60 * 60 * 24 * 14;
+const PASSWORD_ITERATIONS = 120000;
+const APP_HEALTH_ID = "mahavisphot-compositor";
+let activeHealthToken = process.env.MAHAVISPHOT_HEALTH_TOKEN || "";
+let activePort = PORT;
 
 const AUDIO_FILE = "अहं ब्रह्मास्मि.wav";
 const FRAME_DIR = "build_frames/lineup_unique_art2/frames_1080p_jpg";
 const KEYFRAME_DIR = "build_frames/mahavisphot_timestamped/keyframes";
 const RUBAB_FRAME = "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0004.jpg";
+const SAFE_MEDIA_ROOTS = new Map([
+  ["build_frames", path.join(ROOT, "build_frames")],
+  ["build_audio_separation", path.join(ROOT, "build_audio_separation")],
+  ["exports", path.join(ROOT, "exports")],
+  ["media", path.join(ROOT, "media")],
+]);
+const SAFE_ROOT_MEDIA_FILES = new Set([AUDIO_FILE]);
+const PLAN_DEFINITIONS = {
+  free: {
+    label: "Free",
+    projectLimit: 3,
+    exportTier: "preview",
+    seats: 1,
+    features: ["local_auth", "project_crud", "json_export"],
+  },
+  trial: {
+    label: "Trial",
+    projectLimit: 12,
+    exportTier: "mp4-preview",
+    seats: 1,
+    features: ["local_auth", "project_crud", "mp4_export", "schema_manifest"],
+  },
+  pro: {
+    label: "Pro",
+    projectLimit: 60,
+    exportTier: "mp4",
+    seats: 1,
+    features: ["local_auth", "project_crud", "mp4_export", "captions", "vfx_manifest", "compositions"],
+  },
+  studio: {
+    label: "Studio",
+    projectLimit: 500,
+    exportTier: "uhd-ready",
+    seats: 5,
+    features: ["local_auth", "project_crud", "mp4_export", "captions", "vfx_manifest", "compositions", "studio_review"],
+  },
+};
 const GENERATED_TIMELINES = [
   {
     id: "first-generated",
@@ -26,6 +73,16 @@ const GENERATED_TIMELINES = [
     metadataPath: "build_frames/lineup_unique_art2/prior_board_137_shot_timeline.json",
     frameManifestPath: "build_frames/lineup_unique_art2/named_frames_1080p_jpg/named_frames_manifest.json",
   },
+  {
+    id: "varg-ka-khel",
+    name: "Varg Ka Khel Song Edit",
+    timelinePath: "media/varg_ka_khel/timeline.tsv",
+    metadataPath: "media/varg_ka_khel/timeline.json",
+    frameManifestPath: "media/varg_ka_khel/manifest.json",
+    audioPath: "media/varg_ka_khel/varg_ka_khel.mp3",
+    rubabPath: "media/varg_ka_khel/frames/frame_0001.jpg",
+    skipReferences: true,
+  },
 ];
 
 const mimeTypes = {
@@ -38,8 +95,15 @@ const mimeTypes = {
   ".jpg": "image/jpeg",
   ".jpeg": "image/jpeg",
   ".png": "image/png",
+  ".webp": "image/webp",
+  ".gif": "image/gif",
+  ".svg": "image/svg+xml",
   ".mp4": "video/mp4",
+  ".mov": "video/quicktime",
   ".wav": "audio/wav",
+  ".mp3": "audio/mpeg",
+  ".m4a": "audio/mp4",
+  ".aac": "audio/aac",
   ".pdf": "application/pdf",
 };
 
@@ -48,9 +112,10 @@ function send(res, status, body, headers = {}) {
   res.end(body);
 }
 
-function sendJson(res, status, body) {
+function sendJson(res, status, body, headers = {}) {
   send(res, status, JSON.stringify(body, null, 2), {
     "Content-Type": "application/json; charset=utf-8",
+    ...headers,
   });
 }
 
@@ -62,12 +127,483 @@ function safeJoin(base, target) {
   return resolved;
 }
 
+function normalizeAssetPath(assetPath) {
+  const normalized = String(assetPath || "").replace(/\\/g, "/").replace(/^\/+/, "");
+  const parts = normalized.split("/");
+  if (!normalized || normalized.includes("\0") || parts.some((part) => part === "" || part === "." || part === "..")) {
+    throw new Error("Invalid media asset path");
+  }
+  return normalized;
+}
+
+function safeMediaAssetPath(assetPath) {
+  const normalized = normalizeAssetPath(assetPath);
+  if (SAFE_ROOT_MEDIA_FILES.has(normalized)) return path.join(ROOT, normalized);
+  const [folder, ...rest] = normalized.split("/");
+  const root = SAFE_MEDIA_ROOTS.get(folder);
+  if (!root || !rest.length) {
+    throw new Error("Asset path is outside the safe media-only folders");
+  }
+  return safeJoin(root, rest.join("/"));
+}
+
 async function readBody(req) {
   const chunks = [];
   for await (const chunk of req) {
     chunks.push(chunk);
   }
   return Buffer.concat(chunks).toString("utf8");
+}
+
+async function readJsonFile(filePath, fallback) {
+  try {
+    return JSON.parse(await fsp.readFile(filePath, "utf8"));
+  } catch (error) {
+    if (error.code !== "ENOENT") throw error;
+    return structuredClone(fallback);
+  }
+}
+
+async function writeJsonFile(filePath, data) {
+  await fsp.mkdir(path.dirname(filePath), { recursive: true });
+  const tempPath = `${filePath}.${process.pid}.${Date.now()}.tmp`;
+  await fsp.writeFile(tempPath, JSON.stringify(data, null, 2), "utf8");
+  await fsp.rename(tempPath, filePath);
+}
+
+function parseCookies(req) {
+  return Object.fromEntries(
+    String(req.headers.cookie || "")
+      .split(";")
+      .map((part) => part.trim())
+      .filter(Boolean)
+      .map((part) => {
+        const index = part.indexOf("=");
+        const key = index >= 0 ? part.slice(0, index) : part;
+        const value = index >= 0 ? part.slice(index + 1) : "";
+        return [key, decodeURIComponent(value)];
+      })
+  );
+}
+
+function sessionCookie(token, maxAge = SESSION_MAX_AGE_SECONDS) {
+  return `${SESSION_COOKIE}=${encodeURIComponent(token)}; Path=/; Max-Age=${maxAge}; HttpOnly; SameSite=Lax`;
+}
+
+function normalizeEmail(email) {
+  return String(email || "").trim().toLowerCase();
+}
+
+function normalizePlan(plan) {
+  const value = String(plan || "free").toLowerCase();
+  if (value === "creator") return "pro";
+  return PLAN_DEFINITIONS[value] ? value : "free";
+}
+
+function defaultSubscription(plan = "free") {
+  const key = normalizePlan(plan);
+  const selected = PLAN_DEFINITIONS[key];
+  return {
+    plan: key,
+    state: key,
+    status: key === "trial" ? "trialing" : "active",
+    billingMode: "local",
+    gateway: "not_connected",
+    ...selected,
+  };
+}
+
+function defaultLicense(plan = "free", userId = "local", issuedAt = null) {
+  const key = normalizePlan(plan);
+  const seed = `${userId}:${key}`;
+  const digest = crypto.createHash("sha256").update(seed).digest("hex");
+  const selected = PLAN_DEFINITIONS[key];
+  return {
+    id: `license_${digest.slice(0, 16)}`,
+    key: `LOCAL-${key.toUpperCase()}-${digest.slice(0, 8).toUpperCase()}`,
+    status: key === "trial" ? "trialing" : "active",
+    tier: key,
+    seats: selected.seats,
+    exportTier: selected.exportTier,
+    issuedAt: issuedAt || new Date().toISOString(),
+    expiresAt: key === "trial" ? new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString() : null,
+    features: [...selected.features],
+  };
+}
+
+function ensureUserCommercialState(user) {
+  if (!user) return null;
+  const plan = normalizePlan(user.subscription?.plan || "free");
+  const state = normalizePlan(user.subscription?.state || user.subscription?.plan || plan);
+  user.subscription = {
+    ...(user.subscription || {}),
+    ...defaultSubscription(plan),
+    plan,
+    state,
+  };
+  if (!PLAN_DEFINITIONS[user.subscription.state]) user.subscription.state = user.subscription.plan;
+  user.license = {
+    ...defaultLicense(user.subscription.plan, user.id, user.createdAt),
+    ...(user.license || {}),
+    tier: normalizePlan(user.license?.tier || user.subscription.plan),
+  };
+  if (user.license.tier !== user.subscription.plan) {
+    user.license = defaultLicense(user.subscription.plan, user.id, new Date().toISOString());
+  }
+  return user;
+}
+
+function publicUser(user) {
+  if (!user) return null;
+  ensureUserCommercialState(user);
+  return {
+    id: user.id,
+    email: user.email,
+    name: user.name,
+    createdAt: user.createdAt,
+    subscription: user.subscription,
+    license: user.license,
+  };
+}
+
+function hashPassword(password) {
+  const salt = crypto.randomBytes(16).toString("hex");
+  const hash = crypto.pbkdf2Sync(String(password), salt, PASSWORD_ITERATIONS, 32, "sha256").toString("hex");
+  return {
+    salt,
+    hash,
+    iterations: PASSWORD_ITERATIONS,
+    digest: "sha256",
+  };
+}
+
+function verifyPassword(password, passwordHash) {
+  if (!passwordHash?.salt || !passwordHash?.hash) return false;
+  const iterations = Number(passwordHash.iterations) || PASSWORD_ITERATIONS;
+  const digest = passwordHash.digest || "sha256";
+  const attempt = crypto.pbkdf2Sync(String(password), passwordHash.salt, iterations, 32, digest);
+  const expected = Buffer.from(passwordHash.hash, "hex");
+  return expected.length === attempt.length && crypto.timingSafeEqual(expected, attempt);
+}
+
+async function readAuthStore() {
+  const store = await readJsonFile(AUTH_FILE, { users: [], sessions: [] });
+  store.users = Array.isArray(store.users) ? store.users : [];
+  store.sessions = Array.isArray(store.sessions) ? store.sessions : [];
+  return store;
+}
+
+async function saveAuthStore(store) {
+  await writeJsonFile(AUTH_FILE, {
+    users: store.users || [],
+    sessions: store.sessions || [],
+  });
+}
+
+function pruneSessions(store) {
+  const now = Date.now();
+  store.sessions = (store.sessions || []).filter((session) => Date.parse(session.expiresAt) > now);
+}
+
+function createSession(store, userId) {
+  pruneSessions(store);
+  const token = crypto.randomBytes(32).toString("hex");
+  const now = new Date();
+  const expiresAt = new Date(now.getTime() + SESSION_MAX_AGE_SECONDS * 1000);
+  store.sessions.push({
+    token,
+    userId,
+    createdAt: now.toISOString(),
+    expiresAt: expiresAt.toISOString(),
+  });
+  return token;
+}
+
+async function currentUserFromRequest(req) {
+  const token = parseCookies(req)[SESSION_COOKIE];
+  if (!token) return { store: await readAuthStore(), user: null, session: null, token: null };
+  const store = await readAuthStore();
+  pruneSessions(store);
+  const session = store.sessions.find((item) => item.token === token) || null;
+  const user = session ? store.users.find((item) => item.id === session.userId) || null : null;
+  return { store, user, session, token };
+}
+
+async function requireUser(req, res) {
+  const auth = await currentUserFromRequest(req);
+  if (!auth.user) {
+    sendJson(res, 401, { ok: false, error: "Sign in required" });
+    return null;
+  }
+  return auth;
+}
+
+async function parseJsonBody(req) {
+  const raw = await readBody(req);
+  try {
+    return raw ? JSON.parse(raw) : {};
+  } catch {
+    throw new Error("Invalid JSON body");
+  }
+}
+
+async function handleRegister(req, res) {
+  const body = await parseJsonBody(req);
+  const email = normalizeEmail(body.email);
+  const password = String(body.password || "");
+  const name = String(body.name || "").trim() || email.split("@")[0] || "Editor";
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new Error("Valid email required");
+  if (password.length < 8) throw new Error("Password must be at least 8 characters");
+
+  const store = await readAuthStore();
+  pruneSessions(store);
+  if (store.users.some((user) => user.email === email)) {
+    sendJson(res, 409, { ok: false, error: "Account already exists" });
+    return;
+  }
+
+  const user = {
+    id: `user_${crypto.randomUUID()}`,
+    email,
+    name,
+    password: hashPassword(password),
+    subscription: defaultSubscription("free"),
+    license: null,
+    createdAt: new Date().toISOString(),
+  };
+  user.license = defaultLicense(user.subscription.plan, user.id, user.createdAt);
+  store.users.push(user);
+  const token = createSession(store, user.id);
+  await saveAuthStore(store);
+  sendJson(res, 201, { ok: true, user: publicUser(user), subscription: user.subscription, license: user.license }, {
+    "Set-Cookie": sessionCookie(token),
+  });
+}
+
+async function handleLogin(req, res) {
+  const body = await parseJsonBody(req);
+  const email = normalizeEmail(body.email);
+  const password = String(body.password || "");
+  const store = await readAuthStore();
+  pruneSessions(store);
+  const user = store.users.find((item) => item.email === email);
+  if (!user || !verifyPassword(password, user.password)) {
+    sendJson(res, 401, { ok: false, error: "Invalid email or password" });
+    return;
+  }
+  ensureUserCommercialState(user);
+  const token = createSession(store, user.id);
+  await saveAuthStore(store);
+  sendJson(res, 200, { ok: true, user: publicUser(user), subscription: user.subscription, license: user.license }, {
+    "Set-Cookie": sessionCookie(token),
+  });
+}
+
+async function handleLogout(req, res) {
+  const { store, token } = await currentUserFromRequest(req);
+  store.sessions = store.sessions.filter((session) => session.token !== token);
+  await saveAuthStore(store);
+  sendJson(res, 200, { ok: true }, {
+    "Set-Cookie": sessionCookie("", 0),
+  });
+}
+
+async function handleMe(req, res) {
+  const { store, user } = await currentUserFromRequest(req);
+  if (user) {
+    ensureUserCommercialState(user);
+    await saveAuthStore(store);
+  }
+  sendJson(res, 200, {
+    ok: true,
+    user: publicUser(user),
+    subscription: user?.subscription || null,
+    license: user?.license || null,
+  });
+}
+
+async function handleSubscription(req, res) {
+  const auth = await requireUser(req, res);
+  if (!auth) return;
+  ensureUserCommercialState(auth.user);
+  if (req.method === "GET") {
+    sendJson(res, 200, { ok: true, subscription: auth.user.subscription, license: auth.user.license });
+    return;
+  }
+  const body = await parseJsonBody(req);
+  const plan = normalizePlan(body.plan || "free");
+  if (!PLAN_DEFINITIONS[plan]) throw new Error("Unknown subscription plan");
+  auth.user.subscription = {
+    ...defaultSubscription(plan),
+    activatedAt: new Date().toISOString(),
+  };
+  auth.user.license = defaultLicense(plan, auth.user.id, auth.user.subscription.activatedAt);
+  await saveAuthStore(auth.store);
+  sendJson(res, 200, { ok: true, user: publicUser(auth.user), subscription: auth.user.subscription, license: auth.user.license });
+}
+
+function sanitizeProjectId(id) {
+  return String(id || "").replace(/[^a-zA-Z0-9_-]/g, "");
+}
+
+function userProjectDir(userId) {
+  return path.join(PROJECTS_DIR, sanitizeProjectId(userId));
+}
+
+function projectPathFor(userId, projectId) {
+  const cleanId = sanitizeProjectId(projectId);
+  if (!cleanId) throw new Error("Invalid project id");
+  return path.join(userProjectDir(userId), `${cleanId}.json`);
+}
+
+function projectSummary(project) {
+  return {
+    id: project.id,
+    name: project.name,
+    ownerId: project.ownerId,
+    licenseId: project.licenseId || "",
+    createdAt: project.createdAt,
+    updatedAt: project.updatedAt,
+    sceneCount: project.sceneCount || 0,
+    duration: project.duration || 0,
+    schemaVersion: project.schemaVersion || "",
+  };
+}
+
+async function readProjectList(userId) {
+  const dir = userProjectDir(userId);
+  try {
+    const files = (await fsp.readdir(dir)).filter((file) => file.endsWith(".json"));
+    const projects = [];
+    for (const file of files) {
+      try {
+        const project = JSON.parse(await fsp.readFile(path.join(dir, file), "utf8"));
+        projects.push(projectSummary(project));
+      } catch {
+        // Skip malformed local project files instead of blocking the library.
+      }
+    }
+    return projects.sort((a, b) => String(b.updatedAt).localeCompare(String(a.updatedAt)));
+  } catch (error) {
+    if (error.code === "ENOENT") return [];
+    throw error;
+  }
+}
+
+async function readProject(userId, projectId) {
+  const project = await readJsonFile(projectPathFor(userId, projectId), null);
+  if (!project || project.ownerId !== userId) return null;
+  return project;
+}
+
+async function writeProject(userId, project) {
+  await writeJsonFile(projectPathFor(userId, project.id), project);
+}
+
+async function assertProjectCapacity(auth, extra = 1) {
+  ensureUserCommercialState(auth.user);
+  const limit = Number(auth.user.subscription?.projectLimit || 0);
+  if (!limit) return;
+  const projects = await readProjectList(auth.user.id);
+  if (projects.length + extra > limit) {
+    throw new Error(`${auth.user.subscription.label} plan allows ${limit} saved projects`);
+  }
+}
+
+function buildProjectRecord(userId, body, existing = null) {
+  const payload = body.payload || existing?.payload || null;
+  if (!payload || typeof payload !== "object") throw new Error("Project payload required");
+  const edit = payload.edit || payload;
+  const name = String(body.name || existing?.name || edit.title || "Untitled Project").trim().slice(0, 120);
+  const now = new Date().toISOString();
+  return {
+    id: existing?.id || `project_${crypto.randomUUID()}`,
+    ownerId: userId,
+    name,
+    licenseId: body.licenseId || existing?.licenseId || "",
+    payload,
+    schemaVersion: edit.schemaVersion || payload.schemaVersion || "",
+    sceneCount: Array.isArray(edit.scenes) ? edit.scenes.length : 0,
+    duration: Number(edit.duration || 0),
+    createdAt: existing?.createdAt || now,
+    updatedAt: now,
+  };
+}
+
+async function handleProjects(req, res, url) {
+  const auth = await requireUser(req, res);
+  if (!auth) return;
+
+  if (url.pathname === "/api/projects") {
+    if (req.method === "GET") {
+      sendJson(res, 200, { ok: true, projects: await readProjectList(auth.user.id) });
+      return;
+    }
+    if (req.method === "POST") {
+      const body = await parseJsonBody(req);
+      await assertProjectCapacity(auth);
+      const project = buildProjectRecord(auth.user.id, body);
+      project.licenseId = auth.user.license?.id || "";
+      await writeProject(auth.user.id, project);
+      sendJson(res, 201, { ok: true, project: projectSummary(project), record: project });
+      return;
+    }
+  }
+
+  const duplicateMatch = url.pathname.match(/^\/api\/projects\/([^/]+)\/duplicate$/);
+  if (duplicateMatch) {
+    if (req.method !== "POST") {
+      sendJson(res, 405, { ok: false, error: "Method not allowed" });
+      return;
+    }
+    const sourceId = duplicateMatch[1];
+    const source = await readProject(auth.user.id, sourceId);
+    if (!source) {
+      sendJson(res, 404, { ok: false, error: "Project not found" });
+      return;
+    }
+    await assertProjectCapacity(auth);
+    const body = await parseJsonBody(req);
+    const duplicate = buildProjectRecord(auth.user.id, {
+      name: body.name || `Copy of ${source.name || "Untitled Project"}`,
+      payload: structuredClone(source.payload),
+      licenseId: auth.user.license?.id || source.licenseId || "",
+    });
+    duplicate.duplicatedFrom = source.id;
+    await writeProject(auth.user.id, duplicate);
+    sendJson(res, 201, { ok: true, project: projectSummary(duplicate), record: duplicate });
+    return;
+  }
+
+  const match = url.pathname.match(/^\/api\/projects\/([^/]+)$/);
+  if (!match) {
+    sendJson(res, 404, { ok: false, error: "Project route not found" });
+    return;
+  }
+  const projectId = match[1];
+  const project = await readProject(auth.user.id, projectId);
+  if (!project) {
+    sendJson(res, 404, { ok: false, error: "Project not found" });
+    return;
+  }
+
+  if (req.method === "GET") {
+    sendJson(res, 200, { ok: true, project });
+    return;
+  }
+  if (req.method === "PUT") {
+    const body = await parseJsonBody(req);
+    const updated = buildProjectRecord(auth.user.id, body, project);
+    await writeProject(auth.user.id, updated);
+    sendJson(res, 200, { ok: true, project: projectSummary(updated), record: updated });
+    return;
+  }
+  if (req.method === "DELETE") {
+    await fsp.unlink(projectPathFor(auth.user.id, projectId));
+    sendJson(res, 200, { ok: true, deletedId: projectId });
+    return;
+  }
+  sendJson(res, 405, { ok: false, error: "Method not allowed" });
 }
 
 function parseTsv(text) {
@@ -131,8 +667,11 @@ async function getProject(timelineId = "first-generated") {
 
   const timeline = parseTsv(await fsp.readFile(timelinePath, "utf8"));
   const timelineMetadata = await readTimelineMetadata(timelineConfig);
-  const sheetIndex = parseTsv(await fsp.readFile(indexPath, "utf8"));
+  const sheetIndex = timelineConfig.skipReferences ? [] : parseTsv(await fsp.readFile(indexPath, "utf8"));
   const manifest = JSON.parse(await fsp.readFile(manifestPath, "utf8"));
+  const audioPath = timelineConfig.audioPath || AUDIO_FILE;
+  const rubabPath = timelineConfig.rubabPath || RUBAB_FRAME;
+  const audioDuration = Number(timelineMetadata.audio_duration_seconds || 201.84);
 
   const frames = manifest.frames.map((frame) => {
     const framePath = frame.frame_1080p || frame.new_file || frame.old_file;
@@ -148,15 +687,25 @@ async function getProject(timelineId = "first-generated") {
     };
   });
 
-  const references = sheetIndex.map((item) => ({
-    sheet: item.sheet,
-    slot: Number(item.slot),
-    frameIndex: Number(item.frame_index),
-    title: item.title,
-    note: item.note,
-    image: fileUrl(item.source_image),
-    path: item.source_image,
-  }));
+  const references = timelineConfig.skipReferences
+    ? frames.slice(0, 16).map((frame) => ({
+      sheet: timelineConfig.id,
+      slot: frame.index,
+      frameIndex: frame.index,
+      title: frame.title,
+      note: frame.note,
+      image: frame.image,
+      path: frame.path,
+    }))
+    : sheetIndex.map((item) => ({
+      sheet: item.sheet,
+      slot: Number(item.slot),
+      frameIndex: Number(item.frame_index),
+      title: item.title,
+      note: item.note,
+      image: fileUrl(item.source_image),
+      path: item.source_image,
+    }));
 
   const defaultOverlayScenes = new Set([3, 7, 10, 16]);
   const scenes = timeline.map((row) => {
@@ -206,15 +755,15 @@ async function getProject(timelineId = "first-generated") {
       scaleFactor: timelineMetadata.scale_factor_for_frames_1_to_15 || null,
       shotCount: timelineMetadata.shot_count || scenes.length,
     },
-    duration: timelineMetadata.audio_duration_seconds || 201.84,
+    duration: audioDuration,
     audio: {
-      path: AUDIO_FILE,
-      url: fileUrl(AUDIO_FILE),
-      duration: 201.84,
+      path: audioPath,
+      url: fileUrl(audioPath),
+      duration: audioDuration,
     },
     rubab: {
-      path: RUBAB_FRAME,
-      url: fileUrl(RUBAB_FRAME),
+      path: rubabPath,
+      url: fileUrl(rubabPath),
     },
     frames,
     references,
@@ -245,9 +794,105 @@ function coerceScene(scene, fallbackIndex) {
     imagePath,
     rubabOverlay: Boolean(scene.rubabOverlay),
     note: String(scene.note || ""),
+    captions: String(scene.captions || [scene.titleHi, scene.titleEn].filter(Boolean).join("\n")),
+    composite: cloneJson(scene.composite || {}),
+    effects: {
+      grain: Boolean(scene.effects?.grain),
+      vignette: Boolean(scene.effects?.vignette),
+      dust: Boolean(scene.effects?.dust),
+      sonic: Boolean(scene.effects?.sonic),
+    },
     transition: {
       type: String(scene.transition?.type || "cut"),
       duration: Number(scene.transition?.duration || 0),
+    },
+  };
+}
+
+function cloneJson(value, fallback = null) {
+  try {
+    return value == null ? fallback : JSON.parse(JSON.stringify(value));
+  } catch {
+    return fallback;
+  }
+}
+
+function arrayPayload(value) {
+  return Array.isArray(value) ? cloneJson(value, []) : [];
+}
+
+function objectPayload(value) {
+  return value && typeof value === "object" && !Array.isArray(value) ? cloneJson(value, {}) : {};
+}
+
+function exportSchemaPayload(payload, scenes) {
+  const dynamicTracks = arrayPayload(payload.dynamicTracks);
+  const compositions = arrayPayload(payload.compositions);
+  const captions = scenes.filter((scene) => scene.captions.trim());
+  const vfxScenes = scenes.filter((scene) => Object.values(scene.effects).some(Boolean));
+  return {
+    schemaVersion: String(payload.schemaVersion || ""),
+    sourceTimeline: objectPayload(payload.sourceTimeline),
+    markers: arrayPayload(payload.markers),
+    keyframes: arrayPayload(payload.keyframes),
+    dynamicTracks,
+    compositions,
+    activeCompositionId: payload.activeCompositionId || null,
+    audioMix: objectPayload(payload.audioMix),
+    accessibility: objectPayload(payload.accessibility),
+    uxNotes: arrayPayload(payload.uxNotes),
+    spatial: objectPayload(payload.spatial),
+    layers: objectPayload(payload.layers),
+    captions: captions.map((scene) => ({
+      sceneId: scene.id,
+      start: scene.start,
+      end: scene.end,
+      text: scene.captions,
+    })),
+    vfx: vfxScenes.map((scene) => ({
+      sceneId: scene.id,
+      start: scene.start,
+      end: scene.end,
+      effects: scene.effects,
+    })),
+  };
+}
+
+function exportParityReport(schema, scenes, render = {}) {
+  const dynamicTrackClipCount = schema.dynamicTracks.reduce((total, track) => total + (Array.isArray(track.clips) ? track.clips.length : 0), 0);
+  const compositionClipCount = schema.compositions.reduce((total, composition) => total + (Array.isArray(composition.clips) ? composition.clips.length : 0), 0);
+  return {
+    fullSchemaRead: true,
+    sceneCount: scenes.length,
+    dynamicTracks: {
+      read: true,
+      count: schema.dynamicTracks.length,
+      clipCount: dynamicTrackClipCount,
+    },
+    compositions: {
+      read: true,
+      count: schema.compositions.length,
+      clipCount: compositionClipCount,
+      activeCompositionId: schema.activeCompositionId,
+    },
+    captions: {
+      read: true,
+      count: schema.captions.length,
+      rendered: Boolean(render.captionsRendered),
+    },
+    vfx: {
+      read: true,
+      sceneCount: schema.vfx.length,
+      manifestWritten: true,
+      timelineWindowsRendered: Boolean(render.vfxWindowsRendered),
+    },
+    audioMix: {
+      read: true,
+      keys: Object.keys(schema.audioMix),
+    },
+    layers: {
+      read: true,
+      dynamicTrackMirror: Array.isArray(schema.layers.dynamic) ? schema.layers.dynamic.length : 0,
     },
   };
 }
@@ -256,18 +901,53 @@ async function createConcatFile(exportDir, scenes) {
   const concatPath = path.join(exportDir, "timeline.concat.txt");
   const lines = [];
   for (const scene of scenes) {
-    const imagePath = safeJoin(ROOT, scene.imagePath);
+    const imagePath = safeMediaAssetPath(scene.imagePath);
     await fsp.access(imagePath, fs.constants.R_OK);
     lines.push(`file '${imagePath.replace(/'/g, "'\\''")}'`);
     lines.push(`duration ${scene.duration.toFixed(9)}`);
   }
-  const lastImage = safeJoin(ROOT, scenes[scenes.length - 1].imagePath);
+  const lastImage = safeMediaAssetPath(scenes[scenes.length - 1].imagePath);
   lines.push(`file '${lastImage.replace(/'/g, "'\\''")}'`);
   await fsp.writeFile(concatPath, `${lines.join("\n")}\n`, "utf8");
   return concatPath;
 }
 
-function ffmpegArgs({ concatPath, audioPath, outputPath, duration, overlayWindows, rubabPath }) {
+async function attachCaptionFiles(exportDir, scenes) {
+  const captionScenes = scenes.filter((scene) => scene.captions.trim());
+  for (const scene of captionScenes) {
+    const captionPath = path.join(exportDir, `caption_${String(scene.id).padStart(3, "0")}.txt`);
+    await fsp.writeFile(captionPath, scene.captions.trim(), "utf8");
+    scene.captionPath = captionPath;
+  }
+  return captionScenes.length;
+}
+
+function escapeFilterPath(filePath) {
+  return String(filePath).replace(/\\/g, "\\\\").replace(/'/g, "'\\''").replace(/:/g, "\\:");
+}
+
+function timelineEnable(windows) {
+  return windows
+    .map((window) => `between(t,${window.start.toFixed(3)},${window.end.toFixed(3)})`)
+    .join("+");
+}
+
+function postVideoFilters(scenes) {
+  const filters = [];
+  for (const scene of scenes) {
+    if (scene.captionPath) {
+      filters.push(`drawtext=textfile='${escapeFilterPath(scene.captionPath)}':x=(w-text_w)/2:y=h-132:fontcolor=white:fontsize=34:box=1:boxcolor=black@0.48:boxborderw=16:enable='${timelineEnable([scene])}'`);
+    }
+  }
+  const vignetteWindows = scenes.filter((scene) => scene.effects.vignette);
+  if (vignetteWindows.length) {
+    filters.push(`vignette=angle=PI/5:enable='${timelineEnable(vignetteWindows)}'`);
+  }
+  filters.push("fps=24", "format=yuv420p");
+  return filters.join(",");
+}
+
+function ffmpegArgs({ concatPath, audioPath, outputPath, duration, overlayWindows, rubabPath, scenes, includeAdvancedFilters = true }) {
   const args = [
     "-y",
     "-hide_banner",
@@ -280,22 +960,21 @@ function ffmpegArgs({ concatPath, audioPath, outputPath, duration, overlayWindow
     "-i",
     audioPath,
   ];
+  const filters = includeAdvancedFilters ? postVideoFilters(scenes) : "fps=24,format=yuv420p";
 
   if (overlayWindows.length) {
-    const enable = overlayWindows
-      .map((window) => `between(t,${window.start.toFixed(3)},${window.end.toFixed(3)})`)
-      .join("+");
+    const enable = timelineEnable(overlayWindows);
     args.push("-loop", "1", "-framerate", "24", "-t", duration.toFixed(3), "-i", rubabPath);
     args.push(
       "-filter_complex",
-      `[2:v]scale=720:405,format=rgba,colorchannelmixer=aa=0.93,drawbox=x=0:y=0:w=iw:h=ih:color=white@0.70:t=4[rubab];[0:v][rubab]overlay=x=W-w-54:y=H-h-54:enable='${enable}',fps=24,format=yuv420p[v]`,
+      `[2:v]scale=720:405,format=rgba,colorchannelmixer=aa=0.93,drawbox=x=0:y=0:w=iw:h=ih:color=white@0.70:t=4[rubab];[0:v][rubab]overlay=x=W-w-54:y=H-h-54:enable='${enable}',${filters}[v]`,
       "-map",
       "[v]",
       "-map",
       "1:a:0"
     );
   } else {
-    args.push("-map", "0:v:0", "-map", "1:a:0", "-vf", "fps=24,format=yuv420p");
+    args.push("-filter_complex", `[0:v]${filters}[v]`, "-map", "[v]", "-map", "1:a:0");
   }
 
   args.push(
@@ -352,14 +1031,17 @@ async function handleExport(req, res) {
     await fsp.mkdir(exportDir, { recursive: true });
 
     const concatPath = await createConcatFile(exportDir, scenes);
-    const audioPath = safeJoin(ROOT, String(payload.audioPath || AUDIO_FILE));
-    const rubabPath = safeJoin(ROOT, String(payload.rubabPath || RUBAB_FRAME));
+    const audioPath = safeMediaAssetPath(String(payload.audioPath || AUDIO_FILE));
+    const rubabPath = safeMediaAssetPath(String(payload.rubabPath || RUBAB_FRAME));
     const outputPath = path.join(exportDir, "mahavisphot_editor_export.mp4");
     const projectPath = path.join(exportDir, "project.json");
+    const captionsRendered = await attachCaptionFiles(exportDir, scenes);
 
     const overlayWindows = scenes
       .filter((scene) => scene.rubabOverlay)
       .map((scene) => ({ start: scene.start, end: scene.end }));
+    const schema = exportSchemaPayload(payload, scenes);
+    const vfxWindowsRendered = schema.vfx.some((scene) => scene.effects?.vignette);
 
     const project = {
       createdAt: new Date().toISOString(),
@@ -368,9 +1050,15 @@ async function handleExport(req, res) {
       rubabPath: path.relative(ROOT, rubabPath),
       scenes,
       overlayWindows,
+      schema,
+      parity: exportParityReport(schema, scenes, {
+        captionsRendered: captionsRendered === schema.captions.length,
+        vfxWindowsRendered,
+      }),
     };
     await fsp.writeFile(projectPath, JSON.stringify(project, null, 2), "utf8");
 
+    let advancedFilters = true;
     const args = ffmpegArgs({
       concatPath,
       audioPath,
@@ -378,8 +1066,28 @@ async function handleExport(req, res) {
       duration,
       overlayWindows,
       rubabPath,
+      scenes,
     });
-    await runFfmpeg(args);
+    try {
+      await runFfmpeg(args);
+    } catch (error) {
+      advancedFilters = false;
+      const fallbackArgs = ffmpegArgs({
+        concatPath,
+        audioPath,
+        outputPath,
+        duration,
+        overlayWindows,
+        rubabPath,
+        scenes,
+        includeAdvancedFilters: false,
+      });
+      await runFfmpeg(fallbackArgs);
+      project.parity.captions.rendered = false;
+      project.parity.vfx.timelineWindowsRendered = false;
+      project.renderWarning = `Advanced caption/VFX render fallback used: ${error.message.slice(0, 400)}`;
+      await fsp.writeFile(projectPath, JSON.stringify(project, null, 2), "utf8");
+    }
 
     sendJson(res, 200, {
       ok: true,
@@ -388,6 +1096,9 @@ async function handleExport(req, res) {
       project: fileUrl(path.relative(ROOT, projectPath)),
       concat: fileUrl(path.relative(ROOT, concatPath)),
       overlayWindows,
+      schema,
+      parity: project.parity,
+      advancedFilters,
     });
   } catch (error) {
     sendJson(res, 500, {
@@ -404,15 +1115,14 @@ async function serveStatic(req, res) {
     if (url.pathname === "/" || url.pathname === "/editor") {
       filePath = path.join(EDITOR_DIR, "index.html");
     } else if (url.pathname.startsWith("/assets/")) {
-      filePath = safeJoin(ROOT, decodeURIComponent(url.pathname.slice("/assets/".length)));
+      filePath = safeMediaAssetPath(decodeURIComponent(url.pathname.slice("/assets/".length)));
     } else {
       filePath = safeJoin(EDITOR_DIR, decodeURIComponent(url.pathname.slice(1)));
     }
 
     const stat = await fsp.stat(filePath);
     if (stat.isDirectory()) {
-      const listing = await fsp.readdir(filePath);
-      sendJson(res, 200, listing);
+      send(res, 403, "Directory listing disabled", { "Content-Type": "text/plain; charset=utf-8" });
       return;
     }
     const ext = path.extname(filePath).toLowerCase();
@@ -426,8 +1136,54 @@ async function serveStatic(req, res) {
   }
 }
 
+function handleHealth(req, res, url) {
+  const suppliedToken = String(req.headers["x-mahavishphot-health-token"] || req.headers["x-mahavisphot-health-token"] || url.searchParams.get("token") || "");
+  const owned = activeHealthToken ? suppliedToken === activeHealthToken : !suppliedToken;
+  sendJson(res, 200, {
+    ok: true,
+    app: APP_HEALTH_ID,
+    owned,
+    tokenRequired: Boolean(activeHealthToken),
+    port: activePort,
+  });
+}
+
 const server = http.createServer(async (req, res) => {
   const url = new URL(req.url, `http://${req.headers.host}`);
+  try {
+    if (req.method === "GET" && url.pathname === "/api/health") {
+      handleHealth(req, res, url);
+      return;
+    }
+    if (req.method === "GET" && url.pathname === "/api/auth/me") {
+      await handleMe(req, res);
+      return;
+    }
+    if (req.method === "POST" && url.pathname === "/api/auth/register") {
+      await handleRegister(req, res);
+      return;
+    }
+    if (req.method === "POST" && url.pathname === "/api/auth/login") {
+      await handleLogin(req, res);
+      return;
+    }
+    if (req.method === "POST" && url.pathname === "/api/auth/logout") {
+      await handleLogout(req, res);
+      return;
+    }
+    if ((req.method === "GET" || req.method === "POST") && url.pathname === "/api/subscription") {
+      await handleSubscription(req, res);
+      return;
+    }
+    if (url.pathname === "/api/projects" || url.pathname.startsWith("/api/projects/")) {
+      await handleProjects(req, res, url);
+      return;
+    }
+  } catch (error) {
+    sendJson(res, 500, { ok: false, error: error.message || String(error) });
+    return;
+  }
+
   if (req.method === "GET" && url.pathname === "/api/timelines") {
     sendJson(res, 200, {
       timelines: GENERATED_TIMELINES.map((timeline, index) => ({
@@ -455,6 +1211,34 @@ const server = http.createServer(async (req, res) => {
   await serveStatic(req, res);
 });
 
-server.listen(PORT, "127.0.0.1", () => {
-  console.log(`Mahavisphot editor: http://127.0.0.1:${PORT}`);
-});
+function setHealthToken(token) {
+  activeHealthToken = String(token || process.env.MAHAVISPHOT_HEALTH_TOKEN || "");
+}
+
+function startServer(port = PORT, host = "127.0.0.1", healthToken = process.env.MAHAVISPHOT_HEALTH_TOKEN || "") {
+  setHealthToken(healthToken);
+  activePort = port;
+  if (server.listening) return Promise.resolve(server);
+  return new Promise((resolve, reject) => {
+    server.once("error", reject);
+    server.listen(port, host, () => {
+      server.off("error", reject);
+      console.log(`Mahavisphot editor: http://${host}:${port}`);
+      resolve(server);
+    });
+  });
+}
+
+if (require.main === module) {
+  startServer().catch((error) => {
+    console.error(error);
+    process.exitCode = 1;
+  });
+}
+
+module.exports = {
+  startServer,
+  setHealthToken,
+  server,
+  getProject,
+};

@@ -28,6 +28,9 @@ pnpm-debug.log*
 .env.*
 !.env.example
 
+# Local app auth, sessions, subscriptions, and saved project records
+data/
+
 # Heavy source media and rendered masters
 *.mp4
 *.mov
