@@ -1,0 +1,58 @@
+frame	start	end	duration	source	title_hi	title_en	image_path	rubab_overlay	effects	note
+1	0.0	8.0	8.0	1	आओ करें घात की बात	Varg Ka Khel: Let's Talk About Exponents	media/varg_ka_khel/frames/frame_0001.jpg	no		Intro: Upbeat acoustic guitar intro, claps, tabla synth beat
+2	8.0	14.5	6.5	2	आओ करें घात की बात	Let's Talk About Exponents	media/varg_ka_khel/frames/frame_0002.jpg	no		Chorus: आओ करें घात की बात
+3	14.5	21.0	6.5	3	सात का वर्ग मतलब सात गुना सात	Seven Squared Means Seven Times Seven	media/varg_ka_khel/frames/frame_0003.jpg	no		Chorus: आओ करें घात की बात
+4	21.0	27.5	6.5	4	त्रिभुज के जो हैं तीन हाथ	Triangle's Three Hands	media/varg_ka_khel/frames/frame_0004.jpg	no		Chorus: आओ करें घात की बात
+5	27.5	34.0	6.5	5	कमाल खेल है वर्ग के साथ	Squares Are a Wonderful Game	media/varg_ka_khel/frames/frame_0005.jpg	no		Chorus: आओ करें घात की बात
+6	34.0	41.0	7.0	6	पाइथागोरस के नाम पर बस्ता जो खुलवाया	Bag Opened in Pythagoras' Name	media/varg_ka_khel/frames/frame_0006.jpg	no	grain,vignette	Confusion / Satire: Pythagoras bag, rote learning pressure
+7	41.0	48.0	7.0	7	बेचारे कुचली-कुचली को कुछ समझ ना आया	Kutchli-Kutchli Couldn't Understand	media/varg_ka_khel/frames/frame_0007.jpg	no	grain,vignette	Confusion / Satire: Pythagoras bag, rote learning pressure
+8	48.0	55.0	7.0	8	रट-रट कर फॉर्मूला उसकी बुद्धि चकराई	Rote Formula Confused Her Mind	media/varg_ka_khel/frames/frame_0008.jpg	no	grain,vignette	Confusion / Satire: Pythagoras bag, rote learning pressure
+9	55.0	62.0	7.0	9	ब्लैकबोर्ड की काली छाया सपने में भी आई	Blackboard Shadow in Her Dreams	media/varg_ka_khel/frames/frame_0009.jpg	no	grain,vignette	Confusion / Satire: Pythagoras bag, rote learning pressure
+10	62.0	65.25	3.25	10	रटने का बोझ	Weight of Rote Learning	media/varg_ka_khel/frames/frame_0010.jpg	no	grain,vignette	Dark Confusion: Blackboard shadow and formula overload
+11	65.25	68.5	3.25	11	कुचली-कुचली - बोझ बढ़ रहा है	The Pressure Grows	media/varg_ka_khel/frames/frame_0011.jpg	no	grain,vignette	Dark Confusion: Blackboard shadow and formula overload
+12	68.5	71.75	3.25	12	सबसे काला श्यामपट	The Darkest Blackboard	media/varg_ka_khel/frames/frame_0012.jpg	no	grain,vignette	Dark Confusion: Blackboard shadow and formula overload
+13	71.75	75.0	3.25	13	भ्रम ना की गूंज	Echo of Confusion	media/varg_ka_khel/frames/frame_0013.jpg	no	grain,vignette	Dark Confusion: Blackboard shadow and formula overload
+14	75.0	78.25	3.25	14	भ्रम की गूंज	Confusion Echo	media/varg_ka_khel/frames/frame_0014.jpg	no	grain,vignette	Dark Confusion: Blackboard shadow and formula overload
+15	78.25	81.5	3.25	15	चरम बिंदु	Peak Pressure	media/varg_ka_khel/frames/frame_0015.jpg	no	grain,vignette	Dark Confusion: Blackboard shadow and formula overload
+16	81.5	84.75	3.25	16	गहरी गुफा	Deep Cave	media/varg_ka_khel/frames/frame_0016.jpg	no	grain,vignette	Dark Confusion: Blackboard shadow and formula overload
+17	84.75	88.0	3.25	17	रट-रट कर बुद्धि चकराई	Rote Learning Spins the Mind	media/varg_ka_khel/frames/frame_0017.jpg	no	grain,vignette	Dark Confusion: Blackboard shadow and formula overload
+18	88.0	95.5	7.5	18	खेल का समय	Time to Play	media/varg_ka_khel/frames/frame_0018.jpg	no	dust	Playful Turn: रटना छोड़ो, अब देखो ये खेल
+19	95.5	103.0	7.5	19	अंकों का नाच - बोझ अब नहीं	Numbers Dance, No More Burden	media/varg_ka_khel/frames/frame_0019.jpg	no	dust	Playful Turn: रटना छोड़ो, अब देखो ये खेल
+20	103.0	110.5	7.5	20	नया ब्लैकबोर्ड, साफ मन	New Blackboard, Clear Mind	media/varg_ka_khel/frames/frame_0020.jpg	no	dust	Playful Turn: रटना छोड़ो, अब देखो ये खेल
+21	110.5	118.0	7.5	21	साथी हाथ बढ़ाना, मिलकर सीखना	Learn Together	media/varg_ka_khel/frames/frame_0021.jpg	no	dust	Playful Turn: रटना छोड़ो, अब देखो ये खेल
+22	118.0	125.0	7.0	22	जंगल का रास्ता, अब साफ है	The Path is Clear	media/varg_ka_khel/frames/frame_0022.jpg	no	dust	Simple Math: 3-4-5, squares and clear arithmetic
+23	125.0	132.0	7.0	23	मस्तिष्क का द्वार, प्रकाश का खेल	Mind Door Opens	media/varg_ka_khel/frames/frame_0023.jpg	no	dust	Simple Math: 3-4-5, squares and clear arithmetic
+24	132.0	139.0	7.0	24	सीखने का सफर, हर कदम नया	Learning Journey	media/varg_ka_khel/frames/frame_0024.jpg	no	dust	Simple Math: 3-4-5, squares and clear arithmetic
+25	139.0	146.0	7.0	25	रचनात्मक मज़ा, गणित है खेल	Creative Math Play	media/varg_ka_khel/frames/frame_0025.jpg	no	dust	Simple Math: 3-4-5, squares and clear arithmetic
+26	146.0	152.0	6.0	26	कोड की भाषा	Code Language	media/varg_ka_khel/frames/frame_0026.jpg	no	grain,sonic	Area Visual Magic: Base square plus height square
+27	152.0	158.0	6.0	27	घात का जादू - नए कोड की खोज	Exponent Magic	media/varg_ka_khel/frames/frame_0027.jpg	no	grain,sonic	Area Visual Magic: Base square plus height square
+28	158.0	164.0	6.0	28	रस्सी तिरछी मुस्काई, मज़ा आया	The Slanted Rope Smiles	media/varg_ka_khel/frames/frame_0028.jpg	no	grain,sonic	Area Visual Magic: Base square plus height square
+29	164.0	170.0	6.0	29	गुप्त ट्रिक - ५, १२ और १३ का खेल	Secret 5-12-13 Trick	media/varg_ka_khel/frames/frame_0029.jpg	no	grain,sonic	Area Visual Magic: Base square plus height square
+30	170.0	176.0	6.0	30	आधार पे एक चौकोर सजाओ	Build a Square on the Base	media/varg_ka_khel/frames/frame_0030.jpg	no	grain,sonic	Secret Codes: 5, 12, 13 code language
+31	176.0	182.0	6.0	31	लंब पे भी एक वैसा ही बनाओ	Build One on the Height	media/varg_ka_khel/frames/frame_0031.jpg	no	grain,sonic	Secret Codes: 5, 12, 13 code language
+32	182.0	188.0	6.0	32	तिरछी लाइन का वर्ग बन जाएगा!	The Diagonal Square Appears	media/varg_ka_khel/frames/frame_0032.jpg	no	grain,sonic	Secret Codes: 5, 12, 13 code language
+33	188.0	194.0	6.0	33	गणित का मज़ा घात के साथ!	Math Joy with Exponents	media/varg_ka_khel/frames/frame_0033.jpg	no	grain,sonic	Secret Codes: 5, 12, 13 code language
+34	194.0	196.0	2.0	34	प्राचीन खोज की खोज	Ancient Search	media/varg_ka_khel/frames/frame_0034.jpg	no		Proud History: Baudhayan, Shulba Sutra, ancient discovery
+35	196.0	198.0	2.0	35	समय का खेल - एक नया रूप	Time Game, New Form	media/varg_ka_khel/frames/frame_0035.jpg	no		Proud History: Baudhayan, Shulba Sutra, ancient discovery
+36	198.0	200.0	2.0	36	तिरछी रस्सी की खोज - रहस्य खुला	Slanted Rope Discovery	media/varg_ka_khel/frames/frame_0036.jpg	no		Proud History: Baudhayan, Shulba Sutra, ancient discovery
+37	200.0	202.0	2.0	37	महान ट्रिक का राज - एक गहरा संबंध	Great Trick Revealed	media/varg_ka_khel/frames/frame_0037.jpg	no		Proud History: Baudhayan, Shulba Sutra, ancient discovery
+38	202.0	204.0	2.0	38	प्राचीन आधार पे एक चौकोर सजाओ	Ancient Base Square	media/varg_ka_khel/frames/frame_0038.jpg	no		Proud History: Baudhayan, Shulba Sutra, ancient discovery
+39	204.0	206.0	2.0	39	लंब पे भी एक वैसा ही बनाओ	Height Square Too	media/varg_ka_khel/frames/frame_0039.jpg	no		Proud History: Baudhayan, Shulba Sutra, ancient discovery
+40	206.0	208.0	2.0	40	तिरछी लाइन का वर्ग बन जाएगा!	Diagonal Square Forms	media/varg_ka_khel/frames/frame_0040.jpg	no		Proud History: Baudhayan, Shulba Sutra, ancient discovery
+41	208.0	210.0	2.0	41	महान शुल्ब - भारत का ज्ञान	Shulba Wisdom of India	media/varg_ka_khel/frames/frame_0041.jpg	no		Proud History: Baudhayan, Shulba Sutra, ancient discovery
+42	210.0	212.0	2.0	42	भविष्य की नीव	Foundation of the Future	media/varg_ka_khel/frames/frame_0042.jpg	no		Proud History: Baudhayan, Shulba Sutra, ancient discovery
+43	212.0	214.0	2.0	43	समय का खेल - नया अवतार	Time Game, New Avatar	media/varg_ka_khel/frames/frame_0043.jpg	no		Proud History: Baudhayan, Shulba Sutra, ancient discovery
+44	214.0	216.0	2.0	44	तिरछी रस्सी का नया रास्ता - नेटवर्क खुला	Rope Becomes Network	media/varg_ka_khel/frames/frame_0044.jpg	no		Proud History: Baudhayan, Shulba Sutra, ancient discovery
+45	216.0	218.0	2.0	45	महान ट्रिक का कोड - वैश्विक ज्ञान	Global Code of the Trick	media/varg_ka_khel/frames/frame_0045.jpg	no		Proud History: Baudhayan, Shulba Sutra, ancient discovery
+46	218.0	219.38	1.38	46	प्राचीन आधार - नया रूप	Ancient Base, New Form	media/varg_ka_khel/frames/frame_0046.jpg	no	grain,sonic	Chorus / Outro: Kids chorus, applause, happy fade
+47	219.38	220.76	1.38	47	लंब की कहानी - एक साथ	Height Story Together	media/varg_ka_khel/frames/frame_0047.jpg	no	grain,sonic	Chorus / Outro: Kids chorus, applause, happy fade
+48	220.76	222.14	1.38	48	तिरछी लाइन का वर्ग बन जाएगा! - दुनिया बनी	Diagonal Square Builds a World	media/varg_ka_khel/frames/frame_0048.jpg	no	grain,sonic	Chorus / Outro: Kids chorus, applause, happy fade
+49	222.14	223.52	1.38	49	महान शुल्ब - भारत का ज्ञान, दुनिया का उपहार	India's Knowledge, World's Gift	media/varg_ka_khel/frames/frame_0049.jpg	no	grain,sonic	Chorus / Outro: Kids chorus, applause, happy fade
+50	223.52	224.9	1.38	50	कोड की भाषा	Code Language	media/varg_ka_khel/frames/frame_0050.jpg	no	grain,sonic	Chorus / Outro: Kids chorus, applause, happy fade
+51	224.9	226.28	1.38	51	घात का जादू - नए कोड की खोज	Exponent Magic Reprise	media/varg_ka_khel/frames/frame_0051.jpg	no	grain,sonic	Chorus / Outro: Kids chorus, applause, happy fade
+52	226.28	227.66	1.38	52	रस्सी तिरछी मुस्काई, मज़ा आया	Slanted Rope Smiles Again	media/varg_ka_khel/frames/frame_0052.jpg	no	grain,sonic	Chorus / Outro: Kids chorus, applause, happy fade
+53	227.66	229.04	1.38	53	गुप्त ट्रिक - ५, १२ और १३ का खेल	Secret Trick Returns	media/varg_ka_khel/frames/frame_0053.jpg	no	grain,sonic	Chorus / Outro: Kids chorus, applause, happy fade
+54	229.04	230.42	1.38	54	आधार पे एक चौकोर सजाओ	Build the Base Square	media/varg_ka_khel/frames/frame_0054.jpg	no	grain,sonic	Chorus / Outro: Kids chorus, applause, happy fade
+55	230.42	231.8	1.38	55	लंब पे भी एक वैसा ही बनाओ	Build the Height Square	media/varg_ka_khel/frames/frame_0055.jpg	no	grain,sonic	Chorus / Outro: Kids chorus, applause, happy fade
+56	231.8	233.18	1.38	56	तिरछी लाइन का वर्ग बन जाएगा!	Diagonal Square Victory	media/varg_ka_khel/frames/frame_0056.jpg	no	grain,sonic	Chorus / Outro: Kids chorus, applause, happy fade
+57	233.18	234.56	1.38	57	गणित का मज़ा घात के साथ!	Final Math Joy	media/varg_ka_khel/frames/frame_0057.jpg	no	grain,sonic	Chorus / Outro: Kids chorus, applause, happy fade

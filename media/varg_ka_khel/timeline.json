@@ -1,0 +1,69 @@
+{
+  "note": "Varg Ka Khel generated from supplied storyboard boards and embedded song lyrics.",
+  "audio_duration_seconds": 234.559979,
+  "shot_count": 57,
+  "lyrics": "🎵 [Intro](Upbeat acoustic guitar intro with energetic handclaps and a driving tabla synth beat)🎵 [Chorus]आओ करें घात की बात,सात का वर्ग मतलब सात गुना सात।त्रिभुज के जो हैं तीन हाथ,कमाल खेल है वर्ग के साथ!आओ करें घात की बात...🎵 [Verse 1 — The Confusion / Satire](Beat slows down to a heavy, dramatic rhythmic stomp — Rap/Slam-poetry style)पाइथागोरस के नाम पर बस्ता जो खुलवाया,बेचारे कुचली-पुचली को कुछ समझ ना आया।रट-रट कर फॉर्मूला उसकी बुद्धि चकराई,ब्लैकबोर्ड की काली छाया सपने में भी आई!🎵 [Verse 2 — The Transition](Suddenly, the upbeat pop music kicks back in with bright sounds)अरे रुको-रुको! रटना छोड़ो, अब देखो ये खेल,$A$ स्क्वायर प्लस $B$ स्क्वायर इक्वल्स $C$ स्क्वायर का मेल।तीन-चार-पाँच नाचे भाई,रस्सी तिरछी मुस्काई।क्या है बोलो वर्ग का खेला?समान भुजाओं ने लगाया मेला।🎵 [Verse 3 — The Simple Math]चलो समझें आयत और वर्ग,इनके बिना नहीं गणित का स्वर्ग।तीन-तीन का नौ, चार-चार का सोलह,जोड़ दो तो पच्चीस — गणित है साफ़।पाँच-पाँच भी पच्चीस — यही है तोल,विकर्ण का वर्ग सबसे अनमोल।🎵 [Chorus]आओ करें घात की बात,सात का वर्ग मतलब taxation सात गुना सात।त्रिभुज के जो हैं तीन हाथ,कमाल खेल है वर्ग के साथ!🎵 [Bridge — Area Ka Visual Jaadu](High energy, synth-heavy, suspenseful tone)वर्ग नहीं है सिर्फ एक नंबर,यह तो है क्षेत्रफल का समंदर।आधार पे एक चौकोर सजाओ,लंब पे भी एक वैसा ही बनाओ।दोनों का क्षेत्रफल जब जुड़ जाएगा,तिरछी लाइन का वर्ग बन जाएगा!🎵 [Verse 4 — The Secret Codes]सिर्फ तीन-चार-पाँच ही नहीं है यार,इस खेल के आगे भी hain कई पार।पाँच, बारह और तेरह की जोड़ी आई,इन्होंने भी सेम ट्रिक दिखाई।पाँच का पच्चीस, बारह का एक सौ चौवालिस,जोड़ करो तो एक सौ उनहत्तर का शोर ($169$),जो है तेरह का वर्ग, नो डाउट एनी मोर!🎵 [Verse 5 — The Proud History](Proud, cinematic tone with a mystical sitar overlay)पाइथागोरस से सदियों पहले का किस्सा,भारत के बौधायन ने खोजा था यह हिस्सा।शुल्ब सूत्र में उन्होंने बात बताई,रस्सी से हर एक इमारत बनाई।आयत का विकर्ण जब भी खींचो,दोनों भुजाओं का वर्ग उसमें सींचो!🎵 [Chorus / Outro](Full energy, chorus of kids joining in, massive clapping beat)आओ करें घात की बात,सात का वर्ग मतलब सात गुना सात।त्रिभुज के जो हैं तीन हाथ,कमाल खेल है वर्ग के साथ!हाँ, कमाल खेल है वर्ग के साथ!अब बस्ता हल्का, दिमाग है साफ़!गणित का मज़ा वर्ग के साथ!(Fade out with happy children's laughter and applause)",
+  "lyric_sections": [
+    {
+      "name": "Intro",
+      "start": 0.0,
+      "end": 8.0,
+      "note": "Upbeat acoustic guitar intro, claps, tabla synth beat"
+    },
+    {
+      "name": "Chorus",
+      "start": 8.0,
+      "end": 34.0,
+      "note": "आओ करें घात की बात"
+    },
+    {
+      "name": "Confusion / Satire",
+      "start": 34.0,
+      "end": 62.0,
+      "note": "Pythagoras bag, rote learning pressure"
+    },
+    {
+      "name": "Dark Confusion",
+      "start": 62.0,
+      "end": 88.0,
+      "note": "Blackboard shadow and formula overload"
+    },
+    {
+      "name": "Playful Turn",
+      "start": 88.0,
+      "end": 118.0,
+      "note": "रटना छोड़ो, अब देखो ये खेल"
+    },
+    {
+      "name": "Simple Math",
+      "start": 118.0,
+      "end": 146.0,
+      "note": "3-4-5, squares and clear arithmetic"
+    },
+    {
+      "name": "Area Visual Magic",
+      "start": 146.0,
+      "end": 170.0,
+      "note": "Base square plus height square"
+    },
+    {
+      "name": "Secret Codes",
+      "start": 170.0,
+      "end": 194.0,
+      "note": "5, 12, 13 code language"
+    },
+    {
+      "name": "Proud History",
+      "start": 194.0,
+      "end": 218.0,
+      "note": "Baudhayan, Shulba Sutra, ancient discovery"
+    },
+    {
+      "name": "Chorus / Outro",
+      "start": 218.0,
+      "end": 234.559979,
+      "note": "Kids chorus, applause, happy fade"
+    }
+  ],
+  "frame_manifest": "media/varg_ka_khel/manifest.json"
+}
