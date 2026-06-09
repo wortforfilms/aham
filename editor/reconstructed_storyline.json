@@ -1,0 +1,172 @@
+{
+  "title": "Mahavisphot Reconstructed Storyline",
+  "source": {
+    "visual_inventory": "build_frames/lineup_unique_art2/named_frames_1080p_jpg",
+    "timeline": "build_frames/mahavisphot_timestamped/timeline_scaled.tsv",
+    "audio_duration_seconds": 201.84,
+    "unique_frames_observed": 137
+  },
+  "logline": "A storm-born road of memory opens through mountains, ritual sound, and ancestral grief. A Sanskrit shankh blast tears time open, throwing ancient warriors into modern concrete ruin. Haryanvi force and Pakhtoon resolve collide with pride, blood, and inherited wounds until a cursed manuscript is rewritten in blood. The story resolves through Ganga, Tulsi, handshake, Bharat, Brahman, eclipse, bell, Om, and silence.",
+  "beats": [
+    {
+      "beat": 1,
+      "start": "0:00.00",
+      "end": "0:09.86",
+      "title_hi": "द लॉन्ग रोड",
+      "title_en": "The Long Road",
+      "story_action": "A group moves through a severe mountain world; the road is ancient, stormed, and half-mythic.",
+      "primary_frame": "0061_pakhtoon_formation_mountain",
+      "supporting_frames": ["0001_mountain_sage_long_road", "0005_mountain_warrior_march", "0058_mountain_long_road_group", "0059_marching_feet_dust", "0066_warriors_on_ridge"]
+    },
+    {
+      "beat": 2,
+      "start": "0:09.86",
+      "end": "0:19.71",
+      "title_hi": "संस्कृत नाद",
+      "title_en": "Sanskrit Blast",
+      "story_action": "A ritual elder raises the shankh; breath becomes red sonic force and reality ruptures.",
+      "primary_frame": "0032_shankh_red_sonic_beam",
+      "supporting_frames": ["0025_shankh_on_pedestal", "0026_sage_shankh_mountain_blast", "0027_shankh_hands_detail", "0030_red_resonance_spiral", "0031_deep_red_resonance_spiral", "0034_shankh_side_red_blast"]
+    },
+    {
+      "beat": 3,
+      "start": "0:19.71",
+      "end": "0:47.31",
+      "title_hi": "वैचारिक प्रहार",
+      "title_en": "Aggressive Delivery",
+      "story_action": "The Haryanvi figure enters as impact voice; rubab, waveform, fist, and red burst images cut around him.",
+      "primary_frame": "0051_haryanvi_red_burst",
+      "supporting_frames": ["0003_haryanvi_warrior_urban_delivery", "0037_haryanvi_stance_ruins", "0038_aggressive_delivery_caption", "0039_haryanvi_hand_gesture_ruins", "0041_haryanvi_waveform_portrait", "0044_haryanvi_smirk_red_backdrop", "0050_muscular_haryanvi_charge", "0052_haryanvi_echo_copies"]
+    },
+    {
+      "beat": 4,
+      "start": "0:47.31",
+      "end": "0:55.85",
+      "title_hi": "धरातल का बदलाव",
+      "title_en": "Structural Shift",
+      "story_action": "Mountains and concrete merge; modern buildings collapse into ancient terrain.",
+      "primary_frame": "0036_collapsing_buildings_mountain",
+      "supporting_frames": ["0042_walking_silhouette_ruins", "0045_lone_shadow_floor", "0056_elder_shocked_debris", "0057_elder_debris_halo"]
+    },
+    {
+      "beat": 5,
+      "start": "0:55.85",
+      "end": "1:12.94",
+      "title_hi": "पदचाप की धमक",
+      "title_en": "Unyielding Stance",
+      "story_action": "The performer plants himself in cracked ground; power gathers in body, feet, weapons, and posture.",
+      "primary_frame": "0037_haryanvi_stance_ruins",
+      "supporting_frames": ["0040_low_crouch_ground_impact", "0046_radiant_clenched_fist", "0047_bloodied_fist_ground", "0048_footprint_audio_waveform", "0053_warrior_rubab_cracked_wall", "0055_haryanvi_group_stance", "0060_weapon_belt_hands"]
+    },
+    {
+      "beat": 6,
+      "start": "1:12.94",
+      "end": "1:22.14",
+      "title_hi": "वज्र प्रहार",
+      "title_en": "Dust Fracture",
+      "story_action": "The ground answers the beat; impact turns rhythm into visible destruction.",
+      "primary_frame": "0043_foot_impact_dust_burst",
+      "supporting_frames": ["0033_mountain_dust_fracture", "0054_red_ground_explosion", "0110_marching_feet_haryanvi_echo", "0124_outro_marching_feet"]
+    },
+    {
+      "beat": 7,
+      "start": "1:22.14",
+      "end": "1:30.68",
+      "title_hi": "पख्तून रक्षक",
+      "title_en": "Pakhtoon Warrior",
+      "story_action": "Pakhtoon warriors descend as an organized mountain force carrying discipline and inherited pain.",
+      "primary_frame": "0062_pakhtoon_squad_close",
+      "supporting_frames": ["0061_pakhtoon_formation_mountain", "0065_lone_pakhtoon_red_swirl", "0067_hand_gripping_staff", "0068_descending_pakhtoon_squad", "0069_pakhtoon_dialogue_caption"]
+    },
+    {
+      "beat": 8,
+      "start": "1:30.68",
+      "end": "1:39.22",
+      "title_hi": "रूहानी नमी",
+      "title_en": "The Shared Tear",
+      "story_action": "The apparent divide becomes shared grief through eyes, tears, and compassion.",
+      "primary_frame": "0091_shared_tears_split_eyes",
+      "supporting_frames": ["0063_intense_eyes_closeup", "0092_shared_meal_bowl", "0114_eyes_mountain_reflection", "0128_compassionate_smile_face"]
+    },
+    {
+      "beat": 9,
+      "start": "1:39.22",
+      "end": "1:47.76",
+      "title_hi": "शापित ग्रंथ का रक्त",
+      "title_en": "Shapit Granth",
+      "story_action": "The artist enters the library and rewrites lost Natyashastra pages with blood ink.",
+      "primary_frame": "0077_blood_writing_natyashastra",
+      "supporting_frames": ["0006_blood_granth_reader", "0070_library_archway_silhouette", "0071_searching_shelves_locked_book", "0072_manuscript_table_writer", "0073_natyashastra_page_point", "0074_blood_ink_pot_pen", "0075_wrist_cut_ink_mixing", "0076_writing_natya_katha", "0081_red_natyashastra_granth", "0082_writing_lost_pages", "0126_blood_drop_on_page"]
+    },
+    {
+      "beat": 10,
+      "start": "1:47.76",
+      "end": "1:56.96",
+      "title_hi": "गंगा और तुलसी",
+      "title_en": "The Anchor",
+      "story_action": "Ganga, diyas, and Tulsi restore sacred continuity and devotional stillness.",
+      "primary_frame": "0089_tulsi_plant_close+0090_ganga_diyas_wide",
+      "supporting_frames": ["0007_ganga_diyas_tulsi_wide", "0090_ganga_diyas_wide", "0089_tulsi_plant_close"]
+    },
+    {
+      "beat": 11,
+      "start": "1:56.96",
+      "end": "2:22.59",
+      "title_hi": "अटूट जुड़ाव",
+      "title_en": "One-ness",
+      "story_action": "Hands lock; groups assemble; Bharat emerges as a shared vow.",
+      "primary_frame": "0112_handshake_vibration_close",
+      "supporting_frames": ["0008_unity_handshake_firelight", "0085_mountain_camp_assembly", "0086_haryanvi_leader_group", "0087_elder_smile_group", "0088_handshake_close", "0095_bharat_shadow_unity", "0096_handshake_vibration_rings", "0109_bharat_group_march_caption", "0111_aqueduct_procession", "0113_united_warriors_urban", "0120_shanti_handshake_outro", "0123_aqueduct_group_shadows"]
+    },
+    {
+      "beat": 12,
+      "start": "2:22.59",
+      "end": "2:31.79",
+      "title_hi": "ब्रह्म की मुस्कान",
+      "title_en": "The Brahman Smirk",
+      "story_action": "The human face becomes cosmic witness, smiling beyond conflict.",
+      "primary_frame": "0132_mouth_smirk_close",
+      "supporting_frames": ["0100_half_face_extreme_close", "0101_cosmic_face_front", "0102_dissolving_face_script", "0105_dissolving_cosmic_face", "0107_brahman_smirk_close", "0115_subtle_brahman_smile_face"]
+    },
+    {
+      "beat": 13,
+      "start": "2:31.79",
+      "end": "2:40.33",
+      "title_hi": "महाविस्फोट / महाशून्य",
+      "title_en": "The Empty Space",
+      "story_action": "The eclipse opens the threshold and a human figure approaches the void.",
+      "primary_frame": "0106_figure_inside_eclipse",
+      "supporting_frames": ["0009_total_eclipse_halo", "0098_void_floor_figure", "0099_absolute_black_field", "0103_falling_figure_void", "0104_clean_eclipse_halo", "0116_eclipse_figure_focus_caption", "0122_void_figure_shards", "0134_eclipse_shards", "0136_eclipse_ring_close"]
+    },
+    {
+      "beat": 14,
+      "start": "2:40.33",
+      "end": "2:49.53",
+      "title_hi": "स्पंदन की गूंज",
+      "title_en": "Vibration Echo",
+      "story_action": "The final physical force becomes cosmic pulse through fist and vibration.",
+      "primary_frame": "0117_fist_vibration_circles",
+      "supporting_frames": ["0046_radiant_clenched_fist", "0097_clenched_hand_shards", "0112_handshake_vibration_close", "0121_fist_shattering_letters", "0137_eclipse_soundwave_final"]
+    },
+    {
+      "beat": 15,
+      "start": "2:49.53",
+      "end": "3:13.84",
+      "title_hi": "तर्पण और विसर्जन",
+      "title_en": "Sanskrit Chant",
+      "story_action": "Ritual returns as bell and breath; the film prepares to dissolve instead of explode.",
+      "primary_frame": "0118_ritual_bell_black",
+      "supporting_frames": ["0011_elder_chant_face", "0012_ritual_bell_vibration", "0119_elder_smoke_breath", "0127_bell_hindi_caption", "0130_elder_smoke_breath_side", "0133_elder_smoke_breath_center"]
+    },
+    {
+      "beat": 16,
+      "start": "3:13.84",
+      "end": "3:21.84",
+      "title_hi": "पूर्ण विराम / मोक्ष",
+      "title_en": "Final Beat / Silence",
+      "story_action": "The last image contracts to Om in blackness and ends in silence.",
+      "primary_frame": "0131_om_black_vortex",
+      "supporting_frames": ["0108_black_void_star_mark", "0129_om_smoke_void", "0135_small_om_dark_void", "0137_eclipse_soundwave_final"]
+    }
+  ]
+}

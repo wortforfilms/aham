@@ -1,0 +1,563 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mahavisphot Compositor</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#previewStage">Skip to viewer</a>
+    <a class="skip-link" href="#timelineViewport">Skip to timeline</a>
+    <main class="app-shell" aria-label="Mahavisphot advanced video audio VFX compositor">
+      <header class="topbar">
+        <div class="brand">
+          <div class="mark" aria-hidden="true">M</div>
+          <div>
+            <h1>Mahavisphot Compositor</h1>
+            <p>महाविस्फोट / video, audio, VFX, accessibility cut</p>
+          </div>
+        </div>
+
+        <nav class="mode-tabs" id="workspaceModeTabs" aria-label="Workspace modes">
+          <button data-mode="edit" class="active" type="button">Edit</button>
+          <button data-mode="audio" type="button">Audio</button>
+          <button data-mode="vfx" type="button">VFX</button>
+          <button data-mode="accessibility" type="button">Access</button>
+        </nav>
+
+        <div class="top-actions">
+          <button class="ghost" id="loadGeneratedTimelineBtn" type="button" title="Load first generated timeline">Load Gen 1</button>
+          <button class="ghost" id="loadDenseTimelineBtn" type="button" title="Load extracted prior board shot timeline">Load 137 Shots</button>
+          <button class="ghost" id="openStorylineBtn" type="button" title="Show reconstructed storyline">Storyline</button>
+          <button class="ghost" id="resetLayoutBtn" type="button" title="Reset panel layout">Reset Layout</button>
+          <button class="ghost" id="commandPaletteBtn" type="button" title="Open command palette">Commands</button>
+          <button class="ghost" id="downloadJsonBtn" type="button" title="Download edit JSON">JSON</button>
+          <button class="ghost" id="downloadTsvBtn" type="button" title="Download timeline TSV">TSV</button>
+          <button class="ghost" id="downloadBoardBtn" type="button" title="Export storyboard image">Board PNG</button>
+          <button class="primary" id="exportVideoBtn" type="button" title="Export MP4">Export MP4</button>
+        </div>
+      </header>
+
+      <section class="workspace">
+        <aside class="left-panel" aria-label="Scene and layer browser">
+          <div class="panel-head">
+            <h2>Scenes</h2>
+            <button id="duplicateSceneBtn" type="button" title="Duplicate selected scene">+</button>
+          </div>
+          <div class="scene-list" id="sceneList" aria-label="Scene list"></div>
+
+          <section class="layer-stack-panel" aria-label="Compositor layer stack">
+            <div class="panel-head compact">
+              <h2>Layers</h2>
+              <span id="activeToolText">Select</span>
+            </div>
+            <div class="layer-stack" id="layerStack"></div>
+          </section>
+        </aside>
+
+        <div
+          class="panel-resizer vertical-resizer left-width-resizer"
+          id="leftPanelResizer"
+          role="separator"
+          aria-label="Resize scene and layer panel"
+          aria-orientation="vertical"
+          tabindex="0"
+        ></div>
+
+        <section class="center-panel">
+          <div class="preview-wrap">
+            <div class="viewer-toolbar" role="toolbar" aria-label="Compositor tools">
+              <button data-tool="select" class="active" type="button" title="Select tool">Select</button>
+              <button data-tool="trim" type="button" title="Trim tool">Trim</button>
+              <button data-tool="blade" type="button" title="Blade tool">Blade</button>
+              <button data-tool="hand" type="button" title="Pan viewer">Hand</button>
+              <button data-tool="marker" type="button" title="Add marker">Marker</button>
+              <button data-tool="note" type="button" title="Capture UX enhancement note">Note</button>
+              <button id="snapToggleBtn" class="active" type="button" title="Toggle snapping">Snap</button>
+              <button id="safeGuidesBtn" class="active" type="button" title="Toggle safe guides">Guides</button>
+            </div>
+
+            <div class="preview-stage" id="previewStage" tabindex="0" aria-label="Compositor viewer">
+              <img id="previewImage" alt="Selected scene visual" />
+              <img id="rubabOverlay" alt="Rubab overlay" />
+              <div class="effect-layer" id="effectLayer" aria-hidden="true"></div>
+              <div class="safe-guides" id="safeGuides" aria-hidden="true"></div>
+              <div class="caption-overlay" id="captionOverlay"></div>
+              <div class="preview-meta">
+                <span id="previewTime"></span>
+                <span id="previewTitle"></span>
+              </div>
+              <div class="viewer-hud" aria-hidden="true">
+                <span id="viewerZoom">Fit</span>
+                <span id="viewerColor">Rec.709</span>
+                <span id="viewerFps">24 fps</span>
+              </div>
+              <div class="smart-hud" id="smartHud" aria-hidden="true">
+                <div class="smart-hud-head">
+                  <strong id="hudPrimary">Ready</strong>
+                  <span id="hudTimecode">0:00.00</span>
+                </div>
+                <div class="smart-hud-grid">
+                  <span><b>Tool</b><em id="hudTool">Select</em></span>
+                  <span><b>Scene</b><em id="hudScene">The Long Road</em></span>
+                  <span><b>Layer</b><em id="hudLayer">V1 Scene Plate</em></span>
+                  <span><b>Composite</b><em id="hudComposite">100% normal</em></span>
+                  <span><b>Timeline</b><em id="hudTimeline">All / Stacked</em></span>
+                  <span><b>Audio</b><em id="hudAudio">Master 90%</em></span>
+                  <span><b>Access</b><em id="hudAccess">Captions on</em></span>
+                  <span><b>Layout</b><em id="hudLayout">250 / 320 / 360</em></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="player-tools" role="toolbar" aria-label="Player transport">
+              <button id="playPauseBtn" type="button" title="Play or pause">▶</button>
+              <button id="jumpBackBtn" type="button" title="Jump back 5 seconds">−5s</button>
+              <button id="frameBackBtn" type="button" title="Step back one frame">‹</button>
+              <input id="jogSlider" type="range" min="0" max="201.84" step="0.041667" value="0" aria-label="Jog timeline" />
+              <button id="frameForwardBtn" type="button" title="Step forward one frame">›</button>
+              <button id="jumpForwardBtn" type="button" title="Jump forward 5 seconds">+5s</button>
+              <span id="playerClock">0:00.00 / 3:21.84</span>
+            </div>
+
+          </div>
+
+          <div
+            class="panel-resizer horizontal-resizer timeline-split-resizer"
+            id="timelineSplitResizer"
+            role="separator"
+            aria-label="Resize viewer and timeline split"
+            aria-orientation="horizontal"
+            tabindex="0"
+          ></div>
+
+          <div class="timeline-panel">
+            <div class="timeline-head">
+              <div>
+                <h2>Timeline</h2>
+                <span id="timelineReadout">V1 scenes / V2 rubab / VFX / captions / audio</span>
+              </div>
+              <div class="timeline-actions">
+                <button id="splitSceneBtn" type="button" title="Split selected scene at playhead">Split</button>
+                <button id="setStartBtn" type="button" title="Set selected start to playhead">Set In</button>
+                <button id="setEndBtn" type="button" title="Set selected end to playhead">Set Out</button>
+                <button id="addMarkerBtn" type="button" title="Add marker at playhead">Marker</button>
+                <button id="addTransitionBtn" type="button" title="Add or cycle transition after selected scene">Transition</button>
+                <button id="nudgeLeftBtn" type="button" title="Nudge selected clip left one frame">−1f</button>
+                <button id="nudgeRightBtn" type="button" title="Nudge selected clip right one frame">+1f</button>
+                <button id="rippleBtn" type="button" title="Ripple scenes to remove gaps">Ripple</button>
+                <button id="fitSelectionBtn" type="button" title="Center selected clip in timeline">Zoom Sel</button>
+                <button id="fitTimelineBtn" type="button" title="Fit whole timeline">Fit</button>
+                <label class="zoom-control" title="Timeline zoom">
+                  H
+                  <button id="hZoomOutBtn" type="button" title="Horizontal zoom out">−</button>
+                  <input id="zoomInput" type="range" min="2" max="18" step="1" value="5" aria-label="Timeline horizontal zoom" />
+                  <button id="hZoomInBtn" type="button" title="Horizontal zoom in">+</button>
+                </label>
+                <label class="zoom-control" title="Timeline vertical zoom">
+                  V
+                  <button id="vZoomOutBtn" type="button" title="Vertical zoom out">−</button>
+                  <input id="verticalZoomInput" type="range" min="0.55" max="2.2" step="0.05" value="1" aria-label="Timeline vertical zoom" />
+                  <button id="vZoomInBtn" type="button" title="Vertical zoom in">+</button>
+                </label>
+              </div>
+              <div class="timeline-viewbar" aria-label="Timeline view modes">
+                <div class="timeline-mode-tabs" id="timelineModeTabs" role="toolbar" aria-label="Timeline lane modes">
+                  <button data-timeline-mode="all" class="active" type="button">All</button>
+                  <button data-timeline-mode="video" type="button">Video</button>
+                  <button data-timeline-mode="audio" type="button">Audio</button>
+                  <button data-timeline-mode="vfx" type="button">VFX</button>
+                  <button data-timeline-mode="captions" type="button">CC</button>
+                </div>
+                <div class="timeline-view-options" id="timelineViewOptions" role="toolbar" aria-label="Timeline view options">
+                  <button data-timeline-option="thumbnails" class="active" type="button" title="Toggle clip thumbnails">Img</button>
+                  <button data-timeline-option="labels" class="active" type="button" title="Toggle clip labels">Text</button>
+                  <button data-timeline-option="markers" class="active" type="button" title="Toggle timeline markers">Marks</button>
+                  <button data-timeline-option="notes" class="active" type="button" title="Toggle UX note markers">Notes</button>
+                  <button data-timeline-option="followPlayhead" type="button" title="Follow playhead">Follow</button>
+                </div>
+                <label>
+                  Layout
+                  <select id="timelineLayoutInput" aria-label="Timeline layout">
+                    <option value="stacked">Stacked</option>
+                    <option value="compact">Compact</option>
+                    <option value="expanded">Expanded</option>
+                    <option value="filmstrip">Filmstrip</option>
+                  </select>
+                </label>
+                <label>
+                  Pinch
+                  <select id="pinchAxisInput" aria-label="Pinch zoom axis">
+                    <option value="both">Both axes</option>
+                    <option value="horizontal">Horizontal</option>
+                    <option value="vertical">Vertical</option>
+                  </select>
+                </label>
+              </div>
+            </div>
+            <audio id="audioPlayer" preload="metadata"></audio>
+            <div class="timeline-viewport" id="timelineViewport" tabindex="0" aria-label="Layered timeline">
+              <div class="timeline-canvas" id="timelineCanvas">
+                <div class="timeline-ruler" id="timelineRuler"></div>
+                <div class="layer-row marker-row">
+                  <div class="layer-label">M<br /><span>Marks</span></div>
+                  <div class="layer-lane" id="markerLayer"></div>
+                </div>
+                <div class="layer-row video-row">
+                  <div class="layer-label">V1<br /><span>Scenes</span></div>
+                  <div class="layer-lane" id="videoLayer"></div>
+                </div>
+                <div class="layer-row overlay-row">
+                  <div class="layer-label">V2<br /><span>Rubab</span></div>
+                  <div class="layer-lane" id="overlayLayer"></div>
+                </div>
+                <div class="layer-row vfx-row">
+                  <div class="layer-label">FX<br /><span>VFX</span></div>
+                  <div class="layer-lane" id="vfxLayer"></div>
+                </div>
+                <div class="layer-row caption-row">
+                  <div class="layer-label">CC<br /><span>Captions</span></div>
+                  <div class="layer-lane" id="captionLayer"></div>
+                </div>
+                <div class="layer-row audio-row">
+                  <div class="layer-label">A1<br /><span>Audio</span></div>
+                  <div class="layer-lane audio-lane" id="audioLayer"></div>
+                </div>
+                <div class="playhead" id="playhead"></div>
+              </div>
+            </div>
+            <div class="timeline-minimap" id="timelineMiniMap" tabindex="0" aria-label="Timeline overview minimap">
+              <div class="timeline-minimap-track" id="timelineMiniMapTrack"></div>
+              <div class="timeline-minimap-window" id="timelineMiniMapWindow"></div>
+            </div>
+            <div class="timeline-hud" id="timelineHud" aria-hidden="true">
+              <span id="timelineHudZoom">H 5 / V 1</span>
+              <span id="timelineHudMode">All / Stacked</span>
+              <span id="timelineHudGesture">Pinch both</span>
+            </div>
+          </div>
+        </section>
+
+        <div
+          class="panel-resizer vertical-resizer right-width-resizer"
+          id="rightPanelResizer"
+          role="separator"
+          aria-label="Resize inspector panel"
+          aria-orientation="vertical"
+          tabindex="0"
+        ></div>
+
+        <aside class="right-panel" aria-label="Inspector, compositor, audio, VFX and accessibility panels">
+          <section class="baseline-dock" aria-label="Baseline metadata and recovery controls">
+            <div class="baseline-dock-head">
+              <span>Baseline Meta</span>
+              <button id="baselineInspectBtn" type="button" title="Open editable title, timecode, note and asset fields">Inspect</button>
+            </div>
+            <strong id="baselineTitle">Loading scene</strong>
+            <span id="baselineTime">0:00.00 - 0:00.00</span>
+            <span id="baselineAsset">Asset path pending</span>
+            <div class="baseline-dock-actions" aria-label="Baseline command recovery">
+              <button id="baselineResetBtn" type="button" title="Reset panel layout">Reset</button>
+              <button id="baselineCommandsBtn" type="button" title="Open command palette">Cmd</button>
+              <button id="baselineTsvBtn" type="button" title="Download timeline TSV">TSV</button>
+              <button id="baselineBoardBtn" type="button" title="Export storyboard PNG">Board</button>
+            </div>
+          </section>
+          <nav class="panel-tabs" id="panelTabs" aria-label="Inspector panels">
+            <button data-panel="inspector" class="active" type="button">Inspect</button>
+            <button data-panel="vfx" type="button">VFX</button>
+            <button data-panel="audio" type="button">Audio</button>
+            <button data-panel="accessibility" type="button">Access</button>
+            <button data-panel="assets" type="button">Assets</button>
+            <button data-panel="story" type="button">Story</button>
+            <button data-panel="matrix" type="button">Matrix</button>
+            <button data-panel="notes" type="button">Notes</button>
+          </nav>
+
+          <div class="right-scroll">
+            <section class="inspector panel-card" data-panel-section="inspector">
+              <div class="panel-head">
+                <h2>Inspector</h2>
+                <button id="deleteSceneBtn" type="button" title="Delete selected scene">Delete</button>
+              </div>
+              <label>
+                English Title
+                <input id="titleEnInput" type="text" />
+              </label>
+              <label>
+                Hindi Title
+                <input id="titleHiInput" type="text" />
+              </label>
+              <div class="time-grid">
+                <label>
+                  Start
+                  <input id="startInput" type="number" min="0" step="0.001" />
+                </label>
+                <label>
+                  End
+                  <input id="endInput" type="number" min="0" step="0.001" />
+                </label>
+              </div>
+              <label class="toggle">
+                <input id="rubabInput" type="checkbox" />
+                <span>Rubab overlay</span>
+              </label>
+              <label>
+                Note
+                <textarea id="noteInput" rows="3"></textarea>
+              </label>
+              <div class="asset-ref" id="assetRef"></div>
+            </section>
+
+            <section class="panel-card" data-panel-section="vfx">
+              <div class="panel-head">
+                <h2>Compositor</h2>
+                <button id="addKeyframeBtn" type="button" title="Add keyframe at playhead">Keyframe</button>
+              </div>
+              <div class="control-grid">
+                <label>X <input id="transformXInput" type="range" min="-120" max="120" value="0" /></label>
+                <label>Y <input id="transformYInput" type="range" min="-120" max="120" value="0" /></label>
+                <label>Scale <input id="scaleInput" type="range" min="70" max="150" value="100" /></label>
+                <label>Rotate <input id="rotationInput" type="range" min="-18" max="18" value="0" /></label>
+                <label>Opacity <input id="opacityInput" type="range" min="20" max="100" value="100" /></label>
+                <label>
+                  Blend
+                  <select id="blendModeInput">
+                    <option value="normal">Normal</option>
+                    <option value="multiply">Multiply</option>
+                    <option value="screen">Screen</option>
+                    <option value="overlay">Overlay</option>
+                    <option value="luminosity">Luminosity</option>
+                  </select>
+                </label>
+              </div>
+              <div class="fx-grid" aria-label="VFX toggles">
+                <label class="toggle"><input id="grainInput" type="checkbox" checked /><span>Film grain</span></label>
+                <label class="toggle"><input id="vignetteInput" type="checkbox" checked /><span>Vignette</span></label>
+                <label class="toggle"><input id="dustInput" type="checkbox" /><span>Dust field</span></label>
+                <label class="toggle"><input id="sonicInput" type="checkbox" /><span>Sonic wave</span></label>
+              </div>
+              <div class="keyframe-list" id="keyframeList"></div>
+            </section>
+
+            <section class="panel-card" data-panel-section="audio">
+              <div class="panel-head">
+                <h2>Audio Mixer</h2>
+                <button id="soloRubabBtn" type="button" title="Solo rubab layer">Solo Rubab</button>
+              </div>
+              <div class="mixer" id="audioMixer">
+                <label>Master <input id="masterVolumeInput" type="range" min="0" max="100" value="90" /><span id="masterMeter" class="meter"></span></label>
+                <label>Voice <input id="voiceVolumeInput" type="range" min="0" max="100" value="92" /><span id="voiceMeter" class="meter"></span></label>
+                <label>Music <input id="musicVolumeInput" type="range" min="0" max="100" value="80" /><span id="musicMeter" class="meter"></span></label>
+                <label>Rubab <input id="rubabVolumeInput" type="range" min="0" max="100" value="86" /><span id="rubabMeter" class="meter"></span></label>
+              </div>
+            </section>
+
+            <section class="panel-card" data-panel-section="accessibility">
+              <div class="panel-head">
+                <h2>Accessibility</h2>
+                <button id="resetAccessBtn" type="button" title="Reset accessibility settings">Reset</button>
+              </div>
+              <div class="access-grid">
+                <label class="toggle"><input id="captionsInput" type="checkbox" checked /><span>Captions</span></label>
+                <label class="toggle"><input id="highContrastInput" type="checkbox" /><span>High contrast</span></label>
+                <label class="toggle"><input id="largeTextInput" type="checkbox" /><span>Large text</span></label>
+                <label class="toggle"><input id="reduceMotionInput" type="checkbox" /><span>Reduce motion</span></label>
+                <label class="toggle"><input id="dyslexiaInput" type="checkbox" /><span>Readable spacing</span></label>
+                <label class="toggle"><input id="focusModeInput" type="checkbox" /><span>Focus mode</span></label>
+                <label>
+                  Color safety
+                  <select id="colorModeInput">
+                    <option value="none">Standard</option>
+                    <option value="protan">Protan safe</option>
+                    <option value="deutan">Deutan safe</option>
+                    <option value="tritan">Tritan safe</option>
+                  </select>
+                </label>
+                <label>
+                  Density
+                  <select id="densityInput">
+                    <option value="comfortable">Comfortable</option>
+                    <option value="compact">Compact</option>
+                    <option value="spacious">Spacious</option>
+                  </select>
+                </label>
+              </div>
+              <div class="shortcut-card">
+                <strong>Keyboard</strong>
+                <span>Space play, arrows frame step, B blade, V select, M marker, / commands.</span>
+              </div>
+            </section>
+
+            <section class="asset-panel panel-card" data-panel-section="assets">
+              <div class="panel-head">
+                <h2>Assets</h2>
+                <input id="assetSearch" type="search" placeholder="Search" aria-label="Search assets" />
+              </div>
+              <div class="tabs" id="assetTabs">
+                <button data-tab="all" class="active" type="button">All</button>
+                <button data-tab="character_sheet" type="button">Characters</button>
+                <button data-tab="location_sheet" type="button">Locations</button>
+                <button data-tab="props_sheet" type="button">Props</button>
+                <button data-tab="light_vfx_sheet" type="button">Light/VFX</button>
+                <button data-tab="frames" type="button">Frames</button>
+              </div>
+              <div class="asset-grid" id="assetGrid"></div>
+            </section>
+
+            <section class="notes-panel panel-card" data-panel-section="notes">
+              <div class="panel-head">
+                <h2>UX Notes</h2>
+                <button id="addUxNoteBtn" type="button" title="Add UX note at current timecode">Add Note</button>
+              </div>
+              <div class="notes-form">
+                <label>
+                  Category
+                  <select id="uxNoteCategoryInput" aria-label="UX note category">
+                    <option value="layout">Layout</option>
+                    <option value="timeline">Timeline</option>
+                    <option value="viewer">Viewer</option>
+                    <option value="accessibility">Accessibility</option>
+                    <option value="audio">Audio</option>
+                    <option value="vfx">VFX</option>
+                    <option value="performance">Performance</option>
+                    <option value="export">Export</option>
+                  </select>
+                </label>
+                <label>
+                  Priority
+                  <select id="uxNotePriorityInput" aria-label="UX note priority">
+                    <option value="P2">P2</option>
+                    <option value="P1">P1</option>
+                    <option value="P0">P0</option>
+                    <option value="P3">P3</option>
+                  </select>
+                </label>
+                <label class="note-wide">
+                  Note
+                  <textarea id="uxNoteTextInput" rows="4" placeholder="Enhancement note"></textarea>
+                </label>
+              </div>
+              <section class="handwriting-tool" id="handwritingTool" data-layout="inline" aria-label="Handwriting UX sketch notes">
+                <div class="handwriting-head">
+                  <span>Handwriting</span>
+                  <div class="layout-icons" id="handwritingLayoutTabs" aria-label="Handwriting pad layouts">
+                    <button data-handwriting-layout="inline" class="active" type="button" title="Inline writing pad" aria-label="Inline writing pad">▤</button>
+                    <button data-handwriting-layout="split" type="button" title="Split writing pad" aria-label="Split writing pad">▥</button>
+                    <button data-handwriting-layout="board" type="button" title="Board writing pad" aria-label="Board writing pad">□</button>
+                    <button data-handwriting-layout="strip" type="button" title="Strip writing pad" aria-label="Strip writing pad">▭</button>
+                  </div>
+                </div>
+                <div class="handwriting-controls">
+                  <div class="icon-tabs" id="handwritingToolTabs" aria-label="Handwriting tools">
+                    <button data-handwriting-tool="pen" class="active" type="button" title="Pen" aria-label="Pen">✎</button>
+                    <button data-handwriting-tool="marker" type="button" title="Marker" aria-label="Marker">▰</button>
+                    <button data-handwriting-tool="eraser" type="button" title="Eraser" aria-label="Eraser">⌫</button>
+                  </div>
+                  <div class="swatches" id="handwritingColorTabs" aria-label="Ink colors">
+                    <button data-ink-color="#f1d17b" class="active" type="button" title="Amber ink" aria-label="Amber ink"></button>
+                    <button data-ink-color="#56a8a5" type="button" title="Teal ink" aria-label="Teal ink"></button>
+                    <button data-ink-color="#f6f1e9" type="button" title="Light ink" aria-label="Light ink"></button>
+                    <button data-ink-color="#b84a45" type="button" title="Red ink" aria-label="Red ink"></button>
+                  </div>
+                  <label class="tiny-range">
+                    Size
+                    <input id="handwritingSizeInput" type="range" min="1" max="10" value="2" aria-label="Handwriting brush size" />
+                  </label>
+                  <button class="icon-button" id="clearHandwritingBtn" type="button" title="Clear handwriting" aria-label="Clear handwriting">×</button>
+                  <button class="icon-button primary-mini" id="attachSketchBtn" type="button" title="Attach handwriting note" aria-label="Attach handwriting note">✓</button>
+                </div>
+                <div class="handwriting-pad-wrap">
+                  <canvas id="handwritingCanvas" width="640" height="240" aria-label="Handwriting canvas"></canvas>
+                </div>
+                <div class="handwriting-status" id="handwritingStatus">inline / pen / 2px</div>
+              </section>
+              <div class="notes-toolbar">
+                <label>
+                  Status
+                  <select id="uxNoteFilterInput" aria-label="Filter UX notes">
+                    <option value="all">All</option>
+                    <option value="open">Open</option>
+                    <option value="planned">Planned</option>
+                    <option value="done">Done</option>
+                  </select>
+                </label>
+                <button id="exportUxNotesBtn" type="button" title="Export UX notes as Markdown">Export Notes</button>
+                <button id="clearDoneUxNotesBtn" type="button" title="Clear completed UX notes">Clear Done</button>
+              </div>
+              <div class="notes-summary" aria-live="polite">
+                <span id="uxNotesCount">0 notes</span>
+                <span id="uxNotesContext">0:00.00</span>
+              </div>
+              <div class="ux-notes-list" id="uxNotesList"></div>
+            </section>
+
+            <section class="story-panel panel-card" data-panel-section="story">
+              <div class="panel-head">
+                <h2>Storyline</h2>
+                <button id="fitStorylineBtn" type="button" title="Fit timeline and show all story beats">Fit Beats</button>
+              </div>
+              <div class="story-current" aria-live="polite">
+                <span id="storyCurrentTime">0:00.00</span>
+                <strong id="storyCurrentTitle">Loading storyline</strong>
+                <p id="storyCurrentAction">Reconstructed storyline will appear here.</p>
+                <div id="storyFrameRefs" class="story-frame-refs"></div>
+              </div>
+              <div class="story-logline" id="storyLogline"></div>
+              <div class="story-beat-list" id="storyBeatList" aria-label="Reconstructed story beats"></div>
+            </section>
+
+            <section class="matrix-panel panel-card" data-panel-section="matrix">
+              <div class="panel-head">
+                <h2>Feature Matrix</h2>
+                <button id="matrixInspectBtn" type="button" title="Open baseline inspector fields">Open Inspect</button>
+              </div>
+              <div class="matrix-summary">
+                <span>Baseline controls recovered</span>
+                <strong>Meta, Timeline, Commands</strong>
+              </div>
+              <div class="feature-table" role="table" aria-label="Baseline and pro feature matrix">
+                <div role="row"><span>3D COMP</span><b>Planned</b><em>Spatial multi-planar compositor hook</em></div>
+                <div role="row"><span>FX</span><b>Present</b><em>VFX bus, grain, vignette, dust, sonic wave</em></div>
+                <div role="row"><span>Load Gen 1</span><b>Present</b><em>Generated 16-beat master timeline</em></div>
+                <div role="row"><span>Load 137 Shots</span><b>Present</b><em>Prior board dense shot sequence</em></div>
+                <div role="row"><span>Load 500+</span><b>Blocked</b><em>Needs 500+ source assets before honest enablement</em></div>
+                <div role="row"><span>Deep Storyline</span><b>Present</b><em>16 reconstructed narrative beats in Story panel</em></div>
+                <div role="row"><span>XR Toggle</span><b>Planned</b><em>Layout placeholder, not simulated</em></div>
+                <div role="row"><span>Export Pro UHD</span><b>Blocked</b><em>Renderer currently exports MP4 from active cut</em></div>
+              </div>
+              <div class="ledger-list" aria-label="Missing elements ledger">
+                <article><strong>Metadata Fields</strong><span>English/Hindi title, start/end, note, and asset path are restored under Inspect and mirrored in Baseline Meta.</span></article>
+                <article><strong>Timeline Readability</strong><span>Filmstrip thumbnails, CC labels, transition clips, trim handles, and duration pills remain visible with timeline view toggles.</span></article>
+                <article><strong>Top Commands</strong><span>Reset Layout, Commands, TSV, and Board PNG are kept in the header and duplicated in Baseline Meta recovery controls.</span></article>
+              </div>
+            </section>
+          </div>
+        </aside>
+      </section>
+
+      <footer class="statusbar">
+        <span id="statusText" role="status" aria-live="polite">Loading project...</span>
+        <div class="scope-strip bottom-scopes" aria-label="Minimized scopes and loudness">
+          <div class="scope-card"><span>Waveform</span><div class="scope-bars" id="waveformScope"></div></div>
+          <div class="scope-card"><span>Vector</span><div class="vector-scope" id="vectorScope"></div></div>
+          <div class="scope-card"><span>Loudness</span><strong id="loudnessReadout">-18 LUFS</strong></div>
+        </div>
+        <a id="lastExportLink" href="#" hidden>Open export</a>
+      </footer>
+
+      <section class="command-palette" id="commandPalette" hidden role="dialog" aria-modal="true" aria-label="Command palette">
+        <div class="command-box">
+          <label>
+            Command
+            <input id="commandInput" type="search" placeholder="Search commands" />
+          </label>
+          <div class="command-list" id="commandList"></div>
+        </div>
+      </section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
