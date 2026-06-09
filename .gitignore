@@ -1,0 +1,69 @@
+# macOS / editor noise
+.DS_Store
+._*
+.Spotlight-V100/
+.Trashes/
+*.swp
+*.swo
+*~
+
+# Dependency and runtime caches
+node_modules/
+.npm/
+.pnpm-store/
+.yarn/
+.cache/
+.parcel-cache/
+.vite/
+dist/
+coverage/
+
+# Logs and local env
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.env
+.env.*
+!.env.example
+
+# Heavy source media and rendered masters
+*.mp4
+*.mov
+*.mkv
+*.avi
+*.wav
+*.aif
+*.aiff
+*.flac
+*.mp3
+Gemini_Generated_Image*.png
+
+# Generated audio/video/output workspaces
+build_audio_separation/
+build_sheets/
+exports/
+
+# Generated frame extractions are large. Keep lightweight manifests,
+# timeline tables, and contact sheets visible for review.
+build_frames/**
+!build_frames/
+!build_frames/**/
+!build_frames/**/*.json
+!build_frames/**/*.tsv
+!build_frames/**/*.concat.txt
+!build_frames/**/*contact*.jpg
+!build_frames/**/*contact*.png
+!build_frames/**/video_preview*.jpg
+!build_frames/**/video_preview*.png
+!build_frames/**/selected_*.jpg
+!build_frames/**/selected_*.png
+!build_frames/**/candidate_keyframes.jpg
+!build_frames/**/candidate_keyframes.png
+
+# Local browser/test artifacts
+playwright-report/
+test-results/
+tmp/
+*.tmp
