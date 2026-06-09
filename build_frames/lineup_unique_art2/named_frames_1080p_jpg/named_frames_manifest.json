@@ -1,0 +1,1100 @@
+{
+  "frames": [
+    {
+      "index": 1,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0001.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0001_mountain_sage_long_road.jpg",
+      "slug": "mountain_sage_long_road",
+      "title": "Mountain Sage Long Road",
+      "description": "Solitary robed elder walking through stormy mountain pass."
+    },
+    {
+      "index": 2,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0002.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0002_sage_blowing_shankh.jpg",
+      "slug": "sage_blowing_shankh",
+      "title": "Sage Blowing Shankh",
+      "description": "Elder raises conch shell and blows toward the mountains."
+    },
+    {
+      "index": 3,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0003.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0003_haryanvi_warrior_urban_delivery.jpg",
+      "slug": "haryanvi_warrior_urban_delivery",
+      "title": "Haryanvi Warrior Urban Delivery",
+      "description": "Muscular performer in ruined city, direct camera delivery."
+    },
+    {
+      "index": 4,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0004.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0004_rubab_hands_closeup.jpg",
+      "slug": "rubab_hands_closeup",
+      "title": "Rubab Hands Closeup",
+      "description": "Close hands playing a blood-streaked string instrument."
+    },
+    {
+      "index": 5,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0005.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0005_mountain_warrior_march.jpg",
+      "slug": "mountain_warrior_march",
+      "title": "Mountain Warrior March",
+      "description": "Armed group walking forward through mountain valley."
+    },
+    {
+      "index": 6,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0006.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0006_blood_granth_reader.jpg",
+      "slug": "blood_granth_reader",
+      "title": "Blood Granth Reader",
+      "description": "Turbaned artist reading a blood-marked manuscript in library."
+    },
+    {
+      "index": 7,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0007.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0007_ganga_diyas_tulsi_wide.jpg",
+      "slug": "ganga_diyas_tulsi_wide",
+      "title": "Ganga Diyas Tulsi Wide",
+      "description": "Calm river with floating diyas and tulsi plant."
+    },
+    {
+      "index": 8,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0008.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0008_unity_handshake_firelight.jpg",
+      "slug": "unity_handshake_firelight",
+      "title": "Unity Handshake Firelight",
+      "description": "Two men clasp hands in warm firelight."
+    },
+    {
+      "index": 9,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0009.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0009_total_eclipse_halo.jpg",
+      "slug": "total_eclipse_halo",
+      "title": "Total Eclipse Halo",
+      "description": "Black solar eclipse with bright ring of light."
+    },
+    {
+      "index": 10,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0010.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0010_city_overlook_raised_hand.jpg",
+      "slug": "city_overlook_raised_hand",
+      "title": "City Overlook Raised Hand",
+      "description": "Figure looks over modern skyline with raised hand."
+    },
+    {
+      "index": 11,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0011.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0011_elder_chant_face.jpg",
+      "slug": "elder_chant_face",
+      "title": "Elder Chant Face",
+      "description": "Close elder face with eyes closed, chanting."
+    },
+    {
+      "index": 12,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0012.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0012_ritual_bell_vibration.jpg",
+      "slug": "ritual_bell_vibration",
+      "title": "Ritual Bell Vibration",
+      "description": "Bell suspended in darkness with vibration rings."
+    },
+    {
+      "index": 13,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0013.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0013_ney_flute_elder_mountains.jpg",
+      "slug": "ney_flute_elder_mountains",
+      "title": "Ney Flute Elder Mountains",
+      "description": "Elder playing flute against mountain landscape."
+    },
+    {
+      "index": 14,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0014.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0014_split_flute_mountain_notes.jpg",
+      "slug": "split_flute_mountain_notes",
+      "title": "Split Flute Mountain Notes",
+      "description": "Split composition of flute, hair, mountains, and notes."
+    },
+    {
+      "index": 15,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0015.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0015_wind_cloak_mountain_sage.jpg",
+      "slug": "wind_cloak_mountain_sage",
+      "title": "Wind Cloak Mountain Sage",
+      "description": "Robed elder in wind, mountains behind."
+    },
+    {
+      "index": 16,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0016.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0016_ney_flute_mouth_closeup.jpg",
+      "slug": "ney_flute_mouth_closeup",
+      "title": "Ney Flute Mouth Closeup",
+      "description": "Close-up of flute at bearded mouth with musical notes."
+    },
+    {
+      "index": 17,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0017.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0017_abstract_shadow_cut.jpg",
+      "slug": "abstract_shadow_cut",
+      "title": "Abstract Shadow Cut",
+      "description": "High-contrast abstract diagonal shadow transition."
+    },
+    {
+      "index": 18,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0018.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0018_swirling_musical_wind.jpg",
+      "slug": "swirling_musical_wind",
+      "title": "Swirling Musical Wind",
+      "description": "Sepia wind ribbons carrying musical notes."
+    },
+    {
+      "index": 19,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0019.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0019_red_notes_mountain_wind.jpg",
+      "slug": "red_notes_mountain_wind",
+      "title": "Red Notes Mountain Wind",
+      "description": "Red musical notes over mountain wind ribbons."
+    },
+    {
+      "index": 20,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0020.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0020_dark_music_notes.jpg",
+      "slug": "dark_music_notes",
+      "title": "Dark Music Notes",
+      "description": "Sparse red music notes on black field."
+    },
+    {
+      "index": 21,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0021.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0021_flute_silhouette_closeup.jpg",
+      "slug": "flute_silhouette_closeup",
+      "title": "Flute Silhouette Closeup",
+      "description": "Dark close-up of fingers on flute."
+    },
+    {
+      "index": 22,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0022.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0022_mountain_music_ribbons.jpg",
+      "slug": "mountain_music_ribbons",
+      "title": "Mountain Music Ribbons",
+      "description": "Mountain valley crossed by flowing musical ribbons."
+    },
+    {
+      "index": 23,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0023.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0023_cloak_mountain_music_ribbons.jpg",
+      "slug": "cloak_mountain_music_ribbons",
+      "title": "Cloak Mountain Music Ribbons",
+      "description": "Cloaked figure and music ribbons through mountain pass."
+    },
+    {
+      "index": 24,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0024.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0024_intro_ney_closed_eyes.jpg",
+      "slug": "intro_ney_closed_eyes",
+      "title": "Intro Ney Closed Eyes",
+      "description": "Elder closed-eyed portrait with intro flute caption."
+    },
+    {
+      "index": 25,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0025.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0025_shankh_on_pedestal.jpg",
+      "slug": "shankh_on_pedestal",
+      "title": "Shankh On Pedestal",
+      "description": "Conch shell resting on plinth under storm clouds."
+    },
+    {
+      "index": 26,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0026.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0026_sage_shankh_mountain_blast.jpg",
+      "slug": "sage_shankh_mountain_blast",
+      "title": "Sage Shankh Mountain Blast",
+      "description": "Elder blows conch shell in mountain setting."
+    },
+    {
+      "index": 27,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0027.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0027_shankh_hands_detail.jpg",
+      "slug": "shankh_hands_detail",
+      "title": "Shankh Hands Detail",
+      "description": "Hands and mouth on decorated conch shell."
+    },
+    {
+      "index": 28,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0028.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0028_sage_clutching_robes.jpg",
+      "slug": "sage_clutching_robes",
+      "title": "Sage Clutching Robes",
+      "description": "Frontal elder gripping his robe before blast."
+    },
+    {
+      "index": 29,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0029.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0029_shankh_mouth_detail.jpg",
+      "slug": "shankh_mouth_detail",
+      "title": "Shankh Mouth Detail",
+      "description": "Extreme close-up of lips and fingers on conch."
+    },
+    {
+      "index": 30,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0030.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0030_red_resonance_spiral.jpg",
+      "slug": "red_resonance_spiral",
+      "title": "Red Resonance Spiral",
+      "description": "Red and cream sonic spiral vortex."
+    },
+    {
+      "index": 31,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0031.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0031_deep_red_resonance_spiral.jpg",
+      "slug": "deep_red_resonance_spiral",
+      "title": "Deep Red Resonance Spiral",
+      "description": "Darker red circular sonic spiral."
+    },
+    {
+      "index": 32,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0032.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0032_shankh_red_sonic_beam.jpg",
+      "slug": "shankh_red_sonic_beam",
+      "title": "Shankh Red Sonic Beam",
+      "description": "Conch releases red beam from elder's mouth."
+    },
+    {
+      "index": 33,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0033.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0033_mountain_dust_fracture.jpg",
+      "slug": "mountain_dust_fracture",
+      "title": "Mountain Dust Fracture",
+      "description": "Rock face erupts with dust in mountain valley."
+    },
+    {
+      "index": 34,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0034.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0034_shankh_side_red_blast.jpg",
+      "slug": "shankh_side_red_blast",
+      "title": "Shankh Side Red Blast",
+      "description": "Side angle of conch red blast."
+    },
+    {
+      "index": 35,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0035.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0035_smoking_shankh_still.jpg",
+      "slug": "smoking_shankh_still",
+      "title": "Smoking Shankh Still",
+      "description": "Conch shell sits in darkness with red smoke."
+    },
+    {
+      "index": 36,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0036.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0036_collapsing_buildings_mountain.jpg",
+      "slug": "collapsing_buildings_mountain",
+      "title": "Collapsing Buildings Mountain",
+      "description": "Modern buildings fall into ancient mountain scene."
+    },
+    {
+      "index": 37,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0037.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0037_haryanvi_stance_ruins.jpg",
+      "slug": "haryanvi_stance_ruins",
+      "title": "Haryanvi Stance Ruins",
+      "description": "Muscular haryanvi character stands in concrete ruins."
+    },
+    {
+      "index": 38,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0038.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0038_aggressive_delivery_caption.jpg",
+      "slug": "aggressive_delivery_caption",
+      "title": "Aggressive Delivery Caption",
+      "description": "Close mouth and beard with Hindi speech caption."
+    },
+    {
+      "index": 39,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0039.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0039_haryanvi_hand_gesture_ruins.jpg",
+      "slug": "haryanvi_hand_gesture_ruins",
+      "title": "Haryanvi Hand Gesture Ruins",
+      "description": "Performer gestures in ruined street."
+    },
+    {
+      "index": 40,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0040.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0040_low_crouch_ground_impact.jpg",
+      "slug": "low_crouch_ground_impact",
+      "title": "Low Crouch Ground Impact",
+      "description": "Low angle body crouch near cracked ground."
+    },
+    {
+      "index": 41,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0041.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0041_haryanvi_waveform_portrait.jpg",
+      "slug": "haryanvi_waveform_portrait",
+      "title": "Haryanvi Waveform Portrait",
+      "description": "Intense portrait against red audio waveform."
+    },
+    {
+      "index": 42,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0042.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0042_walking_silhouette_ruins.jpg",
+      "slug": "walking_silhouette_ruins",
+      "title": "Walking Silhouette Ruins",
+      "description": "Black silhouette walks through urban canyon."
+    },
+    {
+      "index": 43,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0043.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0043_foot_impact_dust_burst.jpg",
+      "slug": "foot_impact_dust_burst",
+      "title": "Foot Impact Dust Burst",
+      "description": "Boot impact throws dust and debris upward."
+    },
+    {
+      "index": 44,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0044.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0044_haryanvi_smirk_red_backdrop.jpg",
+      "slug": "haryanvi_smirk_red_backdrop",
+      "title": "Haryanvi Smirk Red Backdrop",
+      "description": "Smirking turbaned performer on red background."
+    },
+    {
+      "index": 45,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0045.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0045_lone_shadow_floor.jpg",
+      "slug": "lone_shadow_floor",
+      "title": "Lone Shadow Floor",
+      "description": "Standing figure casts long shadows across open floor."
+    },
+    {
+      "index": 46,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0046.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0046_radiant_clenched_fist.jpg",
+      "slug": "radiant_clenched_fist",
+      "title": "Radiant Clenched Fist",
+      "description": "Raised fist with radial white impact rays."
+    },
+    {
+      "index": 47,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0047.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0047_bloodied_fist_ground.jpg",
+      "slug": "bloodied_fist_ground",
+      "title": "Bloodied Fist Ground",
+      "description": "Blood-streaked fist held near cracked ground."
+    },
+    {
+      "index": 48,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0048.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0048_footprint_audio_waveform.jpg",
+      "slug": "footprint_audio_waveform",
+      "title": "Footprint Audio Waveform",
+      "description": "Footprint crack with red waveform behind it."
+    },
+    {
+      "index": 49,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0049.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0049_rubab_red_spark_pluck.jpg",
+      "slug": "rubab_red_spark_pluck",
+      "title": "Rubab Red Spark Pluck",
+      "description": "Rubab strings plucked with red electric sparks."
+    },
+    {
+      "index": 50,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0050.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0050_muscular_haryanvi_charge.jpg",
+      "slug": "muscular_haryanvi_charge",
+      "title": "Muscular Haryanvi Charge",
+      "description": "Performer leans forward with power rays behind him."
+    },
+    {
+      "index": 51,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0051.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0051_haryanvi_red_burst.jpg",
+      "slug": "haryanvi_red_burst",
+      "title": "Haryanvi Red Burst",
+      "description": "Performer framed by explosive red burst lines."
+    },
+    {
+      "index": 52,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0052.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0052_haryanvi_echo_copies.jpg",
+      "slug": "haryanvi_echo_copies",
+      "title": "Haryanvi Echo Copies",
+      "description": "Multiple ghosted copies of performer behind leader."
+    },
+    {
+      "index": 53,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0053.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0053_warrior_rubab_cracked_wall.jpg",
+      "slug": "warrior_rubab_cracked_wall",
+      "title": "Warrior Rubab Cracked Wall",
+      "description": "Warrior holds string instrument before cracked wall."
+    },
+    {
+      "index": 54,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0054.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0054_red_ground_explosion.jpg",
+      "slug": "red_ground_explosion",
+      "title": "Red Ground Explosion",
+      "description": "Red burst explodes from cracked concrete."
+    },
+    {
+      "index": 55,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0055.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0055_haryanvi_group_stance.jpg",
+      "slug": "haryanvi_group_stance",
+      "title": "Haryanvi Group Stance",
+      "description": "Group of muscular figures standing in formation."
+    },
+    {
+      "index": 56,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0056.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0056_elder_shocked_debris.jpg",
+      "slug": "elder_shocked_debris",
+      "title": "Elder Shocked Debris",
+      "description": "Elder face surrounded by flying debris."
+    },
+    {
+      "index": 57,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0057.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0057_elder_debris_halo.jpg",
+      "slug": "elder_debris_halo",
+      "title": "Elder Debris Halo",
+      "description": "Elder portrait framed by circular debris field."
+    },
+    {
+      "index": 58,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0058.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0058_mountain_long_road_group.jpg",
+      "slug": "mountain_long_road_group",
+      "title": "Mountain Long Road Group",
+      "description": "Small group walking through distant mountain valley."
+    },
+    {
+      "index": 59,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0059.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0059_marching_feet_dust.jpg",
+      "slug": "marching_feet_dust",
+      "title": "Marching Feet Dust",
+      "description": "Close boots marching through dusty ground."
+    },
+    {
+      "index": 60,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0060.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0060_weapon_belt_hands.jpg",
+      "slug": "weapon_belt_hands",
+      "title": "Weapon Belt Hands",
+      "description": "Hands grip belt or weapon strap at waist."
+    },
+    {
+      "index": 61,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0061.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0061_pakhtoon_formation_mountain.jpg",
+      "slug": "pakhtoon_formation_mountain",
+      "title": "Pakhtoon Formation Mountain",
+      "description": "Pakhtoon warrior formation marching in mountains."
+    },
+    {
+      "index": 62,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0062.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0062_pakhtoon_squad_close.jpg",
+      "slug": "pakhtoon_squad_close",
+      "title": "Pakhtoon Squad Close",
+      "description": "Close disciplined group of armed mountain warriors."
+    },
+    {
+      "index": 63,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0063.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0063_intense_eyes_closeup.jpg",
+      "slug": "intense_eyes_closeup",
+      "title": "Intense Eyes Closeup",
+      "description": "Extreme close-up of fierce eyes."
+    },
+    {
+      "index": 64,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0064.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0064_moustache_speech_closeup.jpg",
+      "slug": "moustache_speech_closeup",
+      "title": "Moustache Speech Closeup",
+      "description": "Mouth and moustache close-up mid-speech."
+    },
+    {
+      "index": 65,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0065.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0065_lone_pakhtoon_red_swirl.jpg",
+      "slug": "lone_pakhtoon_red_swirl",
+      "title": "Lone Pakhtoon Red Swirl",
+      "description": "Single warrior walks through red swirling ground."
+    },
+    {
+      "index": 66,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0066.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0066_warriors_on_ridge.jpg",
+      "slug": "warriors_on_ridge",
+      "title": "Warriors On Ridge",
+      "description": "Warriors stand across rocky ridge line."
+    },
+    {
+      "index": 67,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0067.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0067_hand_gripping_staff.jpg",
+      "slug": "hand_gripping_staff",
+      "title": "Hand Gripping Staff",
+      "description": "Close hand gripping staff or weapon shaft."
+    },
+    {
+      "index": 68,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0068.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0068_descending_pakhtoon_squad.jpg",
+      "slug": "descending_pakhtoon_squad",
+      "title": "Descending Pakhtoon Squad",
+      "description": "Warrior squad descends mountain path."
+    },
+    {
+      "index": 69,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0069.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0069_pakhtoon_dialogue_caption.jpg",
+      "slug": "pakhtoon_dialogue_caption",
+      "title": "Pakhtoon Dialogue Caption",
+      "description": "Single warrior in mountains with subtitle caption."
+    },
+    {
+      "index": 70,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0070.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0070_library_archway_silhouette.jpg",
+      "slug": "library_archway_silhouette",
+      "title": "Library Archway Silhouette",
+      "description": "Figure enters tall arched library corridor."
+    },
+    {
+      "index": 71,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0071.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0071_searching_shelves_locked_book.jpg",
+      "slug": "searching_shelves_locked_book",
+      "title": "Searching Shelves Locked Book",
+      "description": "Hand pulls locked book from shelf."
+    },
+    {
+      "index": 72,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0072.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0072_manuscript_table_writer.jpg",
+      "slug": "manuscript_table_writer",
+      "title": "Manuscript Table Writer",
+      "description": "Writer works over manuscript at table."
+    },
+    {
+      "index": 73,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0073.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0073_natyashastra_page_point.jpg",
+      "slug": "natyashastra_page_point",
+      "title": "Natyashastra Page Point",
+      "description": "Finger points to Natyashastra manuscript page."
+    },
+    {
+      "index": 74,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0074.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0074_blood_ink_pot_pen.jpg",
+      "slug": "blood_ink_pot_pen",
+      "title": "Blood Ink Pot Pen",
+      "description": "Pen dips into red blood ink pot."
+    },
+    {
+      "index": 75,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0075.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0075_wrist_cut_ink_mixing.jpg",
+      "slug": "wrist_cut_ink_mixing",
+      "title": "Wrist Cut Ink Mixing",
+      "description": "Cut wrist drips blood near ink pot."
+    },
+    {
+      "index": 76,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0076.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0076_writing_natya_katha.jpg",
+      "slug": "writing_natya_katha",
+      "title": "Writing Natya Katha",
+      "description": "Hand writes large Hindi letters on parchment."
+    },
+    {
+      "index": 77,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0077.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0077_blood_writing_natyashastra.jpg",
+      "slug": "blood_writing_natyashastra",
+      "title": "Blood Writing Natyashastra",
+      "description": "Red ink writes Natyashastra text on page."
+    },
+    {
+      "index": 78,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0078.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0078_theatre_masks_hall.jpg",
+      "slug": "theatre_masks_hall",
+      "title": "Theatre Masks Hall",
+      "description": "Figure faces floating theatre masks in corridor."
+    },
+    {
+      "index": 79,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0079.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0079_red_blood_vortex.jpg",
+      "slug": "red_blood_vortex",
+      "title": "Red Blood Vortex",
+      "description": "Swirling red liquid vortex."
+    },
+    {
+      "index": 80,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0080.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0080_warrior_pen_portrait.jpg",
+      "slug": "warrior_pen_portrait",
+      "title": "Warrior Pen Portrait",
+      "description": "Warrior face holding pen near cheek."
+    },
+    {
+      "index": 81,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0081.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0081_red_natyashastra_granth.jpg",
+      "slug": "red_natyashastra_granth",
+      "title": "Red Natyashastra Granth",
+      "description": "Open red manuscript book with Sanskrit text."
+    },
+    {
+      "index": 82,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0082.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0082_writing_lost_pages.jpg",
+      "slug": "writing_lost_pages",
+      "title": "Writing Lost Pages",
+      "description": "Writer restores lost pages with pen."
+    },
+    {
+      "index": 83,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0083.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0083_theatre_masks_close.jpg",
+      "slug": "theatre_masks_close",
+      "title": "Theatre Masks Close",
+      "description": "Closer theatre masks and performers scene."
+    },
+    {
+      "index": 84,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0084.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0084_blank_red_book.jpg",
+      "slug": "blank_red_book",
+      "title": "Blank Red Book",
+      "description": "Open blank red book on table."
+    },
+    {
+      "index": 85,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0085.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0085_mountain_camp_assembly.jpg",
+      "slug": "mountain_camp_assembly",
+      "title": "Mountain Camp Assembly",
+      "description": "Mountain camp with assembled fighters and flags."
+    },
+    {
+      "index": 86,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0086.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0086_haryanvi_leader_group.jpg",
+      "slug": "haryanvi_leader_group",
+      "title": "Haryanvi Leader Group",
+      "description": "Leader portrait with people standing behind."
+    },
+    {
+      "index": 87,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0087.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0087_elder_smile_group.jpg",
+      "slug": "elder_smile_group",
+      "title": "Elder Smile Group",
+      "description": "Smiling elder with group in background."
+    },
+    {
+      "index": 88,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0088.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0088_handshake_close.jpg",
+      "slug": "handshake_close",
+      "title": "Handshake Close",
+      "description": "Close-up of two hands shaking."
+    },
+    {
+      "index": 89,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0089.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0089_tulsi_plant_close.jpg",
+      "slug": "tulsi_plant_close",
+      "title": "Tulsi Plant Close",
+      "description": "Tulsi plant against warm devotional background."
+    },
+    {
+      "index": 90,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0090.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0090_ganga_diyas_wide.jpg",
+      "slug": "ganga_diyas_wide",
+      "title": "Ganga Diyas Wide",
+      "description": "Wide Ganga river view with floating lamps."
+    },
+    {
+      "index": 91,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0091.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0091_shared_tears_split_eyes.jpg",
+      "slug": "shared_tears_split_eyes",
+      "title": "Shared Tears Split Eyes",
+      "description": "Split-screen eyes with tears."
+    },
+    {
+      "index": 92,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0092.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0092_shared_meal_bowl.jpg",
+      "slug": "shared_meal_bowl",
+      "title": "Shared Meal Bowl",
+      "description": "Two men share food bowl across table."
+    },
+    {
+      "index": 93,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0093.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0093_haryanvi_seated_speaking.jpg",
+      "slug": "haryanvi_seated_speaking",
+      "title": "Haryanvi Seated Speaking",
+      "description": "Seated haryanvi figure gestures while speaking."
+    },
+    {
+      "index": 94,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0094.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0094_spinning_dancer.jpg",
+      "slug": "spinning_dancer",
+      "title": "Spinning Dancer",
+      "description": "Dancer twirls with raised arm."
+    },
+    {
+      "index": 95,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0095.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0095_bharat_shadow_unity.jpg",
+      "slug": "bharat_shadow_unity",
+      "title": "Bharat Shadow Unity",
+      "description": "Two shadows hold hands over word Bharat."
+    },
+    {
+      "index": 96,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0096.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0096_handshake_vibration_rings.jpg",
+      "slug": "handshake_vibration_rings",
+      "title": "Handshake Vibration Rings",
+      "description": "Handshake with circular force rings."
+    },
+    {
+      "index": 97,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0097.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0097_clenched_hand_shards.jpg",
+      "slug": "clenched_hand_shards",
+      "title": "Clenched Hand Shards",
+      "description": "Close fist surrounded by broken shards."
+    },
+    {
+      "index": 98,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0098.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0098_void_floor_figure.jpg",
+      "slug": "void_floor_figure",
+      "title": "Void Floor Figure",
+      "description": "Lone figure on jagged white path in black void."
+    },
+    {
+      "index": 99,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0099.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0099_absolute_black_field.jpg",
+      "slug": "absolute_black_field",
+      "title": "Absolute Black Field",
+      "description": "Nearly blank black frame."
+    },
+    {
+      "index": 100,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0100.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0100_half_face_extreme_close.jpg",
+      "slug": "half_face_extreme_close",
+      "title": "Half Face Extreme Close",
+      "description": "Extreme cropped face close-up."
+    },
+    {
+      "index": 101,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0101.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0101_cosmic_face_front.jpg",
+      "slug": "cosmic_face_front",
+      "title": "Cosmic Face Front",
+      "description": "Frontal turbaned face emerging from darkness."
+    },
+    {
+      "index": 102,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0102.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0102_dissolving_face_script.jpg",
+      "slug": "dissolving_face_script",
+      "title": "Dissolving Face Script",
+      "description": "Portrait dissolves into Devanagari text."
+    },
+    {
+      "index": 103,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0103.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0103_falling_figure_void.jpg",
+      "slug": "falling_figure_void",
+      "title": "Falling Figure Void",
+      "description": "Tiny falling figure in blackness."
+    },
+    {
+      "index": 104,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0104.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0104_clean_eclipse_halo.jpg",
+      "slug": "clean_eclipse_halo",
+      "title": "Clean Eclipse Halo",
+      "description": "Minimal eclipse ring without figure."
+    },
+    {
+      "index": 105,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0105.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0105_dissolving_cosmic_face.jpg",
+      "slug": "dissolving_cosmic_face",
+      "title": "Dissolving Cosmic Face",
+      "description": "Face fragments into textured cosmic field."
+    },
+    {
+      "index": 106,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0106.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0106_figure_inside_eclipse.jpg",
+      "slug": "figure_inside_eclipse",
+      "title": "Figure Inside Eclipse",
+      "description": "Human silhouette stands inside eclipse ring."
+    },
+    {
+      "index": 107,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0107.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0107_brahman_smirk_close.jpg",
+      "slug": "brahman_smirk_close",
+      "title": "Brahman Smirk Close",
+      "description": "Extreme close-up of calm mysterious smile."
+    },
+    {
+      "index": 108,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0108.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0108_black_void_star_mark.jpg",
+      "slug": "black_void_star_mark",
+      "title": "Black Void Star Mark",
+      "description": "Dark frame with small star-like mark."
+    },
+    {
+      "index": 109,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0109.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0109_bharat_group_march_caption.jpg",
+      "slug": "bharat_group_march_caption",
+      "title": "Bharat Group March Caption",
+      "description": "Group walks toward mountains with Bharat caption."
+    },
+    {
+      "index": 110,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0110.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0110_marching_feet_haryanvi_echo.jpg",
+      "slug": "marching_feet_haryanvi_echo",
+      "title": "Marching Feet Haryanvi Echo",
+      "description": "Feet marching over red ground with caption."
+    },
+    {
+      "index": 111,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0111.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0111_aqueduct_procession.jpg",
+      "slug": "aqueduct_procession",
+      "title": "Aqueduct Procession",
+      "description": "Group procession under stone arches."
+    },
+    {
+      "index": 112,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0112.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0112_handshake_vibration_close.jpg",
+      "slug": "handshake_vibration_close",
+      "title": "Handshake Vibration Close",
+      "description": "Locked hands with vibration marks."
+    },
+    {
+      "index": 113,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0113.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0113_united_warriors_urban.jpg",
+      "slug": "united_warriors_urban",
+      "title": "United Warriors Urban",
+      "description": "Haryanvi and Pakhtoon group in urban ruins."
+    },
+    {
+      "index": 114,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0114.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0114_eyes_mountain_reflection.jpg",
+      "slug": "eyes_mountain_reflection",
+      "title": "Eyes Mountain Reflection",
+      "description": "Eyes close-up with mountain forms in irises."
+    },
+    {
+      "index": 115,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0115.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0115_subtle_brahman_smile_face.jpg",
+      "slug": "subtle_brahman_smile_face",
+      "title": "Subtle Brahman Smile Face",
+      "description": "Soft smiling face looking forward."
+    },
+    {
+      "index": 116,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0116.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0116_eclipse_figure_focus_caption.jpg",
+      "slug": "eclipse_figure_focus_caption",
+      "title": "Eclipse Figure Focus Caption",
+      "description": "Eclipse figure with focus caption text."
+    },
+    {
+      "index": 117,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0117.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0117_fist_vibration_circles.jpg",
+      "slug": "fist_vibration_circles",
+      "title": "Fist Vibration Circles",
+      "description": "Clenched fist inside red vibration rings."
+    },
+    {
+      "index": 118,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0118.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0118_ritual_bell_black.jpg",
+      "slug": "ritual_bell_black",
+      "title": "Ritual Bell Black",
+      "description": "Ritual bell isolated on black."
+    },
+    {
+      "index": 119,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0119.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0119_elder_smoke_breath.jpg",
+      "slug": "elder_smoke_breath",
+      "title": "Elder Smoke Breath",
+      "description": "Elder exhales red smoke in darkness."
+    },
+    {
+      "index": 120,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0120.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0120_shanti_handshake_outro.jpg",
+      "slug": "shanti_handshake_outro",
+      "title": "Shanti Handshake Outro",
+      "description": "Hands clasped with Om Shanti text and silhouettes."
+    },
+    {
+      "index": 121,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0121.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0121_fist_shattering_letters.jpg",
+      "slug": "fist_shattering_letters",
+      "title": "Fist Shattering Letters",
+      "description": "Raised fist breaks letter-like shards."
+    },
+    {
+      "index": 122,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0122.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0122_void_figure_shards.jpg",
+      "slug": "void_figure_shards",
+      "title": "Void Figure Shards",
+      "description": "Lone figure in void with black shards."
+    },
+    {
+      "index": 123,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0123.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0123_aqueduct_group_shadows.jpg",
+      "slug": "aqueduct_group_shadows",
+      "title": "Aqueduct Group Shadows",
+      "description": "Group under arches with long shadows."
+    },
+    {
+      "index": 124,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0124.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0124_outro_marching_feet.jpg",
+      "slug": "outro_marching_feet",
+      "title": "Outro Marching Feet",
+      "description": "Low close-up of feet walking forward."
+    },
+    {
+      "index": 125,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0125.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0125_closed_eyes_bharat_map_face.jpg",
+      "slug": "closed_eyes_bharat_map_face",
+      "title": "Closed Eyes Bharat Map Face",
+      "description": "Closed-eyed face with Bharat map motif."
+    },
+    {
+      "index": 126,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0126.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0126_blood_drop_on_page.jpg",
+      "slug": "blood_drop_on_page",
+      "title": "Blood Drop On Page",
+      "description": "Red drop splashes onto parchment."
+    },
+    {
+      "index": 127,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0127.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0127_bell_hindi_caption.jpg",
+      "slug": "bell_hindi_caption",
+      "title": "Bell Hindi Caption",
+      "description": "Bell with Hindi caption below."
+    },
+    {
+      "index": 128,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0128.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0128_compassionate_smile_face.jpg",
+      "slug": "compassionate_smile_face",
+      "title": "Compassionate Smile Face",
+      "description": "Soft face with tearful eyes and slight smile."
+    },
+    {
+      "index": 129,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0129.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0129_om_smoke_void.jpg",
+      "slug": "om_smoke_void",
+      "title": "Om Smoke Void",
+      "description": "Small Om glyph with rising smoke in black void."
+    },
+    {
+      "index": 130,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0130.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0130_elder_smoke_breath_side.jpg",
+      "slug": "elder_smoke_breath_side",
+      "title": "Elder Smoke Breath Side",
+      "description": "Elder exhales red smoke, alternate crop."
+    },
+    {
+      "index": 131,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0131.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0131_om_black_vortex.jpg",
+      "slug": "om_black_vortex",
+      "title": "Om Black Vortex",
+      "description": "Om glyph centered inside black circular vortex."
+    },
+    {
+      "index": 132,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0132.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0132_mouth_smirk_close.jpg",
+      "slug": "mouth_smirk_close",
+      "title": "Mouth Smirk Close",
+      "description": "Close-up of quiet smirk."
+    },
+    {
+      "index": 133,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0133.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0133_elder_smoke_breath_center.jpg",
+      "slug": "elder_smoke_breath_center",
+      "title": "Elder Smoke Breath Center",
+      "description": "Centered elder with red smoke exhale."
+    },
+    {
+      "index": 134,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0134.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0134_eclipse_shards.jpg",
+      "slug": "eclipse_shards",
+      "title": "Eclipse Shards",
+      "description": "Eclipse ring with shards breaking off."
+    },
+    {
+      "index": 135,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0135.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0135_small_om_dark_void.jpg",
+      "slug": "small_om_dark_void",
+      "title": "Small Om Dark Void",
+      "description": "Small Om symbol in dim black field."
+    },
+    {
+      "index": 136,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0136.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0136_eclipse_ring_close.jpg",
+      "slug": "eclipse_ring_close",
+      "title": "Eclipse Ring Close",
+      "description": "Large clean eclipse ring close-up."
+    },
+    {
+      "index": 137,
+      "old_file": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0137.jpg",
+      "new_file": "build_frames/lineup_unique_art2/named_frames_1080p_jpg/0137_eclipse_soundwave_final.jpg",
+      "slug": "eclipse_soundwave_final",
+      "title": "Eclipse Soundwave Final",
+      "description": "Eclipse with shattered ring and waveform lines."
+    }
+  ]
+}

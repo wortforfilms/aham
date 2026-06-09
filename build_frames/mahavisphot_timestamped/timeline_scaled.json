@@ -1,0 +1,185 @@
+{
+  "note": "Storyboard 0:00-4:55 compressed to local WAV span before final 8-second Om/silence hold because local audio is 201.84s, not 4:55+.",
+  "audio_duration_seconds": 201.84,
+  "storyboard_anchor_end_seconds": 295.0,
+  "final_hold_seconds": 8.0,
+  "scale_factor_for_frames_1_to_15": 0.6570847457627119,
+  "timeline": [
+    {
+      "frame": 1,
+      "slug": "01_long_road",
+      "title_hi": "द लॉन्ग रोड",
+      "title_en": "The Long Road",
+      "source_frame_index": 61,
+      "original_storyboard_start_seconds": 0,
+      "scaled_start_seconds": 0.0,
+      "scaled_end_seconds": 9.856271,
+      "duration_seconds": 9.856271
+    },
+    {
+      "frame": 2,
+      "slug": "02_sanskrit_blast",
+      "title_hi": "संस्कृत नाद",
+      "title_en": "Sanskrit Blast",
+      "source_frame_index": 32,
+      "original_storyboard_start_seconds": 15,
+      "scaled_start_seconds": 9.856271,
+      "scaled_end_seconds": 19.712542,
+      "duration_seconds": 9.856271
+    },
+    {
+      "frame": 3,
+      "slug": "03_aggressive_delivery",
+      "title_hi": "वैचारिक प्रहार",
+      "title_en": "Aggressive Delivery",
+      "source_frame_index": 51,
+      "original_storyboard_start_seconds": 30,
+      "scaled_start_seconds": 19.712542,
+      "scaled_end_seconds": 47.310102,
+      "duration_seconds": 27.59756
+    },
+    {
+      "frame": 4,
+      "slug": "04_structural_shift",
+      "title_hi": "धरातल का बदलाव",
+      "title_en": "Structural Shift",
+      "source_frame_index": 36,
+      "original_storyboard_start_seconds": 72,
+      "scaled_start_seconds": 47.310102,
+      "scaled_end_seconds": 55.852203,
+      "duration_seconds": 8.542101
+    },
+    {
+      "frame": 5,
+      "slug": "05_unyielding_stance",
+      "title_hi": "पदचाप की धमक",
+      "title_en": "Unyielding Stance",
+      "source_frame_index": 37,
+      "original_storyboard_start_seconds": 85,
+      "scaled_start_seconds": 55.852203,
+      "scaled_end_seconds": 72.936407,
+      "duration_seconds": 17.084204
+    },
+    {
+      "frame": 6,
+      "slug": "06_dust_fracture",
+      "title_hi": "वज्र प्रहार",
+      "title_en": "Dust Fracture",
+      "source_frame_index": 43,
+      "original_storyboard_start_seconds": 111,
+      "scaled_start_seconds": 72.936407,
+      "scaled_end_seconds": 82.135593,
+      "duration_seconds": 9.199186
+    },
+    {
+      "frame": 7,
+      "slug": "07_pakhtoon_warrior",
+      "title_hi": "पख्तून रक्षक",
+      "title_en": "Pakhtoon Warrior",
+      "source_frame_index": 62,
+      "original_storyboard_start_seconds": 125,
+      "scaled_start_seconds": 82.135593,
+      "scaled_end_seconds": 90.677695,
+      "duration_seconds": 8.542102
+    },
+    {
+      "frame": 8,
+      "slug": "08_shared_tear",
+      "title_hi": "रूहानी नमी",
+      "title_en": "The Shared Tear",
+      "source_frame_index": 91,
+      "original_storyboard_start_seconds": 138,
+      "scaled_start_seconds": 90.677695,
+      "scaled_end_seconds": 99.219797,
+      "duration_seconds": 8.542102
+    },
+    {
+      "frame": 9,
+      "slug": "09_shapit_granth",
+      "title_hi": "शापित ग्रंथ का रक्त",
+      "title_en": "Shapit Granth",
+      "source_frame_index": 77,
+      "original_storyboard_start_seconds": 151,
+      "scaled_start_seconds": 99.219797,
+      "scaled_end_seconds": 107.761898,
+      "duration_seconds": 8.542101
+    },
+    {
+      "frame": 10,
+      "slug": "10_ganga_tulsi",
+      "title_hi": "गंगा और तुलसी",
+      "title_en": "The Anchor",
+      "source_frame_index": "composite_89_90",
+      "original_storyboard_start_seconds": 164,
+      "scaled_start_seconds": 107.761898,
+      "scaled_end_seconds": 116.961085,
+      "duration_seconds": 9.199187
+    },
+    {
+      "frame": 11,
+      "slug": "11_oneness",
+      "title_hi": "अटूट जुड़ाव",
+      "title_en": "One-ness",
+      "source_frame_index": 112,
+      "original_storyboard_start_seconds": 178,
+      "scaled_start_seconds": 116.961085,
+      "scaled_end_seconds": 142.58739,
+      "duration_seconds": 25.626305
+    },
+    {
+      "frame": 12,
+      "slug": "12_brahman_smirk",
+      "title_hi": "ब्रह्म की मुस्कान",
+      "title_en": "The Brahman Smirk",
+      "source_frame_index": 132,
+      "original_storyboard_start_seconds": 217,
+      "scaled_start_seconds": 142.58739,
+      "scaled_end_seconds": 151.786576,
+      "duration_seconds": 9.199186
+    },
+    {
+      "frame": 13,
+      "slug": "13_empty_space",
+      "title_hi": "महाविस्फोट / महाशून्य",
+      "title_en": "The Empty Space",
+      "source_frame_index": 106,
+      "original_storyboard_start_seconds": 231,
+      "scaled_start_seconds": 151.786576,
+      "scaled_end_seconds": 160.328678,
+      "duration_seconds": 8.542102
+    },
+    {
+      "frame": 14,
+      "slug": "14_vibration_echo",
+      "title_hi": "स्पंदन की गूंज",
+      "title_en": "Vibration Echo",
+      "source_frame_index": 117,
+      "original_storyboard_start_seconds": 244,
+      "scaled_start_seconds": 160.328678,
+      "scaled_end_seconds": 169.527864,
+      "duration_seconds": 9.199186
+    },
+    {
+      "frame": 15,
+      "slug": "15_sanskrit_chant",
+      "title_hi": "तर्पण और विसर्जन",
+      "title_en": "Sanskrit Chant",
+      "source_frame_index": 118,
+      "original_storyboard_start_seconds": 258,
+      "scaled_start_seconds": 169.527864,
+      "scaled_end_seconds": 193.84,
+      "duration_seconds": 24.312136
+    },
+    {
+      "frame": 16,
+      "slug": "16_final_silence",
+      "title_hi": "पूर्ण विराम / मोक्ष",
+      "title_en": "Final Beat / Silence",
+      "source_frame_index": 131,
+      "original_storyboard_start_seconds": 295,
+      "scaled_start_seconds": 193.84,
+      "scaled_end_seconds": 201.84,
+      "duration_seconds": 8.0
+    }
+  ]
+}
