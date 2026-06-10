@@ -1,0 +1,151 @@
+{
+  "generatedAt": "2026-06-10T13:39:32.888Z",
+  "host": {
+    "node": "v22.22.0",
+    "platform": "linux arm64"
+  },
+  "runtimes": [
+    {
+      "runtime": "editor",
+      "status": "ready",
+      "summary": "Editor runtime ready: CRUD module loads, local persistence writable.",
+      "checks": [
+        {
+          "name": "crud_module",
+          "ok": true,
+          "detail": "CRUD module fails to load"
+        },
+        {
+          "name": "data_writable",
+          "ok": true,
+          "detail": "data directory is not writable"
+        },
+        {
+          "name": "pages_registry",
+          "ok": true,
+          "detail": "UX page registry missing"
+        }
+      ]
+    },
+    {
+      "runtime": "media",
+      "status": "ready",
+      "summary": "Media runtime ready: ffmpeg/ffprobe present, sources resolvable.",
+      "checks": [
+        {
+          "name": "ffmpeg",
+          "ok": true,
+          "detail": "ffmpeg not found on PATH"
+        },
+        {
+          "name": "ffprobe",
+          "ok": true,
+          "detail": "ffprobe not found on PATH"
+        },
+        {
+          "name": "master_audio",
+          "ok": true,
+          "detail": "master audio stem missing"
+        },
+        {
+          "name": "frame_source",
+          "ok": true,
+          "detail": "named frame source missing"
+        }
+      ]
+    },
+    {
+      "runtime": "render",
+      "status": "ready",
+      "summary": "Render runtime ready: encoder available, render recipe present.",
+      "checks": [
+        {
+          "name": "ffmpeg",
+          "ok": true,
+          "detail": "ffmpeg not found; cannot encode"
+        },
+        {
+          "name": "render_script",
+          "ok": true,
+          "detail": "render_film.mjs missing"
+        }
+      ]
+    },
+    {
+      "runtime": "audio",
+      "status": "ready",
+      "summary": "Audio runtime ready: ffprobe present, master stem analyzable.",
+      "checks": [
+        {
+          "name": "ffprobe",
+          "ok": true,
+          "detail": "ffprobe not found; cannot analyze audio"
+        },
+        {
+          "name": "audio_probe",
+          "ok": true,
+          "detail": "could not probe master audio duration"
+        }
+      ]
+    },
+    {
+      "runtime": "local_ai",
+      "status": "blocked",
+      "summary": "no local model runtime configured (set MAHAVISPHOT_MODEL_DIR to a populated model directory)",
+      "checks": [
+        {
+          "name": "model_inventory",
+          "ok": false,
+          "detail": "no local model runtime configured (set MAHAVISPHOT_MODEL_DIR to a populated model directory)"
+        }
+      ]
+    },
+    {
+      "runtime": "cloud_ai",
+      "status": "blocked",
+      "summary": "no provider credentials (set MAHAVISPHOT_CLOUD_API_KEY)",
+      "checks": [
+        {
+          "name": "provider_credentials",
+          "ok": false,
+          "detail": "no provider credentials (set MAHAVISPHOT_CLOUD_API_KEY)"
+        }
+      ]
+    },
+    {
+      "runtime": "hybrid_ai",
+      "status": "blocked",
+      "summary": "local AI leg not ready; cloud AI leg not ready",
+      "checks": [
+        {
+          "name": "local_leg",
+          "ok": false,
+          "detail": "local AI leg not ready"
+        },
+        {
+          "name": "cloud_leg",
+          "ok": false,
+          "detail": "cloud AI leg not ready"
+        }
+      ]
+    }
+  ],
+  "productionReady": false,
+  "blockers": [
+    {
+      "runtime": "local_ai",
+      "status": "blocked",
+      "summary": "no local model runtime configured (set MAHAVISPHOT_MODEL_DIR to a populated model directory)"
+    },
+    {
+      "runtime": "cloud_ai",
+      "status": "blocked",
+      "summary": "no provider credentials (set MAHAVISPHOT_CLOUD_API_KEY)"
+    },
+    {
+      "runtime": "hybrid_ai",
+      "status": "blocked",
+      "summary": "local AI leg not ready; cloud AI leg not ready"
+    }
+  ]
+}
