@@ -5,6 +5,7 @@ const path = require("node:path");
 const crypto = require("node:crypto");
 const { spawn } = require("node:child_process");
 const crud = require("./crud");
+const timeline = require("./timeline-runtime");
 
 const ROOT = path.resolve(__dirname, "..");
 const EDITOR_DIR = __dirname;
@@ -15,6 +16,7 @@ const AUTH_FILE = path.join(DATA_DIR, "auth.json");
 const PROJECTS_DIR = path.join(DATA_DIR, "projects");
 const CRUD_DIR = path.join(DATA_DIR, "crud");
 const crudStore = crud.createStore(CRUD_DIR);
+const EDITOR_DOCS_DIR = path.join(DATA_DIR, "editor");
 const SESSION_COOKIE = "mahavisphot_session";
 const SESSION_MAX_AGE_SECONDS = 60 * 60 * 24 * 14;
 const PASSWORD_ITERATIONS = 120000;
@@ -1186,6 +1188,40 @@ async function handleRuntimeHealth(req, res) {
   sendJson(res, 200, { ok: true, ...collectors.collectAll() });
 }
 
+function editorDocPath(userId, projectId) {
+  const u = String(userId).replace(/[^a-zA-Z0-9_-]/g, "_").slice(0, 80) || "anon";
+  const p = sanitizeProjectId(projectId) || "default";
+  return path.join(EDITOR_DOCS_DIR, u, `${p}.json`);
+}
+// GET  /api/v1/editor/doc?projectId=ID  -> migrated saved doc (or fresh default)
+// PUT  /api/v1/editor/doc {projectId, doc} -> validate + persist (migrated), save/load parity
+async function handleEditorDoc(req, res, url) {
+  const auth = await requireUser(req, res);
+  if (!auth) return;
+  const userId = auth.user.id;
+  if (req.method === "GET") {
+    const projectId = url.searchParams.get("projectId") || "default";
+    const saved = await readJsonFile(editorDocPath(userId, projectId), null);
+    const doc = timeline.migrate(saved || timeline.newDoc({ name: projectId }));
+    sendJson(res, 200, { ok: true, projectId, migrated: !!saved, doc });
+    return;
+  }
+  if (req.method === "PUT" || req.method === "POST") {
+    const body = await parseJsonBody(req);
+    const projectId = body.projectId || "default";
+    const doc = timeline.migrate(body.doc || {});
+    const errors = timeline.validate(doc);
+    if (errors.length) {
+      sendJson(res, 422, { ok: false, error: "Invalid timeline document", details: errors });
+      return;
+    }
+    await writeJsonFile(editorDocPath(userId, projectId), doc);
+    sendJson(res, 200, { ok: true, projectId, doc });
+    return;
+  }
+  sendJson(res, 405, { ok: false, error: "Method not allowed" });
+}
+
 async function handleCrud(req, res, url) {
   // /api/v1            -> entity + schema catalog (introspection)
   // /api/v1/<entity>   -> GET list, POST create
@@ -1284,6 +1320,10 @@ const server = http.createServer(async (req, res) => {
     }
     if (req.method === "GET" && url.pathname === "/api/v1/health/runtimes") {
       await handleRuntimeHealth(req, res);
+      return;
+    }
+    if (url.pathname === "/api/v1/editor/doc") {
+      await handleEditorDoc(req, res, url);
       return;
     }
     if (url.pathname === "/api/v1" || url.pathname.startsWith("/api/v1/")) {
