@@ -1,0 +1,248 @@
+{
+  "runId": "mahavisphot-runtime-20260609181239",
+  "startedAt": "2026-06-09T18:12:39.739Z",
+  "completedAt": "2026-06-09T18:12:40.106Z",
+  "baseUrl": "http://127.0.0.1:55482",
+  "overallStatus": "verified-with-blockers",
+  "productionReady": false,
+  "phkdVerdict": "BLOCKED_UNTIL_RUNTIME_EVIDENCE",
+  "checks": [
+    {
+      "id": "health-token-required",
+      "status": "passed",
+      "details": {
+        "status": 200,
+        "tokenRequired": true,
+        "owned": false
+      }
+    },
+    {
+      "id": "health-token-owned",
+      "status": "passed",
+      "details": {
+        "status": 200,
+        "owned": true,
+        "port": 55482
+      }
+    },
+    {
+      "id": "studio-home-route",
+      "status": "passed",
+      "details": {
+        "status": 200,
+        "contentType": "text/html; charset=utf-8"
+      }
+    },
+    {
+      "id": "studio-launch-route",
+      "status": "passed",
+      "details": {
+        "status": 200,
+        "contentType": "text/html; charset=utf-8"
+      }
+    },
+    {
+      "id": "registered-scaffold-route-fallback",
+      "status": "passed",
+      "details": {
+        "status": 200,
+        "routeBehavior": "registered studio routes serve scaffold home until module-specific runtime surfaces are implemented"
+      }
+    },
+    {
+      "id": "safe-media-path-rejects-traversal",
+      "status": "passed",
+      "details": {
+        "status": 404
+      }
+    },
+    {
+      "id": "safe-media-path-serves-media",
+      "status": "passed",
+      "details": {
+        "status": 200,
+        "contentType": "image/jpeg"
+      }
+    },
+    {
+      "id": "timeline-api-lists-generated-timelines",
+      "status": "passed",
+      "details": {
+        "status": 200,
+        "timelineIds": [
+          "first-generated",
+          "prior-board-137-shots",
+          "varg-ka-khel"
+        ]
+      }
+    },
+    {
+      "id": "varg-project-loads-runtime-timeline",
+      "status": "passed",
+      "details": {
+        "status": 200,
+        "sceneCount": 57,
+        "audioUrl": "/assets/media/varg_ka_khel/varg_ka_khel.mp3"
+      }
+    },
+    {
+      "id": "auth-me-anonymous",
+      "status": "passed",
+      "details": {
+        "status": 200
+      }
+    },
+    {
+      "id": "auth-register-creates-session",
+      "status": "passed",
+      "details": {
+        "status": 201,
+        "userId": "user_49e800bf-480e-4fab-9bdd-6e764baa5d02",
+        "plan": "free",
+        "cookieCaptured": true
+      }
+    },
+    {
+      "id": "subscription-plan-update",
+      "status": "passed",
+      "details": {
+        "status": 200,
+        "plan": "pro",
+        "licenseTier": "pro"
+      }
+    },
+    {
+      "id": "project-crud-create",
+      "status": "passed",
+      "details": {
+        "status": 201,
+        "projectId": "project_563f1fba-f5bb-48c9-b751-9e757a8c863c",
+        "sceneCount": 1
+      }
+    },
+    {
+      "id": "project-crud-list",
+      "status": "passed",
+      "details": {
+        "status": 200,
+        "projectCount": 1
+      }
+    },
+    {
+      "id": "project-crud-open",
+      "status": "passed",
+      "details": {
+        "status": 200,
+        "projectId": "project_563f1fba-f5bb-48c9-b751-9e757a8c863c"
+      }
+    },
+    {
+      "id": "project-crud-save",
+      "status": "passed",
+      "details": {
+        "status": 200,
+        "name": "Runtime Evidence Project Updated"
+      }
+    },
+    {
+      "id": "project-crud-duplicate",
+      "status": "passed",
+      "details": {
+        "status": 201,
+        "duplicateId": "project_77bdb389-3a19-4a48-98f7-e10284a25988"
+      }
+    },
+    {
+      "id": "project-crud-delete-duplicate",
+      "status": "passed",
+      "details": {
+        "status": 200,
+        "deletedId": "project_77bdb389-3a19-4a48-98f7-e10284a25988"
+      }
+    },
+    {
+      "id": "project-crud-delete",
+      "status": "passed",
+      "details": {
+        "status": 200,
+        "deletedId": "project_563f1fba-f5bb-48c9-b751-9e757a8c863c"
+      }
+    },
+    {
+      "id": "export-endpoint-smoke-render",
+      "status": "passed",
+      "details": {
+        "status": 200,
+        "video": "/assets/exports/editor_export_20260609T181239/mahavisphot_editor_export.mp4",
+        "project": "/assets/exports/editor_export_20260609T181239/project.json",
+        "dynamicTrackCount": 2,
+        "compositionCount": 1,
+        "fullSchemaRead": true,
+        "advancedFilters": false,
+        "captionsRendered": false,
+        "vfxTimelineWindowsRendered": false,
+        "renderWarning": "Advanced caption/VFX render fallback used: [AVFilterGraph @ 0x14a00fb30] No such filter: 'drawtext'\nError : Filter not found\n",
+        "videoExists": true,
+        "projectExists": true
+      }
+    }
+  ],
+  "blockedCapabilities": [
+    {
+      "capability": "advanced-caption-vfx-rendering",
+      "status": "blocked",
+      "reason": "Advanced caption/VFX render fallback used: [AVFilterGraph @ 0x14a00fb30] No such filter: 'drawtext'\nError : Filter not found\n",
+      "requiredEvidence": "An ffmpeg build with required filters or an alternate renderer path, plus tests proving captions and VFX windows render."
+    },
+    {
+      "capability": "export-parity",
+      "status": "blocked",
+      "reason": "The export endpoint read the full schema and produced a video, but full caption/VFX render parity was not verified.",
+      "requiredEvidence": "Renderer integration tests proving dynamic tracks, compositions, captions, VFX windows, audio, and fallback paths render as declared."
+    },
+    {
+      "capability": "runtime-render-engine",
+      "status": "blocked",
+      "reason": "Only the existing ffmpeg export endpoint was smoke-rendered; a full render engine integration and renderer matrix were not verified.",
+      "requiredEvidence": "Renderer integration tests across dynamic tracks, captions, VFX, audio, failure modes, and Electron launch."
+    },
+    {
+      "capability": "local-ai-execution",
+      "status": "blocked",
+      "reason": "No local model runtime adapter was configured or executed during this evidence run.",
+      "requiredEvidence": "Model inventory, local inference adapter, hardware profile, input validation, and deterministic inference test."
+    },
+    {
+      "capability": "cloud-ai-execution",
+      "status": "blocked",
+      "reason": "No cloud provider credentials or adapter were configured or executed during this evidence run.",
+      "requiredEvidence": "Provider credential validation, signed adapter request, response schema validation, and audit log."
+    },
+    {
+      "capability": "hybrid-ai-execution",
+      "status": "blocked",
+      "reason": "No local/cloud orchestration path was configured or executed during this evidence run.",
+      "requiredEvidence": "Hybrid routing test, fallback evidence, synchronization evidence, and failure-mode audit."
+    },
+    {
+      "capability": "production-security-hardening",
+      "status": "blocked",
+      "reason": "Path traversal, health-token ownership, and auth/session CRUD were verified, but full hardening was not audited.",
+      "requiredEvidence": "Threat model, dependency policy, filesystem allowlist audit, session lifecycle audit, and Electron security review."
+    }
+  ],
+  "artifacts": [
+    {
+      "kind": "export",
+      "video": "/assets/exports/editor_export_20260609T181239/mahavisphot_editor_export.mp4",
+      "project": "/assets/exports/editor_export_20260609T181239/project.json",
+      "concat": "/assets/exports/editor_export_20260609T181239/timeline.concat.txt"
+    }
+  ],
+  "environment": {
+    "node": "v22.22.3",
+    "platform": "darwin",
+    "arch": "arm64",
+    "tempDataDir": "/var/folders/rr/_nzzhqvd47z7d6klsxtvv7p40000gn/T/mahavisphot-evidence-data-X18oO0"
+  }
+}

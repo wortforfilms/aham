@@ -1,0 +1,57 @@
+index	id	title	category	sourceId	x	y	width	height	relativePath
+1	mahavisphot-ref-001-source-monitor	Source Monitor	editor	view-modules-gallery	40	95	380	415	frames/frame_001_source-monitor.png
+2	mahavisphot-ref-002-program-monitor	Program Monitor	editor	view-modules-gallery	435	100	395	410	frames/frame_002_program-monitor.png
+3	mahavisphot-ref-003-scene-list	Scene List	editor	view-modules-gallery	840	115	150	390	frames/frame_003_scene-list.png
+4	mahavisphot-ref-004-advanced-timeline	Advanced Timeline	editor	view-modules-gallery	1000	120	415	390	frames/frame_004_advanced-timeline.png
+5	mahavisphot-ref-005-hierarchy-scene-graph	Hierarchy Scene Graph	3d	view-modules-gallery	1458	110	222	400	frames/frame_005_hierarchy-scene-graph.png
+6	mahavisphot-ref-006-3d-transform-inspector	3D Transform Inspector	3d	view-modules-gallery	1685	105	240	405	frames/frame_006_3d-transform-inspector.png
+7	mahavisphot-ref-007-threejs-shader-editor	Three.js Shader Editor	3d	view-modules-gallery	1930	105	225	405	frames/frame_007_threejs-shader-editor.png
+8	mahavisphot-ref-008-uv-texture-editor	UV Texture Editor	3d	view-modules-gallery	2160	105	285	405	frames/frame_008_uv-texture-editor.png
+9	mahavisphot-ref-009-neural-motion-tracker	Neural Motion Tracker	ai-tracking	view-modules-gallery	40	625	230	305	frames/frame_009_neural-motion-tracker.png
+10	mahavisphot-ref-010-topology-map	Topology Map	ai-tracking	view-modules-gallery	285	625	220	305	frames/frame_010_topology-map.png
+11	mahavisphot-ref-011-anisotropic-depth-map-viewer	Anisotropic Depth Map Viewer	ai-tracking	view-modules-gallery	520	620	360	310	frames/frame_011_anisotropic-depth-map-viewer.png
+12	mahavisphot-ref-012-particles-gallery	Particles Gallery	particles	view-modules-gallery	1640	640	285	290	frames/frame_012_particles-gallery.png
+13	mahavisphot-ref-013-particle-node-graph	Particle Node Graph	particles	view-modules-gallery	1940	640	250	290	frames/frame_013_particle-node-graph.png
+14	mahavisphot-ref-014-parametric-fields	Parametric Fields	particles	view-modules-gallery	2210	630	240	300	frames/frame_014_parametric-fields.png
+15	mahavisphot-ref-015-node-graph-composer	Node Graph Composer	vfx	view-modules-gallery	40	1025	390	295	frames/frame_015_node-graph-composer.png
+16	mahavisphot-ref-016-grade-gallery	Grade Gallery	vfx	view-modules-gallery	450	1030	380	290	frames/frame_016_grade-gallery.png
+17	mahavisphot-ref-017-particle-graph-processor	Particle Graph Processor	vfx	view-modules-gallery	860	1030	370	290	frames/frame_017_particle-graph-processor.png
+18	mahavisphot-ref-018-color-wheel-curves-view	Color Wheel Curves View	color	view-modules-gallery	1245	1025	370	295	frames/frame_018_color-wheel-curves-view.png
+19	mahavisphot-ref-019-master-mixer	Master Mixer	audio	view-modules-gallery	1640	1030	248	290	frames/frame_019_master-mixer.png
+20	mahavisphot-ref-020-audio-track-mixer	Audio Track Mixer	audio	view-modules-gallery	1905	1030	260	290	frames/frame_020_audio-track-mixer.png
+21	mahavisphot-ref-021-spectrogram-analyzer	Spectrogram Analyzer	audio	view-modules-gallery	2185	1025	265	295	frames/frame_021_spectrogram-analyzer.png
+22	mahavisphot-ref-022-master-mixer-expanded	Master Mixer Expanded	audio	view-modules-gallery	40	1350	325	290	frames/frame_022_master-mixer-expanded.png
+23	mahavisphot-ref-023-particle-volume-mixer-view	Particle Volume Mixer View	particles	view-modules-gallery	385	1350	500	290	frames/frame_023_particle-volume-mixer-view.png
+24	mahavisphot-ref-024-multi-view-color-curves	Multi View Color Curves	color	view-modules-gallery	925	1350	313	290	frames/frame_024_multi-view-color-curves.png
+25	mahavisphot-ref-025-multi-view-scopes	Multi View Scopes	color	view-modules-gallery	1250	1350	320	290	frames/frame_025_multi-view-scopes.png
+26	mahavisphot-ref-026-render-queue	Render Queue	output	view-modules-gallery	1640	1350	255	290	frames/frame_026_render-queue.png
+27	mahavisphot-ref-027-export-settings	Export Settings	output	view-modules-gallery	1908	1350	277	290	frames/frame_027_export-settings.png
+28	mahavisphot-ref-028-telemetry-dashboard	Telemetry Dashboard	output	view-modules-gallery	2200	1350	260	290	frames/frame_028_telemetry-dashboard.png
+29	mahavisphot-ref-029-top-toolbar-v3	Top Toolbar v3	layout	compositor-pro-v3	0	0	2492	75	frames/frame_029_top-toolbar-v3.png
+30	mahavisphot-ref-030-scenes-panel-v3	Scenes Panel v3	layout	compositor-pro-v3	0	80	450	1075	frames/frame_030_scenes-panel-v3.png
+31	mahavisphot-ref-031-layer-stack-v3	Layer Stack v3	layout	compositor-pro-v3	0	1160	452	465	frames/frame_031_layer-stack-v3.png
+32	mahavisphot-ref-032-toolbelt-v3	Toolbelt v3	layout	compositor-pro-v3	470	80	810	65	frames/frame_032_toolbelt-v3.png
+33	mahavisphot-ref-033-scene-graph-floating-panel	Scene Graph Floating Panel	3d	compositor-pro-v3	480	145	320	500	frames/frame_033_scene-graph-floating-panel.png
+34	mahavisphot-ref-034-viewer-tracking-overlay	Viewer Tracking Overlay	viewer	compositor-pro-v3	805	145	1080	500	frames/frame_034_viewer-tracking-overlay.png
+35	mahavisphot-ref-035-particles-gallery-floating-panel	Particles Gallery Floating Panel	particles	compositor-pro-v3	1288	480	587	675	frames/frame_035_particles-gallery-floating-panel.png
+36	mahavisphot-ref-036-right-inspector-tabs	Right Inspector Tabs	inspector	compositor-pro-v3	1925	80	561	160	frames/frame_036_right-inspector-tabs.png
+37	mahavisphot-ref-037-face-replacer-panel	Face Replacer Panel	ai-tracking	compositor-pro-v3	1925	250	545	565	frames/frame_037_face-replacer-panel.png
+38	mahavisphot-ref-038-texture-fixture-engine	Texture Fixture Engine	vfx	compositor-pro-v3	1925	835	550	260	frames/frame_038_texture-fixture-engine.png
+39	mahavisphot-ref-039-rgb-waveform-scope	RGB Waveform Scope	color	compositor-pro-v3	1925	1115	550	233	frames/frame_039_rgb-waveform-scope.png
+40	mahavisphot-ref-040-loudness-and-vectorscope-panels	Loudness And Vectorscope Panels	audio	compositor-pro-v3	1925	1365	550	250	frames/frame_040_loudness-and-vectorscope-panels.png
+41	mahavisphot-ref-041-timeline-stack-v3	Timeline Stack v3	timeline	compositor-pro-v3	465	735	1420	880	frames/frame_041_timeline-stack-v3.png
+42	mahavisphot-ref-042-node-graph-floating-panel	Node Graph Floating Panel	vfx	compositor-pro-v3	750	1140	898	405	frames/frame_042_node-graph-floating-panel.png
+43	mahavisphot-ref-043-bottom-telemetry-bar-v3	Bottom Telemetry Bar v3	telemetry	compositor-pro-v3	465	1620	2010	76	frames/frame_043_bottom-telemetry-bar-v3.png
+44	mahavisphot-ref-044-top-toolbar-gen-2	Top Toolbar Gen 2	layout	compositor-pro-gen2	0	0	2492	70	frames/frame_044_top-toolbar-gen-2.png
+45	mahavisphot-ref-045-scenes-panel-gen-2	Scenes Panel Gen 2	layout	compositor-pro-gen2	0	80	455	1085	frames/frame_045_scenes-panel-gen-2.png
+46	mahavisphot-ref-046-layer-stack-gen-2	Layer Stack Gen 2	layout	compositor-pro-gen2	0	1165	455	455	frames/frame_046_layer-stack-gen-2.png
+47	mahavisphot-ref-047-program-monitor-gen-2	Program Monitor Gen 2	viewer	compositor-pro-gen2	480	130	1405	520	frames/frame_047_program-monitor-gen-2.png
+48	mahavisphot-ref-048-inspector-pro-rubab-optimizer	Inspector Pro Rubab Optimizer	inspector	compositor-pro-gen2	1925	150	553	660	frames/frame_048_inspector-pro-rubab-optimizer.png
+49	mahavisphot-ref-049-secondary-monitor-tracking-view	Secondary Monitor Tracking View	viewer	compositor-pro-gen2	1925	830	553	280	frames/frame_049_secondary-monitor-tracking-view.png
+50	mahavisphot-ref-050-rgb-waveform-scope-gen-2	RGB Waveform Scope Gen 2	color	compositor-pro-gen2	1925	1125	553	230	frames/frame_050_rgb-waveform-scope-gen-2.png
+51	mahavisphot-ref-051-loudness-vector-telemetry-gen-2	Loudness Vector Telemetry Gen 2	audio	compositor-pro-gen2	1925	1370	553	255	frames/frame_051_loudness-vector-telemetry-gen-2.png
+52	mahavisphot-ref-052-transport-bar-gen-2	Transport Bar Gen 2	timeline	compositor-pro-gen2	480	655	1405	70	frames/frame_052_transport-bar-gen-2.png
+53	mahavisphot-ref-053-timeline-controls-gen-2	Timeline Controls Gen 2	timeline	compositor-pro-gen2	465	735	1420	145	frames/frame_053_timeline-controls-gen-2.png
+54	mahavisphot-ref-054-timeline-stack-gen-2	Timeline Stack Gen 2	timeline	compositor-pro-gen2	465	885	1420	740	frames/frame_054_timeline-stack-gen-2.png
+55	mahavisphot-ref-055-node-graph-composer-floating-gen-2	Node Graph Composer Floating Gen 2	vfx	compositor-pro-gen2	750	1140	898	408	frames/frame_055_node-graph-composer-floating-gen-2.png
+56	mahavisphot-ref-056-bottom-telemetry-bar-gen-2	Bottom Telemetry Bar Gen 2	telemetry	compositor-pro-gen2	465	1620	2013	76	frames/frame_056_bottom-telemetry-bar-gen-2.png

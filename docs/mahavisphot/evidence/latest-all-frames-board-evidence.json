@@ -1,0 +1,13 @@
+{
+  "generatedAt": "2026-06-09T22:41:31.557Z",
+  "boardSvgPath": "public/mahavisphot/boards/mahavisphot-all-frames-board.svg",
+  "boardHtmlPath": "public/mahavisphot/boards/mahavisphot-all-frames-board.html",
+  "boardPngPath": "public/mahavisphot/boards/mahavisphot-all-frames-board.png",
+  "frameCount": 24,
+  "expectedFrameCount": 24,
+  "pngGenerated": true,
+  "pngBlockedReason": "",
+  "renderer": "rsvg-convert",
+  "pngSizeBytes": 815350,
+  "productionReady": false
+}

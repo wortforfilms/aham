@@ -1,0 +1,38 @@
+{
+  "generatedAt": "2026-06-09T22:59:27.181Z",
+  "sourceImages": [
+    {
+      "id": "view-modules-gallery",
+      "path": "/Users/vesahe/Downloads/Gemini_Generated_Image_uvoo0yuvoo0yuvoo.png",
+      "exists": true,
+      "expectedWidth": 2492,
+      "expectedHeight": 1696
+    },
+    {
+      "id": "compositor-pro-v3",
+      "path": "/Users/vesahe/Downloads/Gemini_Generated_Image_pj4kq4pj4kq4pj4k (1).png",
+      "exists": true,
+      "expectedWidth": 2492,
+      "expectedHeight": 1696
+    },
+    {
+      "id": "compositor-pro-gen2",
+      "path": "/Users/vesahe/Downloads/Gemini_Generated_Image_71d6b571d6b571d6.png",
+      "exists": true,
+      "expectedWidth": 2492,
+      "expectedHeight": 1696
+    }
+  ],
+  "outputRoot": "/Users/vesahe/Downloads/aham/public/mahavisphot/extracted/reference-views",
+  "framesRoot": "/Users/vesahe/Downloads/aham/public/mahavisphot/extracted/reference-views/frames",
+  "manifestPath": "/Users/vesahe/Downloads/aham/public/mahavisphot/extracted/reference-views/manifest.json",
+  "tsvPath": "/Users/vesahe/Downloads/aham/public/mahavisphot/extracted/reference-views/manifest.tsv",
+  "htmlPath": "/Users/vesahe/Downloads/aham/public/mahavisphot/extracted/reference-views/index.html",
+  "documentationPath": "/Users/vesahe/Downloads/aham/docs/mahavisphot/EXTRACTED_REFERENCE_VIEWS.md",
+  "frameCount": 56,
+  "expectedFrameCount": 56,
+  "missingOutputCount": 0,
+  "extractionSucceeded": true,
+  "extractionBlockedReason": null,
+  "productionReady": false
+}

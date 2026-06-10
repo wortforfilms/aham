@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MAHAVISPHOT All-Frames Board</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #06070b;
+        --panel: #101424;
+        --line: #29354d;
+        --text: #f8fbff;
+        --muted: #a8b2c7;
+        --cyan: #24d7ff;
+        --amber: #ffb44c;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: Arial, Helvetica, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+      }
+      header, footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 16px 22px;
+        border-bottom: 1px solid var(--line);
+        background: var(--panel);
+      }
+      footer {
+        border-top: 1px solid var(--line);
+        border-bottom: 0;
+        color: var(--muted);
+      }
+      a { color: var(--cyan); text-decoration: none; font-weight: 700; }
+      main { padding: 18px; }
+      img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border: 1px solid var(--line);
+        background: #06070b;
+      }
+      .badge {
+        color: var(--amber);
+        border: 1px solid var(--amber);
+        border-radius: 6px;
+        padding: 8px 10px;
+        font-size: 12px;
+        font-weight: 800;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <strong>MAHAVISPHOT All-Frames Board</strong>
+      <span class="badge">PRODUCTION_READY=false</span>
+      <a href="./mahavisphot-all-frames-board.png">PNG</a>
+    </header>
+    <main>
+      <img src="./mahavisphot-all-frames-board.svg" alt="MAHAVISPHOT Studio all-frames product board" />
+    </main>
+    <footer>MAHAVISPHOT Studio • 400 UX Views • Local AI • Cloud AI • Hybrid AI • VFX • Animation • Render OS • PHKD: Production NO-GO until verified runtime evidence</footer>
+  </body>
+</html>

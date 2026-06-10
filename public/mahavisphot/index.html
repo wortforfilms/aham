@@ -1,0 +1,2617 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mahavisphot Studio</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #07090f;
+        --bg2: #10141d;
+        --panel: #171b26;
+        --panel2: #202636;
+        --line: #333b50;
+        --line2: #4b5875;
+        --text: #f1f5fb;
+        --muted: #a6afc2;
+        --cyan: #25d0df;
+        --violet: #9c7cff;
+        --amber: #f0bd58;
+        --emerald: #49db8d;
+        --rose: #f05d76;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background:
+          linear-gradient(90deg, rgba(37, 208, 223, .07) 1px, transparent 1px),
+          linear-gradient(0deg, rgba(156, 124, 255, .05) 1px, transparent 1px),
+          radial-gradient(circle at 22% 12%, rgba(37, 208, 223, .18), transparent 34%),
+          radial-gradient(circle at 78% 3%, rgba(240, 189, 88, .13), transparent 31%),
+          var(--bg);
+        background-size: 44px 44px, 44px 44px, auto, auto, auto;
+        color: var(--text);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .topbar {
+        min-height: 58px;
+        display: grid;
+        grid-template-columns: minmax(220px, 1fr) auto minmax(220px, 1fr);
+        gap: 12px;
+        align-items: center;
+        padding: 10px 16px;
+        border-bottom: 1px solid var(--line);
+        background: rgba(11, 13, 20, .9);
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        backdrop-filter: blur(16px);
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        min-width: 0;
+      }
+
+      .mark {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: var(--rose);
+        box-shadow: 0 0 18px rgba(240, 93, 118, .9);
+      }
+
+      .brand strong {
+        font-size: 15px;
+        letter-spacing: .04em;
+        white-space: nowrap;
+      }
+
+      .mode {
+        color: var(--muted);
+        font-size: 10px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        flex-wrap: wrap;
+      }
+
+      .nav a,
+      .route-pill,
+      .button {
+        border: 1px solid var(--line);
+        background: linear-gradient(180deg, #242838, #161925);
+        border-radius: 5px;
+        padding: 8px 12px;
+        font-size: 11px;
+        color: var(--text);
+      }
+
+      .nav a[aria-current="page"],
+      .button.primary {
+        border-color: rgba(37, 208, 223, .95);
+        background: linear-gradient(180deg, rgba(37, 208, 223, .28), rgba(37, 208, 223, .12));
+        color: #dffcff;
+        box-shadow: 0 0 0 1px rgba(37, 208, 223, .12) inset;
+      }
+
+      .actions {
+        justify-content: end;
+        display: flex;
+        gap: 7px;
+        flex-wrap: wrap;
+      }
+
+      .shell {
+        display: grid;
+        grid-template-columns: 270px minmax(0, 1fr);
+        min-height: calc(100vh - 58px);
+      }
+
+      aside {
+        border-right: 1px solid var(--line);
+        background: rgba(12, 15, 23, .72);
+        padding: 14px;
+      }
+
+      .side-title {
+        color: var(--muted);
+        font-size: 11px;
+        text-transform: uppercase;
+        margin: 4px 0 10px;
+      }
+
+      .route-list {
+        display: grid;
+        gap: 6px;
+      }
+
+      .route-pill {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        padding: 9px 10px;
+      }
+
+      .route-pill span {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--emerald);
+        flex: 0 0 auto;
+      }
+
+      .route-pill[aria-current="page"] {
+        border-color: var(--cyan);
+        background: rgba(37, 208, 223, .12);
+      }
+
+      main {
+        min-width: 0;
+        padding: clamp(18px, 3vw, 38px);
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1.05fr) minmax(320px, .95fr);
+        gap: 22px;
+        align-items: stretch;
+      }
+
+      .hero-copy,
+      .visual,
+      .status-strip,
+      .module-tile,
+      .rail-panel,
+      .launch-panel {
+        border: 1px solid var(--line);
+        background: linear-gradient(180deg, rgba(27, 32, 46, .94), rgba(10, 12, 19, .94));
+        border-radius: 7px;
+      }
+
+      .hero-copy {
+        padding: clamp(22px, 4vw, 44px);
+        min-height: 420px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(44px, 7vw, 92px);
+        line-height: .92;
+        letter-spacing: 0;
+      }
+
+      .subtitle {
+        max-width: 820px;
+        color: var(--muted);
+        font-size: clamp(15px, 1.7vw, 20px);
+        line-height: 1.48;
+        margin: 18px 0 0;
+      }
+
+      .honesty {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        max-width: 660px;
+        margin-top: 28px;
+        border: 1px solid rgba(240, 189, 88, .72);
+        color: var(--amber);
+        background: rgba(240, 189, 88, .08);
+        border-radius: 5px;
+        padding: 10px 12px;
+        font-size: 12px;
+        line-height: 1.45;
+      }
+
+      .hero-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 28px;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .visual {
+        position: relative;
+        overflow: hidden;
+        min-height: 420px;
+      }
+
+      .visual img {
+        width: 100%;
+        height: 100%;
+        min-height: 420px;
+        object-fit: cover;
+        display: block;
+        filter: saturate(1.08) contrast(1.03);
+      }
+
+      .visual::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(90deg, rgba(7, 9, 15, .22), transparent 34%, rgba(7, 9, 15, .5)),
+          linear-gradient(180deg, transparent 52%, rgba(7, 9, 15, .85));
+        pointer-events: none;
+      }
+
+      .visual-label {
+        position: absolute;
+        left: 14px;
+        right: 14px;
+        bottom: 14px;
+        z-index: 2;
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        align-items: center;
+        border: 1px solid rgba(37, 208, 223, .42);
+        background: rgba(8, 11, 17, .78);
+        border-radius: 5px;
+        padding: 10px 12px;
+        font-size: 11px;
+      }
+
+      .chip {
+        border: 1px solid var(--line2);
+        border-radius: 999px;
+        padding: 4px 8px;
+        color: var(--muted);
+        white-space: nowrap;
+      }
+
+      .chip.scaffold {
+        color: var(--cyan);
+        border-color: rgba(37, 208, 223, .62);
+      }
+
+      .chip.blocked {
+        color: var(--rose);
+        border-color: rgba(240, 93, 118, .62);
+      }
+
+      .chip.preview {
+        color: var(--amber);
+        border-color: rgba(240, 189, 88, .62);
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
+        gap: 12px;
+        margin-top: 18px;
+      }
+
+      .module-tile {
+        min-height: 158px;
+        padding: 12px;
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        gap: 10px;
+      }
+
+      .module-tile img {
+        width: 100%;
+        height: 84px;
+        object-fit: cover;
+        border: 1px solid rgba(37, 208, 223, .18);
+        border-radius: 4px;
+        background: #04060b;
+      }
+
+      .module-head,
+      .status-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .module-head strong {
+        font-size: 13px;
+      }
+
+      .module-meta {
+        color: var(--muted);
+        font-size: 10px;
+      }
+
+      .studio-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.2fr) minmax(280px, .8fr);
+        gap: 14px;
+        margin-top: 18px;
+      }
+
+      .rail-panel {
+        padding: 14px;
+        min-height: 190px;
+      }
+
+      .timeline {
+        display: grid;
+        gap: 8px;
+        margin-top: 14px;
+      }
+
+      .track {
+        height: 26px;
+        border: 1px solid rgba(75, 88, 117, .8);
+        background: #0e111a;
+        position: relative;
+        border-radius: 4px;
+        overflow: hidden;
+      }
+
+      .clip {
+        position: absolute;
+        top: 4px;
+        bottom: 4px;
+        border-radius: 3px;
+        border: 1px solid rgba(37, 208, 223, .5);
+        background: linear-gradient(90deg, rgba(37, 208, 223, .38), rgba(156, 124, 255, .28));
+      }
+
+      .node-map {
+        min-height: 210px;
+        position: relative;
+        margin-top: 14px;
+        border: 1px solid rgba(75, 88, 117, .7);
+        border-radius: 5px;
+        background:
+          linear-gradient(90deg, rgba(75, 88, 117, .18) 1px, transparent 1px),
+          linear-gradient(0deg, rgba(75, 88, 117, .18) 1px, transparent 1px),
+          #0b0e16;
+        background-size: 32px 32px;
+      }
+
+      .node {
+        position: absolute;
+        min-width: 112px;
+        border: 1px solid rgba(37, 208, 223, .55);
+        border-radius: 5px;
+        padding: 8px;
+        background: #171b26;
+        font-size: 10px;
+      }
+
+      .node:nth-child(2) {
+        border-color: rgba(240, 189, 88, .55);
+      }
+
+      .node:nth-child(3) {
+        border-color: rgba(73, 219, 141, .55);
+      }
+
+      .meter-row {
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
+        gap: 7px;
+        height: 120px;
+        align-items: end;
+        margin-top: 14px;
+      }
+
+      .meter {
+        border-radius: 3px 3px 0 0;
+        background: linear-gradient(180deg, var(--rose), var(--amber) 35%, var(--emerald) 72%, var(--cyan));
+        min-height: 18px;
+      }
+
+      .widget-board {
+        display: grid;
+        grid-template-columns: minmax(0, 1.18fr) minmax(270px, .82fr);
+        gap: 14px;
+        margin-top: 18px;
+      }
+
+      .widget-panel {
+        border: 1px solid var(--line);
+        background: linear-gradient(180deg, rgba(27, 32, 46, .96), rgba(10, 12, 19, .96));
+        border-radius: 7px;
+        padding: 14px;
+        min-width: 0;
+      }
+
+      .widget-toolbar {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        align-items: center;
+        margin-top: 12px;
+      }
+
+      .widget-button {
+        border: 1px solid var(--line2);
+        background: #161b27;
+        color: var(--text);
+        border-radius: 5px;
+        padding: 7px 10px;
+        font: inherit;
+        font-size: 10px;
+        cursor: pointer;
+      }
+
+      .widget-button[aria-pressed="true"],
+      .widget-button:focus-visible {
+        border-color: var(--cyan);
+        color: var(--cyan);
+        outline: none;
+      }
+
+      .range-row {
+        display: grid;
+        grid-template-columns: minmax(88px, 120px) minmax(0, 1fr) 46px;
+        gap: 10px;
+        align-items: center;
+        margin-top: 10px;
+        color: var(--muted);
+        font-size: 11px;
+      }
+
+      .range-row input[type="range"] {
+        width: 100%;
+        accent-color: var(--cyan);
+      }
+
+      .widget-stage {
+        min-height: 300px;
+        border: 1px solid rgba(75, 88, 117, .7);
+        border-radius: 6px;
+        margin-top: 12px;
+        overflow: hidden;
+        position: relative;
+        background:
+          linear-gradient(90deg, rgba(75, 88, 117, .18) 1px, transparent 1px),
+          linear-gradient(0deg, rgba(75, 88, 117, .18) 1px, transparent 1px),
+          radial-gradient(circle at 50% 46%, rgba(37, 208, 223, .16), transparent 38%),
+          #080b12;
+        background-size: 32px 32px, 32px 32px, auto, auto;
+      }
+
+      .reference-strip {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        margin-top: 12px;
+      }
+
+      .reference-strip img {
+        width: 100%;
+        height: 78px;
+        object-fit: cover;
+        border: 1px solid rgba(37, 208, 223, .2);
+        border-radius: 4px;
+        background: #05070d;
+      }
+
+      .particle-field {
+        --spread: 62%;
+        --lift: 46%;
+        --size: 7px;
+      }
+
+      .particle {
+        position: absolute;
+        left: calc(50% + (var(--px) * var(--spread)));
+        top: calc(50% + (var(--py) * var(--lift)));
+        width: var(--size);
+        height: var(--size);
+        border-radius: 50%;
+        background: var(--cyan);
+        box-shadow: 0 0 14px currentColor;
+        color: var(--cyan);
+        transform: translate(-50%, -50%) scale(var(--scale));
+        transition: left .2s ease, top .2s ease, width .2s ease, height .2s ease, color .2s ease;
+      }
+
+      .particle-field[data-preset="ash"] .particle {
+        color: #d5e2e8;
+        background: #d5e2e8;
+      }
+
+      .particle-field[data-preset="embers"] .particle {
+        color: var(--amber);
+        background: var(--amber);
+      }
+
+      .particle-field[data-preset="energy"] .particle {
+        color: var(--emerald);
+        background: var(--emerald);
+      }
+
+      .gizmo {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 150px;
+        height: 150px;
+        border: 1px solid rgba(37, 208, 223, .45);
+        transform: translate(-50%, -50%) rotate(var(--rot, 0deg)) scale(var(--zoom, 1));
+      }
+
+      .gizmo::before,
+      .gizmo::after {
+        content: "";
+        position: absolute;
+        background: var(--cyan);
+      }
+
+      .gizmo::before {
+        left: 50%;
+        top: -42px;
+        bottom: -42px;
+        width: 2px;
+      }
+
+      .gizmo::after {
+        top: 50%;
+        left: -42px;
+        right: -42px;
+        height: 2px;
+      }
+
+      .face-mesh {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 150px;
+        height: 190px;
+        border: 1px solid rgba(37, 208, 223, .7);
+        border-radius: 48% 48% 44% 44%;
+        transform: translate(-50%, -50%) scale(var(--mesh-scale, 1));
+        background:
+          radial-gradient(circle at 36% 39%, var(--cyan) 0 3px, transparent 4px),
+          radial-gradient(circle at 64% 39%, var(--cyan) 0 3px, transparent 4px),
+          linear-gradient(90deg, transparent 49%, rgba(37, 208, 223, .55) 50%, transparent 51%),
+          linear-gradient(0deg, transparent 32%, rgba(37, 208, 223, .28) 33%, transparent 34%, transparent 58%, rgba(37, 208, 223, .28) 59%, transparent 60%);
+      }
+
+      .scope-field {
+        display: grid;
+        grid-template-columns: 1fr 180px;
+        gap: 12px;
+        align-items: stretch;
+      }
+
+      .scope-lines {
+        position: relative;
+        min-height: 210px;
+        border: 1px solid rgba(75, 88, 117, .7);
+        border-radius: 5px;
+        background:
+          linear-gradient(0deg, rgba(240, 189, 88, .16) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(75, 88, 117, .16) 1px, transparent 1px),
+          #070a10;
+        background-size: 100% 22px, 34px 100%;
+        overflow: hidden;
+      }
+
+      .scope-line {
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 42px;
+        background: linear-gradient(90deg, transparent, rgba(240, 93, 118, .4), rgba(73, 219, 141, .46), rgba(37, 208, 223, .44), transparent);
+        filter: blur(4px);
+        transform: translateY(var(--wave));
+      }
+
+      .vector-disc {
+        width: 180px;
+        min-height: 180px;
+        border-radius: 50%;
+        border: 1px solid rgba(156, 124, 255, .55);
+        background:
+          radial-gradient(circle, rgba(241, 245, 251, .72) 0 4%, transparent 5%),
+          conic-gradient(from 0deg, rgba(240, 93, 118, .32), rgba(240, 189, 88, .3), rgba(73, 219, 141, .32), rgba(37, 208, 223, .32), rgba(156, 124, 255, .32), rgba(240, 93, 118, .32));
+        position: relative;
+      }
+
+      .vector-disc::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 72px;
+        height: 118px;
+        border-radius: 48%;
+        background: rgba(241, 245, 251, .72);
+        transform: translate(-50%, -50%) rotate(var(--vec-rot, -22deg));
+        filter: blur(3px);
+      }
+
+      .queue-list,
+      .asset-cards,
+      .check-list {
+        display: grid;
+        gap: 8px;
+        margin-top: 12px;
+      }
+
+      .queue-row,
+      .asset-card,
+      .check-row {
+        border: 1px solid rgba(75, 88, 117, .68);
+        background: rgba(12, 15, 23, .7);
+        border-radius: 5px;
+        padding: 9px 10px;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 10px;
+        align-items: center;
+        font-size: 11px;
+      }
+
+      .progress {
+        height: 7px;
+        border-radius: 999px;
+        background: #0a0d14;
+        overflow: hidden;
+        margin-top: 6px;
+      }
+
+      .progress span {
+        display: block;
+        height: 100%;
+        width: var(--pct);
+        background: linear-gradient(90deg, var(--cyan), var(--emerald));
+      }
+
+      .mini-track-label {
+        color: var(--muted);
+        font-size: 10px;
+        margin-top: 11px;
+      }
+
+      .interactive-clip {
+        position: absolute;
+        top: 4px;
+        bottom: 4px;
+        left: var(--left);
+        width: var(--width);
+        min-width: 42px;
+        border-radius: 3px;
+        border: 1px solid rgba(37, 208, 223, .72);
+        background: linear-gradient(90deg, rgba(37, 208, 223, .48), rgba(156, 124, 255, .42));
+        cursor: grab;
+      }
+
+      .interactive-clip:focus-visible {
+        outline: 2px solid var(--amber);
+        outline-offset: 2px;
+      }
+
+      .thumb-ref {
+        border: 1px solid rgba(75, 88, 117, .75);
+        border-radius: 5px;
+        overflow: hidden;
+        background: #05070d;
+      }
+
+      .thumb-ref img {
+        width: 100%;
+        height: 130px;
+        object-fit: cover;
+        display: block;
+      }
+
+      .thumb-ref div {
+        padding: 8px;
+        color: var(--muted);
+        font-size: 10px;
+      }
+
+      .inventory-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 10px;
+        margin-top: 18px;
+      }
+
+      .inventory-card {
+        border: 1px solid rgba(75, 88, 117, .72);
+        background: rgba(12, 15, 23, .7);
+        border-radius: 6px;
+        padding: 12px;
+      }
+
+      .inventory-card span {
+        display: block;
+        color: var(--muted);
+        font-size: 10px;
+        text-transform: uppercase;
+      }
+
+      .inventory-card strong {
+        display: block;
+        margin-top: 6px;
+        font-size: 24px;
+      }
+
+      .inventory-section {
+        margin-top: 18px;
+        border: 1px solid var(--line);
+        background: linear-gradient(180deg, rgba(27, 32, 46, .96), rgba(10, 12, 19, .96));
+        border-radius: 7px;
+        padding: 14px;
+      }
+
+      .inventory-section h2 {
+        margin: 0;
+        font-size: 16px;
+        letter-spacing: 0;
+      }
+
+      .inventory-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 12px;
+        font-size: 11px;
+      }
+
+      .inventory-table th,
+      .inventory-table td {
+        border-bottom: 1px solid rgba(75, 88, 117, .42);
+        padding: 8px;
+        text-align: left;
+        vertical-align: top;
+      }
+
+      .inventory-table th {
+        color: var(--muted);
+        font-weight: 400;
+        text-transform: uppercase;
+        font-size: 10px;
+      }
+
+      .table-scroll {
+        max-height: 520px;
+        overflow: auto;
+        border: 1px solid rgba(75, 88, 117, .45);
+        border-radius: 5px;
+        margin-top: 12px;
+      }
+
+      .inventory-search {
+        width: 100%;
+        margin-top: 12px;
+        border: 1px solid var(--line2);
+        border-radius: 5px;
+        background: #0c1018;
+        color: var(--text);
+        padding: 10px 12px;
+        font: inherit;
+        font-size: 12px;
+      }
+
+      .operation-list {
+        display: flex;
+        gap: 5px;
+        flex-wrap: wrap;
+      }
+
+      .operation-list span {
+        border: 1px solid rgba(75, 88, 117, .68);
+        border-radius: 999px;
+        padding: 3px 7px;
+        color: var(--muted);
+        background: rgba(12, 15, 23, .7);
+      }
+
+      .runtime-card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 12px;
+        margin-top: 12px;
+      }
+
+      .runtime-card {
+        border: 1px solid rgba(75, 88, 117, .72);
+        background: rgba(12, 15, 23, .78);
+        border-radius: 6px;
+        padding: 13px;
+      }
+
+      .runtime-card p {
+        color: var(--muted);
+        line-height: 1.45;
+        font-size: 12px;
+      }
+
+      .freeze-lane {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 12px;
+        margin-top: 18px;
+      }
+
+      .freeze-card {
+        border: 1px solid rgba(75, 88, 117, .72);
+        background: linear-gradient(180deg, rgba(27, 32, 46, .96), rgba(10, 12, 19, .96));
+        border-radius: 7px;
+        padding: 14px;
+      }
+
+      .freeze-card h2 {
+        margin: 0 0 10px;
+        font-size: 15px;
+      }
+
+      .command-list {
+        display: grid;
+        gap: 7px;
+      }
+
+      .command-list code {
+        display: block;
+        border: 1px solid rgba(75, 88, 117, .7);
+        border-radius: 5px;
+        padding: 8px 9px;
+        background: #070a10;
+        color: var(--cyan);
+        overflow-wrap: anywhere;
+        font-size: 11px;
+      }
+
+      .detail-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(280px, .62fr);
+        gap: 14px;
+        margin-top: 18px;
+      }
+
+      .detail-panel {
+        border: 1px solid var(--line);
+        background: linear-gradient(180deg, rgba(27, 32, 46, .96), rgba(10, 12, 19, .96));
+        border-radius: 7px;
+        padding: 14px;
+        min-width: 0;
+      }
+
+      .detail-panel h2 {
+        margin: 0 0 10px;
+        font-size: 16px;
+      }
+
+      .route-link {
+        color: var(--cyan);
+        text-decoration: underline;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 3px;
+      }
+
+      .status-strip {
+        margin-top: 18px;
+        padding: 12px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+        gap: 10px;
+      }
+
+      .status-item {
+        border: 1px solid rgba(75, 88, 117, .72);
+        background: rgba(12, 15, 23, .66);
+        border-radius: 5px;
+        padding: 10px;
+      }
+
+      .status-item span {
+        color: var(--muted);
+        font-size: 10px;
+      }
+
+      .status-item strong {
+        display: block;
+        margin-top: 6px;
+        font-size: 14px;
+      }
+
+      .launch-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 12px;
+        margin-top: 20px;
+      }
+
+      .launch-panel {
+        min-height: 110px;
+        padding: 16px;
+      }
+
+      .launch-panel p,
+      .rail-panel p {
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.45;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      @media (max-width: 1040px) {
+        .topbar,
+        .shell,
+        .hero,
+        .studio-layout,
+        .widget-board,
+        .scope-field,
+        .detail-grid {
+          grid-template-columns: 1fr;
+        }
+
+        aside {
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+
+        .route-list {
+          grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
+        }
+      }
+
+      @media (max-width: 640px) {
+        .topbar {
+          position: static;
+        }
+
+        .visual,
+        .visual img,
+        .hero-copy {
+          min-height: 320px;
+        }
+
+        .nav,
+        .actions {
+          justify-content: start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/mahavisphot" data-route-link>
+        <span class="mark" aria-hidden="true"></span>
+        <span>
+          <strong>MAHAVISPHOT STUDIO</strong>
+          <span class="mode">video, audio, VFX, animation, XR, render OS</span>
+        </span>
+      </a>
+      <nav class="nav" aria-label="Primary routes" id="top-nav"></nav>
+      <div class="actions">
+        <a class="button" href="/mahavisphot/launch">Launch</a>
+        <a class="button primary" href="/editor">Open Editor</a>
+      </div>
+    </header>
+
+    <div class="shell">
+      <aside>
+        <div class="side-title">Studio Routes</div>
+        <nav class="route-list" aria-label="Mahavisphot studio route list" id="side-nav"></nav>
+      </aside>
+      <main id="app" tabindex="-1"></main>
+    </div>
+
+    <script src="/mahavisphot/scaffolds/mahavisphot-studio-scaffolds.js"></script>
+    <script>
+      const ASSET_BASE = "/mahavisphot/extracted/reference-views/frames/";
+      const ALL_FRAMES_BOARD = "/mahavisphot/boards/mahavisphot-all-frames-board.png";
+
+      const routeGroups = [
+        {
+          label: "Core",
+          routes: [
+            {
+              path: "/mahavisphot",
+              nav: "Landing",
+              title: "Mahavisphot Studio",
+              subtitle: "AI-powered cinematic production, VFX, animation, toon, cel, audio, XR, and render operating system.",
+              status: "scaffold",
+              evidence: "400 UX Views Registry",
+              heroImage: ALL_FRAMES_BOARD,
+              kind: "landing",
+            },
+            {
+              path: "/mahavisphot/compositor",
+              nav: "Compositor",
+              title: "Compositor",
+              subtitle: "Layered editorial, node compositing, timeline assembly, scopes, overlays, and schema-aware export surfaces.",
+              status: "preview",
+              evidence: "56 extracted UI references",
+              heroImage: `${ASSET_BASE}frame_034_viewer-tracking-overlay.png`,
+              kind: "studio",
+              tools: ["Timeline Editor", "Node Graph", "Scene Graph", "Scopes", "Inspector"],
+            },
+            {
+              path: "/mahavisphot/editor",
+              nav: "Editor",
+              title: "Editor",
+              subtitle: "Shot sequencing, captions, notes, track CRUD, ripple/cascade delete, dynamic layers, and project handoff.",
+              status: "preview",
+              evidence: "Local editor route",
+              heroImage: `${ASSET_BASE}frame_041_timeline-stack-v3.png`,
+              kind: "studio",
+              tools: ["Tracks", "Markers", "Captions", "Projects", "Export"],
+              ctaHref: "/editor",
+              ctaLabel: "Open Live Editor",
+            },
+            {
+              path: "/mahavisphot/launchpad",
+              nav: "Launchpad",
+              title: "Launch Studio",
+              subtitle: "Project start, recovery mode, hardware health, recent projects, runtime checks, and mode selection.",
+              status: "scaffold",
+              evidence: "Launch route scaffold",
+              heroImage: `${ASSET_BASE}frame_029_top-toolbar-v3.png`,
+              kind: "launch",
+            },
+            {
+              path: "/mahavisphot/freeze-current-scaffold",
+              nav: "Freeze",
+              title: "Freeze Current Scaffold Preview",
+              subtitle: "Preflight view for freezing the current Mahavisphot scaffold without making production runtime claims.",
+              status: "preview",
+              evidence: "Freeze preview checklist",
+              heroImage: ALL_FRAMES_BOARD,
+              kind: "freeze-preview",
+            },
+          ],
+        },
+        {
+          label: "Operating Map",
+          routes: [
+            {
+              path: "/mahavisphot/scaffolds",
+              nav: "Scaffolds",
+              title: "All Studio Scaffolds",
+              subtitle: "One operating map for runtime modes, workflow lanes, CRUD surfaces, UX pages, API contracts, and database tables.",
+              status: "scaffold",
+              evidence: "Generated public scaffold map",
+              heroImage: ALL_FRAMES_BOARD,
+              kind: "inventory",
+              focus: "all",
+            },
+            {
+              path: "/mahavisphot/runtimes",
+              nav: "Runtimes",
+              title: "Runtime Map",
+              subtitle: "Local, cloud, and hybrid runtime surfaces with blocked evidence gates visible and explicit.",
+              status: "blocked",
+              evidence: "Runtime modes scaffold",
+              heroImage: `${ASSET_BASE}frame_009_neural-motion-tracker.png`,
+              kind: "inventory",
+              focus: "runtimes",
+            },
+            {
+              path: "/mahavisphot/workflows",
+              nav: "Workflows",
+              title: "Workflow Map",
+              subtitle: "End-to-end studio workflows from project lifecycle through export, observatory, support, and security.",
+              status: "scaffold",
+              evidence: "Workflow scaffold map",
+              heroImage: `${ASSET_BASE}frame_041_timeline-stack-v3.png`,
+              kind: "inventory",
+              focus: "workflows",
+            },
+            {
+              path: "/mahavisphot/crud",
+              nav: "CRUD",
+              title: "CRUD Surface Map",
+              subtitle: "Create, read, update, delete, duplicate, route, export, and evidence operations across studio records.",
+              status: "scaffold",
+              evidence: "CRUD scaffold map",
+              heroImage: `${ASSET_BASE}frame_036_right-inspector-tabs.png`,
+              kind: "inventory",
+              focus: "crud",
+            },
+            {
+              path: "/mahavisphot/ux-surfaces",
+              nav: "UX Surfaces",
+              title: "All UX Surfaces",
+              subtitle: "The full 400-view UX registry exposed as route-aware local scaffold surfaces.",
+              status: "scaffold",
+              evidence: "400 UX page registry",
+              heroImage: ALL_FRAMES_BOARD,
+              kind: "inventory",
+              focus: "ux",
+            },
+          ],
+        },
+        {
+          label: "Image & VFX",
+          routes: [
+            {
+              path: "/mahavisphot/vfx-studio/overview",
+              nav: "VFX",
+              title: "VFX Studio",
+              subtitle: "Procedural effects, fixture repair, node routing, multi-pass grain, optical stacks, and output buses.",
+              status: "scaffold",
+              evidence: "VFX contract registry",
+              heroImage: `${ASSET_BASE}frame_038_texture-fixture-engine.png`,
+              kind: "studio",
+              tools: ["Texture Fixture", "Glow", "Denoise", "Grain", "Composite Bus"],
+            },
+            {
+              path: "/mahavisphot/particle-studio/overview",
+              nav: "Particles",
+              title: "Particle Studio",
+              subtitle: "Preset gallery, parametric fields, particle node logic, turbulence controls, and timeline-triggered simulations.",
+              status: "scaffold",
+              evidence: "Particle panels extracted",
+              heroImage: `${ASSET_BASE}frame_035_particles-gallery-floating-panel.png`,
+              kind: "studio",
+              tools: ["Preset Gallery", "Vector Fields", "Wind", "Turbulence", "Node Graph"],
+            },
+            {
+              path: "/mahavisphot/color-studio/overview",
+              nav: "Color",
+              title: "Color Studio",
+              subtitle: "RGB waveform, vectorscope, grade gallery, curves, color wheels, and shot continuity views.",
+              status: "scaffold",
+              evidence: "Scopes extracted",
+              heroImage: `${ASSET_BASE}frame_039_rgb-waveform-scope.png`,
+              kind: "studio",
+              tools: ["Waveform", "Vector", "Curves", "Grade Gallery", "LUTs"],
+            },
+            {
+              path: "/mahavisphot/digital-makeup-studio/overview",
+              nav: "Makeup",
+              title: "Digital Makeup Studio",
+              subtitle: "Face-safe cosmetic passes, skin tone continuity, blemish controls, and expression-aware masks.",
+              status: "planned",
+              evidence: "Registry scaffold",
+              heroImage: `${ASSET_BASE}frame_037_face-replacer-panel.png`,
+              kind: "studio",
+              tools: ["Beauty Pass", "Skin Map", "Mask Stack", "Face Track", "Review"],
+            },
+            {
+              path: "/mahavisphot/face-studio/overview",
+              nav: "Face",
+              title: "Face Studio",
+              subtitle: "Topology maps, face replacement layout, landmark confidence, depth swapping, and protected review states.",
+              status: "blocked",
+              evidence: "Runtime model evidence required",
+              heroImage: `${ASSET_BASE}frame_010_topology-map.png`,
+              kind: "studio",
+              tools: ["Landmarks", "Topology", "Face Swap", "Depth Map", "Confidence"],
+            },
+          ],
+        },
+        {
+          label: "3D & Worlds",
+          routes: [
+            {
+              path: "/mahavisphot/3d-studio/overview",
+              nav: "3D",
+              title: "3D Studio",
+              subtitle: "Scene hierarchy, transform inspector, shader editor, UV texture editor, and viewport tracking overlays.",
+              status: "scaffold",
+              evidence: "3D panels extracted",
+              heroImage: `${ASSET_BASE}frame_005_hierarchy-scene-graph.png`,
+              kind: "studio",
+              tools: ["Scene Graph", "Transforms", "Shader Editor", "UV Editor", "Viewport"],
+            },
+            {
+              path: "/mahavisphot/xr-studio/overview",
+              nav: "XR",
+              title: "XR Studio",
+              subtitle: "Immersive review routing, camera zones, spatial preview, accessibility-safe overlays, and export planning.",
+              status: "planned",
+              evidence: "XR registry route",
+              heroImage: `${ASSET_BASE}frame_049_secondary-monitor-tracking-view.png`,
+              kind: "studio",
+              tools: ["Spatial Review", "XR Preview", "Camera Zones", "Accessibility", "Export"],
+            },
+            {
+              path: "/mahavisphot/props-studio/overview",
+              nav: "Props",
+              title: "Props Studio",
+              subtitle: "Asset cards, prop continuity, fixture metadata, turntable references, and shot-level placement notes.",
+              status: "planned",
+              evidence: "Registry scaffold",
+              heroImage: `${ASSET_BASE}frame_003_scene-list.png`,
+              kind: "studio",
+              tools: ["Assets", "Continuity", "Metadata", "Turntable", "Placement"],
+            },
+            {
+              path: "/mahavisphot/costume-studio/overview",
+              nav: "Costume",
+              title: "Costume Studio",
+              subtitle: "Wardrobe references, continuity state, character sheets, texture fixture links, and review notes.",
+              status: "planned",
+              evidence: "Registry scaffold",
+              heroImage: `${ASSET_BASE}frame_030_scenes-panel-v3.png`,
+              kind: "studio",
+              tools: ["Wardrobe", "Continuity", "Character Sheets", "Texture Links", "Review"],
+            },
+          ],
+        },
+        {
+          label: "Animation",
+          routes: [
+            {
+              path: "/mahavisphot/toon-designer-studio/overview",
+              nav: "Toon",
+              title: "Toon Designer",
+              subtitle: "Stylized character design, pose sheets, color variants, prop links, and frame-safe preview routing.",
+              status: "planned",
+              evidence: "Registry scaffold",
+              heroImage: `${ASSET_BASE}frame_016_grade-gallery.png`,
+              kind: "studio",
+              tools: ["Characters", "Pose Sheet", "Color Variants", "Props", "Preview"],
+            },
+            {
+              path: "/mahavisphot/cel-animation-studio/overview",
+              nav: "Cel",
+              title: "Cel Animation",
+              subtitle: "Onion-skin planning, exposure sheets, cleanup passes, color holdouts, and render-safe layer lanes.",
+              status: "planned",
+              evidence: "Registry scaffold",
+              heroImage: `${ASSET_BASE}frame_023_particle-volume-mixer-view.png`,
+              kind: "studio",
+              tools: ["Exposure Sheet", "Onion Skin", "Cleanup", "Holdouts", "Layer Lanes"],
+            },
+            {
+              path: "/mahavisphot/comic-studio/overview",
+              nav: "Comic",
+              title: "Comic Studio",
+              subtitle: "Panel boards, speech/caption passes, page continuity, export sheets, and editorial review states.",
+              status: "planned",
+              evidence: "Registry scaffold",
+              heroImage: `${ASSET_BASE}frame_002_program-monitor.png`,
+              kind: "studio",
+              tools: ["Panels", "Captions", "Pages", "Continuity", "Export"],
+            },
+          ],
+        },
+        {
+          label: "Sound & Output",
+          routes: [
+            {
+              path: "/mahavisphot/audio-studio/overview",
+              nav: "Audio",
+              title: "Audio Studio",
+              subtitle: "Master mixer, audio track mixer, spectrogram analyzer, loudness telemetry, and stem-aware timeline lanes.",
+              status: "scaffold",
+              evidence: "Audio panels extracted",
+              heroImage: `${ASSET_BASE}frame_021_spectrogram-analyzer.png`,
+              kind: "studio",
+              tools: ["Mixer", "Track Inserts", "Spectrogram", "Loudness", "Stems"],
+            },
+            {
+              path: "/mahavisphot/render-center/overview",
+              nav: "Render",
+              title: "Render Center",
+              subtitle: "Render queue, export settings, runtime health, cache telemetry, and blocked parity gates.",
+              status: "scaffold",
+              evidence: "Render route scaffold",
+              heroImage: `${ASSET_BASE}frame_026_render-queue.png`,
+              kind: "studio",
+              tools: ["Queue", "Presets", "Health", "Cache", "Parity Gate"],
+            },
+            {
+              path: "/mahavisphot/export-center/overview",
+              nav: "Export",
+              title: "Export Center",
+              subtitle: "Schema-aware exports for JSON, TSV, board PNG, preview MP4, and future UHD render outputs.",
+              status: "blocked",
+              evidence: "Export parity evidence required",
+              heroImage: `${ASSET_BASE}frame_027_export-settings.png`,
+              kind: "studio",
+              tools: ["JSON", "TSV", "Board PNG", "MP4", "UHD Gate"],
+            },
+            {
+              path: "/mahavisphot/observatory/overview",
+              nav: "Observatory",
+              title: "Render Observatory",
+              subtitle: "Telemetry dashboard, scopes, queue evidence, runtime blockers, GPU status, and production readiness state.",
+              status: "scaffold",
+              evidence: "Runtime evidence JSON",
+              heroImage: `${ASSET_BASE}frame_028_telemetry-dashboard.png`,
+              kind: "studio",
+              tools: ["Telemetry", "Evidence", "GPU", "Scopes", "Readiness"],
+            },
+          ],
+        },
+        {
+          label: "AI Runtime",
+          routes: [
+            {
+              path: "/mahavisphot/local-ai-mode/overview",
+              nav: "Local AI",
+              title: "Local AI Mode",
+              subtitle: "On-device inference lane, model inventory, privacy boundary, hardware probe, and evidence-locked launch state.",
+              status: "blocked",
+              evidence: "Model runtime evidence required",
+              heroImage: `${ASSET_BASE}frame_009_neural-motion-tracker.png`,
+              kind: "studio",
+              tools: ["Model Inventory", "Hardware", "Privacy", "Inference", "Evidence"],
+            },
+            {
+              path: "/mahavisphot/cloud-ai-mode/overview",
+              nav: "Cloud AI",
+              title: "Cloud AI Mode",
+              subtitle: "Provider adapters, credential gates, job routing, cloud render handoff, and audit evidence requirements.",
+              status: "blocked",
+              evidence: "Provider credentials required",
+              heroImage: `${ASSET_BASE}frame_011_anisotropic-depth-map-viewer.png`,
+              kind: "studio",
+              tools: ["Adapters", "Credentials", "Jobs", "Audit", "Handoff"],
+            },
+            {
+              path: "/mahavisphot/hybrid-ai-mode/overview",
+              nav: "Hybrid AI",
+              title: "Hybrid AI Mode",
+              subtitle: "Local/cloud split, fallback routing, privacy tiers, cost controls, and runtime mode health gates.",
+              status: "blocked",
+              evidence: "Hybrid adapter evidence required",
+              heroImage: `${ASSET_BASE}frame_048_inspector-pro-rubab-optimizer.png`,
+              kind: "studio",
+              tools: ["Split Routing", "Fallback", "Privacy", "Cost", "Health"],
+            },
+            {
+              path: "/mahavisphot/developer-platform/overview",
+              nav: "Dev",
+              title: "Developer Platform",
+              subtitle: "Typed registries, API schemas, database table map, route contracts, and extension handoff surfaces.",
+              status: "scaffold",
+              evidence: "Typed schema registry",
+              heroImage: `${ASSET_BASE}frame_013_particle-node-graph.png`,
+              kind: "studio",
+              tools: ["Types", "API", "Tables", "Routes", "Extensions"],
+            },
+          ],
+        },
+      ];
+
+      const routes = routeGroups.flatMap((group) => group.routes.map((route) => ({ ...route, group: group.label })));
+      const routeMap = new Map(routes.map((route) => [route.path, route]));
+      routeMap.set("/mahavisphot/", routeMap.get("/mahavisphot"));
+      routeMap.set("/mahavisphot/launch", routeMap.get("/mahavisphot/launchpad"));
+      routeMap.set("/mahavisphot/launch/", routeMap.get("/mahavisphot/launchpad"));
+      const moduleHeroImages = new Map(routes.filter((route) => route.heroImage).map((route) => [route.path.split("/")[2], route.heroImage]));
+
+      const app = document.getElementById("app");
+      const topNav = document.getElementById("top-nav");
+      const sideNav = document.getElementById("side-nav");
+      let widgetTimer = null;
+
+      function escapeHtml(value) {
+        return String(value)
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;");
+      }
+
+      function statusChip(route) {
+        return `<span class="chip ${escapeHtml(route.status)}">${escapeHtml(route.status.toUpperCase())}</span>`;
+      }
+
+      function normalizePath() {
+        let pathname = window.location.pathname.replace(/\/+$/, "");
+        if (!pathname || pathname === "/mahavisphot/index.html") pathname = "/mahavisphot";
+        if (pathname === "/mahavisphot/launch") pathname = "/mahavisphot/launchpad";
+        return pathname;
+      }
+
+      function dynamicRouteForPath(pathname) {
+        const data = scaffoldData();
+        const runtimeMatch = pathname.match(/^\/mahavisphot\/runtimes\/([a-z-]+)$/);
+        if (runtimeMatch) {
+          const runtime = data.runtimeModes.find((item) => item.id === runtimeMatch[1]);
+          if (runtime) {
+            return {
+              path: pathname,
+              nav: runtime.id,
+              title: runtime.title,
+              subtitle: runtime.scope,
+              status: runtime.status,
+              evidence: "Runtime evidence gate",
+              heroImage: `${ASSET_BASE}frame_009_neural-motion-tracker.png`,
+              kind: "runtime-detail",
+              runtime,
+            };
+          }
+        }
+
+        const workflowMatch = pathname.match(/^\/mahavisphot\/workflows\/([a-z0-9-]+)$/);
+        if (workflowMatch) {
+          const workflow = data.workflows.find((item) => item.id === workflowMatch[1]);
+          if (workflow) {
+            return {
+              path: pathname,
+              nav: workflow.id,
+              title: workflow.title,
+              subtitle: workflow.description,
+              status: workflow.status,
+              evidence: "Workflow scaffold",
+              heroImage: `${ASSET_BASE}frame_041_timeline-stack-v3.png`,
+              kind: "workflow-detail",
+              workflow,
+            };
+          }
+        }
+
+        const crudMatch = pathname.match(/^\/mahavisphot\/crud\/([a-z0-9-]+)$/);
+        if (crudMatch) {
+          const crud = data.crudSurfaces.find((item) => item.id === crudMatch[1]);
+          if (crud) {
+            return {
+              path: pathname,
+              nav: crud.id,
+              title: `${crud.title} CRUD`,
+              subtitle: `Record operations for ${crud.title}.`,
+              status: crud.status,
+              evidence: "CRUD scaffold",
+              heroImage: `${ASSET_BASE}frame_036_right-inspector-tabs.png`,
+              kind: "crud-detail",
+              crud,
+            };
+          }
+        }
+
+        const surface = data.uxSurfaces.find((item) => item.route === pathname);
+        if (surface) {
+          const moduleKey = pathname.split("/")[2];
+          return {
+            path: pathname,
+            nav: surface.title,
+            title: surface.title,
+            subtitle: `${surface.group} surface for ${surface.moduleId}.`,
+            status: surface.status,
+            evidence: "400 UX page registry",
+            heroImage: moduleHeroImages.get(moduleKey) || ALL_FRAMES_BOARD,
+            kind: "ux-detail",
+            surface,
+          };
+        }
+
+        return null;
+      }
+
+      function currentRoute() {
+        const pathname = normalizePath();
+        return routeMap.get(pathname) || dynamicRouteForPath(pathname) || routeMap.get("/mahavisphot");
+      }
+
+      function navigate(event) {
+        const link = event.target.closest("a[data-route-link]");
+        if (!link) return;
+        const url = new URL(link.href);
+        if (url.origin !== window.location.origin || !url.pathname.startsWith("/mahavisphot")) return;
+        if (url.pathname === "/mahavisphot/launch") return;
+        event.preventDefault();
+        window.history.pushState({}, "", url.pathname);
+        render();
+      }
+
+      function renderNav(route) {
+        const topItems = ["/mahavisphot", "/mahavisphot/freeze-current-scaffold", "/mahavisphot/scaffolds", "/mahavisphot/compositor", "/mahavisphot/particle-studio/overview", "/mahavisphot/observatory/overview"];
+        topNav.innerHTML = topItems.map((path) => {
+          const item = routeMap.get(path);
+          const current = item.path === route.path ? ' aria-current="page"' : "";
+          return `<a href="${item.path}" data-route-link${current}>${escapeHtml(item.nav)}</a>`;
+        }).join("");
+
+        sideNav.innerHTML = routeGroups.map((group) => `
+          <div class="side-title">${escapeHtml(group.label)}</div>
+          ${group.routes.map((item) => {
+            const current = item.path === route.path ? ' aria-current="page"' : "";
+            return `<a class="route-pill" href="${item.path}" data-route-link${current}><strong>${escapeHtml(item.nav)}</strong><span aria-hidden="true"></span></a>`;
+          }).join("")}
+        `).join("");
+      }
+
+      function routeCards() {
+        return routes.filter((route) => route.path !== "/mahavisphot").map((route) => `
+          <a class="module-tile" href="${route.path}" data-route-link>
+            <div class="module-head">
+              <strong>${escapeHtml(route.title)}</strong>
+              ${statusChip(route)}
+            </div>
+            <img src="${route.heroImage}" alt="">
+            <div class="module-meta">${escapeHtml(route.group)} - ${escapeHtml(route.evidence)}</div>
+          </a>
+        `).join("");
+      }
+
+      function statusStrip(route) {
+        return `
+          <section class="status-strip" aria-label="Route status">
+            <div class="status-item"><span>ROUTE</span><strong>${escapeHtml(route.path)}</strong></div>
+            <div class="status-item"><span>STATUS</span><strong>${escapeHtml(route.status.toUpperCase())}</strong></div>
+            <div class="status-item"><span>EVIDENCE</span><strong>${escapeHtml(route.evidence)}</strong></div>
+            <div class="status-item"><span>PRODUCTION</span><strong>NO-GO</strong></div>
+          </section>
+        `;
+      }
+
+      function landing(route) {
+        return `
+          <section class="hero" aria-labelledby="route-title">
+            <div class="hero-copy">
+              <div>
+                <h1 id="route-title">${escapeHtml(route.title)}</h1>
+                <p class="subtitle">${escapeHtml(route.subtitle)}</p>
+                <div class="honesty">Architecture scaffold - production readiness requires verified runtime evidence.</div>
+              </div>
+              <div class="hero-actions">
+                <a class="button primary" href="/mahavisphot/compositor" data-route-link>Open Compositor Route</a>
+                <a class="button" href="/mahavisphot/launch">Launch Studio</a>
+                <a class="button" href="/mahavisphot/extracted/reference-views/index.html">Extracted Views</a>
+              </div>
+            </div>
+            <div class="visual">
+              <img src="${route.heroImage}" alt="MAHAVISPHOT Studio product board">
+              <div class="visual-label"><strong>400 UX Views</strong>${statusChip(route)}</div>
+            </div>
+          </section>
+          ${statusStrip(route)}
+          <section class="grid" aria-label="Mahavisphot product routes">${routeCards()}</section>
+        `;
+      }
+
+      function launch(route) {
+        return `
+          <section class="hero" aria-labelledby="route-title">
+            <div class="hero-copy">
+              <div>
+                <h1 id="route-title">${escapeHtml(route.title)}</h1>
+                <p class="subtitle">${escapeHtml(route.subtitle)}</p>
+                <div class="honesty">Recovery and runtime surfaces are route scaffolded. Runtime claims remain evidence-gated.</div>
+              </div>
+              <div class="hero-actions">
+                <a class="button primary" href="/editor">New Project</a>
+                <a class="button" href="/mahavisphot/compositor" data-route-link>Open Compositor</a>
+              </div>
+            </div>
+            <div class="visual">
+              <img src="${route.heroImage}" alt="Mahavisphot launch controls">
+              <div class="visual-label"><strong>Launch Controls</strong>${statusChip(route)}</div>
+            </div>
+          </section>
+          <section class="launch-grid" aria-label="Launch actions">
+            ${["New Project", "Open Project", "Recent Projects", "Templates", "Hardware Check", "Runtime Health", "Local AI Mode", "Cloud AI Mode", "Hybrid AI Mode", "Recovery Mode"].map((label, index) => `
+              <div class="launch-panel">
+                <div class="module-head"><strong>${escapeHtml(label)}</strong><span class="chip ${index > 5 ? "blocked" : "scaffold"}">${index > 5 ? "BLOCKED" : "SCAFFOLD"}</span></div>
+                <p>${index > 5 ? "Evidence-gated runtime mode." : "Route surface ready for local project workflow wiring."}</p>
+              </div>
+            `).join("")}
+          </section>
+          ${statusStrip(route)}
+        `;
+      }
+
+      function freezePreview(route) {
+        const data = scaffoldData();
+        const commands = [
+          "npm run mahavisphot:scaffolds",
+          "node --test tests/mahavisphot-studio-scaffolds.test.mjs",
+          "node --test tests/mahavisphot-route-shell.test.mjs",
+          "npm run check",
+          "npm run typecheck",
+          "npm run mahavisphot:verify",
+          "npm run mahavisphot:evidence",
+          "git diff --check",
+        ];
+        const buckets = [
+          ["Registry Scaffold", "Types, validators, module/page/API/table/schema registries, generated JSON, docs, and tests."],
+          ["Studio Route Shell", "Landing, launch, 400 UX routes, runtime/workflow/CRUD detail routes, widgets, and browser smoke."],
+          ["Generated Boards And Frames", "All-frames board, extracted frame crops, contact sheets, manifests, and extraction evidence."],
+          ["Runtime Evidence", "Auth, subscription, project CRUD, local server health, export smoke evidence, and known blockers."],
+        ];
+        const gates = [
+          ["Scaffold Counts", `${data.counts.modules} modules / ${data.counts.uxSurfaces} UX / ${data.counts.apiEndpoints} API / ${data.counts.databaseTables} tables`, "scaffold"],
+          ["Routes", "Base routes, 400 UX detail routes, runtime/workflow/CRUD detail routes", "preview"],
+          ["Local Preview", "Serve through /mahavisphot/freeze-current-scaffold on the local app server", "preview"],
+          ["Runtime AI", "Local, cloud, and hybrid execution remain blocked until adapters and evidence exist", "blocked"],
+          ["Renderer Parity", "Full dynamic-track/caption/VFX render parity remains blocked", "blocked"],
+          ["Production", "NO-GO until all release gates pass", "blocked"],
+        ];
+
+        return `
+          <section class="hero" aria-labelledby="route-title">
+            <div class="hero-copy">
+              <div>
+                <div class="side-title">Freeze Preview</div>
+                <h1 id="route-title">${escapeHtml(route.title)}</h1>
+                <p class="subtitle">${escapeHtml(route.subtitle)}</p>
+                <div class="honesty">Preview only - this page does not stage, commit, or mark production ready.</div>
+              </div>
+              <div class="hero-actions">
+                <a class="button primary" href="/mahavisphot/scaffolds" data-route-link>Review Scaffolds</a>
+                <a class="button" href="/mahavisphot/ux-surfaces" data-route-link>Review UX</a>
+                <a class="button" href="/mahavisphot/runtimes" data-route-link>Review Runtimes</a>
+                <a class="button" href="/mahavisphot/workflows" data-route-link>Review Workflows</a>
+              </div>
+            </div>
+            <div class="visual">
+              <img src="${route.heroImage}" alt="Mahavisphot scaffold board">
+              <div class="visual-label"><strong>Freeze Candidate</strong>${statusChip(route)}</div>
+            </div>
+          </section>
+          ${countCards(data)}
+          <section class="freeze-lane" aria-label="Freeze preview gates">
+            <article class="freeze-card">
+              <div class="status-head"><h2>Preflight Commands</h2><span class="chip preview">RUN BEFORE COMMIT</span></div>
+              <div class="command-list">${commands.map((command) => `<code>${escapeHtml(command)}</code>`).join("")}</div>
+            </article>
+            <article class="freeze-card">
+              <div class="status-head"><h2>Commit Buckets</h2><span class="chip scaffold">PREVIEW</span></div>
+              <div class="queue-list">
+                ${buckets.map(([title, body]) => `
+                  <div class="queue-row"><span><strong>${escapeHtml(title)}</strong><br>${escapeHtml(body)}</span><span class="chip scaffold">BUCKET</span></div>
+                `).join("")}
+              </div>
+            </article>
+          </section>
+          <section class="inventory-section">
+            <div class="status-head"><h2>Freeze Gate Status</h2><span class="chip blocked">PRODUCTION NO-GO</span></div>
+            <div class="table-scroll">
+              <table class="inventory-table">
+                <thead><tr><th>Gate</th><th>Preview State</th><th>Status</th></tr></thead>
+                <tbody>
+                  ${gates.map(([gate, state, status]) => `
+                    <tr>
+                      <td><strong>${escapeHtml(gate)}</strong></td>
+                      <td>${escapeHtml(state)}</td>
+                      <td><span class="chip ${escapeHtml(status)}">${escapeHtml(status.toUpperCase())}</span></td>
+                    </tr>
+                  `).join("")}
+                </tbody>
+              </table>
+            </div>
+          </section>
+          ${statusStrip(route)}
+        `;
+      }
+
+      function scaffoldData() {
+        return window.MAHAVISPHOT_STUDIO_SCAFFOLDS || {
+          productionReady: false,
+          phkdVerdict: "SCAFFOLD_DATA_UNAVAILABLE",
+          counts: { modules: 0, uxSurfaces: 0, apiEndpoints: 0, databaseTables: 0, runtimeModes: 0, workflows: 0, crudSurfaces: 0 },
+          runtimeModes: [],
+          workflows: [],
+          crudSurfaces: [],
+          uxSurfaces: [],
+          modules: [],
+          apiSummary: [],
+          tableSummary: [],
+        };
+      }
+
+      function countCards(data) {
+        return `
+          <section class="inventory-grid" aria-label="Scaffold counts">
+            <div class="inventory-card"><span>Modules</span><strong>${data.counts.modules}</strong></div>
+            <div class="inventory-card"><span>UX Surfaces</span><strong>${data.counts.uxSurfaces}</strong></div>
+            <div class="inventory-card"><span>API Endpoints</span><strong>${data.counts.apiEndpoints}</strong></div>
+            <div class="inventory-card"><span>DB Tables</span><strong>${data.counts.databaseTables}</strong></div>
+            <div class="inventory-card"><span>Runtime Modes</span><strong>${data.counts.runtimeModes}</strong></div>
+            <div class="inventory-card"><span>Workflows</span><strong>${data.counts.workflows}</strong></div>
+            <div class="inventory-card"><span>CRUD Surfaces</span><strong>${data.counts.crudSurfaces}</strong></div>
+            <div class="inventory-card"><span>Production</span><strong>NO-GO</strong></div>
+          </section>
+        `;
+      }
+
+      function runtimeMatrix(data) {
+        return `
+          <section class="inventory-section" data-inventory-section="runtimes">
+            <div class="status-head"><h2>Runtimes</h2><span class="chip blocked">ALL EVIDENCE-GATED</span></div>
+            <div class="runtime-card-grid">
+              ${data.runtimeModes.map((runtime) => `
+                <article class="runtime-card">
+                  <div class="status-head"><strong>${escapeHtml(runtime.title)}</strong><span class="chip ${escapeHtml(runtime.status)}">${escapeHtml(runtime.status.toUpperCase())}</span></div>
+                  <p>${escapeHtml(runtime.scope)}</p>
+                  <div class="side-title">Evidence Required</div>
+                  <div class="operation-list">${runtime.evidenceRequired.map((item) => `<span>${escapeHtml(item)}</span>`).join("")}</div>
+                  <div class="side-title">Workflow Hooks</div>
+                  <div class="operation-list">${runtime.workflows.map((item) => `<span>${escapeHtml(item)}</span>`).join("")}</div>
+                  <div class="widget-toolbar"><a class="button" href="/mahavisphot/runtimes/${escapeHtml(runtime.id)}" data-route-link>Open Runtime</a></div>
+                </article>
+              `).join("")}
+            </div>
+          </section>
+        `;
+      }
+
+      function workflowTable(data) {
+        return `
+          <section class="inventory-section" data-inventory-section="workflows">
+            <div class="status-head"><h2>Workflows</h2><span class="chip scaffold">${data.workflows.length} LANES</span></div>
+            <div class="table-scroll">
+              <table class="inventory-table">
+                <thead><tr><th>#</th><th>Workflow</th><th>Group</th><th>Status</th><th>Description</th></tr></thead>
+                <tbody>
+                  ${data.workflows.map((workflow) => `
+                    <tr>
+                      <td>${workflow.order}</td>
+                      <td><a class="route-link" href="/mahavisphot/workflows/${escapeHtml(workflow.id)}" data-route-link><strong>${escapeHtml(workflow.title)}</strong></a><br>${escapeHtml(workflow.id)}</td>
+                      <td>${escapeHtml(workflow.group)}</td>
+                      <td><span class="chip ${escapeHtml(workflow.status)}">${escapeHtml(workflow.status.toUpperCase())}</span></td>
+                      <td>${escapeHtml(workflow.description)}</td>
+                    </tr>
+                  `).join("")}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        `;
+      }
+
+      function crudTable(data) {
+        return `
+          <section class="inventory-section" data-inventory-section="crud">
+            <div class="status-head"><h2>CRUD Surfaces</h2><span class="chip scaffold">${data.crudSurfaces.length} RECORD TYPES</span></div>
+            <div class="table-scroll">
+              <table class="inventory-table">
+                <thead><tr><th>#</th><th>Record</th><th>Operations</th><th>Status</th><th>Permissions</th></tr></thead>
+                <tbody>
+                  ${data.crudSurfaces.map((crud) => `
+                    <tr>
+                      <td>${crud.order}</td>
+                      <td><a class="route-link" href="/mahavisphot/crud/${escapeHtml(crud.id)}" data-route-link><strong>${escapeHtml(crud.title)}</strong></a><br>${escapeHtml(crud.id)}</td>
+                      <td><div class="operation-list">${crud.operations.map((operation) => `<span>${escapeHtml(operation)}</span>`).join("")}</div></td>
+                      <td><span class="chip ${escapeHtml(crud.status)}">${escapeHtml(crud.status.toUpperCase())}</span></td>
+                      <td>${crud.permissions.map(escapeHtml).join("<br>")}</td>
+                    </tr>
+                  `).join("")}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        `;
+      }
+
+      function uxSurfaceTable(data) {
+        return `
+          <section class="inventory-section" data-inventory-section="ux">
+            <div class="status-head"><h2>UX Surfaces</h2><span class="chip scaffold">${data.uxSurfaces.length} ROUTES</span></div>
+            <input class="inventory-search" id="ux-surface-search" type="search" placeholder="Filter 400 UX surfaces by title, route, module, group, or status" aria-label="Filter UX surfaces">
+            <div class="table-scroll">
+              <table class="inventory-table">
+                <thead><tr><th>#</th><th>Surface</th><th>Module</th><th>Group</th><th>Status</th><th>Route</th></tr></thead>
+                <tbody id="ux-surface-body">
+                  ${data.uxSurfaces.map((surface, index) => `
+                    <tr data-ux-row="${escapeHtml([surface.title, surface.route, surface.moduleId, surface.group, surface.status].join(" ").toLowerCase())}">
+                      <td>${index + 1}</td>
+                      <td><strong>${escapeHtml(surface.title)}</strong><br>${escapeHtml(surface.id)}</td>
+                      <td>${escapeHtml(surface.moduleId)}</td>
+                      <td>${escapeHtml(surface.group)}</td>
+                      <td><span class="chip ${escapeHtml(surface.status)}">${escapeHtml(surface.status.toUpperCase())}</span></td>
+                      <td><a class="route-link" href="${escapeHtml(surface.route)}" data-route-link>${escapeHtml(surface.route)}</a></td>
+                    </tr>
+                  `).join("")}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        `;
+      }
+
+      function apiTableSummary(data) {
+        return `
+          <section class="inventory-section" data-inventory-section="contracts">
+            <div class="status-head"><h2>API And Table Contracts</h2><span class="chip scaffold">${data.apiSummary.length + data.tableSummary.length} CONTRACTS</span></div>
+            <div class="inventory-grid">
+              <div class="inventory-card"><span>API GET</span><strong>${data.apiSummary.filter((item) => item.method === "GET").length}</strong></div>
+              <div class="inventory-card"><span>API POST</span><strong>${data.apiSummary.filter((item) => item.method === "POST").length}</strong></div>
+              <div class="inventory-card"><span>API PUT</span><strong>${data.apiSummary.filter((item) => item.method === "PUT").length}</strong></div>
+              <div class="inventory-card"><span>API DELETE</span><strong>${data.apiSummary.filter((item) => item.method === "DELETE").length}</strong></div>
+              <div class="inventory-card"><span>Tables</span><strong>${data.tableSummary.length}</strong></div>
+            </div>
+          </section>
+        `;
+      }
+
+      function inventoryPage(route) {
+        const data = scaffoldData();
+        const show = route.focus || "all";
+        const sections = [
+          show === "all" || show === "runtimes" ? runtimeMatrix(data) : "",
+          show === "all" || show === "workflows" ? workflowTable(data) : "",
+          show === "all" || show === "crud" ? crudTable(data) : "",
+          show === "all" || show === "ux" ? uxSurfaceTable(data) : "",
+          show === "all" ? apiTableSummary(data) : "",
+        ].join("");
+
+        return `
+          <section class="hero" aria-labelledby="route-title">
+            <div class="hero-copy">
+              <div>
+                <h1 id="route-title">${escapeHtml(route.title)}</h1>
+                <p class="subtitle">${escapeHtml(route.subtitle)}</p>
+                <div class="honesty">${escapeHtml(data.phkdVerdict)} - productionReady=${String(data.productionReady)}.</div>
+              </div>
+              <div class="hero-actions">
+                <a class="button primary" href="/mahavisphot/scaffolds" data-route-link>All Scaffolds</a>
+                <a class="button" href="/mahavisphot/runtimes" data-route-link>Runtimes</a>
+                <a class="button" href="/mahavisphot/workflows" data-route-link>Workflows</a>
+                <a class="button" href="/mahavisphot/crud" data-route-link>CRUD</a>
+                <a class="button" href="/mahavisphot/ux-surfaces" data-route-link>UX Surfaces</a>
+              </div>
+            </div>
+            <div class="visual">
+              <img src="${route.heroImage}" alt="${escapeHtml(route.title)} reference">
+              <div class="visual-label"><strong>${escapeHtml(route.title)}</strong>${statusChip(route)}</div>
+            </div>
+          </section>
+          ${countCards(data)}
+          ${sections}
+          ${statusStrip(route)}
+        `;
+      }
+
+      function detailHero(route, eyebrow) {
+        return `
+          <section class="hero" aria-labelledby="route-title">
+            <div class="hero-copy">
+              <div>
+                <div class="side-title">${escapeHtml(eyebrow)}</div>
+                <h1 id="route-title">${escapeHtml(route.title)}</h1>
+                <p class="subtitle">${escapeHtml(route.subtitle)}</p>
+                <div class="honesty">${escapeHtml(route.evidence)} - productionReady=false.</div>
+              </div>
+              <div class="hero-actions">
+                <a class="button" href="/mahavisphot/scaffolds" data-route-link>All Scaffolds</a>
+                <a class="button" href="/mahavisphot/runtimes" data-route-link>Runtimes</a>
+                <a class="button" href="/mahavisphot/workflows" data-route-link>Workflows</a>
+                <a class="button" href="/mahavisphot/crud" data-route-link>CRUD</a>
+                <a class="button" href="/mahavisphot/ux-surfaces" data-route-link>UX Surfaces</a>
+              </div>
+            </div>
+            <div class="visual">
+              <img src="${route.heroImage}" alt="${escapeHtml(route.title)} reference">
+              <div class="visual-label"><strong>${escapeHtml(route.path)}</strong>${statusChip(route)}</div>
+            </div>
+          </section>
+        `;
+      }
+
+      function runtimeDetail(route) {
+        const runtime = route.runtime;
+        return `
+          ${detailHero(route, "Runtime Detail")}
+          <section class="detail-grid">
+            <div class="detail-panel">
+              <h2>Evidence Gates</h2>
+              <div class="check-list">
+                ${runtime.evidenceRequired.map((item) => `
+                  <div class="check-row"><span>${escapeHtml(item)}</span><span class="chip blocked">REQUIRED</span></div>
+                `).join("")}
+              </div>
+            </div>
+            <div class="detail-panel">
+              <h2>Runtime Workflows</h2>
+              <div class="operation-list">${runtime.workflows.map((workflow) => `<span>${escapeHtml(workflow)}</span>`).join("")}</div>
+              <h2 style="margin-top:16px">CRUD Surfaces</h2>
+              <div class="operation-list">${runtime.crudSurfaces.map((crud) => `<span>${escapeHtml(crud)}</span>`).join("")}</div>
+            </div>
+          </section>
+          ${statusStrip(route)}
+        `;
+      }
+
+      function workflowDetail(route) {
+        const workflow = route.workflow;
+        const data = scaffoldData();
+        const relatedCrud = data.crudSurfaces.filter((crud) => workflow.description.toLowerCase().includes(crud.id.split("-")[0]) || crud.status === workflow.status).slice(0, 8);
+        return `
+          ${detailHero(route, "Workflow Detail")}
+          <section class="detail-grid">
+            <div class="detail-panel">
+              <h2>Workflow Lane</h2>
+              <div class="queue-list">
+                <div class="queue-row"><span>Group</span><span class="chip scaffold">${escapeHtml(workflow.group)}</span></div>
+                <div class="queue-row"><span>Status</span><span class="chip ${escapeHtml(workflow.status)}">${escapeHtml(workflow.status.toUpperCase())}</span></div>
+                <div class="queue-row"><span>Order</span><span>${workflow.order}</span></div>
+                <div class="queue-row"><span>Release Claim</span><span class="chip blocked">NO-GO</span></div>
+              </div>
+            </div>
+            <div class="detail-panel">
+              <h2>Related CRUD Surfaces</h2>
+              <div class="asset-cards">
+                ${relatedCrud.map((crud) => `
+                  <a class="asset-card" href="/mahavisphot/crud/${escapeHtml(crud.id)}" data-route-link><span>${escapeHtml(crud.title)}</span><span class="chip ${escapeHtml(crud.status)}">${escapeHtml(crud.status.toUpperCase())}</span></a>
+                `).join("")}
+              </div>
+            </div>
+          </section>
+          ${statusStrip(route)}
+        `;
+      }
+
+      function crudDetail(route) {
+        const crud = route.crud;
+        return `
+          ${detailHero(route, "CRUD Detail")}
+          <section class="detail-grid">
+            <div class="detail-panel">
+              <h2>Operations</h2>
+              <div class="asset-cards">
+                ${crud.operations.map((operation, index) => `
+                  <button class="asset-card widget-button" type="button" data-crud-operation="${escapeHtml(operation)}"><span>${escapeHtml(operation)}</span><span class="chip scaffold">${String(index + 1).padStart(2, "0")}</span></button>
+                `).join("")}
+              </div>
+              <p id="crud-readout">Select an operation to inspect the local scaffold action.</p>
+            </div>
+            <div class="detail-panel">
+              <h2>Permissions</h2>
+              <div class="operation-list">${crud.permissions.map((permission) => `<span>${escapeHtml(permission)}</span>`).join("")}</div>
+              <h2 style="margin-top:16px">Status</h2>
+              <span class="chip ${escapeHtml(crud.status)}">${escapeHtml(crud.status.toUpperCase())}</span>
+            </div>
+          </section>
+          ${statusStrip(route)}
+        `;
+      }
+
+      function uxDetail(route) {
+        const surface = route.surface;
+        return `
+          ${detailHero(route, "UX Surface Detail")}
+          <section class="detail-grid">
+            <div class="detail-panel">
+              <h2>Surface Contract</h2>
+              <div class="queue-list">
+                <div class="queue-row"><span>ID</span><span>${escapeHtml(surface.id)}</span></div>
+                <div class="queue-row"><span>Module</span><span>${escapeHtml(surface.moduleId)}</span></div>
+                <div class="queue-row"><span>Group</span><span>${escapeHtml(surface.group)}</span></div>
+                <div class="queue-row"><span>Status</span><span class="chip ${escapeHtml(surface.status)}">${escapeHtml(surface.status.toUpperCase())}</span></div>
+                <div class="queue-row"><span>Route</span><span>${escapeHtml(surface.route)}</span></div>
+              </div>
+            </div>
+            <div class="detail-panel">
+              <h2>Access Gates</h2>
+              <div class="side-title">Runtime Modes</div>
+              <div class="operation-list">${surface.runtimeModes.map((mode) => `<span>${escapeHtml(mode)}</span>`).join("")}</div>
+              <div class="side-title">Plans</div>
+              <div class="operation-list">${surface.plans.map((plan) => `<span>${escapeHtml(plan)}</span>`).join("")}</div>
+              <div class="side-title">Permissions</div>
+              <div class="operation-list">${surface.permissions.map((permission) => `<span>${escapeHtml(permission)}</span>`).join("")}</div>
+            </div>
+          </section>
+          ${functionalWidget({
+            ...route,
+            path: `/mahavisphot/${surface.moduleId}/overview`,
+            tools: [surface.group, surface.moduleId, surface.status, "registry", "route"],
+          })}
+          ${statusStrip(route)}
+        `;
+      }
+
+      function routeWidgetType(route) {
+        if (route.path.includes("particle")) return "particles";
+        if (route.path.includes("compositor") || route.path.includes("editor")) return "timeline";
+        if (route.path.includes("audio")) return "audio";
+        if (route.path.includes("color") || route.path.includes("observatory")) return "scopes";
+        if (route.path.includes("3d") || route.path.includes("xr")) return "spatial";
+        if (route.path.includes("face") || route.path.includes("makeup")) return "face";
+        if (route.path.includes("render") || route.path.includes("export")) return "render";
+        if (route.path.includes("ai-mode")) return "runtime";
+        return "cards";
+      }
+
+      function widgetReferences(route) {
+        const refs = [route.heroImage];
+        if (route.path.includes("particle")) {
+          refs.push(`${ASSET_BASE}frame_012_particles-gallery.png`, `${ASSET_BASE}frame_014_parametric-fields.png`);
+        } else if (route.path.includes("audio")) {
+          refs.push(`${ASSET_BASE}frame_019_master-mixer.png`, `${ASSET_BASE}frame_020_audio-track-mixer.png`);
+        } else if (route.path.includes("color") || route.path.includes("observatory")) {
+          refs.push(`${ASSET_BASE}frame_025_multi-view-scopes.png`, `${ASSET_BASE}frame_024_multi-view-color-curves.png`);
+        } else if (route.path.includes("3d")) {
+          refs.push(`${ASSET_BASE}frame_006_3d-transform-inspector.png`, `${ASSET_BASE}frame_007_threejs-shader-editor.png`);
+        } else if (route.path.includes("face") || route.path.includes("makeup")) {
+          refs.push(`${ASSET_BASE}frame_037_face-replacer-panel.png`, `${ASSET_BASE}frame_011_anisotropic-depth-map-viewer.png`);
+        } else {
+          refs.push(`${ASSET_BASE}frame_041_timeline-stack-v3.png`, `${ASSET_BASE}frame_042_node-graph-floating-panel.png`);
+        }
+        return refs.slice(0, 3);
+      }
+
+      function referencesHtml(route) {
+        return `
+          <div class="reference-strip" aria-label="Extracted frame references">
+            ${widgetReferences(route).map((src) => `<img src="${src}" alt="">`).join("")}
+          </div>
+        `;
+      }
+
+      function particleDots() {
+        const points = [
+          [-.42, -.2, .8], [-.36, .14, .55], [-.31, -.38, .72], [-.24, .26, .62], [-.2, -.04, 1],
+          [-.14, -.3, .6], [-.08, .36, .82], [-.02, -.14, .9], [.04, .2, .64], [.1, -.44, .74],
+          [.16, .02, 1.1], [.21, .34, .58], [.28, -.26, .86], [.33, .1, .68], [.39, -.08, .9],
+          [.46, .3, .56], [-.48, .42, .58], [.5, -.42, .7], [-.06, .02, 1.35], [.02, -.02, 1.2],
+        ];
+        return points.map(([x, y, scale]) => `<span class="particle" style="--px:${x};--py:${y};--scale:${scale}"></span>`).join("");
+      }
+
+      function particlesWidget(route) {
+        return `
+          <section class="widget-board" data-widget="particles">
+            <div class="widget-panel">
+              <div class="status-head"><strong>Particle Field Operator</strong>${statusChip(route)}</div>
+              <div class="widget-toolbar" role="group" aria-label="Particle presets">
+                <button class="widget-button preset-button" type="button" data-preset="ash" aria-pressed="true">Sufi Ash Drift</button>
+                <button class="widget-button preset-button" type="button" data-preset="embers" aria-pressed="false">Neon Embers</button>
+                <button class="widget-button preset-button" type="button" data-preset="energy" aria-pressed="false">Vedic Energy</button>
+              </div>
+              <div class="widget-stage particle-field" data-preset="ash" aria-label="Interactive particle preview">
+                ${particleDots()}
+                <div class="gizmo" style="--rot:18deg;--zoom:.72"></div>
+              </div>
+            </div>
+            <div class="widget-panel">
+              <div class="status-head"><strong>Parametric Controls</strong><span class="chip scaffold">LOCAL UI</span></div>
+              <div class="range-row"><label for="particle-spread">Vector Field</label><input id="particle-spread" data-particle-control="spread" type="range" min="24" max="90" value="62"><output>62</output></div>
+              <div class="range-row"><label for="particle-lift">Wind Lift</label><input id="particle-lift" data-particle-control="lift" type="range" min="22" max="72" value="46"><output>46</output></div>
+              <div class="range-row"><label for="particle-size">Particle Size</label><input id="particle-size" data-particle-control="size" type="range" min="3" max="14" value="7"><output>7</output></div>
+              <p id="particle-readout">Preset ash, vector 62, lift 46, size 7.</p>
+              ${referencesHtml(route)}
+            </div>
+          </section>
+        `;
+      }
+
+      function timelineWidget(route) {
+        return `
+          <section class="widget-board" data-widget="timeline">
+            <div class="widget-panel">
+              <div class="status-head"><strong>Functional Timeline</strong><span class="chip preview">DRAG CLIPS</span></div>
+              ${["V1 Scene Plate", "V2 Overlay", "A1 Music", "A2 Foley"].map((label, row) => `
+                <div class="mini-track-label">${escapeHtml(label)}</div>
+                <div class="track" data-timeline-track="${row}">
+                  <span class="interactive-clip" tabindex="0" data-left="${8 + row * 7}" style="--left:${8 + row * 7}%;--width:${row % 2 ? 34 : 46}%"></span>
+                  ${row < 2 ? `<span class="interactive-clip" tabindex="0" data-left="${58 + row * 4}" style="--left:${58 + row * 4}%;--width:${row % 2 ? 24 : 18}%"></span>` : ""}
+                </div>
+              `).join("")}
+              <div class="widget-toolbar">
+                <button class="widget-button" type="button" data-add-track="video">Add Video Layer</button>
+                <button class="widget-button" type="button" data-add-track="audio">Add Audio Layer</button>
+                <button class="widget-button" type="button" data-delete-mode="ripple" aria-pressed="true">Ripple</button>
+                <button class="widget-button" type="button" data-delete-mode="cascade" aria-pressed="false">Cascade</button>
+                <button class="widget-button" type="button" data-delete-mode="static" aria-pressed="false">Static</button>
+              </div>
+              <p id="timeline-readout">Drag a clip or add a layer. Delete mode: ripple.</p>
+            </div>
+            <div class="widget-panel">
+              <div class="status-head"><strong>Node Composer</strong><span class="chip scaffold">SELECTABLE</span></div>
+              <div class="node-map" data-node-widget>
+                <button class="node widget-button" type="button" style="left:8%;top:22%" data-node="Scene Plate">Scene Plate<br>schema in</button>
+                <button class="node widget-button" type="button" style="left:38%;top:52%" data-node="${escapeHtml(route.title)}">${escapeHtml(route.title)}<br>module pass</button>
+                <button class="node widget-button" type="button" style="left:68%;top:30%" data-node="Composite Out">Composite Out<br>evidence gate</button>
+              </div>
+              <p id="node-readout">Selected node: none.</p>
+              ${referencesHtml(route)}
+            </div>
+          </section>
+        `;
+      }
+
+      function audioWidget(route) {
+        return `
+          <section class="widget-board" data-widget="audio">
+            <div class="widget-panel">
+              <div class="status-head"><strong>Stem Mixer</strong><span class="chip scaffold">LOCAL UI</span></div>
+              <div class="meter-row" id="audio-meters" aria-label="Animated audio meters">
+                ${[70, 42, 84, 58, 93, 35, 66, 78].map((height, index) => `<span class="meter" data-meter="${index}" style="height:${height}%"></span>`).join("")}
+              </div>
+              <div class="widget-toolbar">
+                <button class="widget-button" type="button" data-meter-toggle aria-pressed="false">Run Meter Preview</button>
+                <button class="widget-button" type="button" data-mix="rubab" aria-pressed="true">Rubab</button>
+                <button class="widget-button" type="button" data-mix="voice" aria-pressed="false">Voice</button>
+                <button class="widget-button" type="button" data-mix="bass" aria-pressed="false">Bass</button>
+              </div>
+              <p id="audio-readout">Stem focus: rubab. Preview is deterministic UI motion, not decoded audio.</p>
+            </div>
+            <div class="widget-panel">
+              <div class="status-head"><strong>Track Inserts</strong><span class="chip scaffold">CHAIN</span></div>
+              <div class="queue-list">
+                ${["Noise Gate", "Rubab Optimizer", "Loudness Target -14 LUFS", "Export Stem Bus"].map((label, index) => `
+                  <div class="queue-row"><span>${escapeHtml(label)}<div class="progress"><span style="--pct:${45 + index * 13}%"></span></div></span><span class="chip scaffold">ON</span></div>
+                `).join("")}
+              </div>
+              ${referencesHtml(route)}
+            </div>
+          </section>
+        `;
+      }
+
+      function scopesWidget(route) {
+        return `
+          <section class="widget-board" data-widget="scopes">
+            <div class="widget-panel">
+              <div class="status-head"><strong>Live Scope Controls</strong><span class="chip scaffold">LOCAL UI</span></div>
+              <div class="scope-field">
+                <div class="scope-lines" id="scope-lines">
+                  <span class="scope-line" style="--wave:26px"></span>
+                  <span class="scope-line" style="--wave:78px"></span>
+                  <span class="scope-line" style="--wave:132px"></span>
+                </div>
+                <div class="vector-disc" id="vector-disc"></div>
+              </div>
+              <div class="range-row"><label for="scope-gain">Exposure</label><input id="scope-gain" data-scope-control type="range" min="10" max="90" value="48"><output>48</output></div>
+              <p id="scope-readout">Exposure 48 IRE. Vector angle -22 deg.</p>
+            </div>
+            <div class="widget-panel">
+              <div class="status-head"><strong>Evidence Feed</strong>${statusChip(route)}</div>
+              <div class="queue-list">
+                <div class="queue-row"><span>Waveform diagnostic</span><span class="chip scaffold">VIEW</span></div>
+                <div class="queue-row"><span>Vector balance</span><span class="chip scaffold">VIEW</span></div>
+                <div class="queue-row"><span>Production gate</span><span class="chip blocked">NO-GO</span></div>
+              </div>
+              ${referencesHtml(route)}
+            </div>
+          </section>
+        `;
+      }
+
+      function spatialWidget(route) {
+        return `
+          <section class="widget-board" data-widget="spatial">
+            <div class="widget-panel">
+              <div class="status-head"><strong>Spatial Viewport</strong><span class="chip scaffold">GIZMO</span></div>
+              <div class="widget-stage">
+                <div class="gizmo" id="spatial-gizmo" style="--rot:24deg;--zoom:1"></div>
+              </div>
+              <div class="range-row"><label for="spatial-rot">Rotation</label><input id="spatial-rot" data-spatial-control="rot" type="range" min="-45" max="45" value="24"><output>24</output></div>
+              <div class="range-row"><label for="spatial-zoom">Scale</label><input id="spatial-zoom" data-spatial-control="zoom" type="range" min="60" max="140" value="100"><output>100</output></div>
+            </div>
+            <div class="widget-panel">
+              <div class="status-head"><strong>Scene Graph</strong>${statusChip(route)}</div>
+              <div class="check-list">
+                ${["Main_Cam", "Actor_Mesh_01", "Dust_Particles", "Texture_Fixture", "XR_Review_Camera"].map((label, index) => `
+                  <label class="check-row"><span>${escapeHtml(label)}</span><input type="checkbox" ${index < 3 ? "checked" : ""}></label>
+                `).join("")}
+              </div>
+              ${referencesHtml(route)}
+            </div>
+          </section>
+        `;
+      }
+
+      function faceWidget(route) {
+        return `
+          <section class="widget-board" data-widget="face">
+            <div class="widget-panel">
+              <div class="status-head"><strong>Face Mesh Preview</strong>${statusChip(route)}</div>
+              <div class="widget-stage">
+                <div class="face-mesh" id="face-mesh"></div>
+              </div>
+              <div class="range-row"><label for="face-depth">Depth Swap</label><input id="face-depth" data-face-control type="range" min="70" max="130" value="100"><output>100</output></div>
+              <p id="face-readout">Mesh scale 100. Runtime model evidence is still required for production.</p>
+            </div>
+            <div class="widget-panel">
+              <div class="status-head"><strong>Review Gates</strong><span class="chip blocked">PROTECTED</span></div>
+              <div class="check-list">
+                ${["Consent Evidence", "Model Runtime", "Lighting Match", "Export Approval"].map((label) => `
+                  <div class="check-row"><span>${escapeHtml(label)}</span><span class="chip blocked">BLOCKED</span></div>
+                `).join("")}
+              </div>
+              ${referencesHtml(route)}
+            </div>
+          </section>
+        `;
+      }
+
+      function renderWidget(route) {
+        return `
+          <section class="widget-board" data-widget="render">
+            <div class="widget-panel">
+              <div class="status-head"><strong>Render Queue</strong>${statusChip(route)}</div>
+              <div class="queue-list">
+                ${["Storyboard Board PNG", "Preview MP4", "Captions Burn-In", "UHD Master"].map((label, index) => `
+                  <div class="queue-row"><span>${escapeHtml(label)}<div class="progress"><span style="--pct:${index === 3 ? 12 : 82 - index * 18}%"></span></div></span><span class="chip ${index === 3 ? "blocked" : "scaffold"}">${index === 3 ? "BLOCKED" : "READY"}</span></div>
+                `).join("")}
+              </div>
+              <div class="widget-toolbar">
+                <button class="widget-button" type="button" data-queue-step>Advance Preview Queue</button>
+              </div>
+              <p id="render-readout">Preview queue is local UI state. UHD remains blocked until renderer integration evidence.</p>
+            </div>
+            <div class="widget-panel">
+              <div class="status-head"><strong>Export Schema</strong><span class="chip scaffold">DYNAMIC</span></div>
+              <div class="asset-cards">
+                ${["tracks.dynamic[]", "compositions[]", "captions[]", "vfx.nodes[]", "runtimeEvidence"].map((label) => `
+                  <div class="asset-card"><span>${escapeHtml(label)}</span><span class="chip scaffold">READ</span></div>
+                `).join("")}
+              </div>
+              ${referencesHtml(route)}
+            </div>
+          </section>
+        `;
+      }
+
+      function runtimeWidget(route) {
+        return `
+          <section class="widget-board" data-widget="runtime">
+            <div class="widget-panel">
+              <div class="status-head"><strong>Runtime Gate</strong>${statusChip(route)}</div>
+              <div class="check-list">
+                ${["Runtime adapter", "Credential boundary", "Model inventory", "Privacy policy", "Evidence JSON"].map((label, index) => `
+                  <div class="check-row"><span>${escapeHtml(label)}</span><span class="chip ${index === 4 ? "scaffold" : "blocked"}">${index === 4 ? "SCAFFOLD" : "BLOCKED"}</span></div>
+                `).join("")}
+              </div>
+            </div>
+            <div class="widget-panel">
+              <div class="status-head"><strong>Mode Planner</strong><span class="chip blocked">NO CLAIM</span></div>
+              <p>${escapeHtml(route.subtitle)}</p>
+              ${referencesHtml(route)}
+            </div>
+          </section>
+        `;
+      }
+
+      function cardsWidget(route) {
+        const toolList = route.tools || [];
+        return `
+          <section class="widget-board" data-widget="cards">
+            <div class="widget-panel">
+              <div class="status-head"><strong>Functional Module Cards</strong>${statusChip(route)}</div>
+              <div class="asset-cards">
+                ${toolList.map((label, index) => `
+                  <button class="asset-card widget-button" type="button" data-card-tool="${escapeHtml(label)}"><span>${escapeHtml(label)}</span><span class="chip scaffold">${String(index + 1).padStart(2, "0")}</span></button>
+                `).join("")}
+              </div>
+              <p id="cards-readout">Select a module card.</p>
+            </div>
+            <div class="widget-panel">
+              <div class="status-head"><strong>Reference Frames</strong><span class="chip scaffold">EXTRACTED</span></div>
+              ${referencesHtml(route)}
+            </div>
+          </section>
+        `;
+      }
+
+      function functionalWidget(route) {
+        const type = routeWidgetType(route);
+        if (type === "particles") return particlesWidget(route);
+        if (type === "timeline") return timelineWidget(route);
+        if (type === "audio") return audioWidget(route);
+        if (type === "scopes") return scopesWidget(route);
+        if (type === "spatial") return spatialWidget(route);
+        if (type === "face") return faceWidget(route);
+        if (type === "render") return renderWidget(route);
+        if (type === "runtime") return runtimeWidget(route);
+        return cardsWidget(route);
+      }
+
+      function studio(route) {
+        return `
+          <section class="hero" aria-labelledby="route-title">
+            <div class="hero-copy">
+              <div>
+                <h1 id="route-title">${escapeHtml(route.title)}</h1>
+                <p class="subtitle">${escapeHtml(route.subtitle)}</p>
+                <div class="honesty">${escapeHtml(route.evidence)} - runtime production claims remain blocked until verified evidence exists.</div>
+              </div>
+              <div class="hero-actions">
+                <a class="button primary" href="${escapeHtml(route.ctaHref || route.path)}"${route.ctaHref ? "" : " data-route-link"}>${escapeHtml(route.ctaLabel || "Stay On Route")}</a>
+                <a class="button" href="/mahavisphot" data-route-link>Studio Home</a>
+                <a class="button" href="/mahavisphot/observatory/overview" data-route-link>Observatory</a>
+              </div>
+            </div>
+            <div class="visual">
+              <img src="${route.heroImage}" alt="${escapeHtml(route.title)} reference panel">
+              <div class="visual-label"><strong>${escapeHtml(route.title)}</strong>${statusChip(route)}</div>
+            </div>
+          </section>
+          ${functionalWidget(route)}
+          ${statusStrip(route)}
+          <section class="grid" aria-label="Neighbor routes">
+            ${routes.filter((item) => item.group === route.group && item.path !== route.path).map((item) => `
+              <a class="module-tile" href="${item.path}" data-route-link>
+                <div class="module-head"><strong>${escapeHtml(item.title)}</strong>${statusChip(item)}</div>
+                <img src="${item.heroImage}" alt="">
+                <div class="module-meta">${escapeHtml(item.evidence)}</div>
+              </a>
+            `).join("")}
+          </section>
+        `;
+      }
+
+      function clearWidgetTimer() {
+        if (widgetTimer) {
+          window.clearInterval(widgetTimer);
+          widgetTimer = null;
+        }
+      }
+
+      function hydrateParticles() {
+        const field = app.querySelector(".particle-field");
+        const readout = app.querySelector("#particle-readout");
+        if (!field || !readout) return;
+
+        app.querySelectorAll(".preset-button").forEach((button) => {
+          button.addEventListener("click", () => {
+            app.querySelectorAll(".preset-button").forEach((item) => item.setAttribute("aria-pressed", String(item === button)));
+            field.dataset.preset = button.dataset.preset;
+            readout.textContent = `Preset ${button.dataset.preset}, vector ${app.querySelector("#particle-spread").value}, lift ${app.querySelector("#particle-lift").value}, size ${app.querySelector("#particle-size").value}.`;
+          });
+        });
+
+        app.querySelectorAll("[data-particle-control]").forEach((input) => {
+          input.addEventListener("input", () => {
+            const output = input.parentElement.querySelector("output");
+            output.textContent = input.value;
+            if (input.dataset.particleControl === "spread") field.style.setProperty("--spread", `${input.value}%`);
+            if (input.dataset.particleControl === "lift") field.style.setProperty("--lift", `${input.value}%`);
+            if (input.dataset.particleControl === "size") field.style.setProperty("--size", `${input.value}px`);
+            readout.textContent = `Preset ${field.dataset.preset}, vector ${app.querySelector("#particle-spread").value}, lift ${app.querySelector("#particle-lift").value}, size ${app.querySelector("#particle-size").value}.`;
+          });
+        });
+      }
+
+      function bindClipDrag(clip) {
+        clip.addEventListener("pointerdown", (event) => {
+          const track = clip.closest(".track");
+          const startX = event.clientX;
+          const startLeft = Number(clip.dataset.left || 0);
+          clip.setPointerCapture(event.pointerId);
+          clip.style.cursor = "grabbing";
+
+          const move = (moveEvent) => {
+            const delta = ((moveEvent.clientX - startX) / track.clientWidth) * 100;
+            const width = parseFloat(getComputedStyle(clip).getPropertyValue("width")) / track.clientWidth * 100;
+            const nextLeft = Math.max(0, Math.min(100 - width, startLeft + delta));
+            clip.dataset.left = String(nextLeft.toFixed(1));
+            clip.style.setProperty("--left", `${nextLeft.toFixed(1)}%`);
+            const readout = app.querySelector("#timeline-readout");
+            if (readout) readout.textContent = `Clip moved to ${nextLeft.toFixed(1)}%.`;
+          };
+
+          const up = () => {
+            clip.style.cursor = "grab";
+            clip.removeEventListener("pointermove", move);
+            clip.removeEventListener("pointerup", up);
+          };
+
+          clip.addEventListener("pointermove", move);
+          clip.addEventListener("pointerup", up);
+        });
+      }
+
+      function hydrateTimeline() {
+        app.querySelectorAll(".interactive-clip").forEach(bindClipDrag);
+
+        app.querySelectorAll("[data-delete-mode]").forEach((button) => {
+          button.addEventListener("click", () => {
+            app.querySelectorAll("[data-delete-mode]").forEach((item) => item.setAttribute("aria-pressed", String(item === button)));
+            const readout = app.querySelector("#timeline-readout");
+            if (readout) readout.textContent = `Delete mode: ${button.dataset.deleteMode}.`;
+          });
+        });
+
+        app.querySelectorAll("[data-add-track]").forEach((button) => {
+          button.addEventListener("click", () => {
+            const existing = app.querySelectorAll("[data-timeline-track]").length;
+            const label = button.dataset.addTrack === "video" ? `V${existing + 1} Generated Layer` : `A${existing + 1} Generated Layer`;
+            const target = app.querySelector(".widget-panel");
+            const toolbar = target.querySelector(".widget-toolbar");
+            const labelNode = document.createElement("div");
+            labelNode.className = "mini-track-label";
+            labelNode.textContent = label;
+            const track = document.createElement("div");
+            track.className = "track";
+            track.dataset.timelineTrack = String(existing);
+            const clip = document.createElement("span");
+            clip.className = "interactive-clip";
+            clip.tabIndex = 0;
+            clip.dataset.left = "16";
+            clip.style.setProperty("--left", "16%");
+            clip.style.setProperty("--width", button.dataset.addTrack === "video" ? "32%" : "48%");
+            track.appendChild(clip);
+            target.insertBefore(labelNode, toolbar);
+            target.insertBefore(track, toolbar);
+            bindClipDrag(clip);
+            const readout = app.querySelector("#timeline-readout");
+            if (readout) readout.textContent = `${label} created.`;
+          });
+        });
+
+        app.querySelectorAll("[data-node]").forEach((button) => {
+          button.addEventListener("click", () => {
+            app.querySelectorAll("[data-node]").forEach((item) => item.setAttribute("aria-pressed", String(item === button)));
+            const readout = app.querySelector("#node-readout");
+            if (readout) readout.textContent = `Selected node: ${button.dataset.node}.`;
+          });
+        });
+      }
+
+      function hydrateAudio() {
+        let phase = 0;
+        const meters = [...app.querySelectorAll("[data-meter]")];
+        const readout = app.querySelector("#audio-readout");
+        const toggle = app.querySelector("[data-meter-toggle]");
+        if (!toggle) return;
+
+        toggle.addEventListener("click", () => {
+          const active = toggle.getAttribute("aria-pressed") !== "true";
+          toggle.setAttribute("aria-pressed", String(active));
+          toggle.textContent = active ? "Stop Meter Preview" : "Run Meter Preview";
+          clearWidgetTimer();
+          if (active) {
+            widgetTimer = window.setInterval(() => {
+              phase += 1;
+              meters.forEach((meter, index) => {
+                const height = 32 + ((phase * 11 + index * 17) % 58);
+                meter.style.height = `${height}%`;
+              });
+            }, 240);
+          }
+        });
+
+        app.querySelectorAll("[data-mix]").forEach((button) => {
+          button.addEventListener("click", () => {
+            app.querySelectorAll("[data-mix]").forEach((item) => item.setAttribute("aria-pressed", String(item === button)));
+            if (readout) readout.textContent = `Stem focus: ${button.dataset.mix}. Preview is deterministic UI motion, not decoded audio.`;
+          });
+        });
+      }
+
+      function hydrateScopes() {
+        const input = app.querySelector("[data-scope-control]");
+        const lines = [...app.querySelectorAll(".scope-line")];
+        const disc = app.querySelector("#vector-disc");
+        const readout = app.querySelector("#scope-readout");
+        if (!input || !disc || !readout) return;
+
+        input.addEventListener("input", () => {
+          input.parentElement.querySelector("output").textContent = input.value;
+          const value = Number(input.value);
+          lines.forEach((line, index) => line.style.setProperty("--wave", `${18 + index * 47 + value * .42}px`));
+          disc.style.setProperty("--vec-rot", `${value - 70}deg`);
+          readout.textContent = `Exposure ${value} IRE. Vector angle ${value - 70} deg.`;
+        });
+      }
+
+      function hydrateSpatial() {
+        const gizmo = app.querySelector("#spatial-gizmo");
+        if (!gizmo) return;
+        app.querySelectorAll("[data-spatial-control]").forEach((input) => {
+          input.addEventListener("input", () => {
+            input.parentElement.querySelector("output").textContent = input.value;
+            if (input.dataset.spatialControl === "rot") gizmo.style.setProperty("--rot", `${input.value}deg`);
+            if (input.dataset.spatialControl === "zoom") gizmo.style.setProperty("--zoom", String(Number(input.value) / 100));
+          });
+        });
+      }
+
+      function hydrateFace() {
+        const mesh = app.querySelector("#face-mesh");
+        const input = app.querySelector("[data-face-control]");
+        const readout = app.querySelector("#face-readout");
+        if (!mesh || !input || !readout) return;
+        input.addEventListener("input", () => {
+          input.parentElement.querySelector("output").textContent = input.value;
+          mesh.style.setProperty("--mesh-scale", String(Number(input.value) / 100));
+          readout.textContent = `Mesh scale ${input.value}. Runtime model evidence is still required for production.`;
+        });
+      }
+
+      function hydrateRenderQueue() {
+        const button = app.querySelector("[data-queue-step]");
+        const readout = app.querySelector("#render-readout");
+        if (!button || !readout) return;
+        button.addEventListener("click", () => {
+          app.querySelectorAll(".progress span").forEach((bar, index) => {
+            const current = Number(String(bar.style.getPropertyValue("--pct")).replace("%", "")) || 0;
+            const next = Math.min(index === 3 ? 24 : 100, current + 9);
+            bar.style.setProperty("--pct", `${next}%`);
+          });
+          readout.textContent = "Preview queue advanced. UHD gate remains blocked.";
+        });
+      }
+
+      function hydrateCards() {
+        const readout = app.querySelector("#cards-readout");
+        app.querySelectorAll("[data-card-tool]").forEach((button) => {
+          button.addEventListener("click", () => {
+            app.querySelectorAll("[data-card-tool]").forEach((item) => item.setAttribute("aria-pressed", String(item === button)));
+            if (readout) readout.textContent = `Selected tool: ${button.dataset.cardTool}.`;
+          });
+        });
+      }
+
+      function hydrateCrudDetail() {
+        const readout = app.querySelector("#crud-readout");
+        app.querySelectorAll("[data-crud-operation]").forEach((button) => {
+          button.addEventListener("click", () => {
+            app.querySelectorAll("[data-crud-operation]").forEach((item) => item.setAttribute("aria-pressed", String(item === button)));
+            if (readout) readout.textContent = `Operation scaffold selected: ${button.dataset.crudOperation}.`;
+          });
+        });
+      }
+
+      function hydrateInventory() {
+        const search = app.querySelector("#ux-surface-search");
+        const rows = [...app.querySelectorAll("[data-ux-row]")];
+        if (!search || rows.length === 0) return;
+        search.addEventListener("input", () => {
+          const query = search.value.trim().toLowerCase();
+          rows.forEach((row) => {
+            row.style.display = !query || row.dataset.uxRow.includes(query) ? "" : "none";
+          });
+        });
+      }
+
+      function hydrateWidgets(route) {
+        const type = routeWidgetType(route);
+        if (type === "particles") hydrateParticles();
+        if (type === "timeline") hydrateTimeline();
+        if (type === "audio") hydrateAudio();
+        if (type === "scopes") hydrateScopes();
+        if (type === "spatial") hydrateSpatial();
+        if (type === "face") hydrateFace();
+        if (type === "render") hydrateRenderQueue();
+        if (type === "cards") hydrateCards();
+      }
+
+      function routeHtml(route) {
+        if (route.kind === "landing") return landing(route);
+        if (route.kind === "launch") return launch(route);
+        if (route.kind === "freeze-preview") return freezePreview(route);
+        if (route.kind === "inventory") return inventoryPage(route);
+        if (route.kind === "runtime-detail") return runtimeDetail(route);
+        if (route.kind === "workflow-detail") return workflowDetail(route);
+        if (route.kind === "crud-detail") return crudDetail(route);
+        if (route.kind === "ux-detail") return uxDetail(route);
+        return studio(route);
+      }
+
+      function render() {
+        clearWidgetTimer();
+        const route = currentRoute();
+        document.title = `${route.title} - Mahavisphot Studio`;
+        renderNav(route);
+        app.innerHTML = routeHtml(route);
+        if (route.kind === "studio" || route.kind === "ux-detail") hydrateWidgets(route);
+        if (route.kind === "inventory") hydrateInventory();
+        if (route.kind === "crud-detail") hydrateCrudDetail();
+        app.focus({ preventScroll: true });
+      }
+
+      window.addEventListener("popstate", render);
+      document.addEventListener("click", navigate);
+      render();
+    </script>
+  </body>
+</html>
