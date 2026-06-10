@@ -273,6 +273,7 @@
 </div>
 
 <script src="studio_data.js"></script>
+<script src="public/mahavisphot/search-index.js"></script>
 <script>
 const M = window.MAHAVISPHOT;
 if(!M){ document.getElementById('missing').classList.remove('hide'); }
@@ -609,6 +610,86 @@ function boot(){
   setTimeout(()=>{ st.pxPerSec=Math.max(2,(scroll.clientWidth-20)/st.dur); layout(); tick(true); },60);
   tick(true);
 }
+
+/* ---------- Step 2: global command palette (⌘K / Ctrl-K) ---------- */
+(function commandPalette(){
+  const data = window.MVP_SEARCH;
+  const css = `
+  .cmdk-btn{padding:7px 12px;border-radius:8px;border:1px solid var(--line);background:#ffffff0a;font-weight:600;font-size:12px;color:var(--mut)}
+  .cmdk-btn:hover{background:#ffffff16;color:var(--ink)}
+  .cmdk-btn kbd{font:inherit;color:var(--ink);background:#ffffff14;border-radius:4px;padding:1px 5px;margin-left:6px}
+  .cmdk-ov{position:fixed;inset:0;background:#000a;backdrop-filter:blur(3px);display:none;z-index:999;align-items:flex-start;justify-content:center}
+  .cmdk-ov.on{display:flex}
+  .cmdk{margin-top:9vh;width:min(720px,92vw);background:#12141c;border:1px solid #2a2f3e;border-radius:14px;overflow:hidden;box-shadow:0 30px 80px #000c}
+  .cmdk input{width:100%;padding:16px 18px;background:#0d0f16;border:none;border-bottom:1px solid #262a37;color:#e7e9f0;font-size:15px;outline:none}
+  .cmdk .filters{display:flex;gap:6px;padding:8px 12px;border-bottom:1px solid #262a37;flex-wrap:wrap}
+  .cmdk .filters button{font-size:11px;font-weight:600;color:#8b90a4;border:1px solid #262a37;background:#171a24;border-radius:20px;padding:4px 10px}
+  .cmdk .filters button.on{color:#fff;background:#ff2e3e1f;border-color:#ff2e3e}
+  .cmdk .res{max-height:52vh;overflow:auto}
+  .cmdk .row{display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid #1c2030;cursor:pointer}
+  .cmdk .row.sel,.cmdk .row:hover{background:#ffffff0d}
+  .cmdk .row.gated{opacity:.62}
+  .cmdk .k{font-size:9px;text-transform:uppercase;letter-spacing:.5px;color:#8b90a4;width:64px;flex:none}
+  .cmdk .ti{flex:1;font-size:13px;color:#e7e9f0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .cmdk .ti small{color:#8b90a4;margin-left:8px;font-size:11px}
+  .cmdk .bdg{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:2px 8px;border-radius:20px}
+  .bdg.preview{background:#36d39922;color:#36d399}.bdg.scaffold{background:#4aa8ff22;color:#4aa8ff}
+  .bdg.planned{background:#e8c06a22;color:#e8c06a}.bdg.blocked{background:#ff5d6c22;color:#ff5d6c}.bdg.ready{background:#36d39922;color:#36d399}
+  .cmdk .foot{display:flex;justify-content:space-between;padding:8px 16px;font-size:11px;color:#8b90a4;border-top:1px solid #262a37}`;
+  const style = document.createElement('style'); style.textContent = css; document.head.appendChild(style);
+
+  // discoverability button in topbar
+  const topR = document.querySelector('.topR');
+  if (topR) { const b = document.createElement('button'); b.className='cmdk-btn';
+    b.innerHTML = 'Search <kbd>⌘K</kbd>'; b.onclick = ()=>open(); topR.insertBefore(b, topR.firstChild); }
+
+  const ov = document.createElement('div'); ov.className='cmdk-ov';
+  ov.innerHTML = `<div class="cmdk">
+    <input placeholder="${data?`Search ${data.total} routes, APIs, tables, CRUD, workflows, runtimes…`:'Search index not built — run npm run mahavisphot:search-index'}" />
+    <div class="filters"></div><div class="res"></div>
+    <div class="foot"><span>↑↓ navigate · esc close</span><span id="cmdkCount"></span></div></div>`;
+  document.body.appendChild(ov);
+  const input = ov.querySelector('input'), res = ov.querySelector('.res'), filt = ov.querySelector('.filters');
+  const KINDS = ['all','route','api','table','crud','workflow','runtime'];
+  let kind = 'all', sel = 0, view = [];
+  KINDS.forEach(k=>{ const b=document.createElement('button'); b.textContent=k; if(k==='all')b.classList.add('on');
+    b.onclick=()=>{ kind=k; [...filt.children].forEach(c=>c.classList.toggle('on',c.textContent===k)); render(); }; filt.appendChild(b); });
+
+  function open(){ ov.classList.add('on'); input.value=''; input.focus(); render(); }
+  function close(){ ov.classList.remove('on'); }
+  function render(){
+    const q = input.value.trim().toLowerCase();
+    const items = (data&&data.items)||[];
+    view = items.filter(it => (kind==='all'||it.kind===kind) &&
+      (!q || (it.keywords||'').includes(q) || it.title.toLowerCase().includes(q))).slice(0,200);
+    sel = 0;
+    res.innerHTML = view.map((it,i)=>`<div class="row ${it.status==='blocked'?'gated':''} ${i===0?'sel':''}" data-i="${i}">
+      <span class="k">${it.kind}</span>
+      <span class="ti">${it.title}${it.path?`<small>${it.path}</small>`:''}</span>
+      <span class="bdg ${it.status}">${it.status}${it.status==='blocked'?' 🔒':''}</span></div>`).join('')
+      || `<div class="row"><span class="ti" style="color:#8b90a4">no matches</span></div>`;
+    ov.querySelector('#cmdkCount').textContent = `${view.length} result${view.length===1?'':'s'}`;
+    [...res.querySelectorAll('.row[data-i]')].forEach(r=>r.onclick=()=>choose(+r.dataset.i));
+  }
+  function move(d){ const rows=res.querySelectorAll('.row[data-i]'); if(!rows.length)return;
+    rows[sel]?.classList.remove('sel'); sel=(sel+d+rows.length)%rows.length;
+    rows[sel].classList.add('sel'); rows[sel].scrollIntoView({block:'nearest'}); }
+  function choose(i){ const it=view[i]; if(!it)return;
+    if(it.status==='blocked'){ input.value=''; input.placeholder=`"${it.title}" is gated — runtime blocked until evidence (Step 7/8).`; render(); return; }
+    if(it.kind==='crud'){ document.querySelector('#secBin .h')?.scrollIntoView(); }
+    close();
+  }
+  document.addEventListener('keydown', e=>{
+    if((e.metaKey||e.ctrlKey) && e.key.toLowerCase()==='k'){ e.preventDefault(); ov.classList.contains('on')?close():open(); return; }
+    if(!ov.classList.contains('on')) return;
+    if(e.key==='Escape') close();
+    else if(e.key==='ArrowDown'){ e.preventDefault(); move(1); }
+    else if(e.key==='ArrowUp'){ e.preventDefault(); move(-1); }
+    else if(e.key==='Enter') choose(sel);
+  });
+  input.addEventListener('input', render);
+  ov.addEventListener('click', e=>{ if(e.target===ov) close(); });
+})();
 </script>
 </body>
 </html>

@@ -4,6 +4,7 @@ const fsp = require("node:fs/promises");
 const path = require("node:path");
 const crypto = require("node:crypto");
 const { spawn } = require("node:child_process");
+const crud = require("./crud");
 
 const ROOT = path.resolve(__dirname, "..");
 const EDITOR_DIR = __dirname;
@@ -12,6 +13,8 @@ const PORT = Number(process.env.PORT || 8177);
 const DATA_DIR = path.resolve(process.env.MAHAVISPHOT_DATA_DIR || path.join(ROOT, "data"));
 const AUTH_FILE = path.join(DATA_DIR, "auth.json");
 const PROJECTS_DIR = path.join(DATA_DIR, "projects");
+const CRUD_DIR = path.join(DATA_DIR, "crud");
+const crudStore = crud.createStore(CRUD_DIR);
 const SESSION_COOKIE = "mahavisphot_session";
 const SESSION_MAX_AGE_SECONDS = 60 * 60 * 24 * 14;
 const PASSWORD_ITERATIONS = 120000;
@@ -1163,6 +1166,87 @@ function handleHealth(req, res, url) {
   });
 }
 
+let SEARCH_INDEX_CACHE = null;
+async function handleSearch(req, res, url) {
+  if (!SEARCH_INDEX_CACHE) {
+    SEARCH_INDEX_CACHE = await readJsonFile(path.join(PUBLIC_DIR, "mahavisphot", "search-index.json"), { items: [] });
+  }
+  const q = String(url.searchParams.get("q") || "").trim().toLowerCase();
+  const kind = url.searchParams.get("kind") || "";
+  const status = url.searchParams.get("status") || "";
+  let items = SEARCH_INDEX_CACHE.items || [];
+  if (kind) items = items.filter((it) => it.kind === kind);
+  if (status) items = items.filter((it) => it.status === status);
+  if (q) items = items.filter((it) => (it.keywords || "").includes(q) || String(it.title || "").toLowerCase().includes(q));
+  sendJson(res, 200, { ok: true, query: q, total: items.length, items: items.slice(0, 100) });
+}
+
+async function handleRuntimeHealth(req, res) {
+  const collectors = require("./runtime-collectors");
+  sendJson(res, 200, { ok: true, ...collectors.collectAll() });
+}
+
+async function handleCrud(req, res, url) {
+  // /api/v1            -> entity + schema catalog (introspection)
+  // /api/v1/<entity>   -> GET list, POST create
+  // /api/v1/<entity>/<id> -> GET, PUT/PATCH update, DELETE
+  if (url.pathname === "/api/v1" || url.pathname === "/api/v1/") {
+    sendJson(res, 200, { ok: true, entities: crud.ENTITIES, schemas: crud.SCHEMAS, common: crud.COMMON });
+    return;
+  }
+  const auth = await requireUser(req, res);
+  if (!auth) return;
+  const userId = auth.user.id;
+  const parts = url.pathname.split("/").filter(Boolean); // ["api","v1",entity,id?]
+  const entity = parts[2];
+  const id = parts[3];
+  if (!crud.ENTITIES.includes(entity)) {
+    sendJson(res, 404, { ok: false, error: `Unknown entity: ${entity}` });
+    return;
+  }
+  try {
+    if (!id) {
+      if (req.method === "GET") {
+        const records = await crudStore.list(userId, entity, {
+          projectId: url.searchParams.get("projectId") || undefined,
+        });
+        sendJson(res, 200, { ok: true, entity, count: records.length, records });
+        return;
+      }
+      if (req.method === "POST") {
+        const record = await crudStore.create(userId, entity, await parseJsonBody(req));
+        sendJson(res, 201, { ok: true, entity, record });
+        return;
+      }
+    } else {
+      if (req.method === "GET") {
+        const record = await crudStore.get(userId, entity, id);
+        if (record) sendJson(res, 200, { ok: true, entity, record });
+        else sendJson(res, 404, { ok: false, error: "Not found" });
+        return;
+      }
+      if (req.method === "PUT" || req.method === "PATCH") {
+        const record = await crudStore.update(userId, entity, id, await parseJsonBody(req));
+        if (record) sendJson(res, 200, { ok: true, entity, record });
+        else sendJson(res, 404, { ok: false, error: "Not found" });
+        return;
+      }
+      if (req.method === "DELETE") {
+        const removed = await crudStore.remove(userId, entity, id);
+        sendJson(res, removed ? 200 : 404, { ok: removed, entity, id });
+        return;
+      }
+    }
+    sendJson(res, 405, { ok: false, error: "Method not allowed" });
+  } catch (error) {
+    if (error instanceof crud.ValidationError) {
+      sendJson(res, 422, { ok: false, error: "Validation failed", details: error.errors });
+      return;
+    }
+    sendJson(res, 400, { ok: false, error: error.message || String(error) });
+  }
+}
+
 const server = http.createServer(async (req, res) => {
   const url = new URL(req.url, `http://${req.headers.host}`);
   try {
@@ -1192,6 +1276,18 @@ const server = http.createServer(async (req, res) => {
     }
     if (url.pathname === "/api/projects" || url.pathname.startsWith("/api/projects/")) {
       await handleProjects(req, res, url);
+      return;
+    }
+    if (req.method === "GET" && url.pathname === "/api/v1/search") {
+      await handleSearch(req, res, url);
+      return;
+    }
+    if (req.method === "GET" && url.pathname === "/api/v1/health/runtimes") {
+      await handleRuntimeHealth(req, res);
+      return;
+    }
+    if (url.pathname === "/api/v1" || url.pathname.startsWith("/api/v1/")) {
+      await handleCrud(req, res, url);
       return;
     }
   } catch (error) {
