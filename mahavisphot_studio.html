@@ -1,0 +1,614 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mahavisphot Studio — महाविस्फोट</title>
+<style>
+  :root{
+    --bg:#0a0b10; --panel:#12141c; --panel2:#171a24; --line:#262a37;
+    --ink:#e7e9f0; --mut:#8b90a4; --acc:#ff2e3e; --acc2:#ff7a45; --gold:#e8c06a;
+    --blue:#4aa8ff; --ok:#36d399; --warn:#f5c451; --bad:#ff5d6c;
+    --r:10px; --fast:.16s;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);
+    font:13px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,"Noto Sans Devanagari",sans-serif;
+    overflow:hidden;-webkit-font-smoothing:antialiased}
+  button{font:inherit;color:inherit;cursor:pointer;background:none;border:none}
+  .app{display:grid;grid-template-rows:auto 1fr auto;height:100vh}
+
+  /* ---------- topbar ---------- */
+  .top{display:flex;align-items:center;gap:14px;padding:8px 14px;background:linear-gradient(180deg,#15171f,#0f1118);
+    border-bottom:1px solid var(--line)}
+  .brand{display:flex;align-items:center;gap:10px;min-width:200px}
+  .mark{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;font-weight:800;
+    background:radial-gradient(circle at 30% 30%,var(--acc2),var(--acc));color:#fff;box-shadow:0 0 18px #ff2e3e55}
+  .brand h1{font-size:14px;margin:0;letter-spacing:.3px}
+  .brand p{margin:0;font-size:11px;color:var(--mut)}
+  .modes{display:flex;gap:3px;flex:1;flex-wrap:wrap}
+  .modes button{padding:6px 11px;border-radius:7px;color:var(--mut);font-size:12px;font-weight:600;border:1px solid transparent}
+  .modes button:hover{color:var(--ink);background:#ffffff09}
+  .modes button.on{color:#fff;background:#ffffff12;border-color:var(--line)}
+  .modes button.on::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--acc);margin-right:6px;vertical-align:middle}
+  .topR{display:flex;align-items:center;gap:8px}
+  .btn{padding:7px 13px;border-radius:8px;border:1px solid var(--line);background:#ffffff0a;font-weight:600;font-size:12px}
+  .btn:hover{background:#ffffff16}
+  .btn.pri{background:linear-gradient(180deg,var(--acc2),var(--acc));border-color:transparent;color:#fff;box-shadow:0 4px 14px #ff2e3e44}
+
+  /* ---------- main ---------- */
+  .main{display:grid;grid-template-columns:248px 1fr 312px;min-height:0;overflow:hidden}
+  .col{display:flex;flex-direction:column;min-height:0;background:var(--panel);overflow:hidden}
+  .col.l{border-right:1px solid var(--line)}
+  .col.r{border-left:1px solid var(--line)}
+  .sec{border-bottom:1px solid var(--line)}
+  .sec>.h{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;font-size:11px;
+    text-transform:uppercase;letter-spacing:.6px;color:var(--mut);font-weight:700;background:#0d0f16;cursor:pointer;user-select:none}
+  .sec>.h .chev{transition:transform var(--fast)}
+  .sec.closed .body{display:none}
+  .sec.closed .chev{transform:rotate(-90deg)}
+  .body{padding:10px 12px;overflow:auto}
+
+  /* media bin */
+  .binCtl{display:flex;gap:6px;margin-bottom:9px}
+  .binCtl select,.binCtl input{flex:1;background:var(--panel2);border:1px solid var(--line);color:var(--ink);
+    border-radius:7px;padding:6px 8px;font-size:12px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+  .thumb{position:relative;border-radius:7px;overflow:hidden;border:1px solid var(--line);background:#000;aspect-ratio:16/9;cursor:pointer}
+  .thumb img{width:100%;height:100%;object-fit:cover;display:block;opacity:.92;transition:transform var(--fast),opacity var(--fast)}
+  .thumb:hover img{transform:scale(1.07);opacity:1}
+  .thumb .cap{position:absolute;left:0;right:0;bottom:0;font-size:9px;padding:9px 5px 3px;color:#fff;
+    background:linear-gradient(180deg,transparent,#000d);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .thumb .bn{position:absolute;top:3px;left:3px;font-size:8px;font-weight:700;background:#000a;color:var(--gold);padding:1px 5px;border-radius:20px}
+
+  /* layers */
+  .layer{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:7px;margin-bottom:4px;background:var(--panel2);border:1px solid var(--line)}
+  .layer .dot{width:9px;height:9px;border-radius:2px}
+  .layer .nm{flex:1;font-size:12px;font-weight:600}
+  .layer .eye{color:var(--mut);font-size:14px}
+  .layer .eye.off{opacity:.3}
+  .layer.sel{outline:1px solid var(--acc)}
+
+  /* center / viewer */
+  .col.c{background:#06070b}
+  .stageWrap{flex:1;display:grid;place-items:center;padding:16px;min-height:0;position:relative}
+  .stage{position:relative;width:100%;max-width:980px;aspect-ratio:16/9;background:#000;border-radius:12px;overflow:hidden;
+    box-shadow:0 18px 60px #000a, 0 0 0 1px var(--line)}
+  .stage img.frame{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .kb{animation:kenburns var(--kbdur,9s) ease-out forwards}
+  @keyframes kenburns{from{transform:scale(1.0) translate(0,0)}to{transform:scale(1.12) translate(var(--kbx,-2%),var(--kby,-2%))}}
+  /* vfx overlays */
+  .vfx{position:absolute;inset:0;pointer-events:none}
+  #vxRed{background:radial-gradient(circle at 50% 56%,#ff2e3e55,transparent 60%);mix-blend-mode:screen;opacity:0}
+  #vxVig{box-shadow:inset 0 0 200px 60px #000c;opacity:0}
+  #vxEcl{background:radial-gradient(circle at 50% 45%,transparent 18%,#000 30%);opacity:0}
+  #vxEcl::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,transparent 20%,#ffcaa033 22%,transparent 26%);mix-blend-mode:screen}
+  #vxGrain{opacity:0;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='80' height='80' filter='url(%23n)' opacity='0.5'/></svg>");mix-blend-mode:overlay;animation:grain .4s steps(2) infinite}
+  @keyframes grain{to{transform:translate(6px,4px)}}
+  #vxChrom{opacity:0;background:linear-gradient(90deg,#ff000022,transparent 40%,transparent 60%,#0088ff22);mix-blend-mode:screen}
+  .lbar{position:absolute;left:0;right:0;height:9%;background:#000;opacity:0;transition:opacity .2s}
+  .lbar.t{top:0}.lbar.b{bottom:0}
+  .stage.letter .lbar{opacity:1}
+  /* captions */
+  .cap-hi{position:absolute;left:0;right:0;bottom:13%;text-align:center;font-size:30px;font-weight:700;color:#fff;
+    text-shadow:0 2px 18px #000,0 0 22px #ff2e3e66;letter-spacing:1px;padding:0 24px;opacity:0;transition:opacity .35s}
+  .cap-en{position:absolute;left:0;right:0;bottom:8%;text-align:center;font-size:13px;font-weight:600;letter-spacing:3px;
+    text-transform:uppercase;color:var(--gold);text-shadow:0 2px 10px #000;opacity:0;transition:opacity .35s}
+  .stage.cc .cap-hi,.stage.cc .cap-en{opacity:1}
+  .beatTag{position:absolute;top:12px;left:14px;font-size:11px;color:#fff;background:#000a;padding:4px 10px;border-radius:20px;
+    border:1px solid #ffffff22}
+  .beatTag b{color:var(--acc2)}
+  /* transport */
+  .transport{display:flex;align-items:center;gap:14px;padding:10px 18px;background:#0c0e15;border-top:1px solid var(--line)}
+  .tbtn{width:36px;height:36px;border-radius:9px;display:grid;place-items:center;font-size:15px;background:#ffffff0c;border:1px solid var(--line)}
+  .tbtn:hover{background:#ffffff18}
+  .tbtn.play{width:46px;height:46px;background:linear-gradient(180deg,var(--acc2),var(--acc));border-color:transparent;color:#fff;font-size:18px}
+  .tc{font-variant-numeric:tabular-nums;font-size:13px;color:var(--mut)}
+  .tc b{color:var(--ink)}
+  .vu{flex:1;height:7px;border-radius:5px;background:#ffffff10;overflow:hidden;max-width:220px}
+  .vu i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--ok),var(--gold),var(--acc));transition:width .06s}
+  .spd{background:var(--panel2);border:1px solid var(--line);color:var(--ink);border-radius:7px;padding:5px 7px;font-size:12px}
+
+  /* inspector (right) */
+  .field{margin-bottom:11px}
+  .field label{display:block;font-size:11px;color:var(--mut);margin-bottom:4px;font-weight:600}
+  .field input[type=range]{width:100%;accent-color:var(--acc)}
+  .row{display:flex;gap:7px;align-items:center}
+  .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .chip{padding:6px 10px;border-radius:20px;font-size:11px;font-weight:600;border:1px solid var(--line);background:var(--panel2);color:var(--mut)}
+  .chip.on{background:#ff2e3e1f;border-color:var(--acc);color:#fff}
+  .seg{display:flex;background:var(--panel2);border:1px solid var(--line);border-radius:8px;overflow:hidden;margin-bottom:10px}
+  .seg button{flex:1;padding:7px;font-size:11px;font-weight:600;color:var(--mut)}
+  .seg button.on{background:var(--acc);color:#fff}
+  .pill{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px}
+  .pill.b{background:#f5c45122;color:var(--warn)}
+  .pill.g{background:#36d39922;color:var(--ok)}
+  .pill.r{background:#ff5d6c22;color:var(--bad)}
+  .pill .d{width:6px;height:6px;border-radius:50%;background:currentColor}
+  .aiCard{background:var(--panel2);border:1px solid var(--line);border-radius:9px;padding:10px;margin-bottom:9px}
+  .aiCard h4{margin:0 0 4px;font-size:12.5px}
+  .aiCard p{margin:0 0 8px;font-size:11px;color:var(--mut)}
+  .note{font-size:11px;color:var(--mut);background:#ffffff07;border:1px dashed var(--line);border-radius:8px;padding:8px;line-height:1.5}
+  .jobs{font-size:11px}
+  .job{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--line);color:var(--mut)}
+
+  /* ---------- timeline ---------- */
+  .tl{height:218px;background:var(--panel);border-top:1px solid var(--line);display:flex;flex-direction:column;min-height:0}
+  .tlhead{display:flex;align-items:center;gap:12px;padding:6px 12px;border-bottom:1px solid var(--line);font-size:11px;color:var(--mut)}
+  .tlhead .z{display:flex;gap:4px;align-items:center;margin-left:auto}
+  .tlhead .z button{width:24px;height:22px;border:1px solid var(--line);border-radius:5px;background:#ffffff08}
+  .tlscroll{flex:1;overflow-x:auto;overflow-y:hidden;position:relative}
+  .tlinner{position:relative;height:100%}
+  .ruler{height:20px;position:relative;border-bottom:1px solid var(--line);background:#0d0f16}
+  .tick{position:absolute;top:0;height:100%;border-left:1px solid #ffffff14;font-size:9px;color:var(--mut);padding-left:3px;padding-top:4px}
+  .track{position:relative;border-bottom:1px solid var(--line)}
+  .trackLbl{position:sticky;left:0;z-index:5;float:left;width:0}
+  .tlbadge{position:absolute;left:6px;font-size:9px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.5px;
+    background:#0d0f16cc;padding:1px 6px;border-radius:10px;z-index:6;pointer-events:none}
+  #wave{display:block;height:54px;width:100%}
+  .beatBlk{position:absolute;top:5px;bottom:5px;border-radius:6px;border:1px solid #ffffff22;overflow:hidden;cursor:pointer;
+    background:linear-gradient(180deg,#2a2030,#1a1622)}
+  .beatBlk:hover{border-color:var(--acc)}
+  .beatBlk.sel{border-color:var(--acc);box-shadow:0 0 0 1px var(--acc) inset}
+  .beatBlk b{display:block;font-size:10px;color:#fff;padding:3px 6px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .beatBlk span{display:block;font-size:9px;color:var(--gold);padding:0 6px}
+  .clip{position:absolute;top:5px;bottom:5px;border-radius:5px;background:#1d2740;border:1px solid #3a4a72;overflow:hidden}
+  .clip img{height:100%;width:100%;object-fit:cover;opacity:.55}
+  .playhead{position:absolute;top:0;bottom:0;width:2px;background:var(--acc);z-index:20;pointer-events:none;box-shadow:0 0 8px var(--acc)}
+  .playhead::before{content:"";position:absolute;top:-1px;left:-5px;border:6px solid transparent;border-top-color:var(--acc)}
+  .ph-grab{position:absolute;top:0;height:20px;left:0;right:0;cursor:pointer;z-index:15}
+
+  ::-webkit-scrollbar{height:10px;width:10px}
+  ::-webkit-scrollbar-thumb{background:#2a2f3e;border-radius:6px}
+  ::-webkit-scrollbar-track{background:transparent}
+  .hide{display:none!important}
+  .miss{display:grid;place-items:center;height:100vh;text-align:center;padding:40px;color:var(--mut)}
+  .miss code{color:var(--gold)}
+</style>
+</head>
+<body>
+<div id="app" class="app hide">
+  <!-- TOP -->
+  <div class="top">
+    <div class="brand">
+      <div class="mark">म</div>
+      <div><h1>Mahavisphot Studio</h1><p id="brandSub">महाविस्फोट · video / audio / vfx / ai</p></div>
+    </div>
+    <div class="modes" id="modes"></div>
+    <div class="topR">
+      <span id="rtMode" class="pill b"><span class="d"></span>local · offline</span>
+      <button class="btn" id="saveProj">Save Project</button>
+      <button class="btn pri" id="exportBtn">Export ▸</button>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+    <!-- LEFT -->
+    <div class="col l">
+      <div class="sec" id="secBin">
+        <div class="h">Media Bin · <span id="binCount"></span> frames<span class="chev">▾</span></div>
+        <div class="body">
+          <div class="binCtl">
+            <select id="beatFilter"></select>
+            <input id="binSearch" placeholder="search…" />
+          </div>
+          <div class="grid" id="bin"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CENTER -->
+    <div class="col c">
+      <div class="stageWrap">
+        <div class="stage" id="stage">
+          <img class="frame" id="frameImg" alt="" />
+          <div class="vfx" id="vxRed"></div>
+          <div class="vfx" id="vxChrom"></div>
+          <div class="vfx" id="vxEcl"></div>
+          <div class="vfx" id="vxGrain"></div>
+          <div class="vfx" id="vxVig"></div>
+          <div class="lbar t"></div><div class="lbar b"></div>
+          <div class="beatTag" id="beatTag"></div>
+          <div class="cap-hi" id="capHi"></div>
+          <div class="cap-en" id="capEn"></div>
+        </div>
+      </div>
+      <div class="transport">
+        <button class="tbtn" id="toStart">⏮</button>
+        <button class="tbtn play" id="playBtn">▶</button>
+        <button class="tbtn" id="toEnd">⏭</button>
+        <div class="tc"><b id="cur">0:00.0</b> / <span id="dur">0:00.0</span></div>
+        <select class="spd" id="speed">
+          <option value="0.5">0.5×</option><option value="1" selected>1×</option>
+          <option value="1.5">1.5×</option><option value="2">2×</option>
+        </select>
+        <div class="vu"><i id="vu"></i></div>
+        <span class="tc" id="beatNow"></span>
+      </div>
+    </div>
+
+    <!-- RIGHT inspector -->
+    <div class="col r">
+      <div class="sec"><div class="h">Inspector — <span id="inspTitle">VFX</span><span class="chev">▾</span></div>
+        <div class="body" id="inspector"></div>
+      </div>
+      <div class="sec"><div class="h">Layers<span class="chev">▾</span></div>
+        <div class="body" id="layers"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIMELINE -->
+  <div class="tl">
+    <div class="tlhead">
+      <span>Timeline · <b id="tlDur"></b> · 16 beats · 137 frames</span>
+      <label class="row" style="gap:5px"><input type="checkbox" id="snap" checked />snap to beats</label>
+      <div class="z">
+        <span>zoom</span>
+        <button id="zOut">−</button><button id="zIn">+</button><button id="zFit">fit</button>
+      </div>
+    </div>
+    <div class="tlscroll" id="tlscroll">
+      <div class="tlinner" id="tlinner">
+        <div class="ruler" id="ruler"></div>
+        <div class="track" style="height:58px"><div class="tlbadge">Audio · अहं ब्रह्मास्मि</div><canvas id="wave"></canvas></div>
+        <div class="track" id="beatTrack" style="height:46px"><div class="tlbadge">Story Beats</div></div>
+        <div class="track" id="clipTrack" style="height:50px"><div class="tlbadge">Frames (montage)</div></div>
+        <div class="playhead" id="playhead"></div>
+        <div class="ph-grab" id="phGrab"></div>
+      </div>
+    </div>
+  </div>
+  <audio id="audio" preload="auto"></audio>
+</div>
+
+<div id="missing" class="miss hide">
+  <div>
+    <div class="mark" style="margin:0 auto 14px">म</div>
+    <h2>Mahavisphot Studio</h2>
+    <p>Could not load <code>studio_data.js</code>.<br>
+    Open this file from inside the project folder (<code>aham/</code>) so it can find the data, audio, and frames.</p>
+  </div>
+</div>
+
+<script src="studio_data.js"></script>
+<script>
+const M = window.MAHAVISPHOT;
+if(!M){ document.getElementById('missing').classList.remove('hide'); }
+else { boot(); }
+
+function fmt(t){ if(isNaN(t))t=0; const m=Math.floor(t/60), s=(t%60); return m+":"+s.toFixed(1).padStart(4,'0'); }
+function enc(p){ return p.split('/').map(encodeURIComponent).join('/'); }
+const $ = s=>document.querySelector(s), $$ = s=>[...document.querySelectorAll(s)];
+
+function boot(){
+  document.getElementById('app').classList.remove('hide');
+  const A = $('#audio'); A.src = enc(M.audio);
+  const frameById = Object.fromEntries(M.frames.map(f=>[f.id,f]));
+
+  // ---------- state ----------
+  const st = {
+    dur: M.duration, pxPerSec: 7, selBeat: 1, mode:'edit', curFrame:null,
+    vfx:{red:true,vig:true,eclipse:false,grain:true,chrom:false,letter:true},
+    cc:true, intensity:1, kbStrength:1, aiMode:'local', jobs:[],
+    layers:{frames:true,caption:true,vfx:true,audio:true},
+  };
+
+  // ---------- modes ----------
+  const MODES=[['edit','Edit'],['audio','Audio'],['vfx','VFX'],['3d','3D Studio'],
+    ['particles','Particles'],['motion','Motion Track'],['face','Face Swap'],['access','Access']];
+  const modesEl=$('#modes');
+  MODES.forEach(([k,l])=>{ const b=document.createElement('button'); b.textContent=l; b.dataset.k=k;
+    if(k==='edit')b.classList.add('on'); b.onclick=()=>setMode(k); modesEl.appendChild(b); });
+  function setMode(k){ st.mode=k; $$('#modes button').forEach(b=>b.classList.toggle('on',b.dataset.k===k));
+    renderInspector(); }
+
+  // ---------- media bin ----------
+  const bf=$('#beatFilter');
+  bf.innerHTML='<option value="0">All beats</option>'+M.beats.map(b=>`<option value="${b.beat}">${b.beat}. ${b.title_en}</option>`).join('');
+  $('#binCount').textContent=M.frames.length;
+  function renderBin(){
+    const fb=+bf.value, q=$('#binSearch').value.toLowerCase();
+    const list=M.frames.filter(f=>(fb===0||f.beat===fb)&&(!q||f.title.toLowerCase().includes(q)||f.id.includes(q)));
+    $('#bin').innerHTML=list.map(f=>`<div class="thumb" data-id="${f.id}" title="${f.title} — ${f.desc}">
+      <img loading="lazy" src="${enc(f.file)}" alt=""><div class="bn">${f.num}</div><div class="cap">${f.title}</div></div>`).join('');
+    $$('#bin .thumb').forEach(t=>t.onclick=()=>{ const f=frameById[t.dataset.id];
+      const b=M.beats.find(x=>x.beat===f.beat); seek(b?b.start+0.05:0); showFrame(f.id); });
+  }
+  bf.onchange=renderBin; $('#binSearch').oninput=renderBin; renderBin();
+
+  // ---------- layers ----------
+  const LAYERS=[['frames','Frame Montage','#4aa8ff'],['caption','Captions','#e8c06a'],
+    ['vfx','VFX Stack','#ff2e3e'],['audio','Audio · अहं ब्रह्मास्मि','#36d399']];
+  function renderLayers(){
+    $('#layers').innerHTML=LAYERS.map(([k,n,c])=>`<div class="layer" data-k="${k}">
+      <span class="dot" style="background:${c}"></span><span class="nm">${n}</span>
+      <span class="eye ${st.layers[k]?'':'off'}">${st.layers[k]?'◉':'○'}</span></div>`).join('');
+    $$('#layers .layer').forEach(l=>l.onclick=()=>{ const k=l.dataset.k; st.layers[k]=!st.layers[k];
+      renderLayers(); applyVfx(); });
+  }
+  renderLayers();
+
+  // ---------- inspector (per mode) ----------
+  function vfxRow(k,label){return `<label class="chip ${st.vfx[k]?'on':''}" data-vfx="${k}">${label}</label>`;}
+  function renderInspector(){
+    const t={edit:'Edit',audio:'Audio Mixer',vfx:'VFX',['3d']:'3D Studio',particles:'Particles',
+      motion:'Motion Tracking',face:'Face Swap',access:'Accessibility'}[st.mode];
+    $('#inspTitle').textContent=t;
+    const ins=$('#inspector');
+    if(st.mode==='vfx'||st.mode==='edit'){
+      ins.innerHTML=`
+        <div class="field"><label>Active looks</label><div class="chips">
+          ${vfxRow('red','Red Sonic')}${vfxRow('eclipse','Eclipse')}${vfxRow('vig','Vignette')}
+          ${vfxRow('grain','Film Grain')}${vfxRow('chrom','Chromatic')}${vfxRow('letter','Letterbox 2.39')}
+        </div></div>
+        <div class="field"><label>VFX intensity · <b id="iv">${st.intensity.toFixed(2)}</b></label>
+          <input type="range" id="intensity" min="0" max="1.5" step="0.05" value="${st.intensity}"></div>
+        <div class="field"><label>Ken Burns motion · <b id="kbv">${st.kbStrength.toFixed(2)}</b></label>
+          <input type="range" id="kb" min="0" max="2" step="0.1" value="${st.kbStrength}"></div>
+        <div class="field"><label><input type="checkbox" id="ccToggle" ${st.cc?'checked':''}> Burn captions (HI + EN)</label></div>
+        <div class="note">Looks are audio-reactive: Red Sonic and the VU meter pulse to the live RMS of the track. These same looks are written into the export recipe.</div>`;
+      bindVfx();
+    } else if(st.mode==='audio'){
+      ins.innerHTML=`
+        <div class="field"><label>Master volume</label><input type="range" id="vol" min="0" max="1" step="0.02" value="1"></div>
+        <div class="field"><label>Playback rate</label><input type="range" id="rate" min="0.5" max="2" step="0.1" value="1"></div>
+        <div class="note">Single stem loaded: <b>अहं ब्रह्मास्मि.wav</b> · ${fmt(M.duration)} · 16-bit WAV.
+        Beat markers below are locked to this stem. Add stems (rubab solo, VO, FX bed) in the bin to build a multitrack mix.</div>
+        <div class="field" style="margin-top:10px"><label>Detected energy beats</label>
+          <div class="chips">${M.beats.map(b=>`<span class="chip" style="cursor:pointer" data-seek="${b.start}">${b.beat}</span>`).join('')}</div></div>`;
+      $('#vol').oninput=e=>A.volume=+e.target.value;
+      $('#rate').oninput=e=>{A.playbackRate=+e.target.value;};
+      $$('#inspector [data-seek]').forEach(c=>c.onclick=()=>seek(+c.dataset.seek+0.02));
+    } else if(['3d','particles','motion','face'].includes(st.mode)){
+      renderAI();
+    } else if(st.mode==='access'){
+      ins.innerHTML=`
+        <div class="field"><label>Accessibility cut</label>
+        <div class="note">Auto-generated artefacts from the storyline:
+        <br>• 16 scene descriptions (audio-description script)<br>• HI + EN burned captions<br>• High-contrast caption mode
+        <br>• Reduced-motion export (disables Ken Burns)</div></div>
+        <div class="field"><label><input type="checkbox" id="reduceMotion"> Reduced motion (flat frames)</label></div>
+        <button class="btn" id="adScript">Preview audio-description script</button>
+        <div id="adOut" class="note hide" style="margin-top:8px"></div>`;
+      $('#reduceMotion').onchange=e=>{ st.kbStrength=e.target.checked?0:1; showFrame(st.curFrame,true); };
+      $('#adScript').onclick=()=>{ const o=$('#adOut'); o.classList.remove('hide');
+        o.innerHTML=M.beats.map(b=>`<b>${fmt(b.start)}</b> — ${b.action}`).join('<br>'); };
+    }
+  }
+  function bindVfx(){
+    $$('#inspector [data-vfx]').forEach(c=>c.onclick=()=>{ const k=c.dataset.vfx; st.vfx[k]=!st.vfx[k];
+      c.classList.toggle('on',st.vfx[k]); applyVfx(); });
+    $('#intensity').oninput=e=>{ st.intensity=+e.target.value; $('#iv').textContent=st.intensity.toFixed(2); applyVfx(); };
+    $('#kb').oninput=e=>{ st.kbStrength=+e.target.value; $('#kbv').textContent=st.kbStrength.toFixed(2); };
+    $('#ccToggle').onchange=e=>{ st.cc=e.target.checked; applyVfx(); };
+  }
+
+  // ---------- AI panel (honest stubs) ----------
+  const AI_TOOLS={
+    face:[['Face Swap','Map a target identity onto the Haryanvi / Pakhtoon performers across a beat.','inswapper / SimSwap']],
+    motion:[['Motion Tracking','Solve 2D camera + point tracks to pin captions and VFX to moving frames.','CoTracker / Lucas-Kanade']],
+    particles:[['Particle Sim','Dust-fracture, ember and red-resonance particle systems bound to beat energy.','GPU point sim']],
+    ['3d']:[['3D Camera Projection','Project frames onto cards in 3D for parallax push-ins on the eclipse + void beats.','three.js scene']],
+  };
+  function renderAI(){
+    const tools=AI_TOOLS[st.mode]||[];
+    $('#inspector').innerHTML=`
+      <div class="seg" id="aiSeg">
+        ${['local','cloud','hybrid'].map(m=>`<button data-m="${m}" class="${st.aiMode===m?'on':''}">${m}</button>`).join('')}
+      </div>
+      <div id="aiStatus"></div>
+      ${tools.map((t,i)=>`<div class="aiCard"><h4>${t[0]}</h4><p>${t[1]}</p>
+        <div class="row" style="justify-content:space-between">
+          <span style="font-size:10px;color:var(--mut)">engine: ${t[2]}</span>
+          <button class="btn" data-run="${i}">Run on beat ${st.selBeat}</button></div></div>`).join('')}
+      <div class="field" style="margin-top:6px"><label>Job queue</label><div class="jobs" id="jobs"></div></div>`;
+    $$('#aiSeg button').forEach(b=>b.onclick=()=>{ st.aiMode=b.dataset.m; renderAI(); });
+    $$('#inspector [data-run]').forEach(b=>b.onclick=()=>queueJob(tools[+b.dataset.run][0]));
+    aiStatus(); renderJobs();
+  }
+  function aiStatus(){
+    const map={
+      local:['pill b','no local model runtime configured — set MAHAVISPHOT_MODEL_DIR + GPU adapter'],
+      cloud:['pill r','no provider credentials — add API key in project settings to enable'],
+      hybrid:['pill b','hybrid needs both local runtime + cloud fallback configured'],
+    };
+    const [cls,msg]=map[st.aiMode];
+    $('#aiStatus').innerHTML=`<div class="note"><span class="${cls}"><span class="d"></span>${st.aiMode} runtime</span>
+      <div style="margin-top:6px">${msg}.</div>
+      <div style="margin-top:6px;opacity:.8">UI + adapter interface are wired; execution is gated until a runtime reports ready, so jobs queue instead of failing silently.</div></div>`;
+    $('#rtMode').className=cls; $('#rtMode').innerHTML=`<span class="d"></span>${st.aiMode} · ${st.aiMode==='cloud'?'no key':'offline'}`;
+  }
+  function queueJob(name){
+    const j={name,mode:st.aiMode,beat:st.selBeat,state:'queued (runtime not ready)',t:new Date().toLocaleTimeString()};
+    st.jobs.unshift(j); renderJobs();
+  }
+  function renderJobs(){
+    const el=$('#jobs'); if(!el)return;
+    el.innerHTML=st.jobs.length?st.jobs.slice(0,6).map(j=>`<div class="job"><span>${j.name} · b${j.beat} · ${j.mode}</span><span>${j.state}</span></div>`).join(''):'<div style="color:var(--mut)">no jobs queued</div>';
+  }
+
+  // ---------- VFX apply ----------
+  function applyVfx(){
+    const on=st.layers.vfx, I=st.intensity;
+    $('#vxRed').style.opacity = (on&&st.vfx.red)?0.0:0; // base set by reactive loop
+    $('#vxVig').style.opacity = (on&&st.vfx.vig)?0.85*I:0;
+    $('#vxEcl').style.opacity = (on&&st.vfx.eclipse)?Math.min(1,I):0;
+    $('#vxGrain').style.opacity = (on&&st.vfx.grain)?0.35*I:0;
+    $('#vxChrom').style.opacity = (on&&st.vfx.chrom)?0.6*I:0;
+    $('#stage').classList.toggle('letter', on&&st.vfx.letter);
+    $('#stage').classList.toggle('cc', st.cc&&st.layers.caption);
+  }
+
+  // ---------- frame display ----------
+  function beatAt(t){ return M.beats.find(b=>t>=b.start&&t<b.end)||M.beats[M.beats.length-1]; }
+  function frameForTime(t){
+    const b=beatAt(t); if(!b.members.length) return {beat:b,id:b.primary};
+    const k=Math.min(b.members.length-1, Math.floor((t-b.start)/b.dur*b.members.length));
+    return {beat:b, id:b.members[k]};
+  }
+  let lastImg=null;
+  function showFrame(id,force){
+    if(!id) return;
+    const f=frameById[id]; if(!f)return;
+    if(id!==lastImg||force){
+      const img=$('#frameImg'); img.src=enc(f.file); st.curFrame=id; lastImg=id;
+      // re-trigger ken burns
+      img.classList.remove('kb'); void img.offsetWidth;
+      if(st.kbStrength>0){
+        img.style.setProperty('--kbdur',(2.2)+'s');
+        img.style.setProperty('--kbx',(-(2*st.kbStrength))+'%');
+        img.style.setProperty('--kby',(-(1.5*st.kbStrength))+'%');
+        img.style.transform='';
+        img.classList.add('kb');
+      } else { img.style.transform='none'; }
+    }
+  }
+  function updateBeatUI(b){
+    $('#beatTag').innerHTML=`<b>BEAT ${b.beat}</b> · ${b.title_en}`;
+    $('#capHi').textContent=b.title_hi; $('#capEn').textContent=b.title_en;
+    $('#beatNow').textContent=`Beat ${b.beat}/16 · ${b.title_en}`;
+    $('#beatNow').title=b.action;
+    if(st.selBeat!==b.beat){ st.selBeat=b.beat; markSelBeat(); }
+  }
+
+  // ---------- timeline build ----------
+  const inner=$('#tlinner'), scroll=$('#tlscroll');
+  function layout(){
+    const w=st.dur*st.pxPerSec;
+    inner.style.width=w+'px';
+    // ruler
+    const ru=$('#ruler'); ru.innerHTML='';
+    const step=st.pxPerSec<5?20:(st.pxPerSec<12?10:5);
+    for(let s=0;s<=st.dur;s+=step){ const d=document.createElement('div'); d.className='tick';
+      d.style.left=(s*st.pxPerSec)+'px'; d.textContent=fmt(s).replace(/\.\d/,''); ru.appendChild(d); }
+    // beats
+    const bt=$('#beatTrack'); bt.querySelectorAll('.beatBlk').forEach(e=>e.remove());
+    M.beats.forEach(b=>{ const el=document.createElement('div'); el.className='beatBlk'; el.dataset.beat=b.beat;
+      el.style.left=(b.start*st.pxPerSec)+'px'; el.style.width=(b.dur*st.pxPerSec-3)+'px';
+      el.innerHTML=`<b>${b.beat}. ${b.title_en}</b><span>${b.title_hi}</span>`;
+      el.onclick=()=>{ st.selBeat=b.beat; seek(b.start+0.02); markSelBeat(); };
+      bt.appendChild(el); });
+    markSelBeat();
+    // clips (frame montage)
+    const ct=$('#clipTrack'); ct.querySelectorAll('.clip').forEach(e=>e.remove());
+    M.beats.forEach(b=>{ const n=b.members.length||1; const cw=b.dur/n;
+      b.members.forEach((id,i)=>{ const f=frameById[id]; if(!f)return;
+        const c=document.createElement('div'); c.className='clip';
+        c.style.left=((b.start+i*cw)*st.pxPerSec)+'px'; c.style.width=(cw*st.pxPerSec-2)+'px';
+        c.title=f.title; c.innerHTML=`<img loading="lazy" src="${enc(f.file)}">`;
+        c.onclick=()=>seek(b.start+i*cw+0.02); ct.appendChild(c); }); });
+    drawWave();
+  }
+  function markSelBeat(){ $$('#beatTrack .beatBlk').forEach(e=>e.classList.toggle('sel',+e.dataset.beat===st.selBeat)); }
+  // waveform
+  const wave=$('#wave');
+  function drawWave(){
+    const w=st.dur*st.pxPerSec, h=54, dpr=devicePixelRatio||1;
+    wave.width=w*dpr; wave.height=h*dpr; wave.style.width=w+'px'; wave.style.height=h+'px';
+    const c=wave.getContext('2d'); c.scale(dpr,dpr); c.clearRect(0,0,w,h);
+    const peaks=M.waveform, n=peaks.length;
+    for(let i=0;i<n;i++){ const x=i/n*w, bh=peaks[i]*h*0.92;
+      const g=c.createLinearGradient(0,h/2-bh/2,0,h/2+bh/2);
+      g.addColorStop(0,'#ff7a45'); g.addColorStop(.5,'#ff2e3e'); g.addColorStop(1,'#7a1530');
+      c.fillStyle=g; c.fillRect(x, h/2-bh/2, Math.max(1,w/n-0.5), bh); }
+  }
+
+  // ---------- transport & sync ----------
+  $('#dur').textContent=fmt(M.duration); $('#tlDur').textContent=fmt(M.duration);
+  let playing=false;
+  function play(){ A.play(); playing=true; $('#playBtn').textContent='⏸'; }
+  function pause(){ A.pause(); playing=false; $('#playBtn').textContent='▶'; }
+  $('#playBtn').onclick=()=>playing?pause():play();
+  $('#toStart').onclick=()=>seek(0); $('#toEnd').onclick=()=>seek(M.duration-0.1);
+  $('#speed').onchange=e=>A.playbackRate=+e.target.value;
+  function seek(t){ t=Math.max(0,Math.min(M.duration,t)); A.currentTime=t; tick(true); }
+  // click ruler/tracks to seek
+  $('#phGrab').onclick=e=>{ const r=inner.getBoundingClientRect(); seek((e.clientX-r.left)/st.pxPerSec); };
+  let dragging=false;
+  $('#phGrab').onmousedown=()=>dragging=true;
+  window.addEventListener('mouseup',()=>dragging=false);
+  window.addEventListener('mousemove',e=>{ if(!dragging)return; const r=inner.getBoundingClientRect();
+    seek((e.clientX-r.left)/st.pxPerSec); });
+
+  function tick(force){
+    const t=A.currentTime;
+    $('#cur').textContent=fmt(t);
+    const ff=frameForTime(t); showFrame(ff.id,force); updateBeatUI(ff.beat);
+    const x=t*st.pxPerSec; $('#playhead').style.left=x+'px';
+    // autoscroll
+    const sl=scroll.scrollLeft, vw=scroll.clientWidth;
+    if(x<sl+60||x>sl+vw-60) scroll.scrollLeft=x-vw/2;
+  }
+  A.addEventListener('timeupdate',()=>tick(false));
+  A.addEventListener('ended',()=>pause());
+
+  // ---------- audio-reactive ----------
+  let analyser,dataArr,actx;
+  function initReactive(){
+    try{ actx=new (window.AudioContext||window.webkitAudioContext)();
+      const src=actx.createMediaElementSource(A); analyser=actx.createAnalyser();
+      analyser.fftSize=256; dataArr=new Uint8Array(analyser.frequencyBinCount);
+      src.connect(analyser); analyser.connect(actx.destination);
+    }catch(e){}
+  }
+  A.addEventListener('play',()=>{ if(!actx)initReactive(); if(actx&&actx.state==='suspended')actx.resume(); });
+  function reactLoop(){
+    let energy=0;
+    if(analyser){ analyser.getByteFrequencyData(dataArr);
+      let s=0; for(let i=0;i<dataArr.length;i++)s+=dataArr[i]; energy=s/dataArr.length/255; }
+    $('#vu').style.width=(energy*100)+'%';
+    if(st.layers.vfx&&st.vfx.red){ $('#vxRed').style.opacity=(0.25+energy*0.9)*st.intensity; }
+    requestAnimationFrame(reactLoop);
+  }
+  reactLoop();
+
+  // ---------- zoom ----------
+  $('#zIn').onclick=()=>{ st.pxPerSec=Math.min(40,st.pxPerSec*1.4); layout(); tick(true); };
+  $('#zOut').onclick=()=>{ st.pxPerSec=Math.max(2,st.pxPerSec/1.4); layout(); tick(true); };
+  $('#zFit').onclick=()=>{ st.pxPerSec=Math.max(2,(scroll.clientWidth-20)/st.dur); layout(); tick(true); };
+
+  // ---------- collapsible sections ----------
+  $$('.sec>.h').forEach(h=>h.onclick=e=>{ if(e.target.tagName==='SELECT'||e.target.tagName==='INPUT')return;
+    h.parentElement.classList.toggle('closed'); });
+
+  // ---------- save / export ----------
+  $('#saveProj').onclick=()=>{
+    const proj={app:'mahavisphot-studio',version:'1.0',savedAt:new Date().toISOString(),
+      track:M.track,duration:M.duration,vfx:st.vfx,intensity:st.intensity,kbStrength:st.kbStrength,
+      captions:st.cc,beats:M.beats.map(b=>({beat:b.beat,title_en:b.title_en,title_hi:b.title_hi,
+        start:b.start,end:b.end,primary:b.primary,members:b.members}))};
+    dl('mahavisphot_project.json',JSON.stringify(proj,null,2));
+  };
+  $('#exportBtn').onclick=()=>openExport();
+  function dl(name,txt){ const b=new Blob([txt],{type:'text/plain'}); const a=document.createElement('a');
+    a.href=URL.createObjectURL(b); a.download=name; a.click(); }
+
+  function openExport(){
+    const looks=Object.entries(st.vfx).filter(([k,v])=>v).map(([k])=>k).join(', ');
+    const cmd=`# Mahavisphot — render recipe (run from project root)\n`+
+      `node scripts/render_film.mjs --res 1920x1080 --fps 30 \\\n`+
+      `  --captions ${st.cc?'on':'off'} --motion ${st.kbStrength} \\\n`+
+      `  --looks "${looks}" --intensity ${st.intensity}`;
+    const w=window.open('','_blank','width=720,height=560');
+    w.document.write(`<title>Export — Mahavisphot</title>
+      <body style="font:14px -apple-system,sans-serif;background:#0d0f16;color:#e7e9f0;padding:26px">
+      <h2 style="margin:0 0 6px">Export · Mahavisphot</h2>
+      <p style="color:#8b90a4">${M.title} · ${fmt(M.duration)} · 1920×1080 · 30fps · ${M.beats.length} beats / ${M.frames.length} frames</p>
+      <h4>Active looks</h4><p style="color:#e8c06a">${looks||'none'} · intensity ${st.intensity.toFixed(2)} · captions ${st.cc?'on':'off'} · motion ${st.kbStrength.toFixed(1)}</p>
+      <h4>Render recipe</h4>
+      <pre style="background:#000;border:1px solid #262a37;border-radius:8px;padding:14px;white-space:pre-wrap;color:#9fe6c2">${cmd}</pre>
+      <p style="color:#8b90a4">A reference render of these beats already exists in the folder as
+      <b style="color:#fff">mahavisphot_film.mp4</b>. This recipe regenerates it with your current look/caption/motion settings.</p>
+      </body>`);
+  }
+
+  // ---------- go ----------
+  applyVfx(); renderInspector(); layout();
+  setTimeout(()=>{ st.pxPerSec=Math.max(2,(scroll.clientWidth-20)/st.dur); layout(); tick(true); },60);
+  tick(true);
+}
+</script>
+</body>
+</html>

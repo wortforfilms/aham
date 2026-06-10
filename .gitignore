@@ -30,6 +30,8 @@ pnpm-debug.log*
 
 # Local app auth, sessions, subscriptions, and saved project records
 data/
+!src/mahavisphot/data/
+!src/mahavisphot/data/*.json
 
 # Heavy source media and rendered masters
 *.mp4

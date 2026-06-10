@@ -7,8 +7,9 @@ const { spawn } = require("node:child_process");
 
 const ROOT = path.resolve(__dirname, "..");
 const EDITOR_DIR = __dirname;
+const PUBLIC_DIR = path.join(ROOT, "public");
 const PORT = Number(process.env.PORT || 8177);
-const DATA_DIR = path.join(ROOT, "data");
+const DATA_DIR = path.resolve(process.env.MAHAVISPHOT_DATA_DIR || path.join(ROOT, "data"));
 const AUTH_FILE = path.join(DATA_DIR, "auth.json");
 const PROJECTS_DIR = path.join(DATA_DIR, "projects");
 const SESSION_COOKIE = "mahavisphot_session";
@@ -1114,6 +1115,20 @@ async function serveStatic(req, res) {
     let filePath;
     if (url.pathname === "/" || url.pathname === "/editor") {
       filePath = path.join(EDITOR_DIR, "index.html");
+    } else if (url.pathname === "/mahavisphot" || url.pathname === "/mahavisphot/") {
+      filePath = path.join(PUBLIC_DIR, "mahavisphot", "index.html");
+    } else if (url.pathname === "/mahavisphot/launch" || url.pathname === "/mahavisphot/launch/") {
+      filePath = path.join(PUBLIC_DIR, "mahavisphot", "launch.html");
+    } else if (url.pathname === "/mahavisphot/launch.html") {
+      filePath = path.join(PUBLIC_DIR, "mahavisphot", "launch.html");
+    } else if (url.pathname.startsWith("/mahavisphot/")) {
+      const requestedPath = decodeURIComponent(url.pathname.slice("/mahavisphot/".length));
+      const hasFileExtension = Boolean(path.extname(requestedPath));
+      filePath = hasFileExtension
+        ? safeJoin(path.join(PUBLIC_DIR, "mahavisphot"), requestedPath)
+        : path.join(PUBLIC_DIR, "mahavisphot", "index.html");
+    } else if (url.pathname.startsWith("/public/")) {
+      filePath = safeJoin(PUBLIC_DIR, decodeURIComponent(url.pathname.slice("/public/".length)));
     } else if (url.pathname.startsWith("/assets/")) {
       filePath = safeMediaAssetPath(decodeURIComponent(url.pathname.slice("/assets/".length)));
     } else {
@@ -1223,7 +1238,9 @@ function startServer(port = PORT, host = "127.0.0.1", healthToken = process.env.
     server.once("error", reject);
     server.listen(port, host, () => {
       server.off("error", reject);
-      console.log(`Mahavisphot editor: http://${host}:${port}`);
+      const address = server.address();
+      activePort = address && typeof address === "object" ? address.port : port;
+      console.log(`Mahavisphot editor: http://${host}:${activePort}`);
       resolve(server);
     });
   });

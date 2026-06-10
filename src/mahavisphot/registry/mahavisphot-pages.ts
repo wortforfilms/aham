@@ -1,0 +1,11508 @@
+import type { MahavisphotPage } from "../types/mahavisphot-types";
+
+export const MAHAVISPHOT_PAGES = [
+  {
+    "id": "editor.overview",
+    "moduleId": "editor",
+    "title": "Editor Overview",
+    "route": "/mahavisphot/editor/overview",
+    "description": "Editor: Overview, readiness, and navigation surface.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "command map",
+    "order": 1
+  },
+  {
+    "id": "editor.launch",
+    "moduleId": "editor",
+    "title": "Editor Launch",
+    "route": "/mahavisphot/editor/launch",
+    "description": "Editor: New, open, recovery, and project intent selection.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "project launch",
+    "order": 2
+  },
+  {
+    "id": "editor.ingest",
+    "moduleId": "editor",
+    "title": "Editor Ingest",
+    "route": "/mahavisphot/editor/ingest",
+    "description": "Editor: Media intake, source validation, and evidence collection.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "media intake",
+    "order": 3
+  },
+  {
+    "id": "editor.storyboard",
+    "moduleId": "editor",
+    "title": "Editor Storyboard",
+    "route": "/mahavisphot/editor/storyboard",
+    "description": "Editor: Boards, frame descriptions, captions, and shot order.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "story planning",
+    "order": 4
+  },
+  {
+    "id": "editor.timeline",
+    "moduleId": "editor",
+    "title": "Editor Timeline",
+    "route": "/mahavisphot/editor/timeline",
+    "description": "Editor: Time-based assembly, tracks, clips, markers, and edits.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "timeline",
+    "order": 5
+  },
+  {
+    "id": "editor.layers",
+    "moduleId": "editor",
+    "title": "Editor Layers",
+    "route": "/mahavisphot/editor/layers",
+    "description": "Editor: Layer routing, visibility, locking, and composition stack.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "layer control",
+    "order": 6
+  },
+  {
+    "id": "editor.inspector",
+    "moduleId": "editor",
+    "title": "Editor Inspector",
+    "route": "/mahavisphot/editor/inspector",
+    "description": "Editor: Selected item metadata, numeric controls, and status.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "inspection",
+    "order": 7
+  },
+  {
+    "id": "editor.node-graph",
+    "moduleId": "editor",
+    "title": "Editor Node Graph",
+    "route": "/mahavisphot/editor/node-graph",
+    "description": "Editor: Node pass planning, data flow, and render order.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "node workspace",
+    "order": 8
+  },
+  {
+    "id": "editor.automation",
+    "moduleId": "editor",
+    "title": "Editor Automation",
+    "route": "/mahavisphot/editor/automation",
+    "description": "Editor: Repeatable operations, macro intent, and guarded actions.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "automation",
+    "order": 9
+  },
+  {
+    "id": "editor.review",
+    "moduleId": "editor",
+    "title": "Editor Review",
+    "route": "/mahavisphot/editor/review",
+    "description": "Editor: Approval, compare, comments, and handoff checks.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "review",
+    "order": 10
+  },
+  {
+    "id": "editor.collaboration",
+    "moduleId": "editor",
+    "title": "Editor Collaboration",
+    "route": "/mahavisphot/editor/collaboration",
+    "description": "Editor: Shared context, roles, assignments, and notes.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "collaboration",
+    "order": 11
+  },
+  {
+    "id": "editor.settings",
+    "moduleId": "editor",
+    "title": "Editor Settings",
+    "route": "/mahavisphot/editor/settings",
+    "description": "Editor: Module configuration, safety defaults, and preferences.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "settings",
+    "order": 12
+  },
+  {
+    "id": "editor.health",
+    "moduleId": "editor",
+    "title": "Editor Health",
+    "route": "/mahavisphot/editor/health",
+    "description": "Editor: Capability health, environment state, and blocked evidence.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "runtime health",
+    "order": 13
+  },
+  {
+    "id": "editor.evidence",
+    "moduleId": "editor",
+    "title": "Editor Evidence",
+    "route": "/mahavisphot/editor/evidence",
+    "description": "Editor: Verification artifacts, logs, screenshots, and proof links.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "evidence",
+    "order": 14
+  },
+  {
+    "id": "editor.export",
+    "moduleId": "editor",
+    "title": "Editor Export",
+    "route": "/mahavisphot/editor/export",
+    "description": "Editor: Data, media, manifest, and delivery package preparation.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "delivery",
+    "order": 15
+  },
+  {
+    "id": "editor.audit",
+    "moduleId": "editor",
+    "title": "Editor Audit",
+    "route": "/mahavisphot/editor/audit",
+    "description": "Editor: Security, schema, access, and readiness review.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "audit",
+    "order": 16
+  },
+  {
+    "id": "compositor.overview",
+    "moduleId": "compositor",
+    "title": "Compositor Overview",
+    "route": "/mahavisphot/compositor/overview",
+    "description": "Compositor: Overview, readiness, and navigation surface.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "command map",
+    "order": 101
+  },
+  {
+    "id": "compositor.launch",
+    "moduleId": "compositor",
+    "title": "Compositor Launch",
+    "route": "/mahavisphot/compositor/launch",
+    "description": "Compositor: New, open, recovery, and project intent selection.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "project launch",
+    "order": 102
+  },
+  {
+    "id": "compositor.ingest",
+    "moduleId": "compositor",
+    "title": "Compositor Ingest",
+    "route": "/mahavisphot/compositor/ingest",
+    "description": "Compositor: Media intake, source validation, and evidence collection.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "media intake",
+    "order": 103
+  },
+  {
+    "id": "compositor.storyboard",
+    "moduleId": "compositor",
+    "title": "Compositor Storyboard",
+    "route": "/mahavisphot/compositor/storyboard",
+    "description": "Compositor: Boards, frame descriptions, captions, and shot order.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "story planning",
+    "order": 104
+  },
+  {
+    "id": "compositor.timeline",
+    "moduleId": "compositor",
+    "title": "Compositor Timeline",
+    "route": "/mahavisphot/compositor/timeline",
+    "description": "Compositor: Time-based assembly, tracks, clips, markers, and edits.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "timeline",
+    "order": 105
+  },
+  {
+    "id": "compositor.layers",
+    "moduleId": "compositor",
+    "title": "Compositor Layers",
+    "route": "/mahavisphot/compositor/layers",
+    "description": "Compositor: Layer routing, visibility, locking, and composition stack.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "layer control",
+    "order": 106
+  },
+  {
+    "id": "compositor.inspector",
+    "moduleId": "compositor",
+    "title": "Compositor Inspector",
+    "route": "/mahavisphot/compositor/inspector",
+    "description": "Compositor: Selected item metadata, numeric controls, and status.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "inspection",
+    "order": 107
+  },
+  {
+    "id": "compositor.node-graph",
+    "moduleId": "compositor",
+    "title": "Compositor Node Graph",
+    "route": "/mahavisphot/compositor/node-graph",
+    "description": "Compositor: Node pass planning, data flow, and render order.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "node workspace",
+    "order": 108
+  },
+  {
+    "id": "compositor.automation",
+    "moduleId": "compositor",
+    "title": "Compositor Automation",
+    "route": "/mahavisphot/compositor/automation",
+    "description": "Compositor: Repeatable operations, macro intent, and guarded actions.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "automation",
+    "order": 109
+  },
+  {
+    "id": "compositor.review",
+    "moduleId": "compositor",
+    "title": "Compositor Review",
+    "route": "/mahavisphot/compositor/review",
+    "description": "Compositor: Approval, compare, comments, and handoff checks.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "review",
+    "order": 110
+  },
+  {
+    "id": "compositor.collaboration",
+    "moduleId": "compositor",
+    "title": "Compositor Collaboration",
+    "route": "/mahavisphot/compositor/collaboration",
+    "description": "Compositor: Shared context, roles, assignments, and notes.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "collaboration",
+    "order": 111
+  },
+  {
+    "id": "compositor.settings",
+    "moduleId": "compositor",
+    "title": "Compositor Settings",
+    "route": "/mahavisphot/compositor/settings",
+    "description": "Compositor: Module configuration, safety defaults, and preferences.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "settings",
+    "order": 112
+  },
+  {
+    "id": "compositor.health",
+    "moduleId": "compositor",
+    "title": "Compositor Health",
+    "route": "/mahavisphot/compositor/health",
+    "description": "Compositor: Capability health, environment state, and blocked evidence.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "runtime health",
+    "order": 113
+  },
+  {
+    "id": "compositor.evidence",
+    "moduleId": "compositor",
+    "title": "Compositor Evidence",
+    "route": "/mahavisphot/compositor/evidence",
+    "description": "Compositor: Verification artifacts, logs, screenshots, and proof links.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "evidence",
+    "order": 114
+  },
+  {
+    "id": "compositor.export",
+    "moduleId": "compositor",
+    "title": "Compositor Export",
+    "route": "/mahavisphot/compositor/export",
+    "description": "Compositor: Data, media, manifest, and delivery package preparation.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "delivery",
+    "order": 115
+  },
+  {
+    "id": "compositor.audit",
+    "moduleId": "compositor",
+    "title": "Compositor Audit",
+    "route": "/mahavisphot/compositor/audit",
+    "description": "Compositor: Security, schema, access, and readiness review.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "audit",
+    "order": 116
+  },
+  {
+    "id": "vfx-studio.overview",
+    "moduleId": "vfx-studio",
+    "title": "VFX Studio Overview",
+    "route": "/mahavisphot/vfx-studio/overview",
+    "description": "VFX Studio: Overview, readiness, and navigation surface.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "command map",
+    "order": 201
+  },
+  {
+    "id": "vfx-studio.launch",
+    "moduleId": "vfx-studio",
+    "title": "VFX Studio Launch",
+    "route": "/mahavisphot/vfx-studio/launch",
+    "description": "VFX Studio: New, open, recovery, and project intent selection.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "project launch",
+    "order": 202
+  },
+  {
+    "id": "vfx-studio.ingest",
+    "moduleId": "vfx-studio",
+    "title": "VFX Studio Ingest",
+    "route": "/mahavisphot/vfx-studio/ingest",
+    "description": "VFX Studio: Media intake, source validation, and evidence collection.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "media intake",
+    "order": 203
+  },
+  {
+    "id": "vfx-studio.storyboard",
+    "moduleId": "vfx-studio",
+    "title": "VFX Studio Storyboard",
+    "route": "/mahavisphot/vfx-studio/storyboard",
+    "description": "VFX Studio: Boards, frame descriptions, captions, and shot order.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "story planning",
+    "order": 204
+  },
+  {
+    "id": "vfx-studio.timeline",
+    "moduleId": "vfx-studio",
+    "title": "VFX Studio Timeline",
+    "route": "/mahavisphot/vfx-studio/timeline",
+    "description": "VFX Studio: Time-based assembly, tracks, clips, markers, and edits.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "timeline",
+    "order": 205
+  },
+  {
+    "id": "vfx-studio.layers",
+    "moduleId": "vfx-studio",
+    "title": "VFX Studio Layers",
+    "route": "/mahavisphot/vfx-studio/layers",
+    "description": "VFX Studio: Layer routing, visibility, locking, and composition stack.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "layer control",
+    "order": 206
+  },
+  {
+    "id": "vfx-studio.inspector",
+    "moduleId": "vfx-studio",
+    "title": "VFX Studio Inspector",
+    "route": "/mahavisphot/vfx-studio/inspector",
+    "description": "VFX Studio: Selected item metadata, numeric controls, and status.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "inspection",
+    "order": 207
+  },
+  {
+    "id": "vfx-studio.node-graph",
+    "moduleId": "vfx-studio",
+    "title": "VFX Studio Node Graph",
+    "route": "/mahavisphot/vfx-studio/node-graph",
+    "description": "VFX Studio: Node pass planning, data flow, and render order.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "node workspace",
+    "order": 208
+  },
+  {
+    "id": "vfx-studio.automation",
+    "moduleId": "vfx-studio",
+    "title": "VFX Studio Automation",
+    "route": "/mahavisphot/vfx-studio/automation",
+    "description": "VFX Studio: Repeatable operations, macro intent, and guarded actions.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "automation",
+    "order": 209
+  },
+  {
+    "id": "vfx-studio.review",
+    "moduleId": "vfx-studio",
+    "title": "VFX Studio Review",
+    "route": "/mahavisphot/vfx-studio/review",
+    "description": "VFX Studio: Approval, compare, comments, and handoff checks.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "review",
+    "order": 210
+  },
+  {
+    "id": "vfx-studio.collaboration",
+    "moduleId": "vfx-studio",
+    "title": "VFX Studio Collaboration",
+    "route": "/mahavisphot/vfx-studio/collaboration",
+    "description": "VFX Studio: Shared context, roles, assignments, and notes.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "collaboration",
+    "order": 211
+  },
+  {
+    "id": "vfx-studio.settings",
+    "moduleId": "vfx-studio",
+    "title": "VFX Studio Settings",
+    "route": "/mahavisphot/vfx-studio/settings",
+    "description": "VFX Studio: Module configuration, safety defaults, and preferences.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "settings",
+    "order": 212
+  },
+  {
+    "id": "vfx-studio.health",
+    "moduleId": "vfx-studio",
+    "title": "VFX Studio Health",
+    "route": "/mahavisphot/vfx-studio/health",
+    "description": "VFX Studio: Capability health, environment state, and blocked evidence.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "runtime health",
+    "order": 213
+  },
+  {
+    "id": "vfx-studio.evidence",
+    "moduleId": "vfx-studio",
+    "title": "VFX Studio Evidence",
+    "route": "/mahavisphot/vfx-studio/evidence",
+    "description": "VFX Studio: Verification artifacts, logs, screenshots, and proof links.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "evidence",
+    "order": 214
+  },
+  {
+    "id": "vfx-studio.export",
+    "moduleId": "vfx-studio",
+    "title": "VFX Studio Export",
+    "route": "/mahavisphot/vfx-studio/export",
+    "description": "VFX Studio: Data, media, manifest, and delivery package preparation.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "delivery",
+    "order": 215
+  },
+  {
+    "id": "vfx-studio.audit",
+    "moduleId": "vfx-studio",
+    "title": "VFX Studio Audit",
+    "route": "/mahavisphot/vfx-studio/audit",
+    "description": "VFX Studio: Security, schema, access, and readiness review.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "audit",
+    "order": 216
+  },
+  {
+    "id": "particle-studio.overview",
+    "moduleId": "particle-studio",
+    "title": "Particle Studio Overview",
+    "route": "/mahavisphot/particle-studio/overview",
+    "description": "Particle Studio: Overview, readiness, and navigation surface.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "command map",
+    "order": 301
+  },
+  {
+    "id": "particle-studio.launch",
+    "moduleId": "particle-studio",
+    "title": "Particle Studio Launch",
+    "route": "/mahavisphot/particle-studio/launch",
+    "description": "Particle Studio: New, open, recovery, and project intent selection.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "project launch",
+    "order": 302
+  },
+  {
+    "id": "particle-studio.ingest",
+    "moduleId": "particle-studio",
+    "title": "Particle Studio Ingest",
+    "route": "/mahavisphot/particle-studio/ingest",
+    "description": "Particle Studio: Media intake, source validation, and evidence collection.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "media intake",
+    "order": 303
+  },
+  {
+    "id": "particle-studio.storyboard",
+    "moduleId": "particle-studio",
+    "title": "Particle Studio Storyboard",
+    "route": "/mahavisphot/particle-studio/storyboard",
+    "description": "Particle Studio: Boards, frame descriptions, captions, and shot order.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "story planning",
+    "order": 304
+  },
+  {
+    "id": "particle-studio.timeline",
+    "moduleId": "particle-studio",
+    "title": "Particle Studio Timeline",
+    "route": "/mahavisphot/particle-studio/timeline",
+    "description": "Particle Studio: Time-based assembly, tracks, clips, markers, and edits.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "timeline",
+    "order": 305
+  },
+  {
+    "id": "particle-studio.layers",
+    "moduleId": "particle-studio",
+    "title": "Particle Studio Layers",
+    "route": "/mahavisphot/particle-studio/layers",
+    "description": "Particle Studio: Layer routing, visibility, locking, and composition stack.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "layer control",
+    "order": 306
+  },
+  {
+    "id": "particle-studio.inspector",
+    "moduleId": "particle-studio",
+    "title": "Particle Studio Inspector",
+    "route": "/mahavisphot/particle-studio/inspector",
+    "description": "Particle Studio: Selected item metadata, numeric controls, and status.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "inspection",
+    "order": 307
+  },
+  {
+    "id": "particle-studio.node-graph",
+    "moduleId": "particle-studio",
+    "title": "Particle Studio Node Graph",
+    "route": "/mahavisphot/particle-studio/node-graph",
+    "description": "Particle Studio: Node pass planning, data flow, and render order.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "node workspace",
+    "order": 308
+  },
+  {
+    "id": "particle-studio.automation",
+    "moduleId": "particle-studio",
+    "title": "Particle Studio Automation",
+    "route": "/mahavisphot/particle-studio/automation",
+    "description": "Particle Studio: Repeatable operations, macro intent, and guarded actions.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "automation",
+    "order": 309
+  },
+  {
+    "id": "particle-studio.review",
+    "moduleId": "particle-studio",
+    "title": "Particle Studio Review",
+    "route": "/mahavisphot/particle-studio/review",
+    "description": "Particle Studio: Approval, compare, comments, and handoff checks.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "review",
+    "order": 310
+  },
+  {
+    "id": "particle-studio.collaboration",
+    "moduleId": "particle-studio",
+    "title": "Particle Studio Collaboration",
+    "route": "/mahavisphot/particle-studio/collaboration",
+    "description": "Particle Studio: Shared context, roles, assignments, and notes.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "collaboration",
+    "order": 311
+  },
+  {
+    "id": "particle-studio.settings",
+    "moduleId": "particle-studio",
+    "title": "Particle Studio Settings",
+    "route": "/mahavisphot/particle-studio/settings",
+    "description": "Particle Studio: Module configuration, safety defaults, and preferences.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "settings",
+    "order": 312
+  },
+  {
+    "id": "particle-studio.health",
+    "moduleId": "particle-studio",
+    "title": "Particle Studio Health",
+    "route": "/mahavisphot/particle-studio/health",
+    "description": "Particle Studio: Capability health, environment state, and blocked evidence.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "runtime health",
+    "order": 313
+  },
+  {
+    "id": "particle-studio.evidence",
+    "moduleId": "particle-studio",
+    "title": "Particle Studio Evidence",
+    "route": "/mahavisphot/particle-studio/evidence",
+    "description": "Particle Studio: Verification artifacts, logs, screenshots, and proof links.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "evidence",
+    "order": 314
+  },
+  {
+    "id": "particle-studio.export",
+    "moduleId": "particle-studio",
+    "title": "Particle Studio Export",
+    "route": "/mahavisphot/particle-studio/export",
+    "description": "Particle Studio: Data, media, manifest, and delivery package preparation.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "delivery",
+    "order": 315
+  },
+  {
+    "id": "particle-studio.audit",
+    "moduleId": "particle-studio",
+    "title": "Particle Studio Audit",
+    "route": "/mahavisphot/particle-studio/audit",
+    "description": "Particle Studio: Security, schema, access, and readiness review.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "audit",
+    "order": 316
+  },
+  {
+    "id": "digital-makeup-studio.overview",
+    "moduleId": "digital-makeup-studio",
+    "title": "Digital Makeup Studio Overview",
+    "route": "/mahavisphot/digital-makeup-studio/overview",
+    "description": "Digital Makeup Studio: Overview, readiness, and navigation surface.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "command map",
+    "order": 401
+  },
+  {
+    "id": "digital-makeup-studio.launch",
+    "moduleId": "digital-makeup-studio",
+    "title": "Digital Makeup Studio Launch",
+    "route": "/mahavisphot/digital-makeup-studio/launch",
+    "description": "Digital Makeup Studio: New, open, recovery, and project intent selection.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "project launch",
+    "order": 402
+  },
+  {
+    "id": "digital-makeup-studio.ingest",
+    "moduleId": "digital-makeup-studio",
+    "title": "Digital Makeup Studio Ingest",
+    "route": "/mahavisphot/digital-makeup-studio/ingest",
+    "description": "Digital Makeup Studio: Media intake, source validation, and evidence collection.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "media intake",
+    "order": 403
+  },
+  {
+    "id": "digital-makeup-studio.storyboard",
+    "moduleId": "digital-makeup-studio",
+    "title": "Digital Makeup Studio Storyboard",
+    "route": "/mahavisphot/digital-makeup-studio/storyboard",
+    "description": "Digital Makeup Studio: Boards, frame descriptions, captions, and shot order.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "story planning",
+    "order": 404
+  },
+  {
+    "id": "digital-makeup-studio.timeline",
+    "moduleId": "digital-makeup-studio",
+    "title": "Digital Makeup Studio Timeline",
+    "route": "/mahavisphot/digital-makeup-studio/timeline",
+    "description": "Digital Makeup Studio: Time-based assembly, tracks, clips, markers, and edits.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "timeline",
+    "order": 405
+  },
+  {
+    "id": "digital-makeup-studio.layers",
+    "moduleId": "digital-makeup-studio",
+    "title": "Digital Makeup Studio Layers",
+    "route": "/mahavisphot/digital-makeup-studio/layers",
+    "description": "Digital Makeup Studio: Layer routing, visibility, locking, and composition stack.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "layer control",
+    "order": 406
+  },
+  {
+    "id": "digital-makeup-studio.inspector",
+    "moduleId": "digital-makeup-studio",
+    "title": "Digital Makeup Studio Inspector",
+    "route": "/mahavisphot/digital-makeup-studio/inspector",
+    "description": "Digital Makeup Studio: Selected item metadata, numeric controls, and status.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "inspection",
+    "order": 407
+  },
+  {
+    "id": "digital-makeup-studio.node-graph",
+    "moduleId": "digital-makeup-studio",
+    "title": "Digital Makeup Studio Node Graph",
+    "route": "/mahavisphot/digital-makeup-studio/node-graph",
+    "description": "Digital Makeup Studio: Node pass planning, data flow, and render order.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "node workspace",
+    "order": 408
+  },
+  {
+    "id": "digital-makeup-studio.automation",
+    "moduleId": "digital-makeup-studio",
+    "title": "Digital Makeup Studio Automation",
+    "route": "/mahavisphot/digital-makeup-studio/automation",
+    "description": "Digital Makeup Studio: Repeatable operations, macro intent, and guarded actions.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "automation",
+    "order": 409
+  },
+  {
+    "id": "digital-makeup-studio.review",
+    "moduleId": "digital-makeup-studio",
+    "title": "Digital Makeup Studio Review",
+    "route": "/mahavisphot/digital-makeup-studio/review",
+    "description": "Digital Makeup Studio: Approval, compare, comments, and handoff checks.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "review",
+    "order": 410
+  },
+  {
+    "id": "digital-makeup-studio.collaboration",
+    "moduleId": "digital-makeup-studio",
+    "title": "Digital Makeup Studio Collaboration",
+    "route": "/mahavisphot/digital-makeup-studio/collaboration",
+    "description": "Digital Makeup Studio: Shared context, roles, assignments, and notes.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "collaboration",
+    "order": 411
+  },
+  {
+    "id": "digital-makeup-studio.settings",
+    "moduleId": "digital-makeup-studio",
+    "title": "Digital Makeup Studio Settings",
+    "route": "/mahavisphot/digital-makeup-studio/settings",
+    "description": "Digital Makeup Studio: Module configuration, safety defaults, and preferences.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "settings",
+    "order": 412
+  },
+  {
+    "id": "digital-makeup-studio.health",
+    "moduleId": "digital-makeup-studio",
+    "title": "Digital Makeup Studio Health",
+    "route": "/mahavisphot/digital-makeup-studio/health",
+    "description": "Digital Makeup Studio: Capability health, environment state, and blocked evidence.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "runtime health",
+    "order": 413
+  },
+  {
+    "id": "digital-makeup-studio.evidence",
+    "moduleId": "digital-makeup-studio",
+    "title": "Digital Makeup Studio Evidence",
+    "route": "/mahavisphot/digital-makeup-studio/evidence",
+    "description": "Digital Makeup Studio: Verification artifacts, logs, screenshots, and proof links.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "evidence",
+    "order": 414
+  },
+  {
+    "id": "digital-makeup-studio.export",
+    "moduleId": "digital-makeup-studio",
+    "title": "Digital Makeup Studio Export",
+    "route": "/mahavisphot/digital-makeup-studio/export",
+    "description": "Digital Makeup Studio: Data, media, manifest, and delivery package preparation.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "delivery",
+    "order": 415
+  },
+  {
+    "id": "digital-makeup-studio.audit",
+    "moduleId": "digital-makeup-studio",
+    "title": "Digital Makeup Studio Audit",
+    "route": "/mahavisphot/digital-makeup-studio/audit",
+    "description": "Digital Makeup Studio: Security, schema, access, and readiness review.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "audit",
+    "order": 416
+  },
+  {
+    "id": "costume-studio.overview",
+    "moduleId": "costume-studio",
+    "title": "Costume Studio Overview",
+    "route": "/mahavisphot/costume-studio/overview",
+    "description": "Costume Studio: Overview, readiness, and navigation surface.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "command map",
+    "order": 501
+  },
+  {
+    "id": "costume-studio.launch",
+    "moduleId": "costume-studio",
+    "title": "Costume Studio Launch",
+    "route": "/mahavisphot/costume-studio/launch",
+    "description": "Costume Studio: New, open, recovery, and project intent selection.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "project launch",
+    "order": 502
+  },
+  {
+    "id": "costume-studio.ingest",
+    "moduleId": "costume-studio",
+    "title": "Costume Studio Ingest",
+    "route": "/mahavisphot/costume-studio/ingest",
+    "description": "Costume Studio: Media intake, source validation, and evidence collection.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "media intake",
+    "order": 503
+  },
+  {
+    "id": "costume-studio.storyboard",
+    "moduleId": "costume-studio",
+    "title": "Costume Studio Storyboard",
+    "route": "/mahavisphot/costume-studio/storyboard",
+    "description": "Costume Studio: Boards, frame descriptions, captions, and shot order.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "story planning",
+    "order": 504
+  },
+  {
+    "id": "costume-studio.timeline",
+    "moduleId": "costume-studio",
+    "title": "Costume Studio Timeline",
+    "route": "/mahavisphot/costume-studio/timeline",
+    "description": "Costume Studio: Time-based assembly, tracks, clips, markers, and edits.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "timeline",
+    "order": 505
+  },
+  {
+    "id": "costume-studio.layers",
+    "moduleId": "costume-studio",
+    "title": "Costume Studio Layers",
+    "route": "/mahavisphot/costume-studio/layers",
+    "description": "Costume Studio: Layer routing, visibility, locking, and composition stack.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "layer control",
+    "order": 506
+  },
+  {
+    "id": "costume-studio.inspector",
+    "moduleId": "costume-studio",
+    "title": "Costume Studio Inspector",
+    "route": "/mahavisphot/costume-studio/inspector",
+    "description": "Costume Studio: Selected item metadata, numeric controls, and status.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "inspection",
+    "order": 507
+  },
+  {
+    "id": "costume-studio.node-graph",
+    "moduleId": "costume-studio",
+    "title": "Costume Studio Node Graph",
+    "route": "/mahavisphot/costume-studio/node-graph",
+    "description": "Costume Studio: Node pass planning, data flow, and render order.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "node workspace",
+    "order": 508
+  },
+  {
+    "id": "costume-studio.automation",
+    "moduleId": "costume-studio",
+    "title": "Costume Studio Automation",
+    "route": "/mahavisphot/costume-studio/automation",
+    "description": "Costume Studio: Repeatable operations, macro intent, and guarded actions.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "automation",
+    "order": 509
+  },
+  {
+    "id": "costume-studio.review",
+    "moduleId": "costume-studio",
+    "title": "Costume Studio Review",
+    "route": "/mahavisphot/costume-studio/review",
+    "description": "Costume Studio: Approval, compare, comments, and handoff checks.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "review",
+    "order": 510
+  },
+  {
+    "id": "costume-studio.collaboration",
+    "moduleId": "costume-studio",
+    "title": "Costume Studio Collaboration",
+    "route": "/mahavisphot/costume-studio/collaboration",
+    "description": "Costume Studio: Shared context, roles, assignments, and notes.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "collaboration",
+    "order": 511
+  },
+  {
+    "id": "costume-studio.settings",
+    "moduleId": "costume-studio",
+    "title": "Costume Studio Settings",
+    "route": "/mahavisphot/costume-studio/settings",
+    "description": "Costume Studio: Module configuration, safety defaults, and preferences.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "settings",
+    "order": 512
+  },
+  {
+    "id": "costume-studio.health",
+    "moduleId": "costume-studio",
+    "title": "Costume Studio Health",
+    "route": "/mahavisphot/costume-studio/health",
+    "description": "Costume Studio: Capability health, environment state, and blocked evidence.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "runtime health",
+    "order": 513
+  },
+  {
+    "id": "costume-studio.evidence",
+    "moduleId": "costume-studio",
+    "title": "Costume Studio Evidence",
+    "route": "/mahavisphot/costume-studio/evidence",
+    "description": "Costume Studio: Verification artifacts, logs, screenshots, and proof links.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "evidence",
+    "order": 514
+  },
+  {
+    "id": "costume-studio.export",
+    "moduleId": "costume-studio",
+    "title": "Costume Studio Export",
+    "route": "/mahavisphot/costume-studio/export",
+    "description": "Costume Studio: Data, media, manifest, and delivery package preparation.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "delivery",
+    "order": 515
+  },
+  {
+    "id": "costume-studio.audit",
+    "moduleId": "costume-studio",
+    "title": "Costume Studio Audit",
+    "route": "/mahavisphot/costume-studio/audit",
+    "description": "Costume Studio: Security, schema, access, and readiness review.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "audit",
+    "order": 516
+  },
+  {
+    "id": "props-studio.overview",
+    "moduleId": "props-studio",
+    "title": "Props Studio Overview",
+    "route": "/mahavisphot/props-studio/overview",
+    "description": "Props Studio: Overview, readiness, and navigation surface.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "command map",
+    "order": 601
+  },
+  {
+    "id": "props-studio.launch",
+    "moduleId": "props-studio",
+    "title": "Props Studio Launch",
+    "route": "/mahavisphot/props-studio/launch",
+    "description": "Props Studio: New, open, recovery, and project intent selection.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "project launch",
+    "order": 602
+  },
+  {
+    "id": "props-studio.ingest",
+    "moduleId": "props-studio",
+    "title": "Props Studio Ingest",
+    "route": "/mahavisphot/props-studio/ingest",
+    "description": "Props Studio: Media intake, source validation, and evidence collection.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "media intake",
+    "order": 603
+  },
+  {
+    "id": "props-studio.storyboard",
+    "moduleId": "props-studio",
+    "title": "Props Studio Storyboard",
+    "route": "/mahavisphot/props-studio/storyboard",
+    "description": "Props Studio: Boards, frame descriptions, captions, and shot order.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "story planning",
+    "order": 604
+  },
+  {
+    "id": "props-studio.timeline",
+    "moduleId": "props-studio",
+    "title": "Props Studio Timeline",
+    "route": "/mahavisphot/props-studio/timeline",
+    "description": "Props Studio: Time-based assembly, tracks, clips, markers, and edits.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "timeline",
+    "order": 605
+  },
+  {
+    "id": "props-studio.layers",
+    "moduleId": "props-studio",
+    "title": "Props Studio Layers",
+    "route": "/mahavisphot/props-studio/layers",
+    "description": "Props Studio: Layer routing, visibility, locking, and composition stack.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "layer control",
+    "order": 606
+  },
+  {
+    "id": "props-studio.inspector",
+    "moduleId": "props-studio",
+    "title": "Props Studio Inspector",
+    "route": "/mahavisphot/props-studio/inspector",
+    "description": "Props Studio: Selected item metadata, numeric controls, and status.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "inspection",
+    "order": 607
+  },
+  {
+    "id": "props-studio.node-graph",
+    "moduleId": "props-studio",
+    "title": "Props Studio Node Graph",
+    "route": "/mahavisphot/props-studio/node-graph",
+    "description": "Props Studio: Node pass planning, data flow, and render order.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "node workspace",
+    "order": 608
+  },
+  {
+    "id": "props-studio.automation",
+    "moduleId": "props-studio",
+    "title": "Props Studio Automation",
+    "route": "/mahavisphot/props-studio/automation",
+    "description": "Props Studio: Repeatable operations, macro intent, and guarded actions.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "automation",
+    "order": 609
+  },
+  {
+    "id": "props-studio.review",
+    "moduleId": "props-studio",
+    "title": "Props Studio Review",
+    "route": "/mahavisphot/props-studio/review",
+    "description": "Props Studio: Approval, compare, comments, and handoff checks.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "review",
+    "order": 610
+  },
+  {
+    "id": "props-studio.collaboration",
+    "moduleId": "props-studio",
+    "title": "Props Studio Collaboration",
+    "route": "/mahavisphot/props-studio/collaboration",
+    "description": "Props Studio: Shared context, roles, assignments, and notes.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "collaboration",
+    "order": 611
+  },
+  {
+    "id": "props-studio.settings",
+    "moduleId": "props-studio",
+    "title": "Props Studio Settings",
+    "route": "/mahavisphot/props-studio/settings",
+    "description": "Props Studio: Module configuration, safety defaults, and preferences.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "settings",
+    "order": 612
+  },
+  {
+    "id": "props-studio.health",
+    "moduleId": "props-studio",
+    "title": "Props Studio Health",
+    "route": "/mahavisphot/props-studio/health",
+    "description": "Props Studio: Capability health, environment state, and blocked evidence.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "runtime health",
+    "order": 613
+  },
+  {
+    "id": "props-studio.evidence",
+    "moduleId": "props-studio",
+    "title": "Props Studio Evidence",
+    "route": "/mahavisphot/props-studio/evidence",
+    "description": "Props Studio: Verification artifacts, logs, screenshots, and proof links.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "evidence",
+    "order": 614
+  },
+  {
+    "id": "props-studio.export",
+    "moduleId": "props-studio",
+    "title": "Props Studio Export",
+    "route": "/mahavisphot/props-studio/export",
+    "description": "Props Studio: Data, media, manifest, and delivery package preparation.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "delivery",
+    "order": 615
+  },
+  {
+    "id": "props-studio.audit",
+    "moduleId": "props-studio",
+    "title": "Props Studio Audit",
+    "route": "/mahavisphot/props-studio/audit",
+    "description": "Props Studio: Security, schema, access, and readiness review.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "audit",
+    "order": 616
+  },
+  {
+    "id": "toon-designer-studio.overview",
+    "moduleId": "toon-designer-studio",
+    "title": "Toon Designer Studio Overview",
+    "route": "/mahavisphot/toon-designer-studio/overview",
+    "description": "Toon Designer Studio: Overview, readiness, and navigation surface.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "command map",
+    "order": 701
+  },
+  {
+    "id": "toon-designer-studio.launch",
+    "moduleId": "toon-designer-studio",
+    "title": "Toon Designer Studio Launch",
+    "route": "/mahavisphot/toon-designer-studio/launch",
+    "description": "Toon Designer Studio: New, open, recovery, and project intent selection.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "project launch",
+    "order": 702
+  },
+  {
+    "id": "toon-designer-studio.ingest",
+    "moduleId": "toon-designer-studio",
+    "title": "Toon Designer Studio Ingest",
+    "route": "/mahavisphot/toon-designer-studio/ingest",
+    "description": "Toon Designer Studio: Media intake, source validation, and evidence collection.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "media intake",
+    "order": 703
+  },
+  {
+    "id": "toon-designer-studio.storyboard",
+    "moduleId": "toon-designer-studio",
+    "title": "Toon Designer Studio Storyboard",
+    "route": "/mahavisphot/toon-designer-studio/storyboard",
+    "description": "Toon Designer Studio: Boards, frame descriptions, captions, and shot order.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "story planning",
+    "order": 704
+  },
+  {
+    "id": "toon-designer-studio.timeline",
+    "moduleId": "toon-designer-studio",
+    "title": "Toon Designer Studio Timeline",
+    "route": "/mahavisphot/toon-designer-studio/timeline",
+    "description": "Toon Designer Studio: Time-based assembly, tracks, clips, markers, and edits.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "timeline",
+    "order": 705
+  },
+  {
+    "id": "toon-designer-studio.layers",
+    "moduleId": "toon-designer-studio",
+    "title": "Toon Designer Studio Layers",
+    "route": "/mahavisphot/toon-designer-studio/layers",
+    "description": "Toon Designer Studio: Layer routing, visibility, locking, and composition stack.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "layer control",
+    "order": 706
+  },
+  {
+    "id": "toon-designer-studio.inspector",
+    "moduleId": "toon-designer-studio",
+    "title": "Toon Designer Studio Inspector",
+    "route": "/mahavisphot/toon-designer-studio/inspector",
+    "description": "Toon Designer Studio: Selected item metadata, numeric controls, and status.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "inspection",
+    "order": 707
+  },
+  {
+    "id": "toon-designer-studio.node-graph",
+    "moduleId": "toon-designer-studio",
+    "title": "Toon Designer Studio Node Graph",
+    "route": "/mahavisphot/toon-designer-studio/node-graph",
+    "description": "Toon Designer Studio: Node pass planning, data flow, and render order.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "node workspace",
+    "order": 708
+  },
+  {
+    "id": "toon-designer-studio.automation",
+    "moduleId": "toon-designer-studio",
+    "title": "Toon Designer Studio Automation",
+    "route": "/mahavisphot/toon-designer-studio/automation",
+    "description": "Toon Designer Studio: Repeatable operations, macro intent, and guarded actions.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "automation",
+    "order": 709
+  },
+  {
+    "id": "toon-designer-studio.review",
+    "moduleId": "toon-designer-studio",
+    "title": "Toon Designer Studio Review",
+    "route": "/mahavisphot/toon-designer-studio/review",
+    "description": "Toon Designer Studio: Approval, compare, comments, and handoff checks.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "review",
+    "order": 710
+  },
+  {
+    "id": "toon-designer-studio.collaboration",
+    "moduleId": "toon-designer-studio",
+    "title": "Toon Designer Studio Collaboration",
+    "route": "/mahavisphot/toon-designer-studio/collaboration",
+    "description": "Toon Designer Studio: Shared context, roles, assignments, and notes.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "collaboration",
+    "order": 711
+  },
+  {
+    "id": "toon-designer-studio.settings",
+    "moduleId": "toon-designer-studio",
+    "title": "Toon Designer Studio Settings",
+    "route": "/mahavisphot/toon-designer-studio/settings",
+    "description": "Toon Designer Studio: Module configuration, safety defaults, and preferences.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "settings",
+    "order": 712
+  },
+  {
+    "id": "toon-designer-studio.health",
+    "moduleId": "toon-designer-studio",
+    "title": "Toon Designer Studio Health",
+    "route": "/mahavisphot/toon-designer-studio/health",
+    "description": "Toon Designer Studio: Capability health, environment state, and blocked evidence.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "runtime health",
+    "order": 713
+  },
+  {
+    "id": "toon-designer-studio.evidence",
+    "moduleId": "toon-designer-studio",
+    "title": "Toon Designer Studio Evidence",
+    "route": "/mahavisphot/toon-designer-studio/evidence",
+    "description": "Toon Designer Studio: Verification artifacts, logs, screenshots, and proof links.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "evidence",
+    "order": 714
+  },
+  {
+    "id": "toon-designer-studio.export",
+    "moduleId": "toon-designer-studio",
+    "title": "Toon Designer Studio Export",
+    "route": "/mahavisphot/toon-designer-studio/export",
+    "description": "Toon Designer Studio: Data, media, manifest, and delivery package preparation.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "delivery",
+    "order": 715
+  },
+  {
+    "id": "toon-designer-studio.audit",
+    "moduleId": "toon-designer-studio",
+    "title": "Toon Designer Studio Audit",
+    "route": "/mahavisphot/toon-designer-studio/audit",
+    "description": "Toon Designer Studio: Security, schema, access, and readiness review.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "audit",
+    "order": 716
+  },
+  {
+    "id": "cel-animation-studio.overview",
+    "moduleId": "cel-animation-studio",
+    "title": "Cel Animation Studio Overview",
+    "route": "/mahavisphot/cel-animation-studio/overview",
+    "description": "Cel Animation Studio: Overview, readiness, and navigation surface.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "command map",
+    "order": 801
+  },
+  {
+    "id": "cel-animation-studio.launch",
+    "moduleId": "cel-animation-studio",
+    "title": "Cel Animation Studio Launch",
+    "route": "/mahavisphot/cel-animation-studio/launch",
+    "description": "Cel Animation Studio: New, open, recovery, and project intent selection.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "project launch",
+    "order": 802
+  },
+  {
+    "id": "cel-animation-studio.ingest",
+    "moduleId": "cel-animation-studio",
+    "title": "Cel Animation Studio Ingest",
+    "route": "/mahavisphot/cel-animation-studio/ingest",
+    "description": "Cel Animation Studio: Media intake, source validation, and evidence collection.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "media intake",
+    "order": 803
+  },
+  {
+    "id": "cel-animation-studio.storyboard",
+    "moduleId": "cel-animation-studio",
+    "title": "Cel Animation Studio Storyboard",
+    "route": "/mahavisphot/cel-animation-studio/storyboard",
+    "description": "Cel Animation Studio: Boards, frame descriptions, captions, and shot order.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "story planning",
+    "order": 804
+  },
+  {
+    "id": "cel-animation-studio.timeline",
+    "moduleId": "cel-animation-studio",
+    "title": "Cel Animation Studio Timeline",
+    "route": "/mahavisphot/cel-animation-studio/timeline",
+    "description": "Cel Animation Studio: Time-based assembly, tracks, clips, markers, and edits.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "timeline",
+    "order": 805
+  },
+  {
+    "id": "cel-animation-studio.layers",
+    "moduleId": "cel-animation-studio",
+    "title": "Cel Animation Studio Layers",
+    "route": "/mahavisphot/cel-animation-studio/layers",
+    "description": "Cel Animation Studio: Layer routing, visibility, locking, and composition stack.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "layer control",
+    "order": 806
+  },
+  {
+    "id": "cel-animation-studio.inspector",
+    "moduleId": "cel-animation-studio",
+    "title": "Cel Animation Studio Inspector",
+    "route": "/mahavisphot/cel-animation-studio/inspector",
+    "description": "Cel Animation Studio: Selected item metadata, numeric controls, and status.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "inspection",
+    "order": 807
+  },
+  {
+    "id": "cel-animation-studio.node-graph",
+    "moduleId": "cel-animation-studio",
+    "title": "Cel Animation Studio Node Graph",
+    "route": "/mahavisphot/cel-animation-studio/node-graph",
+    "description": "Cel Animation Studio: Node pass planning, data flow, and render order.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "node workspace",
+    "order": 808
+  },
+  {
+    "id": "cel-animation-studio.automation",
+    "moduleId": "cel-animation-studio",
+    "title": "Cel Animation Studio Automation",
+    "route": "/mahavisphot/cel-animation-studio/automation",
+    "description": "Cel Animation Studio: Repeatable operations, macro intent, and guarded actions.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "automation",
+    "order": 809
+  },
+  {
+    "id": "cel-animation-studio.review",
+    "moduleId": "cel-animation-studio",
+    "title": "Cel Animation Studio Review",
+    "route": "/mahavisphot/cel-animation-studio/review",
+    "description": "Cel Animation Studio: Approval, compare, comments, and handoff checks.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "review",
+    "order": 810
+  },
+  {
+    "id": "cel-animation-studio.collaboration",
+    "moduleId": "cel-animation-studio",
+    "title": "Cel Animation Studio Collaboration",
+    "route": "/mahavisphot/cel-animation-studio/collaboration",
+    "description": "Cel Animation Studio: Shared context, roles, assignments, and notes.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "collaboration",
+    "order": 811
+  },
+  {
+    "id": "cel-animation-studio.settings",
+    "moduleId": "cel-animation-studio",
+    "title": "Cel Animation Studio Settings",
+    "route": "/mahavisphot/cel-animation-studio/settings",
+    "description": "Cel Animation Studio: Module configuration, safety defaults, and preferences.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "settings",
+    "order": 812
+  },
+  {
+    "id": "cel-animation-studio.health",
+    "moduleId": "cel-animation-studio",
+    "title": "Cel Animation Studio Health",
+    "route": "/mahavisphot/cel-animation-studio/health",
+    "description": "Cel Animation Studio: Capability health, environment state, and blocked evidence.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "runtime health",
+    "order": 813
+  },
+  {
+    "id": "cel-animation-studio.evidence",
+    "moduleId": "cel-animation-studio",
+    "title": "Cel Animation Studio Evidence",
+    "route": "/mahavisphot/cel-animation-studio/evidence",
+    "description": "Cel Animation Studio: Verification artifacts, logs, screenshots, and proof links.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "evidence",
+    "order": 814
+  },
+  {
+    "id": "cel-animation-studio.export",
+    "moduleId": "cel-animation-studio",
+    "title": "Cel Animation Studio Export",
+    "route": "/mahavisphot/cel-animation-studio/export",
+    "description": "Cel Animation Studio: Data, media, manifest, and delivery package preparation.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "delivery",
+    "order": 815
+  },
+  {
+    "id": "cel-animation-studio.audit",
+    "moduleId": "cel-animation-studio",
+    "title": "Cel Animation Studio Audit",
+    "route": "/mahavisphot/cel-animation-studio/audit",
+    "description": "Cel Animation Studio: Security, schema, access, and readiness review.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "audit",
+    "order": 816
+  },
+  {
+    "id": "comic-studio.overview",
+    "moduleId": "comic-studio",
+    "title": "Comic Studio Overview",
+    "route": "/mahavisphot/comic-studio/overview",
+    "description": "Comic Studio: Overview, readiness, and navigation surface.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "command map",
+    "order": 901
+  },
+  {
+    "id": "comic-studio.launch",
+    "moduleId": "comic-studio",
+    "title": "Comic Studio Launch",
+    "route": "/mahavisphot/comic-studio/launch",
+    "description": "Comic Studio: New, open, recovery, and project intent selection.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "project launch",
+    "order": 902
+  },
+  {
+    "id": "comic-studio.ingest",
+    "moduleId": "comic-studio",
+    "title": "Comic Studio Ingest",
+    "route": "/mahavisphot/comic-studio/ingest",
+    "description": "Comic Studio: Media intake, source validation, and evidence collection.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "media intake",
+    "order": 903
+  },
+  {
+    "id": "comic-studio.storyboard",
+    "moduleId": "comic-studio",
+    "title": "Comic Studio Storyboard",
+    "route": "/mahavisphot/comic-studio/storyboard",
+    "description": "Comic Studio: Boards, frame descriptions, captions, and shot order.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "story planning",
+    "order": 904
+  },
+  {
+    "id": "comic-studio.timeline",
+    "moduleId": "comic-studio",
+    "title": "Comic Studio Timeline",
+    "route": "/mahavisphot/comic-studio/timeline",
+    "description": "Comic Studio: Time-based assembly, tracks, clips, markers, and edits.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "timeline",
+    "order": 905
+  },
+  {
+    "id": "comic-studio.layers",
+    "moduleId": "comic-studio",
+    "title": "Comic Studio Layers",
+    "route": "/mahavisphot/comic-studio/layers",
+    "description": "Comic Studio: Layer routing, visibility, locking, and composition stack.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "layer control",
+    "order": 906
+  },
+  {
+    "id": "comic-studio.inspector",
+    "moduleId": "comic-studio",
+    "title": "Comic Studio Inspector",
+    "route": "/mahavisphot/comic-studio/inspector",
+    "description": "Comic Studio: Selected item metadata, numeric controls, and status.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "inspection",
+    "order": 907
+  },
+  {
+    "id": "comic-studio.node-graph",
+    "moduleId": "comic-studio",
+    "title": "Comic Studio Node Graph",
+    "route": "/mahavisphot/comic-studio/node-graph",
+    "description": "Comic Studio: Node pass planning, data flow, and render order.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "node workspace",
+    "order": 908
+  },
+  {
+    "id": "comic-studio.automation",
+    "moduleId": "comic-studio",
+    "title": "Comic Studio Automation",
+    "route": "/mahavisphot/comic-studio/automation",
+    "description": "Comic Studio: Repeatable operations, macro intent, and guarded actions.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "automation",
+    "order": 909
+  },
+  {
+    "id": "comic-studio.review",
+    "moduleId": "comic-studio",
+    "title": "Comic Studio Review",
+    "route": "/mahavisphot/comic-studio/review",
+    "description": "Comic Studio: Approval, compare, comments, and handoff checks.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "review",
+    "order": 910
+  },
+  {
+    "id": "comic-studio.collaboration",
+    "moduleId": "comic-studio",
+    "title": "Comic Studio Collaboration",
+    "route": "/mahavisphot/comic-studio/collaboration",
+    "description": "Comic Studio: Shared context, roles, assignments, and notes.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "collaboration",
+    "order": 911
+  },
+  {
+    "id": "comic-studio.settings",
+    "moduleId": "comic-studio",
+    "title": "Comic Studio Settings",
+    "route": "/mahavisphot/comic-studio/settings",
+    "description": "Comic Studio: Module configuration, safety defaults, and preferences.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "settings",
+    "order": 912
+  },
+  {
+    "id": "comic-studio.health",
+    "moduleId": "comic-studio",
+    "title": "Comic Studio Health",
+    "route": "/mahavisphot/comic-studio/health",
+    "description": "Comic Studio: Capability health, environment state, and blocked evidence.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "runtime health",
+    "order": 913
+  },
+  {
+    "id": "comic-studio.evidence",
+    "moduleId": "comic-studio",
+    "title": "Comic Studio Evidence",
+    "route": "/mahavisphot/comic-studio/evidence",
+    "description": "Comic Studio: Verification artifacts, logs, screenshots, and proof links.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "evidence",
+    "order": 914
+  },
+  {
+    "id": "comic-studio.export",
+    "moduleId": "comic-studio",
+    "title": "Comic Studio Export",
+    "route": "/mahavisphot/comic-studio/export",
+    "description": "Comic Studio: Data, media, manifest, and delivery package preparation.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "delivery",
+    "order": 915
+  },
+  {
+    "id": "comic-studio.audit",
+    "moduleId": "comic-studio",
+    "title": "Comic Studio Audit",
+    "route": "/mahavisphot/comic-studio/audit",
+    "description": "Comic Studio: Security, schema, access, and readiness review.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "audit",
+    "order": 916
+  },
+  {
+    "id": "face-studio.overview",
+    "moduleId": "face-studio",
+    "title": "Face Studio Overview",
+    "route": "/mahavisphot/face-studio/overview",
+    "description": "Face Studio: Overview, readiness, and navigation surface.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "command map",
+    "order": 1001
+  },
+  {
+    "id": "face-studio.launch",
+    "moduleId": "face-studio",
+    "title": "Face Studio Launch",
+    "route": "/mahavisphot/face-studio/launch",
+    "description": "Face Studio: New, open, recovery, and project intent selection.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "project launch",
+    "order": 1002
+  },
+  {
+    "id": "face-studio.ingest",
+    "moduleId": "face-studio",
+    "title": "Face Studio Ingest",
+    "route": "/mahavisphot/face-studio/ingest",
+    "description": "Face Studio: Media intake, source validation, and evidence collection.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "media intake",
+    "order": 1003
+  },
+  {
+    "id": "face-studio.storyboard",
+    "moduleId": "face-studio",
+    "title": "Face Studio Storyboard",
+    "route": "/mahavisphot/face-studio/storyboard",
+    "description": "Face Studio: Boards, frame descriptions, captions, and shot order.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "story planning",
+    "order": 1004
+  },
+  {
+    "id": "face-studio.timeline",
+    "moduleId": "face-studio",
+    "title": "Face Studio Timeline",
+    "route": "/mahavisphot/face-studio/timeline",
+    "description": "Face Studio: Time-based assembly, tracks, clips, markers, and edits.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "timeline",
+    "order": 1005
+  },
+  {
+    "id": "face-studio.layers",
+    "moduleId": "face-studio",
+    "title": "Face Studio Layers",
+    "route": "/mahavisphot/face-studio/layers",
+    "description": "Face Studio: Layer routing, visibility, locking, and composition stack.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "layer control",
+    "order": 1006
+  },
+  {
+    "id": "face-studio.inspector",
+    "moduleId": "face-studio",
+    "title": "Face Studio Inspector",
+    "route": "/mahavisphot/face-studio/inspector",
+    "description": "Face Studio: Selected item metadata, numeric controls, and status.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "inspection",
+    "order": 1007
+  },
+  {
+    "id": "face-studio.node-graph",
+    "moduleId": "face-studio",
+    "title": "Face Studio Node Graph",
+    "route": "/mahavisphot/face-studio/node-graph",
+    "description": "Face Studio: Node pass planning, data flow, and render order.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "node workspace",
+    "order": 1008
+  },
+  {
+    "id": "face-studio.automation",
+    "moduleId": "face-studio",
+    "title": "Face Studio Automation",
+    "route": "/mahavisphot/face-studio/automation",
+    "description": "Face Studio: Repeatable operations, macro intent, and guarded actions.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "automation",
+    "order": 1009
+  },
+  {
+    "id": "face-studio.review",
+    "moduleId": "face-studio",
+    "title": "Face Studio Review",
+    "route": "/mahavisphot/face-studio/review",
+    "description": "Face Studio: Approval, compare, comments, and handoff checks.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "review",
+    "order": 1010
+  },
+  {
+    "id": "face-studio.collaboration",
+    "moduleId": "face-studio",
+    "title": "Face Studio Collaboration",
+    "route": "/mahavisphot/face-studio/collaboration",
+    "description": "Face Studio: Shared context, roles, assignments, and notes.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "collaboration",
+    "order": 1011
+  },
+  {
+    "id": "face-studio.settings",
+    "moduleId": "face-studio",
+    "title": "Face Studio Settings",
+    "route": "/mahavisphot/face-studio/settings",
+    "description": "Face Studio: Module configuration, safety defaults, and preferences.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "settings",
+    "order": 1012
+  },
+  {
+    "id": "face-studio.health",
+    "moduleId": "face-studio",
+    "title": "Face Studio Health",
+    "route": "/mahavisphot/face-studio/health",
+    "description": "Face Studio: Capability health, environment state, and blocked evidence.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "runtime health",
+    "order": 1013
+  },
+  {
+    "id": "face-studio.evidence",
+    "moduleId": "face-studio",
+    "title": "Face Studio Evidence",
+    "route": "/mahavisphot/face-studio/evidence",
+    "description": "Face Studio: Verification artifacts, logs, screenshots, and proof links.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "evidence",
+    "order": 1014
+  },
+  {
+    "id": "face-studio.export",
+    "moduleId": "face-studio",
+    "title": "Face Studio Export",
+    "route": "/mahavisphot/face-studio/export",
+    "description": "Face Studio: Data, media, manifest, and delivery package preparation.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "delivery",
+    "order": 1015
+  },
+  {
+    "id": "face-studio.audit",
+    "moduleId": "face-studio",
+    "title": "Face Studio Audit",
+    "route": "/mahavisphot/face-studio/audit",
+    "description": "Face Studio: Security, schema, access, and readiness review.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "audit",
+    "order": 1016
+  },
+  {
+    "id": "three-d-studio.overview",
+    "moduleId": "three-d-studio",
+    "title": "3D Studio Overview",
+    "route": "/mahavisphot/three-d-studio/overview",
+    "description": "3D Studio: Overview, readiness, and navigation surface.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "command map",
+    "order": 1101
+  },
+  {
+    "id": "three-d-studio.launch",
+    "moduleId": "three-d-studio",
+    "title": "3D Studio Launch",
+    "route": "/mahavisphot/three-d-studio/launch",
+    "description": "3D Studio: New, open, recovery, and project intent selection.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "project launch",
+    "order": 1102
+  },
+  {
+    "id": "three-d-studio.ingest",
+    "moduleId": "three-d-studio",
+    "title": "3D Studio Ingest",
+    "route": "/mahavisphot/three-d-studio/ingest",
+    "description": "3D Studio: Media intake, source validation, and evidence collection.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "media intake",
+    "order": 1103
+  },
+  {
+    "id": "three-d-studio.storyboard",
+    "moduleId": "three-d-studio",
+    "title": "3D Studio Storyboard",
+    "route": "/mahavisphot/three-d-studio/storyboard",
+    "description": "3D Studio: Boards, frame descriptions, captions, and shot order.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "story planning",
+    "order": 1104
+  },
+  {
+    "id": "three-d-studio.timeline",
+    "moduleId": "three-d-studio",
+    "title": "3D Studio Timeline",
+    "route": "/mahavisphot/three-d-studio/timeline",
+    "description": "3D Studio: Time-based assembly, tracks, clips, markers, and edits.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "timeline",
+    "order": 1105
+  },
+  {
+    "id": "three-d-studio.layers",
+    "moduleId": "three-d-studio",
+    "title": "3D Studio Layers",
+    "route": "/mahavisphot/three-d-studio/layers",
+    "description": "3D Studio: Layer routing, visibility, locking, and composition stack.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "layer control",
+    "order": 1106
+  },
+  {
+    "id": "three-d-studio.inspector",
+    "moduleId": "three-d-studio",
+    "title": "3D Studio Inspector",
+    "route": "/mahavisphot/three-d-studio/inspector",
+    "description": "3D Studio: Selected item metadata, numeric controls, and status.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "inspection",
+    "order": 1107
+  },
+  {
+    "id": "three-d-studio.node-graph",
+    "moduleId": "three-d-studio",
+    "title": "3D Studio Node Graph",
+    "route": "/mahavisphot/three-d-studio/node-graph",
+    "description": "3D Studio: Node pass planning, data flow, and render order.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "node workspace",
+    "order": 1108
+  },
+  {
+    "id": "three-d-studio.automation",
+    "moduleId": "three-d-studio",
+    "title": "3D Studio Automation",
+    "route": "/mahavisphot/three-d-studio/automation",
+    "description": "3D Studio: Repeatable operations, macro intent, and guarded actions.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "automation",
+    "order": 1109
+  },
+  {
+    "id": "three-d-studio.review",
+    "moduleId": "three-d-studio",
+    "title": "3D Studio Review",
+    "route": "/mahavisphot/three-d-studio/review",
+    "description": "3D Studio: Approval, compare, comments, and handoff checks.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "review",
+    "order": 1110
+  },
+  {
+    "id": "three-d-studio.collaboration",
+    "moduleId": "three-d-studio",
+    "title": "3D Studio Collaboration",
+    "route": "/mahavisphot/three-d-studio/collaboration",
+    "description": "3D Studio: Shared context, roles, assignments, and notes.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "collaboration",
+    "order": 1111
+  },
+  {
+    "id": "three-d-studio.settings",
+    "moduleId": "three-d-studio",
+    "title": "3D Studio Settings",
+    "route": "/mahavisphot/three-d-studio/settings",
+    "description": "3D Studio: Module configuration, safety defaults, and preferences.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "settings",
+    "order": 1112
+  },
+  {
+    "id": "three-d-studio.health",
+    "moduleId": "three-d-studio",
+    "title": "3D Studio Health",
+    "route": "/mahavisphot/three-d-studio/health",
+    "description": "3D Studio: Capability health, environment state, and blocked evidence.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "runtime health",
+    "order": 1113
+  },
+  {
+    "id": "three-d-studio.evidence",
+    "moduleId": "three-d-studio",
+    "title": "3D Studio Evidence",
+    "route": "/mahavisphot/three-d-studio/evidence",
+    "description": "3D Studio: Verification artifacts, logs, screenshots, and proof links.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "evidence",
+    "order": 1114
+  },
+  {
+    "id": "three-d-studio.export",
+    "moduleId": "three-d-studio",
+    "title": "3D Studio Export",
+    "route": "/mahavisphot/three-d-studio/export",
+    "description": "3D Studio: Data, media, manifest, and delivery package preparation.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "delivery",
+    "order": 1115
+  },
+  {
+    "id": "three-d-studio.audit",
+    "moduleId": "three-d-studio",
+    "title": "3D Studio Audit",
+    "route": "/mahavisphot/three-d-studio/audit",
+    "description": "3D Studio: Security, schema, access, and readiness review.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "audit",
+    "order": 1116
+  },
+  {
+    "id": "xr-studio.overview",
+    "moduleId": "xr-studio",
+    "title": "XR Studio Overview",
+    "route": "/mahavisphot/xr-studio/overview",
+    "description": "XR Studio: Overview, readiness, and navigation surface.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "command map",
+    "order": 1201
+  },
+  {
+    "id": "xr-studio.launch",
+    "moduleId": "xr-studio",
+    "title": "XR Studio Launch",
+    "route": "/mahavisphot/xr-studio/launch",
+    "description": "XR Studio: New, open, recovery, and project intent selection.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "project launch",
+    "order": 1202
+  },
+  {
+    "id": "xr-studio.ingest",
+    "moduleId": "xr-studio",
+    "title": "XR Studio Ingest",
+    "route": "/mahavisphot/xr-studio/ingest",
+    "description": "XR Studio: Media intake, source validation, and evidence collection.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "media intake",
+    "order": 1203
+  },
+  {
+    "id": "xr-studio.storyboard",
+    "moduleId": "xr-studio",
+    "title": "XR Studio Storyboard",
+    "route": "/mahavisphot/xr-studio/storyboard",
+    "description": "XR Studio: Boards, frame descriptions, captions, and shot order.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "story planning",
+    "order": 1204
+  },
+  {
+    "id": "xr-studio.timeline",
+    "moduleId": "xr-studio",
+    "title": "XR Studio Timeline",
+    "route": "/mahavisphot/xr-studio/timeline",
+    "description": "XR Studio: Time-based assembly, tracks, clips, markers, and edits.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "timeline",
+    "order": 1205
+  },
+  {
+    "id": "xr-studio.layers",
+    "moduleId": "xr-studio",
+    "title": "XR Studio Layers",
+    "route": "/mahavisphot/xr-studio/layers",
+    "description": "XR Studio: Layer routing, visibility, locking, and composition stack.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "layer control",
+    "order": 1206
+  },
+  {
+    "id": "xr-studio.inspector",
+    "moduleId": "xr-studio",
+    "title": "XR Studio Inspector",
+    "route": "/mahavisphot/xr-studio/inspector",
+    "description": "XR Studio: Selected item metadata, numeric controls, and status.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "inspection",
+    "order": 1207
+  },
+  {
+    "id": "xr-studio.node-graph",
+    "moduleId": "xr-studio",
+    "title": "XR Studio Node Graph",
+    "route": "/mahavisphot/xr-studio/node-graph",
+    "description": "XR Studio: Node pass planning, data flow, and render order.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "node workspace",
+    "order": 1208
+  },
+  {
+    "id": "xr-studio.automation",
+    "moduleId": "xr-studio",
+    "title": "XR Studio Automation",
+    "route": "/mahavisphot/xr-studio/automation",
+    "description": "XR Studio: Repeatable operations, macro intent, and guarded actions.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "automation",
+    "order": 1209
+  },
+  {
+    "id": "xr-studio.review",
+    "moduleId": "xr-studio",
+    "title": "XR Studio Review",
+    "route": "/mahavisphot/xr-studio/review",
+    "description": "XR Studio: Approval, compare, comments, and handoff checks.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "review",
+    "order": 1210
+  },
+  {
+    "id": "xr-studio.collaboration",
+    "moduleId": "xr-studio",
+    "title": "XR Studio Collaboration",
+    "route": "/mahavisphot/xr-studio/collaboration",
+    "description": "XR Studio: Shared context, roles, assignments, and notes.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "collaboration",
+    "order": 1211
+  },
+  {
+    "id": "xr-studio.settings",
+    "moduleId": "xr-studio",
+    "title": "XR Studio Settings",
+    "route": "/mahavisphot/xr-studio/settings",
+    "description": "XR Studio: Module configuration, safety defaults, and preferences.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "settings",
+    "order": 1212
+  },
+  {
+    "id": "xr-studio.health",
+    "moduleId": "xr-studio",
+    "title": "XR Studio Health",
+    "route": "/mahavisphot/xr-studio/health",
+    "description": "XR Studio: Capability health, environment state, and blocked evidence.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "runtime health",
+    "order": 1213
+  },
+  {
+    "id": "xr-studio.evidence",
+    "moduleId": "xr-studio",
+    "title": "XR Studio Evidence",
+    "route": "/mahavisphot/xr-studio/evidence",
+    "description": "XR Studio: Verification artifacts, logs, screenshots, and proof links.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "evidence",
+    "order": 1214
+  },
+  {
+    "id": "xr-studio.export",
+    "moduleId": "xr-studio",
+    "title": "XR Studio Export",
+    "route": "/mahavisphot/xr-studio/export",
+    "description": "XR Studio: Data, media, manifest, and delivery package preparation.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "delivery",
+    "order": 1215
+  },
+  {
+    "id": "xr-studio.audit",
+    "moduleId": "xr-studio",
+    "title": "XR Studio Audit",
+    "route": "/mahavisphot/xr-studio/audit",
+    "description": "XR Studio: Security, schema, access, and readiness review.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "audit",
+    "order": 1216
+  },
+  {
+    "id": "audio-studio.overview",
+    "moduleId": "audio-studio",
+    "title": "Audio Studio Overview",
+    "route": "/mahavisphot/audio-studio/overview",
+    "description": "Audio Studio: Overview, readiness, and navigation surface.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "command map",
+    "order": 1301
+  },
+  {
+    "id": "audio-studio.launch",
+    "moduleId": "audio-studio",
+    "title": "Audio Studio Launch",
+    "route": "/mahavisphot/audio-studio/launch",
+    "description": "Audio Studio: New, open, recovery, and project intent selection.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "project launch",
+    "order": 1302
+  },
+  {
+    "id": "audio-studio.ingest",
+    "moduleId": "audio-studio",
+    "title": "Audio Studio Ingest",
+    "route": "/mahavisphot/audio-studio/ingest",
+    "description": "Audio Studio: Media intake, source validation, and evidence collection.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "media intake",
+    "order": 1303
+  },
+  {
+    "id": "audio-studio.storyboard",
+    "moduleId": "audio-studio",
+    "title": "Audio Studio Storyboard",
+    "route": "/mahavisphot/audio-studio/storyboard",
+    "description": "Audio Studio: Boards, frame descriptions, captions, and shot order.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "story planning",
+    "order": 1304
+  },
+  {
+    "id": "audio-studio.timeline",
+    "moduleId": "audio-studio",
+    "title": "Audio Studio Timeline",
+    "route": "/mahavisphot/audio-studio/timeline",
+    "description": "Audio Studio: Time-based assembly, tracks, clips, markers, and edits.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "timeline",
+    "order": 1305
+  },
+  {
+    "id": "audio-studio.layers",
+    "moduleId": "audio-studio",
+    "title": "Audio Studio Layers",
+    "route": "/mahavisphot/audio-studio/layers",
+    "description": "Audio Studio: Layer routing, visibility, locking, and composition stack.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "layer control",
+    "order": 1306
+  },
+  {
+    "id": "audio-studio.inspector",
+    "moduleId": "audio-studio",
+    "title": "Audio Studio Inspector",
+    "route": "/mahavisphot/audio-studio/inspector",
+    "description": "Audio Studio: Selected item metadata, numeric controls, and status.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "inspection",
+    "order": 1307
+  },
+  {
+    "id": "audio-studio.node-graph",
+    "moduleId": "audio-studio",
+    "title": "Audio Studio Node Graph",
+    "route": "/mahavisphot/audio-studio/node-graph",
+    "description": "Audio Studio: Node pass planning, data flow, and render order.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "node workspace",
+    "order": 1308
+  },
+  {
+    "id": "audio-studio.automation",
+    "moduleId": "audio-studio",
+    "title": "Audio Studio Automation",
+    "route": "/mahavisphot/audio-studio/automation",
+    "description": "Audio Studio: Repeatable operations, macro intent, and guarded actions.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "automation",
+    "order": 1309
+  },
+  {
+    "id": "audio-studio.review",
+    "moduleId": "audio-studio",
+    "title": "Audio Studio Review",
+    "route": "/mahavisphot/audio-studio/review",
+    "description": "Audio Studio: Approval, compare, comments, and handoff checks.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "review",
+    "order": 1310
+  },
+  {
+    "id": "audio-studio.collaboration",
+    "moduleId": "audio-studio",
+    "title": "Audio Studio Collaboration",
+    "route": "/mahavisphot/audio-studio/collaboration",
+    "description": "Audio Studio: Shared context, roles, assignments, and notes.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "collaboration",
+    "order": 1311
+  },
+  {
+    "id": "audio-studio.settings",
+    "moduleId": "audio-studio",
+    "title": "Audio Studio Settings",
+    "route": "/mahavisphot/audio-studio/settings",
+    "description": "Audio Studio: Module configuration, safety defaults, and preferences.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "settings",
+    "order": 1312
+  },
+  {
+    "id": "audio-studio.health",
+    "moduleId": "audio-studio",
+    "title": "Audio Studio Health",
+    "route": "/mahavisphot/audio-studio/health",
+    "description": "Audio Studio: Capability health, environment state, and blocked evidence.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "runtime health",
+    "order": 1313
+  },
+  {
+    "id": "audio-studio.evidence",
+    "moduleId": "audio-studio",
+    "title": "Audio Studio Evidence",
+    "route": "/mahavisphot/audio-studio/evidence",
+    "description": "Audio Studio: Verification artifacts, logs, screenshots, and proof links.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "evidence",
+    "order": 1314
+  },
+  {
+    "id": "audio-studio.export",
+    "moduleId": "audio-studio",
+    "title": "Audio Studio Export",
+    "route": "/mahavisphot/audio-studio/export",
+    "description": "Audio Studio: Data, media, manifest, and delivery package preparation.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "delivery",
+    "order": 1315
+  },
+  {
+    "id": "audio-studio.audit",
+    "moduleId": "audio-studio",
+    "title": "Audio Studio Audit",
+    "route": "/mahavisphot/audio-studio/audit",
+    "description": "Audio Studio: Security, schema, access, and readiness review.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "audit",
+    "order": 1316
+  },
+  {
+    "id": "color-studio.overview",
+    "moduleId": "color-studio",
+    "title": "Color Studio Overview",
+    "route": "/mahavisphot/color-studio/overview",
+    "description": "Color Studio: Overview, readiness, and navigation surface.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "command map",
+    "order": 1401
+  },
+  {
+    "id": "color-studio.launch",
+    "moduleId": "color-studio",
+    "title": "Color Studio Launch",
+    "route": "/mahavisphot/color-studio/launch",
+    "description": "Color Studio: New, open, recovery, and project intent selection.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "project launch",
+    "order": 1402
+  },
+  {
+    "id": "color-studio.ingest",
+    "moduleId": "color-studio",
+    "title": "Color Studio Ingest",
+    "route": "/mahavisphot/color-studio/ingest",
+    "description": "Color Studio: Media intake, source validation, and evidence collection.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "media intake",
+    "order": 1403
+  },
+  {
+    "id": "color-studio.storyboard",
+    "moduleId": "color-studio",
+    "title": "Color Studio Storyboard",
+    "route": "/mahavisphot/color-studio/storyboard",
+    "description": "Color Studio: Boards, frame descriptions, captions, and shot order.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "story planning",
+    "order": 1404
+  },
+  {
+    "id": "color-studio.timeline",
+    "moduleId": "color-studio",
+    "title": "Color Studio Timeline",
+    "route": "/mahavisphot/color-studio/timeline",
+    "description": "Color Studio: Time-based assembly, tracks, clips, markers, and edits.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "timeline",
+    "order": 1405
+  },
+  {
+    "id": "color-studio.layers",
+    "moduleId": "color-studio",
+    "title": "Color Studio Layers",
+    "route": "/mahavisphot/color-studio/layers",
+    "description": "Color Studio: Layer routing, visibility, locking, and composition stack.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "layer control",
+    "order": 1406
+  },
+  {
+    "id": "color-studio.inspector",
+    "moduleId": "color-studio",
+    "title": "Color Studio Inspector",
+    "route": "/mahavisphot/color-studio/inspector",
+    "description": "Color Studio: Selected item metadata, numeric controls, and status.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "inspection",
+    "order": 1407
+  },
+  {
+    "id": "color-studio.node-graph",
+    "moduleId": "color-studio",
+    "title": "Color Studio Node Graph",
+    "route": "/mahavisphot/color-studio/node-graph",
+    "description": "Color Studio: Node pass planning, data flow, and render order.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "node workspace",
+    "order": 1408
+  },
+  {
+    "id": "color-studio.automation",
+    "moduleId": "color-studio",
+    "title": "Color Studio Automation",
+    "route": "/mahavisphot/color-studio/automation",
+    "description": "Color Studio: Repeatable operations, macro intent, and guarded actions.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "automation",
+    "order": 1409
+  },
+  {
+    "id": "color-studio.review",
+    "moduleId": "color-studio",
+    "title": "Color Studio Review",
+    "route": "/mahavisphot/color-studio/review",
+    "description": "Color Studio: Approval, compare, comments, and handoff checks.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "review",
+    "order": 1410
+  },
+  {
+    "id": "color-studio.collaboration",
+    "moduleId": "color-studio",
+    "title": "Color Studio Collaboration",
+    "route": "/mahavisphot/color-studio/collaboration",
+    "description": "Color Studio: Shared context, roles, assignments, and notes.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "collaboration",
+    "order": 1411
+  },
+  {
+    "id": "color-studio.settings",
+    "moduleId": "color-studio",
+    "title": "Color Studio Settings",
+    "route": "/mahavisphot/color-studio/settings",
+    "description": "Color Studio: Module configuration, safety defaults, and preferences.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "settings",
+    "order": 1412
+  },
+  {
+    "id": "color-studio.health",
+    "moduleId": "color-studio",
+    "title": "Color Studio Health",
+    "route": "/mahavisphot/color-studio/health",
+    "description": "Color Studio: Capability health, environment state, and blocked evidence.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "runtime health",
+    "order": 1413
+  },
+  {
+    "id": "color-studio.evidence",
+    "moduleId": "color-studio",
+    "title": "Color Studio Evidence",
+    "route": "/mahavisphot/color-studio/evidence",
+    "description": "Color Studio: Verification artifacts, logs, screenshots, and proof links.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "evidence",
+    "order": 1414
+  },
+  {
+    "id": "color-studio.export",
+    "moduleId": "color-studio",
+    "title": "Color Studio Export",
+    "route": "/mahavisphot/color-studio/export",
+    "description": "Color Studio: Data, media, manifest, and delivery package preparation.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "delivery",
+    "order": 1415
+  },
+  {
+    "id": "color-studio.audit",
+    "moduleId": "color-studio",
+    "title": "Color Studio Audit",
+    "route": "/mahavisphot/color-studio/audit",
+    "description": "Color Studio: Security, schema, access, and readiness review.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "audit",
+    "order": 1416
+  },
+  {
+    "id": "render-center.overview",
+    "moduleId": "render-center",
+    "title": "Render Center Overview",
+    "route": "/mahavisphot/render-center/overview",
+    "description": "Render Center: Overview, readiness, and navigation surface.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "render:read",
+      "render:write"
+    ],
+    "navigationGroup": "command map",
+    "order": 1501
+  },
+  {
+    "id": "render-center.launch",
+    "moduleId": "render-center",
+    "title": "Render Center Launch",
+    "route": "/mahavisphot/render-center/launch",
+    "description": "Render Center: New, open, recovery, and project intent selection.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "render:read",
+      "render:write"
+    ],
+    "navigationGroup": "project launch",
+    "order": 1502
+  },
+  {
+    "id": "render-center.ingest",
+    "moduleId": "render-center",
+    "title": "Render Center Ingest",
+    "route": "/mahavisphot/render-center/ingest",
+    "description": "Render Center: Media intake, source validation, and evidence collection.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "render:read",
+      "render:write"
+    ],
+    "navigationGroup": "media intake",
+    "order": 1503
+  },
+  {
+    "id": "render-center.storyboard",
+    "moduleId": "render-center",
+    "title": "Render Center Storyboard",
+    "route": "/mahavisphot/render-center/storyboard",
+    "description": "Render Center: Boards, frame descriptions, captions, and shot order.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "render:read",
+      "render:write"
+    ],
+    "navigationGroup": "story planning",
+    "order": 1504
+  },
+  {
+    "id": "render-center.timeline",
+    "moduleId": "render-center",
+    "title": "Render Center Timeline",
+    "route": "/mahavisphot/render-center/timeline",
+    "description": "Render Center: Time-based assembly, tracks, clips, markers, and edits.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "render:read",
+      "render:write"
+    ],
+    "navigationGroup": "timeline",
+    "order": 1505
+  },
+  {
+    "id": "render-center.layers",
+    "moduleId": "render-center",
+    "title": "Render Center Layers",
+    "route": "/mahavisphot/render-center/layers",
+    "description": "Render Center: Layer routing, visibility, locking, and composition stack.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "render:read",
+      "render:write"
+    ],
+    "navigationGroup": "layer control",
+    "order": 1506
+  },
+  {
+    "id": "render-center.inspector",
+    "moduleId": "render-center",
+    "title": "Render Center Inspector",
+    "route": "/mahavisphot/render-center/inspector",
+    "description": "Render Center: Selected item metadata, numeric controls, and status.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "render:read",
+      "render:write"
+    ],
+    "navigationGroup": "inspection",
+    "order": 1507
+  },
+  {
+    "id": "render-center.node-graph",
+    "moduleId": "render-center",
+    "title": "Render Center Node Graph",
+    "route": "/mahavisphot/render-center/node-graph",
+    "description": "Render Center: Node pass planning, data flow, and render order.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "render:read",
+      "render:write"
+    ],
+    "navigationGroup": "node workspace",
+    "order": 1508
+  },
+  {
+    "id": "render-center.automation",
+    "moduleId": "render-center",
+    "title": "Render Center Automation",
+    "route": "/mahavisphot/render-center/automation",
+    "description": "Render Center: Repeatable operations, macro intent, and guarded actions.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "render:read",
+      "render:write"
+    ],
+    "navigationGroup": "automation",
+    "order": 1509
+  },
+  {
+    "id": "render-center.review",
+    "moduleId": "render-center",
+    "title": "Render Center Review",
+    "route": "/mahavisphot/render-center/review",
+    "description": "Render Center: Approval, compare, comments, and handoff checks.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "render:read",
+      "render:write"
+    ],
+    "navigationGroup": "review",
+    "order": 1510
+  },
+  {
+    "id": "render-center.collaboration",
+    "moduleId": "render-center",
+    "title": "Render Center Collaboration",
+    "route": "/mahavisphot/render-center/collaboration",
+    "description": "Render Center: Shared context, roles, assignments, and notes.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "render:read",
+      "render:write"
+    ],
+    "navigationGroup": "collaboration",
+    "order": 1511
+  },
+  {
+    "id": "render-center.settings",
+    "moduleId": "render-center",
+    "title": "Render Center Settings",
+    "route": "/mahavisphot/render-center/settings",
+    "description": "Render Center: Module configuration, safety defaults, and preferences.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "render:read",
+      "render:write"
+    ],
+    "navigationGroup": "settings",
+    "order": 1512
+  },
+  {
+    "id": "render-center.health",
+    "moduleId": "render-center",
+    "title": "Render Center Health",
+    "route": "/mahavisphot/render-center/health",
+    "description": "Render Center: Capability health, environment state, and blocked evidence.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "render:read",
+      "render:write"
+    ],
+    "navigationGroup": "runtime health",
+    "order": 1513
+  },
+  {
+    "id": "render-center.evidence",
+    "moduleId": "render-center",
+    "title": "Render Center Evidence",
+    "route": "/mahavisphot/render-center/evidence",
+    "description": "Render Center: Verification artifacts, logs, screenshots, and proof links.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "render:read",
+      "render:write"
+    ],
+    "navigationGroup": "evidence",
+    "order": 1514
+  },
+  {
+    "id": "render-center.export",
+    "moduleId": "render-center",
+    "title": "Render Center Export",
+    "route": "/mahavisphot/render-center/export",
+    "description": "Render Center: Data, media, manifest, and delivery package preparation.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "render:read",
+      "render:write"
+    ],
+    "navigationGroup": "delivery",
+    "order": 1515
+  },
+  {
+    "id": "render-center.audit",
+    "moduleId": "render-center",
+    "title": "Render Center Audit",
+    "route": "/mahavisphot/render-center/audit",
+    "description": "Render Center: Security, schema, access, and readiness review.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "render:read",
+      "render:write"
+    ],
+    "navigationGroup": "audit",
+    "order": 1516
+  },
+  {
+    "id": "export-center.overview",
+    "moduleId": "export-center",
+    "title": "Export Center Overview",
+    "route": "/mahavisphot/export-center/overview",
+    "description": "Export Center: Overview, readiness, and navigation surface.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "render:read",
+      "render:write"
+    ],
+    "navigationGroup": "command map",
+    "order": 1601
+  },
+  {
+    "id": "export-center.launch",
+    "moduleId": "export-center",
+    "title": "Export Center Launch",
+    "route": "/mahavisphot/export-center/launch",
+    "description": "Export Center: New, open, recovery, and project intent selection.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "render:read",
+      "render:write"
+    ],
+    "navigationGroup": "project launch",
+    "order": 1602
+  },
+  {
+    "id": "export-center.ingest",
+    "moduleId": "export-center",
+    "title": "Export Center Ingest",
+    "route": "/mahavisphot/export-center/ingest",
+    "description": "Export Center: Media intake, source validation, and evidence collection.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "render:read",
+      "render:write"
+    ],
+    "navigationGroup": "media intake",
+    "order": 1603
+  },
+  {
+    "id": "export-center.storyboard",
+    "moduleId": "export-center",
+    "title": "Export Center Storyboard",
+    "route": "/mahavisphot/export-center/storyboard",
+    "description": "Export Center: Boards, frame descriptions, captions, and shot order.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "render:read",
+      "render:write"
+    ],
+    "navigationGroup": "story planning",
+    "order": 1604
+  },
+  {
+    "id": "export-center.timeline",
+    "moduleId": "export-center",
+    "title": "Export Center Timeline",
+    "route": "/mahavisphot/export-center/timeline",
+    "description": "Export Center: Time-based assembly, tracks, clips, markers, and edits.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "render:read",
+      "render:write"
+    ],
+    "navigationGroup": "timeline",
+    "order": 1605
+  },
+  {
+    "id": "export-center.layers",
+    "moduleId": "export-center",
+    "title": "Export Center Layers",
+    "route": "/mahavisphot/export-center/layers",
+    "description": "Export Center: Layer routing, visibility, locking, and composition stack.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "render:read",
+      "render:write"
+    ],
+    "navigationGroup": "layer control",
+    "order": 1606
+  },
+  {
+    "id": "export-center.inspector",
+    "moduleId": "export-center",
+    "title": "Export Center Inspector",
+    "route": "/mahavisphot/export-center/inspector",
+    "description": "Export Center: Selected item metadata, numeric controls, and status.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "render:read",
+      "render:write"
+    ],
+    "navigationGroup": "inspection",
+    "order": 1607
+  },
+  {
+    "id": "export-center.node-graph",
+    "moduleId": "export-center",
+    "title": "Export Center Node Graph",
+    "route": "/mahavisphot/export-center/node-graph",
+    "description": "Export Center: Node pass planning, data flow, and render order.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "render:read",
+      "render:write"
+    ],
+    "navigationGroup": "node workspace",
+    "order": 1608
+  },
+  {
+    "id": "export-center.automation",
+    "moduleId": "export-center",
+    "title": "Export Center Automation",
+    "route": "/mahavisphot/export-center/automation",
+    "description": "Export Center: Repeatable operations, macro intent, and guarded actions.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "render:read",
+      "render:write"
+    ],
+    "navigationGroup": "automation",
+    "order": 1609
+  },
+  {
+    "id": "export-center.review",
+    "moduleId": "export-center",
+    "title": "Export Center Review",
+    "route": "/mahavisphot/export-center/review",
+    "description": "Export Center: Approval, compare, comments, and handoff checks.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "render:read",
+      "render:write"
+    ],
+    "navigationGroup": "review",
+    "order": 1610
+  },
+  {
+    "id": "export-center.collaboration",
+    "moduleId": "export-center",
+    "title": "Export Center Collaboration",
+    "route": "/mahavisphot/export-center/collaboration",
+    "description": "Export Center: Shared context, roles, assignments, and notes.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "render:read",
+      "render:write"
+    ],
+    "navigationGroup": "collaboration",
+    "order": 1611
+  },
+  {
+    "id": "export-center.settings",
+    "moduleId": "export-center",
+    "title": "Export Center Settings",
+    "route": "/mahavisphot/export-center/settings",
+    "description": "Export Center: Module configuration, safety defaults, and preferences.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "render:read",
+      "render:write"
+    ],
+    "navigationGroup": "settings",
+    "order": 1612
+  },
+  {
+    "id": "export-center.health",
+    "moduleId": "export-center",
+    "title": "Export Center Health",
+    "route": "/mahavisphot/export-center/health",
+    "description": "Export Center: Capability health, environment state, and blocked evidence.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "render:read",
+      "render:write"
+    ],
+    "navigationGroup": "runtime health",
+    "order": 1613
+  },
+  {
+    "id": "export-center.evidence",
+    "moduleId": "export-center",
+    "title": "Export Center Evidence",
+    "route": "/mahavisphot/export-center/evidence",
+    "description": "Export Center: Verification artifacts, logs, screenshots, and proof links.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "render:read",
+      "render:write"
+    ],
+    "navigationGroup": "evidence",
+    "order": 1614
+  },
+  {
+    "id": "export-center.export",
+    "moduleId": "export-center",
+    "title": "Export Center Export",
+    "route": "/mahavisphot/export-center/export",
+    "description": "Export Center: Data, media, manifest, and delivery package preparation.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "render:read",
+      "render:write"
+    ],
+    "navigationGroup": "delivery",
+    "order": 1615
+  },
+  {
+    "id": "export-center.audit",
+    "moduleId": "export-center",
+    "title": "Export Center Audit",
+    "route": "/mahavisphot/export-center/audit",
+    "description": "Export Center: Security, schema, access, and readiness review.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "render:read",
+      "render:write"
+    ],
+    "navigationGroup": "audit",
+    "order": 1616
+  },
+  {
+    "id": "observatory.overview",
+    "moduleId": "observatory",
+    "title": "Observatory Overview",
+    "route": "/mahavisphot/observatory/overview",
+    "description": "Observatory: Overview, readiness, and navigation surface.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "command map",
+    "order": 1701
+  },
+  {
+    "id": "observatory.launch",
+    "moduleId": "observatory",
+    "title": "Observatory Launch",
+    "route": "/mahavisphot/observatory/launch",
+    "description": "Observatory: New, open, recovery, and project intent selection.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "project launch",
+    "order": 1702
+  },
+  {
+    "id": "observatory.ingest",
+    "moduleId": "observatory",
+    "title": "Observatory Ingest",
+    "route": "/mahavisphot/observatory/ingest",
+    "description": "Observatory: Media intake, source validation, and evidence collection.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "media intake",
+    "order": 1703
+  },
+  {
+    "id": "observatory.storyboard",
+    "moduleId": "observatory",
+    "title": "Observatory Storyboard",
+    "route": "/mahavisphot/observatory/storyboard",
+    "description": "Observatory: Boards, frame descriptions, captions, and shot order.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "story planning",
+    "order": 1704
+  },
+  {
+    "id": "observatory.timeline",
+    "moduleId": "observatory",
+    "title": "Observatory Timeline",
+    "route": "/mahavisphot/observatory/timeline",
+    "description": "Observatory: Time-based assembly, tracks, clips, markers, and edits.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "timeline",
+    "order": 1705
+  },
+  {
+    "id": "observatory.layers",
+    "moduleId": "observatory",
+    "title": "Observatory Layers",
+    "route": "/mahavisphot/observatory/layers",
+    "description": "Observatory: Layer routing, visibility, locking, and composition stack.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "layer control",
+    "order": 1706
+  },
+  {
+    "id": "observatory.inspector",
+    "moduleId": "observatory",
+    "title": "Observatory Inspector",
+    "route": "/mahavisphot/observatory/inspector",
+    "description": "Observatory: Selected item metadata, numeric controls, and status.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "inspection",
+    "order": 1707
+  },
+  {
+    "id": "observatory.node-graph",
+    "moduleId": "observatory",
+    "title": "Observatory Node Graph",
+    "route": "/mahavisphot/observatory/node-graph",
+    "description": "Observatory: Node pass planning, data flow, and render order.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "node workspace",
+    "order": 1708
+  },
+  {
+    "id": "observatory.automation",
+    "moduleId": "observatory",
+    "title": "Observatory Automation",
+    "route": "/mahavisphot/observatory/automation",
+    "description": "Observatory: Repeatable operations, macro intent, and guarded actions.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "automation",
+    "order": 1709
+  },
+  {
+    "id": "observatory.review",
+    "moduleId": "observatory",
+    "title": "Observatory Review",
+    "route": "/mahavisphot/observatory/review",
+    "description": "Observatory: Approval, compare, comments, and handoff checks.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "review",
+    "order": 1710
+  },
+  {
+    "id": "observatory.collaboration",
+    "moduleId": "observatory",
+    "title": "Observatory Collaboration",
+    "route": "/mahavisphot/observatory/collaboration",
+    "description": "Observatory: Shared context, roles, assignments, and notes.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "collaboration",
+    "order": 1711
+  },
+  {
+    "id": "observatory.settings",
+    "moduleId": "observatory",
+    "title": "Observatory Settings",
+    "route": "/mahavisphot/observatory/settings",
+    "description": "Observatory: Module configuration, safety defaults, and preferences.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "settings",
+    "order": 1712
+  },
+  {
+    "id": "observatory.health",
+    "moduleId": "observatory",
+    "title": "Observatory Health",
+    "route": "/mahavisphot/observatory/health",
+    "description": "Observatory: Capability health, environment state, and blocked evidence.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "runtime health",
+    "order": 1713
+  },
+  {
+    "id": "observatory.evidence",
+    "moduleId": "observatory",
+    "title": "Observatory Evidence",
+    "route": "/mahavisphot/observatory/evidence",
+    "description": "Observatory: Verification artifacts, logs, screenshots, and proof links.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "evidence",
+    "order": 1714
+  },
+  {
+    "id": "observatory.export",
+    "moduleId": "observatory",
+    "title": "Observatory Export",
+    "route": "/mahavisphot/observatory/export",
+    "description": "Observatory: Data, media, manifest, and delivery package preparation.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "delivery",
+    "order": 1715
+  },
+  {
+    "id": "observatory.audit",
+    "moduleId": "observatory",
+    "title": "Observatory Audit",
+    "route": "/mahavisphot/observatory/audit",
+    "description": "Observatory: Security, schema, access, and readiness review.",
+    "status": "scaffold",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "navigationGroup": "audit",
+    "order": 1716
+  },
+  {
+    "id": "local-ai-mode.overview",
+    "moduleId": "local-ai-mode",
+    "title": "Local AI Mode Overview",
+    "route": "/mahavisphot/local-ai-mode/overview",
+    "description": "Local AI Mode: Overview, readiness, and navigation surface.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:local"
+    ],
+    "navigationGroup": "command map",
+    "order": 1801
+  },
+  {
+    "id": "local-ai-mode.launch",
+    "moduleId": "local-ai-mode",
+    "title": "Local AI Mode Launch",
+    "route": "/mahavisphot/local-ai-mode/launch",
+    "description": "Local AI Mode: New, open, recovery, and project intent selection.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:local"
+    ],
+    "navigationGroup": "project launch",
+    "order": 1802
+  },
+  {
+    "id": "local-ai-mode.ingest",
+    "moduleId": "local-ai-mode",
+    "title": "Local AI Mode Ingest",
+    "route": "/mahavisphot/local-ai-mode/ingest",
+    "description": "Local AI Mode: Media intake, source validation, and evidence collection.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:local"
+    ],
+    "navigationGroup": "media intake",
+    "order": 1803
+  },
+  {
+    "id": "local-ai-mode.storyboard",
+    "moduleId": "local-ai-mode",
+    "title": "Local AI Mode Storyboard",
+    "route": "/mahavisphot/local-ai-mode/storyboard",
+    "description": "Local AI Mode: Boards, frame descriptions, captions, and shot order.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:local"
+    ],
+    "navigationGroup": "story planning",
+    "order": 1804
+  },
+  {
+    "id": "local-ai-mode.timeline",
+    "moduleId": "local-ai-mode",
+    "title": "Local AI Mode Timeline",
+    "route": "/mahavisphot/local-ai-mode/timeline",
+    "description": "Local AI Mode: Time-based assembly, tracks, clips, markers, and edits.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:local"
+    ],
+    "navigationGroup": "timeline",
+    "order": 1805
+  },
+  {
+    "id": "local-ai-mode.layers",
+    "moduleId": "local-ai-mode",
+    "title": "Local AI Mode Layers",
+    "route": "/mahavisphot/local-ai-mode/layers",
+    "description": "Local AI Mode: Layer routing, visibility, locking, and composition stack.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:local"
+    ],
+    "navigationGroup": "layer control",
+    "order": 1806
+  },
+  {
+    "id": "local-ai-mode.inspector",
+    "moduleId": "local-ai-mode",
+    "title": "Local AI Mode Inspector",
+    "route": "/mahavisphot/local-ai-mode/inspector",
+    "description": "Local AI Mode: Selected item metadata, numeric controls, and status.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:local"
+    ],
+    "navigationGroup": "inspection",
+    "order": 1807
+  },
+  {
+    "id": "local-ai-mode.node-graph",
+    "moduleId": "local-ai-mode",
+    "title": "Local AI Mode Node Graph",
+    "route": "/mahavisphot/local-ai-mode/node-graph",
+    "description": "Local AI Mode: Node pass planning, data flow, and render order.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:local"
+    ],
+    "navigationGroup": "node workspace",
+    "order": 1808
+  },
+  {
+    "id": "local-ai-mode.automation",
+    "moduleId": "local-ai-mode",
+    "title": "Local AI Mode Automation",
+    "route": "/mahavisphot/local-ai-mode/automation",
+    "description": "Local AI Mode: Repeatable operations, macro intent, and guarded actions.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:local"
+    ],
+    "navigationGroup": "automation",
+    "order": 1809
+  },
+  {
+    "id": "local-ai-mode.review",
+    "moduleId": "local-ai-mode",
+    "title": "Local AI Mode Review",
+    "route": "/mahavisphot/local-ai-mode/review",
+    "description": "Local AI Mode: Approval, compare, comments, and handoff checks.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:local"
+    ],
+    "navigationGroup": "review",
+    "order": 1810
+  },
+  {
+    "id": "local-ai-mode.collaboration",
+    "moduleId": "local-ai-mode",
+    "title": "Local AI Mode Collaboration",
+    "route": "/mahavisphot/local-ai-mode/collaboration",
+    "description": "Local AI Mode: Shared context, roles, assignments, and notes.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:local"
+    ],
+    "navigationGroup": "collaboration",
+    "order": 1811
+  },
+  {
+    "id": "local-ai-mode.settings",
+    "moduleId": "local-ai-mode",
+    "title": "Local AI Mode Settings",
+    "route": "/mahavisphot/local-ai-mode/settings",
+    "description": "Local AI Mode: Module configuration, safety defaults, and preferences.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:local"
+    ],
+    "navigationGroup": "settings",
+    "order": 1812
+  },
+  {
+    "id": "local-ai-mode.health",
+    "moduleId": "local-ai-mode",
+    "title": "Local AI Mode Health",
+    "route": "/mahavisphot/local-ai-mode/health",
+    "description": "Local AI Mode: Capability health, environment state, and blocked evidence.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:local"
+    ],
+    "navigationGroup": "runtime health",
+    "order": 1813
+  },
+  {
+    "id": "local-ai-mode.evidence",
+    "moduleId": "local-ai-mode",
+    "title": "Local AI Mode Evidence",
+    "route": "/mahavisphot/local-ai-mode/evidence",
+    "description": "Local AI Mode: Verification artifacts, logs, screenshots, and proof links.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:local"
+    ],
+    "navigationGroup": "evidence",
+    "order": 1814
+  },
+  {
+    "id": "local-ai-mode.export",
+    "moduleId": "local-ai-mode",
+    "title": "Local AI Mode Export",
+    "route": "/mahavisphot/local-ai-mode/export",
+    "description": "Local AI Mode: Data, media, manifest, and delivery package preparation.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:local"
+    ],
+    "navigationGroup": "delivery",
+    "order": 1815
+  },
+  {
+    "id": "local-ai-mode.audit",
+    "moduleId": "local-ai-mode",
+    "title": "Local AI Mode Audit",
+    "route": "/mahavisphot/local-ai-mode/audit",
+    "description": "Local AI Mode: Security, schema, access, and readiness review.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:local"
+    ],
+    "navigationGroup": "audit",
+    "order": 1816
+  },
+  {
+    "id": "cloud-ai-mode.overview",
+    "moduleId": "cloud-ai-mode",
+    "title": "Cloud AI Mode Overview",
+    "route": "/mahavisphot/cloud-ai-mode/overview",
+    "description": "Cloud AI Mode: Overview, readiness, and navigation surface.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "cloud"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:cloud"
+    ],
+    "navigationGroup": "command map",
+    "order": 1901
+  },
+  {
+    "id": "cloud-ai-mode.launch",
+    "moduleId": "cloud-ai-mode",
+    "title": "Cloud AI Mode Launch",
+    "route": "/mahavisphot/cloud-ai-mode/launch",
+    "description": "Cloud AI Mode: New, open, recovery, and project intent selection.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "cloud"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:cloud"
+    ],
+    "navigationGroup": "project launch",
+    "order": 1902
+  },
+  {
+    "id": "cloud-ai-mode.ingest",
+    "moduleId": "cloud-ai-mode",
+    "title": "Cloud AI Mode Ingest",
+    "route": "/mahavisphot/cloud-ai-mode/ingest",
+    "description": "Cloud AI Mode: Media intake, source validation, and evidence collection.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "cloud"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:cloud"
+    ],
+    "navigationGroup": "media intake",
+    "order": 1903
+  },
+  {
+    "id": "cloud-ai-mode.storyboard",
+    "moduleId": "cloud-ai-mode",
+    "title": "Cloud AI Mode Storyboard",
+    "route": "/mahavisphot/cloud-ai-mode/storyboard",
+    "description": "Cloud AI Mode: Boards, frame descriptions, captions, and shot order.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "cloud"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:cloud"
+    ],
+    "navigationGroup": "story planning",
+    "order": 1904
+  },
+  {
+    "id": "cloud-ai-mode.timeline",
+    "moduleId": "cloud-ai-mode",
+    "title": "Cloud AI Mode Timeline",
+    "route": "/mahavisphot/cloud-ai-mode/timeline",
+    "description": "Cloud AI Mode: Time-based assembly, tracks, clips, markers, and edits.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "cloud"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:cloud"
+    ],
+    "navigationGroup": "timeline",
+    "order": 1905
+  },
+  {
+    "id": "cloud-ai-mode.layers",
+    "moduleId": "cloud-ai-mode",
+    "title": "Cloud AI Mode Layers",
+    "route": "/mahavisphot/cloud-ai-mode/layers",
+    "description": "Cloud AI Mode: Layer routing, visibility, locking, and composition stack.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "cloud"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:cloud"
+    ],
+    "navigationGroup": "layer control",
+    "order": 1906
+  },
+  {
+    "id": "cloud-ai-mode.inspector",
+    "moduleId": "cloud-ai-mode",
+    "title": "Cloud AI Mode Inspector",
+    "route": "/mahavisphot/cloud-ai-mode/inspector",
+    "description": "Cloud AI Mode: Selected item metadata, numeric controls, and status.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "cloud"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:cloud"
+    ],
+    "navigationGroup": "inspection",
+    "order": 1907
+  },
+  {
+    "id": "cloud-ai-mode.node-graph",
+    "moduleId": "cloud-ai-mode",
+    "title": "Cloud AI Mode Node Graph",
+    "route": "/mahavisphot/cloud-ai-mode/node-graph",
+    "description": "Cloud AI Mode: Node pass planning, data flow, and render order.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "cloud"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:cloud"
+    ],
+    "navigationGroup": "node workspace",
+    "order": 1908
+  },
+  {
+    "id": "cloud-ai-mode.automation",
+    "moduleId": "cloud-ai-mode",
+    "title": "Cloud AI Mode Automation",
+    "route": "/mahavisphot/cloud-ai-mode/automation",
+    "description": "Cloud AI Mode: Repeatable operations, macro intent, and guarded actions.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "cloud"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:cloud"
+    ],
+    "navigationGroup": "automation",
+    "order": 1909
+  },
+  {
+    "id": "cloud-ai-mode.review",
+    "moduleId": "cloud-ai-mode",
+    "title": "Cloud AI Mode Review",
+    "route": "/mahavisphot/cloud-ai-mode/review",
+    "description": "Cloud AI Mode: Approval, compare, comments, and handoff checks.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "cloud"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:cloud"
+    ],
+    "navigationGroup": "review",
+    "order": 1910
+  },
+  {
+    "id": "cloud-ai-mode.collaboration",
+    "moduleId": "cloud-ai-mode",
+    "title": "Cloud AI Mode Collaboration",
+    "route": "/mahavisphot/cloud-ai-mode/collaboration",
+    "description": "Cloud AI Mode: Shared context, roles, assignments, and notes.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "cloud"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:cloud"
+    ],
+    "navigationGroup": "collaboration",
+    "order": 1911
+  },
+  {
+    "id": "cloud-ai-mode.settings",
+    "moduleId": "cloud-ai-mode",
+    "title": "Cloud AI Mode Settings",
+    "route": "/mahavisphot/cloud-ai-mode/settings",
+    "description": "Cloud AI Mode: Module configuration, safety defaults, and preferences.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "cloud"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:cloud"
+    ],
+    "navigationGroup": "settings",
+    "order": 1912
+  },
+  {
+    "id": "cloud-ai-mode.health",
+    "moduleId": "cloud-ai-mode",
+    "title": "Cloud AI Mode Health",
+    "route": "/mahavisphot/cloud-ai-mode/health",
+    "description": "Cloud AI Mode: Capability health, environment state, and blocked evidence.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "cloud"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:cloud"
+    ],
+    "navigationGroup": "runtime health",
+    "order": 1913
+  },
+  {
+    "id": "cloud-ai-mode.evidence",
+    "moduleId": "cloud-ai-mode",
+    "title": "Cloud AI Mode Evidence",
+    "route": "/mahavisphot/cloud-ai-mode/evidence",
+    "description": "Cloud AI Mode: Verification artifacts, logs, screenshots, and proof links.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "cloud"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:cloud"
+    ],
+    "navigationGroup": "evidence",
+    "order": 1914
+  },
+  {
+    "id": "cloud-ai-mode.export",
+    "moduleId": "cloud-ai-mode",
+    "title": "Cloud AI Mode Export",
+    "route": "/mahavisphot/cloud-ai-mode/export",
+    "description": "Cloud AI Mode: Data, media, manifest, and delivery package preparation.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "cloud"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:cloud"
+    ],
+    "navigationGroup": "delivery",
+    "order": 1915
+  },
+  {
+    "id": "cloud-ai-mode.audit",
+    "moduleId": "cloud-ai-mode",
+    "title": "Cloud AI Mode Audit",
+    "route": "/mahavisphot/cloud-ai-mode/audit",
+    "description": "Cloud AI Mode: Security, schema, access, and readiness review.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "cloud"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:cloud"
+    ],
+    "navigationGroup": "audit",
+    "order": 1916
+  },
+  {
+    "id": "hybrid-ai-mode.overview",
+    "moduleId": "hybrid-ai-mode",
+    "title": "Hybrid AI Mode Overview",
+    "route": "/mahavisphot/hybrid-ai-mode/overview",
+    "description": "Hybrid AI Mode: Overview, readiness, and navigation surface.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "hybrid",
+      "local",
+      "cloud"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:hybrid",
+      "ai:local",
+      "ai:cloud"
+    ],
+    "navigationGroup": "command map",
+    "order": 2001
+  },
+  {
+    "id": "hybrid-ai-mode.launch",
+    "moduleId": "hybrid-ai-mode",
+    "title": "Hybrid AI Mode Launch",
+    "route": "/mahavisphot/hybrid-ai-mode/launch",
+    "description": "Hybrid AI Mode: New, open, recovery, and project intent selection.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "hybrid",
+      "local",
+      "cloud"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:hybrid",
+      "ai:local",
+      "ai:cloud"
+    ],
+    "navigationGroup": "project launch",
+    "order": 2002
+  },
+  {
+    "id": "hybrid-ai-mode.ingest",
+    "moduleId": "hybrid-ai-mode",
+    "title": "Hybrid AI Mode Ingest",
+    "route": "/mahavisphot/hybrid-ai-mode/ingest",
+    "description": "Hybrid AI Mode: Media intake, source validation, and evidence collection.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "hybrid",
+      "local",
+      "cloud"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:hybrid",
+      "ai:local",
+      "ai:cloud"
+    ],
+    "navigationGroup": "media intake",
+    "order": 2003
+  },
+  {
+    "id": "hybrid-ai-mode.storyboard",
+    "moduleId": "hybrid-ai-mode",
+    "title": "Hybrid AI Mode Storyboard",
+    "route": "/mahavisphot/hybrid-ai-mode/storyboard",
+    "description": "Hybrid AI Mode: Boards, frame descriptions, captions, and shot order.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "hybrid",
+      "local",
+      "cloud"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:hybrid",
+      "ai:local",
+      "ai:cloud"
+    ],
+    "navigationGroup": "story planning",
+    "order": 2004
+  },
+  {
+    "id": "hybrid-ai-mode.timeline",
+    "moduleId": "hybrid-ai-mode",
+    "title": "Hybrid AI Mode Timeline",
+    "route": "/mahavisphot/hybrid-ai-mode/timeline",
+    "description": "Hybrid AI Mode: Time-based assembly, tracks, clips, markers, and edits.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "hybrid",
+      "local",
+      "cloud"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:hybrid",
+      "ai:local",
+      "ai:cloud"
+    ],
+    "navigationGroup": "timeline",
+    "order": 2005
+  },
+  {
+    "id": "hybrid-ai-mode.layers",
+    "moduleId": "hybrid-ai-mode",
+    "title": "Hybrid AI Mode Layers",
+    "route": "/mahavisphot/hybrid-ai-mode/layers",
+    "description": "Hybrid AI Mode: Layer routing, visibility, locking, and composition stack.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "hybrid",
+      "local",
+      "cloud"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:hybrid",
+      "ai:local",
+      "ai:cloud"
+    ],
+    "navigationGroup": "layer control",
+    "order": 2006
+  },
+  {
+    "id": "hybrid-ai-mode.inspector",
+    "moduleId": "hybrid-ai-mode",
+    "title": "Hybrid AI Mode Inspector",
+    "route": "/mahavisphot/hybrid-ai-mode/inspector",
+    "description": "Hybrid AI Mode: Selected item metadata, numeric controls, and status.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "hybrid",
+      "local",
+      "cloud"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:hybrid",
+      "ai:local",
+      "ai:cloud"
+    ],
+    "navigationGroup": "inspection",
+    "order": 2007
+  },
+  {
+    "id": "hybrid-ai-mode.node-graph",
+    "moduleId": "hybrid-ai-mode",
+    "title": "Hybrid AI Mode Node Graph",
+    "route": "/mahavisphot/hybrid-ai-mode/node-graph",
+    "description": "Hybrid AI Mode: Node pass planning, data flow, and render order.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "hybrid",
+      "local",
+      "cloud"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:hybrid",
+      "ai:local",
+      "ai:cloud"
+    ],
+    "navigationGroup": "node workspace",
+    "order": 2008
+  },
+  {
+    "id": "hybrid-ai-mode.automation",
+    "moduleId": "hybrid-ai-mode",
+    "title": "Hybrid AI Mode Automation",
+    "route": "/mahavisphot/hybrid-ai-mode/automation",
+    "description": "Hybrid AI Mode: Repeatable operations, macro intent, and guarded actions.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "hybrid",
+      "local",
+      "cloud"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:hybrid",
+      "ai:local",
+      "ai:cloud"
+    ],
+    "navigationGroup": "automation",
+    "order": 2009
+  },
+  {
+    "id": "hybrid-ai-mode.review",
+    "moduleId": "hybrid-ai-mode",
+    "title": "Hybrid AI Mode Review",
+    "route": "/mahavisphot/hybrid-ai-mode/review",
+    "description": "Hybrid AI Mode: Approval, compare, comments, and handoff checks.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "hybrid",
+      "local",
+      "cloud"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:hybrid",
+      "ai:local",
+      "ai:cloud"
+    ],
+    "navigationGroup": "review",
+    "order": 2010
+  },
+  {
+    "id": "hybrid-ai-mode.collaboration",
+    "moduleId": "hybrid-ai-mode",
+    "title": "Hybrid AI Mode Collaboration",
+    "route": "/mahavisphot/hybrid-ai-mode/collaboration",
+    "description": "Hybrid AI Mode: Shared context, roles, assignments, and notes.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "hybrid",
+      "local",
+      "cloud"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:hybrid",
+      "ai:local",
+      "ai:cloud"
+    ],
+    "navigationGroup": "collaboration",
+    "order": 2011
+  },
+  {
+    "id": "hybrid-ai-mode.settings",
+    "moduleId": "hybrid-ai-mode",
+    "title": "Hybrid AI Mode Settings",
+    "route": "/mahavisphot/hybrid-ai-mode/settings",
+    "description": "Hybrid AI Mode: Module configuration, safety defaults, and preferences.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "hybrid",
+      "local",
+      "cloud"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:hybrid",
+      "ai:local",
+      "ai:cloud"
+    ],
+    "navigationGroup": "settings",
+    "order": 2012
+  },
+  {
+    "id": "hybrid-ai-mode.health",
+    "moduleId": "hybrid-ai-mode",
+    "title": "Hybrid AI Mode Health",
+    "route": "/mahavisphot/hybrid-ai-mode/health",
+    "description": "Hybrid AI Mode: Capability health, environment state, and blocked evidence.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "hybrid",
+      "local",
+      "cloud"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:hybrid",
+      "ai:local",
+      "ai:cloud"
+    ],
+    "navigationGroup": "runtime health",
+    "order": 2013
+  },
+  {
+    "id": "hybrid-ai-mode.evidence",
+    "moduleId": "hybrid-ai-mode",
+    "title": "Hybrid AI Mode Evidence",
+    "route": "/mahavisphot/hybrid-ai-mode/evidence",
+    "description": "Hybrid AI Mode: Verification artifacts, logs, screenshots, and proof links.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "hybrid",
+      "local",
+      "cloud"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:hybrid",
+      "ai:local",
+      "ai:cloud"
+    ],
+    "navigationGroup": "evidence",
+    "order": 2014
+  },
+  {
+    "id": "hybrid-ai-mode.export",
+    "moduleId": "hybrid-ai-mode",
+    "title": "Hybrid AI Mode Export",
+    "route": "/mahavisphot/hybrid-ai-mode/export",
+    "description": "Hybrid AI Mode: Data, media, manifest, and delivery package preparation.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "hybrid",
+      "local",
+      "cloud"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:hybrid",
+      "ai:local",
+      "ai:cloud"
+    ],
+    "navigationGroup": "delivery",
+    "order": 2015
+  },
+  {
+    "id": "hybrid-ai-mode.audit",
+    "moduleId": "hybrid-ai-mode",
+    "title": "Hybrid AI Mode Audit",
+    "route": "/mahavisphot/hybrid-ai-mode/audit",
+    "description": "Hybrid AI Mode: Security, schema, access, and readiness review.",
+    "status": "blocked",
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "hybrid",
+      "local",
+      "cloud"
+    ],
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:hybrid",
+      "ai:local",
+      "ai:cloud"
+    ],
+    "navigationGroup": "audit",
+    "order": 2016
+  },
+  {
+    "id": "admin.overview",
+    "moduleId": "admin",
+    "title": "Admin Overview",
+    "route": "/mahavisphot/admin/overview",
+    "description": "Admin: Overview, readiness, and navigation surface.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:admin",
+      "admin:read",
+      "admin:write",
+      "billing:read",
+      "billing:write",
+      "security:read"
+    ],
+    "navigationGroup": "command map",
+    "order": 2101
+  },
+  {
+    "id": "admin.launch",
+    "moduleId": "admin",
+    "title": "Admin Launch",
+    "route": "/mahavisphot/admin/launch",
+    "description": "Admin: New, open, recovery, and project intent selection.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:admin",
+      "admin:read",
+      "admin:write",
+      "billing:read",
+      "billing:write",
+      "security:read"
+    ],
+    "navigationGroup": "project launch",
+    "order": 2102
+  },
+  {
+    "id": "admin.ingest",
+    "moduleId": "admin",
+    "title": "Admin Ingest",
+    "route": "/mahavisphot/admin/ingest",
+    "description": "Admin: Media intake, source validation, and evidence collection.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:admin",
+      "admin:read",
+      "admin:write",
+      "billing:read",
+      "billing:write",
+      "security:read"
+    ],
+    "navigationGroup": "media intake",
+    "order": 2103
+  },
+  {
+    "id": "admin.storyboard",
+    "moduleId": "admin",
+    "title": "Admin Storyboard",
+    "route": "/mahavisphot/admin/storyboard",
+    "description": "Admin: Boards, frame descriptions, captions, and shot order.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:admin",
+      "admin:read",
+      "admin:write",
+      "billing:read",
+      "billing:write",
+      "security:read"
+    ],
+    "navigationGroup": "story planning",
+    "order": 2104
+  },
+  {
+    "id": "admin.timeline",
+    "moduleId": "admin",
+    "title": "Admin Timeline",
+    "route": "/mahavisphot/admin/timeline",
+    "description": "Admin: Time-based assembly, tracks, clips, markers, and edits.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:admin",
+      "admin:read",
+      "admin:write",
+      "billing:read",
+      "billing:write",
+      "security:read"
+    ],
+    "navigationGroup": "timeline",
+    "order": 2105
+  },
+  {
+    "id": "admin.layers",
+    "moduleId": "admin",
+    "title": "Admin Layers",
+    "route": "/mahavisphot/admin/layers",
+    "description": "Admin: Layer routing, visibility, locking, and composition stack.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:admin",
+      "admin:read",
+      "admin:write",
+      "billing:read",
+      "billing:write",
+      "security:read"
+    ],
+    "navigationGroup": "layer control",
+    "order": 2106
+  },
+  {
+    "id": "admin.inspector",
+    "moduleId": "admin",
+    "title": "Admin Inspector",
+    "route": "/mahavisphot/admin/inspector",
+    "description": "Admin: Selected item metadata, numeric controls, and status.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:admin",
+      "admin:read",
+      "admin:write",
+      "billing:read",
+      "billing:write",
+      "security:read"
+    ],
+    "navigationGroup": "inspection",
+    "order": 2107
+  },
+  {
+    "id": "admin.node-graph",
+    "moduleId": "admin",
+    "title": "Admin Node Graph",
+    "route": "/mahavisphot/admin/node-graph",
+    "description": "Admin: Node pass planning, data flow, and render order.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:admin",
+      "admin:read",
+      "admin:write",
+      "billing:read",
+      "billing:write",
+      "security:read"
+    ],
+    "navigationGroup": "node workspace",
+    "order": 2108
+  },
+  {
+    "id": "admin.automation",
+    "moduleId": "admin",
+    "title": "Admin Automation",
+    "route": "/mahavisphot/admin/automation",
+    "description": "Admin: Repeatable operations, macro intent, and guarded actions.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:admin",
+      "admin:read",
+      "admin:write",
+      "billing:read",
+      "billing:write",
+      "security:read"
+    ],
+    "navigationGroup": "automation",
+    "order": 2109
+  },
+  {
+    "id": "admin.review",
+    "moduleId": "admin",
+    "title": "Admin Review",
+    "route": "/mahavisphot/admin/review",
+    "description": "Admin: Approval, compare, comments, and handoff checks.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:admin",
+      "admin:read",
+      "admin:write",
+      "billing:read",
+      "billing:write",
+      "security:read"
+    ],
+    "navigationGroup": "review",
+    "order": 2110
+  },
+  {
+    "id": "admin.collaboration",
+    "moduleId": "admin",
+    "title": "Admin Collaboration",
+    "route": "/mahavisphot/admin/collaboration",
+    "description": "Admin: Shared context, roles, assignments, and notes.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:admin",
+      "admin:read",
+      "admin:write",
+      "billing:read",
+      "billing:write",
+      "security:read"
+    ],
+    "navigationGroup": "collaboration",
+    "order": 2111
+  },
+  {
+    "id": "admin.settings",
+    "moduleId": "admin",
+    "title": "Admin Settings",
+    "route": "/mahavisphot/admin/settings",
+    "description": "Admin: Module configuration, safety defaults, and preferences.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:admin",
+      "admin:read",
+      "admin:write",
+      "billing:read",
+      "billing:write",
+      "security:read"
+    ],
+    "navigationGroup": "settings",
+    "order": 2112
+  },
+  {
+    "id": "admin.health",
+    "moduleId": "admin",
+    "title": "Admin Health",
+    "route": "/mahavisphot/admin/health",
+    "description": "Admin: Capability health, environment state, and blocked evidence.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:admin",
+      "admin:read",
+      "admin:write",
+      "billing:read",
+      "billing:write",
+      "security:read"
+    ],
+    "navigationGroup": "runtime health",
+    "order": 2113
+  },
+  {
+    "id": "admin.evidence",
+    "moduleId": "admin",
+    "title": "Admin Evidence",
+    "route": "/mahavisphot/admin/evidence",
+    "description": "Admin: Verification artifacts, logs, screenshots, and proof links.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:admin",
+      "admin:read",
+      "admin:write",
+      "billing:read",
+      "billing:write",
+      "security:read"
+    ],
+    "navigationGroup": "evidence",
+    "order": 2114
+  },
+  {
+    "id": "admin.export",
+    "moduleId": "admin",
+    "title": "Admin Export",
+    "route": "/mahavisphot/admin/export",
+    "description": "Admin: Data, media, manifest, and delivery package preparation.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:admin",
+      "admin:read",
+      "admin:write",
+      "billing:read",
+      "billing:write",
+      "security:read"
+    ],
+    "navigationGroup": "delivery",
+    "order": 2115
+  },
+  {
+    "id": "admin.audit",
+    "moduleId": "admin",
+    "title": "Admin Audit",
+    "route": "/mahavisphot/admin/audit",
+    "description": "Admin: Security, schema, access, and readiness review.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "project:admin",
+      "admin:read",
+      "admin:write",
+      "billing:read",
+      "billing:write",
+      "security:read"
+    ],
+    "navigationGroup": "audit",
+    "order": 2116
+  },
+  {
+    "id": "support.overview",
+    "moduleId": "support",
+    "title": "Support Overview",
+    "route": "/mahavisphot/support/overview",
+    "description": "Support: Overview, readiness, and navigation surface.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "support:read",
+      "support:write",
+      "project:read",
+      "security:read"
+    ],
+    "navigationGroup": "command map",
+    "order": 2201
+  },
+  {
+    "id": "support.launch",
+    "moduleId": "support",
+    "title": "Support Launch",
+    "route": "/mahavisphot/support/launch",
+    "description": "Support: New, open, recovery, and project intent selection.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "support:read",
+      "support:write",
+      "project:read",
+      "security:read"
+    ],
+    "navigationGroup": "project launch",
+    "order": 2202
+  },
+  {
+    "id": "support.ingest",
+    "moduleId": "support",
+    "title": "Support Ingest",
+    "route": "/mahavisphot/support/ingest",
+    "description": "Support: Media intake, source validation, and evidence collection.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "support:read",
+      "support:write",
+      "project:read",
+      "security:read"
+    ],
+    "navigationGroup": "media intake",
+    "order": 2203
+  },
+  {
+    "id": "support.storyboard",
+    "moduleId": "support",
+    "title": "Support Storyboard",
+    "route": "/mahavisphot/support/storyboard",
+    "description": "Support: Boards, frame descriptions, captions, and shot order.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "support:read",
+      "support:write",
+      "project:read",
+      "security:read"
+    ],
+    "navigationGroup": "story planning",
+    "order": 2204
+  },
+  {
+    "id": "support.timeline",
+    "moduleId": "support",
+    "title": "Support Timeline",
+    "route": "/mahavisphot/support/timeline",
+    "description": "Support: Time-based assembly, tracks, clips, markers, and edits.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "support:read",
+      "support:write",
+      "project:read",
+      "security:read"
+    ],
+    "navigationGroup": "timeline",
+    "order": 2205
+  },
+  {
+    "id": "support.layers",
+    "moduleId": "support",
+    "title": "Support Layers",
+    "route": "/mahavisphot/support/layers",
+    "description": "Support: Layer routing, visibility, locking, and composition stack.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "support:read",
+      "support:write",
+      "project:read",
+      "security:read"
+    ],
+    "navigationGroup": "layer control",
+    "order": 2206
+  },
+  {
+    "id": "support.inspector",
+    "moduleId": "support",
+    "title": "Support Inspector",
+    "route": "/mahavisphot/support/inspector",
+    "description": "Support: Selected item metadata, numeric controls, and status.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "support:read",
+      "support:write",
+      "project:read",
+      "security:read"
+    ],
+    "navigationGroup": "inspection",
+    "order": 2207
+  },
+  {
+    "id": "support.node-graph",
+    "moduleId": "support",
+    "title": "Support Node Graph",
+    "route": "/mahavisphot/support/node-graph",
+    "description": "Support: Node pass planning, data flow, and render order.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "support:read",
+      "support:write",
+      "project:read",
+      "security:read"
+    ],
+    "navigationGroup": "node workspace",
+    "order": 2208
+  },
+  {
+    "id": "support.automation",
+    "moduleId": "support",
+    "title": "Support Automation",
+    "route": "/mahavisphot/support/automation",
+    "description": "Support: Repeatable operations, macro intent, and guarded actions.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "support:read",
+      "support:write",
+      "project:read",
+      "security:read"
+    ],
+    "navigationGroup": "automation",
+    "order": 2209
+  },
+  {
+    "id": "support.review",
+    "moduleId": "support",
+    "title": "Support Review",
+    "route": "/mahavisphot/support/review",
+    "description": "Support: Approval, compare, comments, and handoff checks.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "support:read",
+      "support:write",
+      "project:read",
+      "security:read"
+    ],
+    "navigationGroup": "review",
+    "order": 2210
+  },
+  {
+    "id": "support.collaboration",
+    "moduleId": "support",
+    "title": "Support Collaboration",
+    "route": "/mahavisphot/support/collaboration",
+    "description": "Support: Shared context, roles, assignments, and notes.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "support:read",
+      "support:write",
+      "project:read",
+      "security:read"
+    ],
+    "navigationGroup": "collaboration",
+    "order": 2211
+  },
+  {
+    "id": "support.settings",
+    "moduleId": "support",
+    "title": "Support Settings",
+    "route": "/mahavisphot/support/settings",
+    "description": "Support: Module configuration, safety defaults, and preferences.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "support:read",
+      "support:write",
+      "project:read",
+      "security:read"
+    ],
+    "navigationGroup": "settings",
+    "order": 2212
+  },
+  {
+    "id": "support.health",
+    "moduleId": "support",
+    "title": "Support Health",
+    "route": "/mahavisphot/support/health",
+    "description": "Support: Capability health, environment state, and blocked evidence.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "support:read",
+      "support:write",
+      "project:read",
+      "security:read"
+    ],
+    "navigationGroup": "runtime health",
+    "order": 2213
+  },
+  {
+    "id": "support.evidence",
+    "moduleId": "support",
+    "title": "Support Evidence",
+    "route": "/mahavisphot/support/evidence",
+    "description": "Support: Verification artifacts, logs, screenshots, and proof links.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "support:read",
+      "support:write",
+      "project:read",
+      "security:read"
+    ],
+    "navigationGroup": "evidence",
+    "order": 2214
+  },
+  {
+    "id": "support.export",
+    "moduleId": "support",
+    "title": "Support Export",
+    "route": "/mahavisphot/support/export",
+    "description": "Support: Data, media, manifest, and delivery package preparation.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "support:read",
+      "support:write",
+      "project:read",
+      "security:read"
+    ],
+    "navigationGroup": "delivery",
+    "order": 2215
+  },
+  {
+    "id": "support.audit",
+    "moduleId": "support",
+    "title": "Support Audit",
+    "route": "/mahavisphot/support/audit",
+    "description": "Support: Security, schema, access, and readiness review.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "support:read",
+      "support:write",
+      "project:read",
+      "security:read"
+    ],
+    "navigationGroup": "audit",
+    "order": 2216
+  },
+  {
+    "id": "developer-platform.overview",
+    "moduleId": "developer-platform",
+    "title": "Developer Platform Overview",
+    "route": "/mahavisphot/developer-platform/overview",
+    "description": "Developer Platform: Overview, readiness, and navigation surface.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "developer:read",
+      "developer:write",
+      "project:read"
+    ],
+    "navigationGroup": "command map",
+    "order": 2301
+  },
+  {
+    "id": "developer-platform.launch",
+    "moduleId": "developer-platform",
+    "title": "Developer Platform Launch",
+    "route": "/mahavisphot/developer-platform/launch",
+    "description": "Developer Platform: New, open, recovery, and project intent selection.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "developer:read",
+      "developer:write",
+      "project:read"
+    ],
+    "navigationGroup": "project launch",
+    "order": 2302
+  },
+  {
+    "id": "developer-platform.ingest",
+    "moduleId": "developer-platform",
+    "title": "Developer Platform Ingest",
+    "route": "/mahavisphot/developer-platform/ingest",
+    "description": "Developer Platform: Media intake, source validation, and evidence collection.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "developer:read",
+      "developer:write",
+      "project:read"
+    ],
+    "navigationGroup": "media intake",
+    "order": 2303
+  },
+  {
+    "id": "developer-platform.storyboard",
+    "moduleId": "developer-platform",
+    "title": "Developer Platform Storyboard",
+    "route": "/mahavisphot/developer-platform/storyboard",
+    "description": "Developer Platform: Boards, frame descriptions, captions, and shot order.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "developer:read",
+      "developer:write",
+      "project:read"
+    ],
+    "navigationGroup": "story planning",
+    "order": 2304
+  },
+  {
+    "id": "developer-platform.timeline",
+    "moduleId": "developer-platform",
+    "title": "Developer Platform Timeline",
+    "route": "/mahavisphot/developer-platform/timeline",
+    "description": "Developer Platform: Time-based assembly, tracks, clips, markers, and edits.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "developer:read",
+      "developer:write",
+      "project:read"
+    ],
+    "navigationGroup": "timeline",
+    "order": 2305
+  },
+  {
+    "id": "developer-platform.layers",
+    "moduleId": "developer-platform",
+    "title": "Developer Platform Layers",
+    "route": "/mahavisphot/developer-platform/layers",
+    "description": "Developer Platform: Layer routing, visibility, locking, and composition stack.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "developer:read",
+      "developer:write",
+      "project:read"
+    ],
+    "navigationGroup": "layer control",
+    "order": 2306
+  },
+  {
+    "id": "developer-platform.inspector",
+    "moduleId": "developer-platform",
+    "title": "Developer Platform Inspector",
+    "route": "/mahavisphot/developer-platform/inspector",
+    "description": "Developer Platform: Selected item metadata, numeric controls, and status.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "developer:read",
+      "developer:write",
+      "project:read"
+    ],
+    "navigationGroup": "inspection",
+    "order": 2307
+  },
+  {
+    "id": "developer-platform.node-graph",
+    "moduleId": "developer-platform",
+    "title": "Developer Platform Node Graph",
+    "route": "/mahavisphot/developer-platform/node-graph",
+    "description": "Developer Platform: Node pass planning, data flow, and render order.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "developer:read",
+      "developer:write",
+      "project:read"
+    ],
+    "navigationGroup": "node workspace",
+    "order": 2308
+  },
+  {
+    "id": "developer-platform.automation",
+    "moduleId": "developer-platform",
+    "title": "Developer Platform Automation",
+    "route": "/mahavisphot/developer-platform/automation",
+    "description": "Developer Platform: Repeatable operations, macro intent, and guarded actions.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "developer:read",
+      "developer:write",
+      "project:read"
+    ],
+    "navigationGroup": "automation",
+    "order": 2309
+  },
+  {
+    "id": "developer-platform.review",
+    "moduleId": "developer-platform",
+    "title": "Developer Platform Review",
+    "route": "/mahavisphot/developer-platform/review",
+    "description": "Developer Platform: Approval, compare, comments, and handoff checks.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "developer:read",
+      "developer:write",
+      "project:read"
+    ],
+    "navigationGroup": "review",
+    "order": 2310
+  },
+  {
+    "id": "developer-platform.collaboration",
+    "moduleId": "developer-platform",
+    "title": "Developer Platform Collaboration",
+    "route": "/mahavisphot/developer-platform/collaboration",
+    "description": "Developer Platform: Shared context, roles, assignments, and notes.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "developer:read",
+      "developer:write",
+      "project:read"
+    ],
+    "navigationGroup": "collaboration",
+    "order": 2311
+  },
+  {
+    "id": "developer-platform.settings",
+    "moduleId": "developer-platform",
+    "title": "Developer Platform Settings",
+    "route": "/mahavisphot/developer-platform/settings",
+    "description": "Developer Platform: Module configuration, safety defaults, and preferences.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "developer:read",
+      "developer:write",
+      "project:read"
+    ],
+    "navigationGroup": "settings",
+    "order": 2312
+  },
+  {
+    "id": "developer-platform.health",
+    "moduleId": "developer-platform",
+    "title": "Developer Platform Health",
+    "route": "/mahavisphot/developer-platform/health",
+    "description": "Developer Platform: Capability health, environment state, and blocked evidence.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "developer:read",
+      "developer:write",
+      "project:read"
+    ],
+    "navigationGroup": "runtime health",
+    "order": 2313
+  },
+  {
+    "id": "developer-platform.evidence",
+    "moduleId": "developer-platform",
+    "title": "Developer Platform Evidence",
+    "route": "/mahavisphot/developer-platform/evidence",
+    "description": "Developer Platform: Verification artifacts, logs, screenshots, and proof links.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "developer:read",
+      "developer:write",
+      "project:read"
+    ],
+    "navigationGroup": "evidence",
+    "order": 2314
+  },
+  {
+    "id": "developer-platform.export",
+    "moduleId": "developer-platform",
+    "title": "Developer Platform Export",
+    "route": "/mahavisphot/developer-platform/export",
+    "description": "Developer Platform: Data, media, manifest, and delivery package preparation.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "developer:read",
+      "developer:write",
+      "project:read"
+    ],
+    "navigationGroup": "delivery",
+    "order": 2315
+  },
+  {
+    "id": "developer-platform.audit",
+    "moduleId": "developer-platform",
+    "title": "Developer Platform Audit",
+    "route": "/mahavisphot/developer-platform/audit",
+    "description": "Developer Platform: Security, schema, access, and readiness review.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "developer:read",
+      "developer:write",
+      "project:read"
+    ],
+    "navigationGroup": "audit",
+    "order": 2316
+  },
+  {
+    "id": "security-recovery.overview",
+    "moduleId": "security-recovery",
+    "title": "Security Recovery Overview",
+    "route": "/mahavisphot/security-recovery/overview",
+    "description": "Security Recovery: Overview, readiness, and navigation surface.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "security:read",
+      "security:write",
+      "project:admin"
+    ],
+    "navigationGroup": "command map",
+    "order": 2401
+  },
+  {
+    "id": "security-recovery.launch",
+    "moduleId": "security-recovery",
+    "title": "Security Recovery Launch",
+    "route": "/mahavisphot/security-recovery/launch",
+    "description": "Security Recovery: New, open, recovery, and project intent selection.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "security:read",
+      "security:write",
+      "project:admin"
+    ],
+    "navigationGroup": "project launch",
+    "order": 2402
+  },
+  {
+    "id": "security-recovery.ingest",
+    "moduleId": "security-recovery",
+    "title": "Security Recovery Ingest",
+    "route": "/mahavisphot/security-recovery/ingest",
+    "description": "Security Recovery: Media intake, source validation, and evidence collection.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "security:read",
+      "security:write",
+      "project:admin"
+    ],
+    "navigationGroup": "media intake",
+    "order": 2403
+  },
+  {
+    "id": "security-recovery.storyboard",
+    "moduleId": "security-recovery",
+    "title": "Security Recovery Storyboard",
+    "route": "/mahavisphot/security-recovery/storyboard",
+    "description": "Security Recovery: Boards, frame descriptions, captions, and shot order.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "security:read",
+      "security:write",
+      "project:admin"
+    ],
+    "navigationGroup": "story planning",
+    "order": 2404
+  },
+  {
+    "id": "security-recovery.timeline",
+    "moduleId": "security-recovery",
+    "title": "Security Recovery Timeline",
+    "route": "/mahavisphot/security-recovery/timeline",
+    "description": "Security Recovery: Time-based assembly, tracks, clips, markers, and edits.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "security:read",
+      "security:write",
+      "project:admin"
+    ],
+    "navigationGroup": "timeline",
+    "order": 2405
+  },
+  {
+    "id": "security-recovery.layers",
+    "moduleId": "security-recovery",
+    "title": "Security Recovery Layers",
+    "route": "/mahavisphot/security-recovery/layers",
+    "description": "Security Recovery: Layer routing, visibility, locking, and composition stack.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "security:read",
+      "security:write",
+      "project:admin"
+    ],
+    "navigationGroup": "layer control",
+    "order": 2406
+  },
+  {
+    "id": "security-recovery.inspector",
+    "moduleId": "security-recovery",
+    "title": "Security Recovery Inspector",
+    "route": "/mahavisphot/security-recovery/inspector",
+    "description": "Security Recovery: Selected item metadata, numeric controls, and status.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "security:read",
+      "security:write",
+      "project:admin"
+    ],
+    "navigationGroup": "inspection",
+    "order": 2407
+  },
+  {
+    "id": "security-recovery.node-graph",
+    "moduleId": "security-recovery",
+    "title": "Security Recovery Node Graph",
+    "route": "/mahavisphot/security-recovery/node-graph",
+    "description": "Security Recovery: Node pass planning, data flow, and render order.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "security:read",
+      "security:write",
+      "project:admin"
+    ],
+    "navigationGroup": "node workspace",
+    "order": 2408
+  },
+  {
+    "id": "security-recovery.automation",
+    "moduleId": "security-recovery",
+    "title": "Security Recovery Automation",
+    "route": "/mahavisphot/security-recovery/automation",
+    "description": "Security Recovery: Repeatable operations, macro intent, and guarded actions.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "security:read",
+      "security:write",
+      "project:admin"
+    ],
+    "navigationGroup": "automation",
+    "order": 2409
+  },
+  {
+    "id": "security-recovery.review",
+    "moduleId": "security-recovery",
+    "title": "Security Recovery Review",
+    "route": "/mahavisphot/security-recovery/review",
+    "description": "Security Recovery: Approval, compare, comments, and handoff checks.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "security:read",
+      "security:write",
+      "project:admin"
+    ],
+    "navigationGroup": "review",
+    "order": 2410
+  },
+  {
+    "id": "security-recovery.collaboration",
+    "moduleId": "security-recovery",
+    "title": "Security Recovery Collaboration",
+    "route": "/mahavisphot/security-recovery/collaboration",
+    "description": "Security Recovery: Shared context, roles, assignments, and notes.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "security:read",
+      "security:write",
+      "project:admin"
+    ],
+    "navigationGroup": "collaboration",
+    "order": 2411
+  },
+  {
+    "id": "security-recovery.settings",
+    "moduleId": "security-recovery",
+    "title": "Security Recovery Settings",
+    "route": "/mahavisphot/security-recovery/settings",
+    "description": "Security Recovery: Module configuration, safety defaults, and preferences.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "security:read",
+      "security:write",
+      "project:admin"
+    ],
+    "navigationGroup": "settings",
+    "order": 2412
+  },
+  {
+    "id": "security-recovery.health",
+    "moduleId": "security-recovery",
+    "title": "Security Recovery Health",
+    "route": "/mahavisphot/security-recovery/health",
+    "description": "Security Recovery: Capability health, environment state, and blocked evidence.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "security:read",
+      "security:write",
+      "project:admin"
+    ],
+    "navigationGroup": "runtime health",
+    "order": 2413
+  },
+  {
+    "id": "security-recovery.evidence",
+    "moduleId": "security-recovery",
+    "title": "Security Recovery Evidence",
+    "route": "/mahavisphot/security-recovery/evidence",
+    "description": "Security Recovery: Verification artifacts, logs, screenshots, and proof links.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "security:read",
+      "security:write",
+      "project:admin"
+    ],
+    "navigationGroup": "evidence",
+    "order": 2414
+  },
+  {
+    "id": "security-recovery.export",
+    "moduleId": "security-recovery",
+    "title": "Security Recovery Export",
+    "route": "/mahavisphot/security-recovery/export",
+    "description": "Security Recovery: Data, media, manifest, and delivery package preparation.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "security:read",
+      "security:write",
+      "project:admin"
+    ],
+    "navigationGroup": "delivery",
+    "order": 2415
+  },
+  {
+    "id": "security-recovery.audit",
+    "moduleId": "security-recovery",
+    "title": "Security Recovery Audit",
+    "route": "/mahavisphot/security-recovery/audit",
+    "description": "Security Recovery: Security, schema, access, and readiness review.",
+    "status": "planned",
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "permissions": [
+      "security:read",
+      "security:write",
+      "project:admin"
+    ],
+    "navigationGroup": "audit",
+    "order": 2416
+  }
+] as const satisfies ReadonlyArray<MahavisphotPage>;

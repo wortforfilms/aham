@@ -1,0 +1,4295 @@
+[
+  {
+    "id": "editor.list",
+    "moduleId": "editor",
+    "method": "GET",
+    "path": "/api/v1/editor/records",
+    "description": "Editor: List records for the module.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.editor.list.request",
+    "responseSchema": "mahavisphot.schema.v1.editor.list.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1
+  },
+  {
+    "id": "editor.create",
+    "moduleId": "editor",
+    "method": "POST",
+    "path": "/api/v1/editor/records",
+    "description": "Editor: Create a validated module record.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.editor.create.request",
+    "responseSchema": "mahavisphot.schema.v1.editor.create.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 2
+  },
+  {
+    "id": "editor.read",
+    "moduleId": "editor",
+    "method": "GET",
+    "path": "/api/v1/editor/records/{recordId}",
+    "description": "Editor: Read one module record by stable id.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.editor.read.request",
+    "responseSchema": "mahavisphot.schema.v1.editor.read.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 3
+  },
+  {
+    "id": "editor.update",
+    "moduleId": "editor",
+    "method": "PUT",
+    "path": "/api/v1/editor/records/{recordId}",
+    "description": "Editor: Replace a validated module record.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.editor.update.request",
+    "responseSchema": "mahavisphot.schema.v1.editor.update.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 4
+  },
+  {
+    "id": "editor.delete",
+    "moduleId": "editor",
+    "method": "DELETE",
+    "path": "/api/v1/editor/records/{recordId}",
+    "description": "Editor: Delete one module record through policy gates.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.editor.delete.request",
+    "responseSchema": "mahavisphot.schema.v1.editor.delete.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 5
+  },
+  {
+    "id": "editor.health",
+    "moduleId": "editor",
+    "method": "GET",
+    "path": "/api/v1/editor/health",
+    "description": "Editor: Read module readiness and evidence state.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.editor.health.request",
+    "responseSchema": "mahavisphot.schema.v1.editor.health.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 6
+  },
+  {
+    "id": "compositor.list",
+    "moduleId": "compositor",
+    "method": "GET",
+    "path": "/api/v1/compositor/records",
+    "description": "Compositor: List records for the module.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.compositor.list.request",
+    "responseSchema": "mahavisphot.schema.v1.compositor.list.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 101
+  },
+  {
+    "id": "compositor.create",
+    "moduleId": "compositor",
+    "method": "POST",
+    "path": "/api/v1/compositor/records",
+    "description": "Compositor: Create a validated module record.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.compositor.create.request",
+    "responseSchema": "mahavisphot.schema.v1.compositor.create.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 102
+  },
+  {
+    "id": "compositor.read",
+    "moduleId": "compositor",
+    "method": "GET",
+    "path": "/api/v1/compositor/records/{recordId}",
+    "description": "Compositor: Read one module record by stable id.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.compositor.read.request",
+    "responseSchema": "mahavisphot.schema.v1.compositor.read.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 103
+  },
+  {
+    "id": "compositor.update",
+    "moduleId": "compositor",
+    "method": "PUT",
+    "path": "/api/v1/compositor/records/{recordId}",
+    "description": "Compositor: Replace a validated module record.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.compositor.update.request",
+    "responseSchema": "mahavisphot.schema.v1.compositor.update.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 104
+  },
+  {
+    "id": "compositor.delete",
+    "moduleId": "compositor",
+    "method": "DELETE",
+    "path": "/api/v1/compositor/records/{recordId}",
+    "description": "Compositor: Delete one module record through policy gates.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.compositor.delete.request",
+    "responseSchema": "mahavisphot.schema.v1.compositor.delete.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 105
+  },
+  {
+    "id": "compositor.health",
+    "moduleId": "compositor",
+    "method": "GET",
+    "path": "/api/v1/compositor/health",
+    "description": "Compositor: Read module readiness and evidence state.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.compositor.health.request",
+    "responseSchema": "mahavisphot.schema.v1.compositor.health.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 106
+  },
+  {
+    "id": "vfx-studio.list",
+    "moduleId": "vfx-studio",
+    "method": "GET",
+    "path": "/api/v1/vfx-studio/records",
+    "description": "VFX Studio: List records for the module.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.vfx-studio.list.request",
+    "responseSchema": "mahavisphot.schema.v1.vfx-studio.list.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 201
+  },
+  {
+    "id": "vfx-studio.create",
+    "moduleId": "vfx-studio",
+    "method": "POST",
+    "path": "/api/v1/vfx-studio/records",
+    "description": "VFX Studio: Create a validated module record.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.vfx-studio.create.request",
+    "responseSchema": "mahavisphot.schema.v1.vfx-studio.create.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 202
+  },
+  {
+    "id": "vfx-studio.read",
+    "moduleId": "vfx-studio",
+    "method": "GET",
+    "path": "/api/v1/vfx-studio/records/{recordId}",
+    "description": "VFX Studio: Read one module record by stable id.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.vfx-studio.read.request",
+    "responseSchema": "mahavisphot.schema.v1.vfx-studio.read.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 203
+  },
+  {
+    "id": "vfx-studio.update",
+    "moduleId": "vfx-studio",
+    "method": "PUT",
+    "path": "/api/v1/vfx-studio/records/{recordId}",
+    "description": "VFX Studio: Replace a validated module record.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.vfx-studio.update.request",
+    "responseSchema": "mahavisphot.schema.v1.vfx-studio.update.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 204
+  },
+  {
+    "id": "vfx-studio.delete",
+    "moduleId": "vfx-studio",
+    "method": "DELETE",
+    "path": "/api/v1/vfx-studio/records/{recordId}",
+    "description": "VFX Studio: Delete one module record through policy gates.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.vfx-studio.delete.request",
+    "responseSchema": "mahavisphot.schema.v1.vfx-studio.delete.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 205
+  },
+  {
+    "id": "vfx-studio.health",
+    "moduleId": "vfx-studio",
+    "method": "GET",
+    "path": "/api/v1/vfx-studio/health",
+    "description": "VFX Studio: Read module readiness and evidence state.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.vfx-studio.health.request",
+    "responseSchema": "mahavisphot.schema.v1.vfx-studio.health.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 206
+  },
+  {
+    "id": "particle-studio.list",
+    "moduleId": "particle-studio",
+    "method": "GET",
+    "path": "/api/v1/particle-studio/records",
+    "description": "Particle Studio: List records for the module.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.particle-studio.list.request",
+    "responseSchema": "mahavisphot.schema.v1.particle-studio.list.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 301
+  },
+  {
+    "id": "particle-studio.create",
+    "moduleId": "particle-studio",
+    "method": "POST",
+    "path": "/api/v1/particle-studio/records",
+    "description": "Particle Studio: Create a validated module record.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.particle-studio.create.request",
+    "responseSchema": "mahavisphot.schema.v1.particle-studio.create.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 302
+  },
+  {
+    "id": "particle-studio.read",
+    "moduleId": "particle-studio",
+    "method": "GET",
+    "path": "/api/v1/particle-studio/records/{recordId}",
+    "description": "Particle Studio: Read one module record by stable id.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.particle-studio.read.request",
+    "responseSchema": "mahavisphot.schema.v1.particle-studio.read.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 303
+  },
+  {
+    "id": "particle-studio.update",
+    "moduleId": "particle-studio",
+    "method": "PUT",
+    "path": "/api/v1/particle-studio/records/{recordId}",
+    "description": "Particle Studio: Replace a validated module record.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.particle-studio.update.request",
+    "responseSchema": "mahavisphot.schema.v1.particle-studio.update.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 304
+  },
+  {
+    "id": "particle-studio.delete",
+    "moduleId": "particle-studio",
+    "method": "DELETE",
+    "path": "/api/v1/particle-studio/records/{recordId}",
+    "description": "Particle Studio: Delete one module record through policy gates.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.particle-studio.delete.request",
+    "responseSchema": "mahavisphot.schema.v1.particle-studio.delete.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 305
+  },
+  {
+    "id": "particle-studio.health",
+    "moduleId": "particle-studio",
+    "method": "GET",
+    "path": "/api/v1/particle-studio/health",
+    "description": "Particle Studio: Read module readiness and evidence state.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.particle-studio.health.request",
+    "responseSchema": "mahavisphot.schema.v1.particle-studio.health.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 306
+  },
+  {
+    "id": "digital-makeup-studio.list",
+    "moduleId": "digital-makeup-studio",
+    "method": "GET",
+    "path": "/api/v1/digital-makeup-studio/records",
+    "description": "Digital Makeup Studio: List records for the module.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.digital-makeup-studio.list.request",
+    "responseSchema": "mahavisphot.schema.v1.digital-makeup-studio.list.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 401
+  },
+  {
+    "id": "digital-makeup-studio.create",
+    "moduleId": "digital-makeup-studio",
+    "method": "POST",
+    "path": "/api/v1/digital-makeup-studio/records",
+    "description": "Digital Makeup Studio: Create a validated module record.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.digital-makeup-studio.create.request",
+    "responseSchema": "mahavisphot.schema.v1.digital-makeup-studio.create.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 402
+  },
+  {
+    "id": "digital-makeup-studio.read",
+    "moduleId": "digital-makeup-studio",
+    "method": "GET",
+    "path": "/api/v1/digital-makeup-studio/records/{recordId}",
+    "description": "Digital Makeup Studio: Read one module record by stable id.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.digital-makeup-studio.read.request",
+    "responseSchema": "mahavisphot.schema.v1.digital-makeup-studio.read.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 403
+  },
+  {
+    "id": "digital-makeup-studio.update",
+    "moduleId": "digital-makeup-studio",
+    "method": "PUT",
+    "path": "/api/v1/digital-makeup-studio/records/{recordId}",
+    "description": "Digital Makeup Studio: Replace a validated module record.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.digital-makeup-studio.update.request",
+    "responseSchema": "mahavisphot.schema.v1.digital-makeup-studio.update.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 404
+  },
+  {
+    "id": "digital-makeup-studio.delete",
+    "moduleId": "digital-makeup-studio",
+    "method": "DELETE",
+    "path": "/api/v1/digital-makeup-studio/records/{recordId}",
+    "description": "Digital Makeup Studio: Delete one module record through policy gates.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.digital-makeup-studio.delete.request",
+    "responseSchema": "mahavisphot.schema.v1.digital-makeup-studio.delete.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 405
+  },
+  {
+    "id": "digital-makeup-studio.health",
+    "moduleId": "digital-makeup-studio",
+    "method": "GET",
+    "path": "/api/v1/digital-makeup-studio/health",
+    "description": "Digital Makeup Studio: Read module readiness and evidence state.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.digital-makeup-studio.health.request",
+    "responseSchema": "mahavisphot.schema.v1.digital-makeup-studio.health.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 406
+  },
+  {
+    "id": "costume-studio.list",
+    "moduleId": "costume-studio",
+    "method": "GET",
+    "path": "/api/v1/costume-studio/records",
+    "description": "Costume Studio: List records for the module.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.costume-studio.list.request",
+    "responseSchema": "mahavisphot.schema.v1.costume-studio.list.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 501
+  },
+  {
+    "id": "costume-studio.create",
+    "moduleId": "costume-studio",
+    "method": "POST",
+    "path": "/api/v1/costume-studio/records",
+    "description": "Costume Studio: Create a validated module record.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.costume-studio.create.request",
+    "responseSchema": "mahavisphot.schema.v1.costume-studio.create.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 502
+  },
+  {
+    "id": "costume-studio.read",
+    "moduleId": "costume-studio",
+    "method": "GET",
+    "path": "/api/v1/costume-studio/records/{recordId}",
+    "description": "Costume Studio: Read one module record by stable id.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.costume-studio.read.request",
+    "responseSchema": "mahavisphot.schema.v1.costume-studio.read.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 503
+  },
+  {
+    "id": "costume-studio.update",
+    "moduleId": "costume-studio",
+    "method": "PUT",
+    "path": "/api/v1/costume-studio/records/{recordId}",
+    "description": "Costume Studio: Replace a validated module record.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.costume-studio.update.request",
+    "responseSchema": "mahavisphot.schema.v1.costume-studio.update.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 504
+  },
+  {
+    "id": "costume-studio.delete",
+    "moduleId": "costume-studio",
+    "method": "DELETE",
+    "path": "/api/v1/costume-studio/records/{recordId}",
+    "description": "Costume Studio: Delete one module record through policy gates.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.costume-studio.delete.request",
+    "responseSchema": "mahavisphot.schema.v1.costume-studio.delete.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 505
+  },
+  {
+    "id": "costume-studio.health",
+    "moduleId": "costume-studio",
+    "method": "GET",
+    "path": "/api/v1/costume-studio/health",
+    "description": "Costume Studio: Read module readiness and evidence state.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.costume-studio.health.request",
+    "responseSchema": "mahavisphot.schema.v1.costume-studio.health.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 506
+  },
+  {
+    "id": "props-studio.list",
+    "moduleId": "props-studio",
+    "method": "GET",
+    "path": "/api/v1/props-studio/records",
+    "description": "Props Studio: List records for the module.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.props-studio.list.request",
+    "responseSchema": "mahavisphot.schema.v1.props-studio.list.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 601
+  },
+  {
+    "id": "props-studio.create",
+    "moduleId": "props-studio",
+    "method": "POST",
+    "path": "/api/v1/props-studio/records",
+    "description": "Props Studio: Create a validated module record.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.props-studio.create.request",
+    "responseSchema": "mahavisphot.schema.v1.props-studio.create.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 602
+  },
+  {
+    "id": "props-studio.read",
+    "moduleId": "props-studio",
+    "method": "GET",
+    "path": "/api/v1/props-studio/records/{recordId}",
+    "description": "Props Studio: Read one module record by stable id.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.props-studio.read.request",
+    "responseSchema": "mahavisphot.schema.v1.props-studio.read.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 603
+  },
+  {
+    "id": "props-studio.update",
+    "moduleId": "props-studio",
+    "method": "PUT",
+    "path": "/api/v1/props-studio/records/{recordId}",
+    "description": "Props Studio: Replace a validated module record.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.props-studio.update.request",
+    "responseSchema": "mahavisphot.schema.v1.props-studio.update.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 604
+  },
+  {
+    "id": "props-studio.delete",
+    "moduleId": "props-studio",
+    "method": "DELETE",
+    "path": "/api/v1/props-studio/records/{recordId}",
+    "description": "Props Studio: Delete one module record through policy gates.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.props-studio.delete.request",
+    "responseSchema": "mahavisphot.schema.v1.props-studio.delete.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 605
+  },
+  {
+    "id": "props-studio.health",
+    "moduleId": "props-studio",
+    "method": "GET",
+    "path": "/api/v1/props-studio/health",
+    "description": "Props Studio: Read module readiness and evidence state.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.props-studio.health.request",
+    "responseSchema": "mahavisphot.schema.v1.props-studio.health.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 606
+  },
+  {
+    "id": "toon-designer-studio.list",
+    "moduleId": "toon-designer-studio",
+    "method": "GET",
+    "path": "/api/v1/toon-designer-studio/records",
+    "description": "Toon Designer Studio: List records for the module.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.toon-designer-studio.list.request",
+    "responseSchema": "mahavisphot.schema.v1.toon-designer-studio.list.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 701
+  },
+  {
+    "id": "toon-designer-studio.create",
+    "moduleId": "toon-designer-studio",
+    "method": "POST",
+    "path": "/api/v1/toon-designer-studio/records",
+    "description": "Toon Designer Studio: Create a validated module record.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.toon-designer-studio.create.request",
+    "responseSchema": "mahavisphot.schema.v1.toon-designer-studio.create.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 702
+  },
+  {
+    "id": "toon-designer-studio.read",
+    "moduleId": "toon-designer-studio",
+    "method": "GET",
+    "path": "/api/v1/toon-designer-studio/records/{recordId}",
+    "description": "Toon Designer Studio: Read one module record by stable id.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.toon-designer-studio.read.request",
+    "responseSchema": "mahavisphot.schema.v1.toon-designer-studio.read.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 703
+  },
+  {
+    "id": "toon-designer-studio.update",
+    "moduleId": "toon-designer-studio",
+    "method": "PUT",
+    "path": "/api/v1/toon-designer-studio/records/{recordId}",
+    "description": "Toon Designer Studio: Replace a validated module record.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.toon-designer-studio.update.request",
+    "responseSchema": "mahavisphot.schema.v1.toon-designer-studio.update.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 704
+  },
+  {
+    "id": "toon-designer-studio.delete",
+    "moduleId": "toon-designer-studio",
+    "method": "DELETE",
+    "path": "/api/v1/toon-designer-studio/records/{recordId}",
+    "description": "Toon Designer Studio: Delete one module record through policy gates.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.toon-designer-studio.delete.request",
+    "responseSchema": "mahavisphot.schema.v1.toon-designer-studio.delete.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 705
+  },
+  {
+    "id": "toon-designer-studio.health",
+    "moduleId": "toon-designer-studio",
+    "method": "GET",
+    "path": "/api/v1/toon-designer-studio/health",
+    "description": "Toon Designer Studio: Read module readiness and evidence state.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.toon-designer-studio.health.request",
+    "responseSchema": "mahavisphot.schema.v1.toon-designer-studio.health.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 706
+  },
+  {
+    "id": "cel-animation-studio.list",
+    "moduleId": "cel-animation-studio",
+    "method": "GET",
+    "path": "/api/v1/cel-animation-studio/records",
+    "description": "Cel Animation Studio: List records for the module.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.cel-animation-studio.list.request",
+    "responseSchema": "mahavisphot.schema.v1.cel-animation-studio.list.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 801
+  },
+  {
+    "id": "cel-animation-studio.create",
+    "moduleId": "cel-animation-studio",
+    "method": "POST",
+    "path": "/api/v1/cel-animation-studio/records",
+    "description": "Cel Animation Studio: Create a validated module record.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.cel-animation-studio.create.request",
+    "responseSchema": "mahavisphot.schema.v1.cel-animation-studio.create.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 802
+  },
+  {
+    "id": "cel-animation-studio.read",
+    "moduleId": "cel-animation-studio",
+    "method": "GET",
+    "path": "/api/v1/cel-animation-studio/records/{recordId}",
+    "description": "Cel Animation Studio: Read one module record by stable id.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.cel-animation-studio.read.request",
+    "responseSchema": "mahavisphot.schema.v1.cel-animation-studio.read.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 803
+  },
+  {
+    "id": "cel-animation-studio.update",
+    "moduleId": "cel-animation-studio",
+    "method": "PUT",
+    "path": "/api/v1/cel-animation-studio/records/{recordId}",
+    "description": "Cel Animation Studio: Replace a validated module record.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.cel-animation-studio.update.request",
+    "responseSchema": "mahavisphot.schema.v1.cel-animation-studio.update.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 804
+  },
+  {
+    "id": "cel-animation-studio.delete",
+    "moduleId": "cel-animation-studio",
+    "method": "DELETE",
+    "path": "/api/v1/cel-animation-studio/records/{recordId}",
+    "description": "Cel Animation Studio: Delete one module record through policy gates.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.cel-animation-studio.delete.request",
+    "responseSchema": "mahavisphot.schema.v1.cel-animation-studio.delete.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 805
+  },
+  {
+    "id": "cel-animation-studio.health",
+    "moduleId": "cel-animation-studio",
+    "method": "GET",
+    "path": "/api/v1/cel-animation-studio/health",
+    "description": "Cel Animation Studio: Read module readiness and evidence state.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.cel-animation-studio.health.request",
+    "responseSchema": "mahavisphot.schema.v1.cel-animation-studio.health.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 806
+  },
+  {
+    "id": "comic-studio.list",
+    "moduleId": "comic-studio",
+    "method": "GET",
+    "path": "/api/v1/comic-studio/records",
+    "description": "Comic Studio: List records for the module.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.comic-studio.list.request",
+    "responseSchema": "mahavisphot.schema.v1.comic-studio.list.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 901
+  },
+  {
+    "id": "comic-studio.create",
+    "moduleId": "comic-studio",
+    "method": "POST",
+    "path": "/api/v1/comic-studio/records",
+    "description": "Comic Studio: Create a validated module record.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.comic-studio.create.request",
+    "responseSchema": "mahavisphot.schema.v1.comic-studio.create.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 902
+  },
+  {
+    "id": "comic-studio.read",
+    "moduleId": "comic-studio",
+    "method": "GET",
+    "path": "/api/v1/comic-studio/records/{recordId}",
+    "description": "Comic Studio: Read one module record by stable id.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.comic-studio.read.request",
+    "responseSchema": "mahavisphot.schema.v1.comic-studio.read.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 903
+  },
+  {
+    "id": "comic-studio.update",
+    "moduleId": "comic-studio",
+    "method": "PUT",
+    "path": "/api/v1/comic-studio/records/{recordId}",
+    "description": "Comic Studio: Replace a validated module record.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.comic-studio.update.request",
+    "responseSchema": "mahavisphot.schema.v1.comic-studio.update.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 904
+  },
+  {
+    "id": "comic-studio.delete",
+    "moduleId": "comic-studio",
+    "method": "DELETE",
+    "path": "/api/v1/comic-studio/records/{recordId}",
+    "description": "Comic Studio: Delete one module record through policy gates.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.comic-studio.delete.request",
+    "responseSchema": "mahavisphot.schema.v1.comic-studio.delete.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 905
+  },
+  {
+    "id": "comic-studio.health",
+    "moduleId": "comic-studio",
+    "method": "GET",
+    "path": "/api/v1/comic-studio/health",
+    "description": "Comic Studio: Read module readiness and evidence state.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.comic-studio.health.request",
+    "responseSchema": "mahavisphot.schema.v1.comic-studio.health.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 906
+  },
+  {
+    "id": "face-studio.list",
+    "moduleId": "face-studio",
+    "method": "GET",
+    "path": "/api/v1/face-studio/records",
+    "description": "Face Studio: List records for the module.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.face-studio.list.request",
+    "responseSchema": "mahavisphot.schema.v1.face-studio.list.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1001
+  },
+  {
+    "id": "face-studio.create",
+    "moduleId": "face-studio",
+    "method": "POST",
+    "path": "/api/v1/face-studio/records",
+    "description": "Face Studio: Create a validated module record.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.face-studio.create.request",
+    "responseSchema": "mahavisphot.schema.v1.face-studio.create.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1002
+  },
+  {
+    "id": "face-studio.read",
+    "moduleId": "face-studio",
+    "method": "GET",
+    "path": "/api/v1/face-studio/records/{recordId}",
+    "description": "Face Studio: Read one module record by stable id.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.face-studio.read.request",
+    "responseSchema": "mahavisphot.schema.v1.face-studio.read.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1003
+  },
+  {
+    "id": "face-studio.update",
+    "moduleId": "face-studio",
+    "method": "PUT",
+    "path": "/api/v1/face-studio/records/{recordId}",
+    "description": "Face Studio: Replace a validated module record.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.face-studio.update.request",
+    "responseSchema": "mahavisphot.schema.v1.face-studio.update.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1004
+  },
+  {
+    "id": "face-studio.delete",
+    "moduleId": "face-studio",
+    "method": "DELETE",
+    "path": "/api/v1/face-studio/records/{recordId}",
+    "description": "Face Studio: Delete one module record through policy gates.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.face-studio.delete.request",
+    "responseSchema": "mahavisphot.schema.v1.face-studio.delete.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1005
+  },
+  {
+    "id": "face-studio.health",
+    "moduleId": "face-studio",
+    "method": "GET",
+    "path": "/api/v1/face-studio/health",
+    "description": "Face Studio: Read module readiness and evidence state.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.face-studio.health.request",
+    "responseSchema": "mahavisphot.schema.v1.face-studio.health.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1006
+  },
+  {
+    "id": "three-d-studio.list",
+    "moduleId": "three-d-studio",
+    "method": "GET",
+    "path": "/api/v1/three-d-studio/records",
+    "description": "3D Studio: List records for the module.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.three-d-studio.list.request",
+    "responseSchema": "mahavisphot.schema.v1.three-d-studio.list.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1101
+  },
+  {
+    "id": "three-d-studio.create",
+    "moduleId": "three-d-studio",
+    "method": "POST",
+    "path": "/api/v1/three-d-studio/records",
+    "description": "3D Studio: Create a validated module record.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.three-d-studio.create.request",
+    "responseSchema": "mahavisphot.schema.v1.three-d-studio.create.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1102
+  },
+  {
+    "id": "three-d-studio.read",
+    "moduleId": "three-d-studio",
+    "method": "GET",
+    "path": "/api/v1/three-d-studio/records/{recordId}",
+    "description": "3D Studio: Read one module record by stable id.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.three-d-studio.read.request",
+    "responseSchema": "mahavisphot.schema.v1.three-d-studio.read.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1103
+  },
+  {
+    "id": "three-d-studio.update",
+    "moduleId": "three-d-studio",
+    "method": "PUT",
+    "path": "/api/v1/three-d-studio/records/{recordId}",
+    "description": "3D Studio: Replace a validated module record.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.three-d-studio.update.request",
+    "responseSchema": "mahavisphot.schema.v1.three-d-studio.update.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1104
+  },
+  {
+    "id": "three-d-studio.delete",
+    "moduleId": "three-d-studio",
+    "method": "DELETE",
+    "path": "/api/v1/three-d-studio/records/{recordId}",
+    "description": "3D Studio: Delete one module record through policy gates.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.three-d-studio.delete.request",
+    "responseSchema": "mahavisphot.schema.v1.three-d-studio.delete.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1105
+  },
+  {
+    "id": "three-d-studio.health",
+    "moduleId": "three-d-studio",
+    "method": "GET",
+    "path": "/api/v1/three-d-studio/health",
+    "description": "3D Studio: Read module readiness and evidence state.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.three-d-studio.health.request",
+    "responseSchema": "mahavisphot.schema.v1.three-d-studio.health.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1106
+  },
+  {
+    "id": "xr-studio.list",
+    "moduleId": "xr-studio",
+    "method": "GET",
+    "path": "/api/v1/xr-studio/records",
+    "description": "XR Studio: List records for the module.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.xr-studio.list.request",
+    "responseSchema": "mahavisphot.schema.v1.xr-studio.list.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1201
+  },
+  {
+    "id": "xr-studio.create",
+    "moduleId": "xr-studio",
+    "method": "POST",
+    "path": "/api/v1/xr-studio/records",
+    "description": "XR Studio: Create a validated module record.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.xr-studio.create.request",
+    "responseSchema": "mahavisphot.schema.v1.xr-studio.create.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1202
+  },
+  {
+    "id": "xr-studio.read",
+    "moduleId": "xr-studio",
+    "method": "GET",
+    "path": "/api/v1/xr-studio/records/{recordId}",
+    "description": "XR Studio: Read one module record by stable id.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.xr-studio.read.request",
+    "responseSchema": "mahavisphot.schema.v1.xr-studio.read.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1203
+  },
+  {
+    "id": "xr-studio.update",
+    "moduleId": "xr-studio",
+    "method": "PUT",
+    "path": "/api/v1/xr-studio/records/{recordId}",
+    "description": "XR Studio: Replace a validated module record.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.xr-studio.update.request",
+    "responseSchema": "mahavisphot.schema.v1.xr-studio.update.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1204
+  },
+  {
+    "id": "xr-studio.delete",
+    "moduleId": "xr-studio",
+    "method": "DELETE",
+    "path": "/api/v1/xr-studio/records/{recordId}",
+    "description": "XR Studio: Delete one module record through policy gates.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.xr-studio.delete.request",
+    "responseSchema": "mahavisphot.schema.v1.xr-studio.delete.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1205
+  },
+  {
+    "id": "xr-studio.health",
+    "moduleId": "xr-studio",
+    "method": "GET",
+    "path": "/api/v1/xr-studio/health",
+    "description": "XR Studio: Read module readiness and evidence state.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.xr-studio.health.request",
+    "responseSchema": "mahavisphot.schema.v1.xr-studio.health.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1206
+  },
+  {
+    "id": "audio-studio.list",
+    "moduleId": "audio-studio",
+    "method": "GET",
+    "path": "/api/v1/audio-studio/records",
+    "description": "Audio Studio: List records for the module.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.audio-studio.list.request",
+    "responseSchema": "mahavisphot.schema.v1.audio-studio.list.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1301
+  },
+  {
+    "id": "audio-studio.create",
+    "moduleId": "audio-studio",
+    "method": "POST",
+    "path": "/api/v1/audio-studio/records",
+    "description": "Audio Studio: Create a validated module record.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.audio-studio.create.request",
+    "responseSchema": "mahavisphot.schema.v1.audio-studio.create.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1302
+  },
+  {
+    "id": "audio-studio.read",
+    "moduleId": "audio-studio",
+    "method": "GET",
+    "path": "/api/v1/audio-studio/records/{recordId}",
+    "description": "Audio Studio: Read one module record by stable id.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.audio-studio.read.request",
+    "responseSchema": "mahavisphot.schema.v1.audio-studio.read.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1303
+  },
+  {
+    "id": "audio-studio.update",
+    "moduleId": "audio-studio",
+    "method": "PUT",
+    "path": "/api/v1/audio-studio/records/{recordId}",
+    "description": "Audio Studio: Replace a validated module record.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.audio-studio.update.request",
+    "responseSchema": "mahavisphot.schema.v1.audio-studio.update.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1304
+  },
+  {
+    "id": "audio-studio.delete",
+    "moduleId": "audio-studio",
+    "method": "DELETE",
+    "path": "/api/v1/audio-studio/records/{recordId}",
+    "description": "Audio Studio: Delete one module record through policy gates.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.audio-studio.delete.request",
+    "responseSchema": "mahavisphot.schema.v1.audio-studio.delete.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1305
+  },
+  {
+    "id": "audio-studio.health",
+    "moduleId": "audio-studio",
+    "method": "GET",
+    "path": "/api/v1/audio-studio/health",
+    "description": "Audio Studio: Read module readiness and evidence state.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.audio-studio.health.request",
+    "responseSchema": "mahavisphot.schema.v1.audio-studio.health.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1306
+  },
+  {
+    "id": "color-studio.list",
+    "moduleId": "color-studio",
+    "method": "GET",
+    "path": "/api/v1/color-studio/records",
+    "description": "Color Studio: List records for the module.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.color-studio.list.request",
+    "responseSchema": "mahavisphot.schema.v1.color-studio.list.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1401
+  },
+  {
+    "id": "color-studio.create",
+    "moduleId": "color-studio",
+    "method": "POST",
+    "path": "/api/v1/color-studio/records",
+    "description": "Color Studio: Create a validated module record.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.color-studio.create.request",
+    "responseSchema": "mahavisphot.schema.v1.color-studio.create.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1402
+  },
+  {
+    "id": "color-studio.read",
+    "moduleId": "color-studio",
+    "method": "GET",
+    "path": "/api/v1/color-studio/records/{recordId}",
+    "description": "Color Studio: Read one module record by stable id.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.color-studio.read.request",
+    "responseSchema": "mahavisphot.schema.v1.color-studio.read.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1403
+  },
+  {
+    "id": "color-studio.update",
+    "moduleId": "color-studio",
+    "method": "PUT",
+    "path": "/api/v1/color-studio/records/{recordId}",
+    "description": "Color Studio: Replace a validated module record.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.color-studio.update.request",
+    "responseSchema": "mahavisphot.schema.v1.color-studio.update.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1404
+  },
+  {
+    "id": "color-studio.delete",
+    "moduleId": "color-studio",
+    "method": "DELETE",
+    "path": "/api/v1/color-studio/records/{recordId}",
+    "description": "Color Studio: Delete one module record through policy gates.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.color-studio.delete.request",
+    "responseSchema": "mahavisphot.schema.v1.color-studio.delete.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1405
+  },
+  {
+    "id": "color-studio.health",
+    "moduleId": "color-studio",
+    "method": "GET",
+    "path": "/api/v1/color-studio/health",
+    "description": "Color Studio: Read module readiness and evidence state.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.color-studio.health.request",
+    "responseSchema": "mahavisphot.schema.v1.color-studio.health.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1406
+  },
+  {
+    "id": "render-center.list",
+    "moduleId": "render-center",
+    "method": "GET",
+    "path": "/api/v1/render-center/records",
+    "description": "Render Center: List records for the module.",
+    "status": "blocked",
+    "requestSchema": "mahavisphot.schema.v1.render-center.list.request",
+    "responseSchema": "mahavisphot.schema.v1.render-center.list.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "render:read"
+    ],
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1501
+  },
+  {
+    "id": "render-center.create",
+    "moduleId": "render-center",
+    "method": "POST",
+    "path": "/api/v1/render-center/records",
+    "description": "Render Center: Create a validated module record.",
+    "status": "blocked",
+    "requestSchema": "mahavisphot.schema.v1.render-center.create.request",
+    "responseSchema": "mahavisphot.schema.v1.render-center.create.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "render:read",
+      "render:write"
+    ],
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1502
+  },
+  {
+    "id": "render-center.read",
+    "moduleId": "render-center",
+    "method": "GET",
+    "path": "/api/v1/render-center/records/{recordId}",
+    "description": "Render Center: Read one module record by stable id.",
+    "status": "blocked",
+    "requestSchema": "mahavisphot.schema.v1.render-center.read.request",
+    "responseSchema": "mahavisphot.schema.v1.render-center.read.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "render:read"
+    ],
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1503
+  },
+  {
+    "id": "render-center.update",
+    "moduleId": "render-center",
+    "method": "PUT",
+    "path": "/api/v1/render-center/records/{recordId}",
+    "description": "Render Center: Replace a validated module record.",
+    "status": "blocked",
+    "requestSchema": "mahavisphot.schema.v1.render-center.update.request",
+    "responseSchema": "mahavisphot.schema.v1.render-center.update.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "render:read",
+      "render:write"
+    ],
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1504
+  },
+  {
+    "id": "render-center.delete",
+    "moduleId": "render-center",
+    "method": "DELETE",
+    "path": "/api/v1/render-center/records/{recordId}",
+    "description": "Render Center: Delete one module record through policy gates.",
+    "status": "blocked",
+    "requestSchema": "mahavisphot.schema.v1.render-center.delete.request",
+    "responseSchema": "mahavisphot.schema.v1.render-center.delete.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "render:read",
+      "render:write"
+    ],
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1505
+  },
+  {
+    "id": "render-center.health",
+    "moduleId": "render-center",
+    "method": "GET",
+    "path": "/api/v1/render-center/health",
+    "description": "Render Center: Read module readiness and evidence state.",
+    "status": "blocked",
+    "requestSchema": "mahavisphot.schema.v1.render-center.health.request",
+    "responseSchema": "mahavisphot.schema.v1.render-center.health.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "render:read"
+    ],
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1506
+  },
+  {
+    "id": "export-center.list",
+    "moduleId": "export-center",
+    "method": "GET",
+    "path": "/api/v1/export-center/records",
+    "description": "Export Center: List records for the module.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.export-center.list.request",
+    "responseSchema": "mahavisphot.schema.v1.export-center.list.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "render:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1601
+  },
+  {
+    "id": "export-center.create",
+    "moduleId": "export-center",
+    "method": "POST",
+    "path": "/api/v1/export-center/records",
+    "description": "Export Center: Create a validated module record.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.export-center.create.request",
+    "responseSchema": "mahavisphot.schema.v1.export-center.create.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "render:read",
+      "render:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1602
+  },
+  {
+    "id": "export-center.read",
+    "moduleId": "export-center",
+    "method": "GET",
+    "path": "/api/v1/export-center/records/{recordId}",
+    "description": "Export Center: Read one module record by stable id.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.export-center.read.request",
+    "responseSchema": "mahavisphot.schema.v1.export-center.read.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "render:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1603
+  },
+  {
+    "id": "export-center.update",
+    "moduleId": "export-center",
+    "method": "PUT",
+    "path": "/api/v1/export-center/records/{recordId}",
+    "description": "Export Center: Replace a validated module record.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.export-center.update.request",
+    "responseSchema": "mahavisphot.schema.v1.export-center.update.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "render:read",
+      "render:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1604
+  },
+  {
+    "id": "export-center.delete",
+    "moduleId": "export-center",
+    "method": "DELETE",
+    "path": "/api/v1/export-center/records/{recordId}",
+    "description": "Export Center: Delete one module record through policy gates.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.export-center.delete.request",
+    "responseSchema": "mahavisphot.schema.v1.export-center.delete.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "render:read",
+      "render:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1605
+  },
+  {
+    "id": "export-center.health",
+    "moduleId": "export-center",
+    "method": "GET",
+    "path": "/api/v1/export-center/health",
+    "description": "Export Center: Read module readiness and evidence state.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.export-center.health.request",
+    "responseSchema": "mahavisphot.schema.v1.export-center.health.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "render:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1606
+  },
+  {
+    "id": "observatory.list",
+    "moduleId": "observatory",
+    "method": "GET",
+    "path": "/api/v1/observatory/records",
+    "description": "Observatory: List records for the module.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.observatory.list.request",
+    "responseSchema": "mahavisphot.schema.v1.observatory.list.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1701
+  },
+  {
+    "id": "observatory.create",
+    "moduleId": "observatory",
+    "method": "POST",
+    "path": "/api/v1/observatory/records",
+    "description": "Observatory: Create a validated module record.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.observatory.create.request",
+    "responseSchema": "mahavisphot.schema.v1.observatory.create.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1702
+  },
+  {
+    "id": "observatory.read",
+    "moduleId": "observatory",
+    "method": "GET",
+    "path": "/api/v1/observatory/records/{recordId}",
+    "description": "Observatory: Read one module record by stable id.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.observatory.read.request",
+    "responseSchema": "mahavisphot.schema.v1.observatory.read.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1703
+  },
+  {
+    "id": "observatory.update",
+    "moduleId": "observatory",
+    "method": "PUT",
+    "path": "/api/v1/observatory/records/{recordId}",
+    "description": "Observatory: Replace a validated module record.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.observatory.update.request",
+    "responseSchema": "mahavisphot.schema.v1.observatory.update.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1704
+  },
+  {
+    "id": "observatory.delete",
+    "moduleId": "observatory",
+    "method": "DELETE",
+    "path": "/api/v1/observatory/records/{recordId}",
+    "description": "Observatory: Delete one module record through policy gates.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.observatory.delete.request",
+    "responseSchema": "mahavisphot.schema.v1.observatory.delete.response",
+    "permissions": [
+      "project:read",
+      "project:write",
+      "media:read",
+      "media:write",
+      "timeline:read",
+      "timeline:write"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1705
+  },
+  {
+    "id": "observatory.health",
+    "moduleId": "observatory",
+    "method": "GET",
+    "path": "/api/v1/observatory/health",
+    "description": "Observatory: Read module readiness and evidence state.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.observatory.health.request",
+    "responseSchema": "mahavisphot.schema.v1.observatory.health.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "timeline:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 1706
+  },
+  {
+    "id": "local-ai-mode.list",
+    "moduleId": "local-ai-mode",
+    "method": "GET",
+    "path": "/api/v1/local-ai-mode/records",
+    "description": "Local AI Mode: List records for the module.",
+    "status": "blocked",
+    "requestSchema": "mahavisphot.schema.v1.local-ai-mode.list.request",
+    "responseSchema": "mahavisphot.schema.v1.local-ai-mode.list.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:local"
+    ],
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local"
+    ],
+    "order": 1801
+  },
+  {
+    "id": "local-ai-mode.create",
+    "moduleId": "local-ai-mode",
+    "method": "POST",
+    "path": "/api/v1/local-ai-mode/records",
+    "description": "Local AI Mode: Create a validated module record.",
+    "status": "blocked",
+    "requestSchema": "mahavisphot.schema.v1.local-ai-mode.create.request",
+    "responseSchema": "mahavisphot.schema.v1.local-ai-mode.create.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:local"
+    ],
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local"
+    ],
+    "order": 1802
+  },
+  {
+    "id": "local-ai-mode.read",
+    "moduleId": "local-ai-mode",
+    "method": "GET",
+    "path": "/api/v1/local-ai-mode/records/{recordId}",
+    "description": "Local AI Mode: Read one module record by stable id.",
+    "status": "blocked",
+    "requestSchema": "mahavisphot.schema.v1.local-ai-mode.read.request",
+    "responseSchema": "mahavisphot.schema.v1.local-ai-mode.read.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:local"
+    ],
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local"
+    ],
+    "order": 1803
+  },
+  {
+    "id": "local-ai-mode.update",
+    "moduleId": "local-ai-mode",
+    "method": "PUT",
+    "path": "/api/v1/local-ai-mode/records/{recordId}",
+    "description": "Local AI Mode: Replace a validated module record.",
+    "status": "blocked",
+    "requestSchema": "mahavisphot.schema.v1.local-ai-mode.update.request",
+    "responseSchema": "mahavisphot.schema.v1.local-ai-mode.update.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:local"
+    ],
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local"
+    ],
+    "order": 1804
+  },
+  {
+    "id": "local-ai-mode.delete",
+    "moduleId": "local-ai-mode",
+    "method": "DELETE",
+    "path": "/api/v1/local-ai-mode/records/{recordId}",
+    "description": "Local AI Mode: Delete one module record through policy gates.",
+    "status": "blocked",
+    "requestSchema": "mahavisphot.schema.v1.local-ai-mode.delete.request",
+    "responseSchema": "mahavisphot.schema.v1.local-ai-mode.delete.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:local"
+    ],
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local"
+    ],
+    "order": 1805
+  },
+  {
+    "id": "local-ai-mode.health",
+    "moduleId": "local-ai-mode",
+    "method": "GET",
+    "path": "/api/v1/local-ai-mode/health",
+    "description": "Local AI Mode: Read module readiness and evidence state.",
+    "status": "blocked",
+    "requestSchema": "mahavisphot.schema.v1.local-ai-mode.health.request",
+    "responseSchema": "mahavisphot.schema.v1.local-ai-mode.health.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:local"
+    ],
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local"
+    ],
+    "order": 1806
+  },
+  {
+    "id": "cloud-ai-mode.list",
+    "moduleId": "cloud-ai-mode",
+    "method": "GET",
+    "path": "/api/v1/cloud-ai-mode/records",
+    "description": "Cloud AI Mode: List records for the module.",
+    "status": "blocked",
+    "requestSchema": "mahavisphot.schema.v1.cloud-ai-mode.list.request",
+    "responseSchema": "mahavisphot.schema.v1.cloud-ai-mode.list.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:cloud"
+    ],
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "cloud"
+    ],
+    "order": 1901
+  },
+  {
+    "id": "cloud-ai-mode.create",
+    "moduleId": "cloud-ai-mode",
+    "method": "POST",
+    "path": "/api/v1/cloud-ai-mode/records",
+    "description": "Cloud AI Mode: Create a validated module record.",
+    "status": "blocked",
+    "requestSchema": "mahavisphot.schema.v1.cloud-ai-mode.create.request",
+    "responseSchema": "mahavisphot.schema.v1.cloud-ai-mode.create.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:cloud"
+    ],
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "cloud"
+    ],
+    "order": 1902
+  },
+  {
+    "id": "cloud-ai-mode.read",
+    "moduleId": "cloud-ai-mode",
+    "method": "GET",
+    "path": "/api/v1/cloud-ai-mode/records/{recordId}",
+    "description": "Cloud AI Mode: Read one module record by stable id.",
+    "status": "blocked",
+    "requestSchema": "mahavisphot.schema.v1.cloud-ai-mode.read.request",
+    "responseSchema": "mahavisphot.schema.v1.cloud-ai-mode.read.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:cloud"
+    ],
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "cloud"
+    ],
+    "order": 1903
+  },
+  {
+    "id": "cloud-ai-mode.update",
+    "moduleId": "cloud-ai-mode",
+    "method": "PUT",
+    "path": "/api/v1/cloud-ai-mode/records/{recordId}",
+    "description": "Cloud AI Mode: Replace a validated module record.",
+    "status": "blocked",
+    "requestSchema": "mahavisphot.schema.v1.cloud-ai-mode.update.request",
+    "responseSchema": "mahavisphot.schema.v1.cloud-ai-mode.update.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:cloud"
+    ],
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "cloud"
+    ],
+    "order": 1904
+  },
+  {
+    "id": "cloud-ai-mode.delete",
+    "moduleId": "cloud-ai-mode",
+    "method": "DELETE",
+    "path": "/api/v1/cloud-ai-mode/records/{recordId}",
+    "description": "Cloud AI Mode: Delete one module record through policy gates.",
+    "status": "blocked",
+    "requestSchema": "mahavisphot.schema.v1.cloud-ai-mode.delete.request",
+    "responseSchema": "mahavisphot.schema.v1.cloud-ai-mode.delete.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:cloud"
+    ],
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "cloud"
+    ],
+    "order": 1905
+  },
+  {
+    "id": "cloud-ai-mode.health",
+    "moduleId": "cloud-ai-mode",
+    "method": "GET",
+    "path": "/api/v1/cloud-ai-mode/health",
+    "description": "Cloud AI Mode: Read module readiness and evidence state.",
+    "status": "blocked",
+    "requestSchema": "mahavisphot.schema.v1.cloud-ai-mode.health.request",
+    "responseSchema": "mahavisphot.schema.v1.cloud-ai-mode.health.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:cloud"
+    ],
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "cloud"
+    ],
+    "order": 1906
+  },
+  {
+    "id": "hybrid-ai-mode.list",
+    "moduleId": "hybrid-ai-mode",
+    "method": "GET",
+    "path": "/api/v1/hybrid-ai-mode/records",
+    "description": "Hybrid AI Mode: List records for the module.",
+    "status": "blocked",
+    "requestSchema": "mahavisphot.schema.v1.hybrid-ai-mode.list.request",
+    "responseSchema": "mahavisphot.schema.v1.hybrid-ai-mode.list.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:hybrid",
+      "ai:local",
+      "ai:cloud"
+    ],
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "hybrid",
+      "local",
+      "cloud"
+    ],
+    "order": 2001
+  },
+  {
+    "id": "hybrid-ai-mode.create",
+    "moduleId": "hybrid-ai-mode",
+    "method": "POST",
+    "path": "/api/v1/hybrid-ai-mode/records",
+    "description": "Hybrid AI Mode: Create a validated module record.",
+    "status": "blocked",
+    "requestSchema": "mahavisphot.schema.v1.hybrid-ai-mode.create.request",
+    "responseSchema": "mahavisphot.schema.v1.hybrid-ai-mode.create.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:hybrid",
+      "ai:local",
+      "ai:cloud"
+    ],
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "hybrid",
+      "local",
+      "cloud"
+    ],
+    "order": 2002
+  },
+  {
+    "id": "hybrid-ai-mode.read",
+    "moduleId": "hybrid-ai-mode",
+    "method": "GET",
+    "path": "/api/v1/hybrid-ai-mode/records/{recordId}",
+    "description": "Hybrid AI Mode: Read one module record by stable id.",
+    "status": "blocked",
+    "requestSchema": "mahavisphot.schema.v1.hybrid-ai-mode.read.request",
+    "responseSchema": "mahavisphot.schema.v1.hybrid-ai-mode.read.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:hybrid",
+      "ai:local",
+      "ai:cloud"
+    ],
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "hybrid",
+      "local",
+      "cloud"
+    ],
+    "order": 2003
+  },
+  {
+    "id": "hybrid-ai-mode.update",
+    "moduleId": "hybrid-ai-mode",
+    "method": "PUT",
+    "path": "/api/v1/hybrid-ai-mode/records/{recordId}",
+    "description": "Hybrid AI Mode: Replace a validated module record.",
+    "status": "blocked",
+    "requestSchema": "mahavisphot.schema.v1.hybrid-ai-mode.update.request",
+    "responseSchema": "mahavisphot.schema.v1.hybrid-ai-mode.update.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:hybrid",
+      "ai:local",
+      "ai:cloud"
+    ],
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "hybrid",
+      "local",
+      "cloud"
+    ],
+    "order": 2004
+  },
+  {
+    "id": "hybrid-ai-mode.delete",
+    "moduleId": "hybrid-ai-mode",
+    "method": "DELETE",
+    "path": "/api/v1/hybrid-ai-mode/records/{recordId}",
+    "description": "Hybrid AI Mode: Delete one module record through policy gates.",
+    "status": "blocked",
+    "requestSchema": "mahavisphot.schema.v1.hybrid-ai-mode.delete.request",
+    "responseSchema": "mahavisphot.schema.v1.hybrid-ai-mode.delete.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:hybrid",
+      "ai:local",
+      "ai:cloud"
+    ],
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "hybrid",
+      "local",
+      "cloud"
+    ],
+    "order": 2005
+  },
+  {
+    "id": "hybrid-ai-mode.health",
+    "moduleId": "hybrid-ai-mode",
+    "method": "GET",
+    "path": "/api/v1/hybrid-ai-mode/health",
+    "description": "Hybrid AI Mode: Read module readiness and evidence state.",
+    "status": "blocked",
+    "requestSchema": "mahavisphot.schema.v1.hybrid-ai-mode.health.request",
+    "responseSchema": "mahavisphot.schema.v1.hybrid-ai-mode.health.response",
+    "permissions": [
+      "project:read",
+      "media:read",
+      "ai:hybrid",
+      "ai:local",
+      "ai:cloud"
+    ],
+    "planAvailability": [
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "hybrid",
+      "local",
+      "cloud"
+    ],
+    "order": 2006
+  },
+  {
+    "id": "admin.list",
+    "moduleId": "admin",
+    "method": "GET",
+    "path": "/api/v1/admin/records",
+    "description": "Admin: List records for the module.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.admin.list.request",
+    "responseSchema": "mahavisphot.schema.v1.admin.list.response",
+    "permissions": [
+      "admin:read",
+      "billing:read",
+      "security:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 2101
+  },
+  {
+    "id": "admin.create",
+    "moduleId": "admin",
+    "method": "POST",
+    "path": "/api/v1/admin/records",
+    "description": "Admin: Create a validated module record.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.admin.create.request",
+    "responseSchema": "mahavisphot.schema.v1.admin.create.response",
+    "permissions": [
+      "project:admin",
+      "admin:read",
+      "admin:write",
+      "billing:read",
+      "billing:write",
+      "security:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 2102
+  },
+  {
+    "id": "admin.read",
+    "moduleId": "admin",
+    "method": "GET",
+    "path": "/api/v1/admin/records/{recordId}",
+    "description": "Admin: Read one module record by stable id.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.admin.read.request",
+    "responseSchema": "mahavisphot.schema.v1.admin.read.response",
+    "permissions": [
+      "admin:read",
+      "billing:read",
+      "security:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 2103
+  },
+  {
+    "id": "admin.update",
+    "moduleId": "admin",
+    "method": "PUT",
+    "path": "/api/v1/admin/records/{recordId}",
+    "description": "Admin: Replace a validated module record.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.admin.update.request",
+    "responseSchema": "mahavisphot.schema.v1.admin.update.response",
+    "permissions": [
+      "project:admin",
+      "admin:read",
+      "admin:write",
+      "billing:read",
+      "billing:write",
+      "security:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 2104
+  },
+  {
+    "id": "admin.delete",
+    "moduleId": "admin",
+    "method": "DELETE",
+    "path": "/api/v1/admin/records/{recordId}",
+    "description": "Admin: Delete one module record through policy gates.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.admin.delete.request",
+    "responseSchema": "mahavisphot.schema.v1.admin.delete.response",
+    "permissions": [
+      "project:admin",
+      "admin:read",
+      "admin:write",
+      "billing:read",
+      "billing:write",
+      "security:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 2105
+  },
+  {
+    "id": "admin.health",
+    "moduleId": "admin",
+    "method": "GET",
+    "path": "/api/v1/admin/health",
+    "description": "Admin: Read module readiness and evidence state.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.admin.health.request",
+    "responseSchema": "mahavisphot.schema.v1.admin.health.response",
+    "permissions": [
+      "admin:read",
+      "billing:read",
+      "security:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 2106
+  },
+  {
+    "id": "support.list",
+    "moduleId": "support",
+    "method": "GET",
+    "path": "/api/v1/support/records",
+    "description": "Support: List records for the module.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.support.list.request",
+    "responseSchema": "mahavisphot.schema.v1.support.list.response",
+    "permissions": [
+      "support:read",
+      "project:read",
+      "security:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 2201
+  },
+  {
+    "id": "support.create",
+    "moduleId": "support",
+    "method": "POST",
+    "path": "/api/v1/support/records",
+    "description": "Support: Create a validated module record.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.support.create.request",
+    "responseSchema": "mahavisphot.schema.v1.support.create.response",
+    "permissions": [
+      "support:read",
+      "support:write",
+      "project:read",
+      "security:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 2202
+  },
+  {
+    "id": "support.read",
+    "moduleId": "support",
+    "method": "GET",
+    "path": "/api/v1/support/records/{recordId}",
+    "description": "Support: Read one module record by stable id.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.support.read.request",
+    "responseSchema": "mahavisphot.schema.v1.support.read.response",
+    "permissions": [
+      "support:read",
+      "project:read",
+      "security:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 2203
+  },
+  {
+    "id": "support.update",
+    "moduleId": "support",
+    "method": "PUT",
+    "path": "/api/v1/support/records/{recordId}",
+    "description": "Support: Replace a validated module record.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.support.update.request",
+    "responseSchema": "mahavisphot.schema.v1.support.update.response",
+    "permissions": [
+      "support:read",
+      "support:write",
+      "project:read",
+      "security:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 2204
+  },
+  {
+    "id": "support.delete",
+    "moduleId": "support",
+    "method": "DELETE",
+    "path": "/api/v1/support/records/{recordId}",
+    "description": "Support: Delete one module record through policy gates.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.support.delete.request",
+    "responseSchema": "mahavisphot.schema.v1.support.delete.response",
+    "permissions": [
+      "support:read",
+      "support:write",
+      "project:read",
+      "security:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 2205
+  },
+  {
+    "id": "support.health",
+    "moduleId": "support",
+    "method": "GET",
+    "path": "/api/v1/support/health",
+    "description": "Support: Read module readiness and evidence state.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.support.health.request",
+    "responseSchema": "mahavisphot.schema.v1.support.health.response",
+    "permissions": [
+      "support:read",
+      "project:read",
+      "security:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 2206
+  },
+  {
+    "id": "developer-platform.list",
+    "moduleId": "developer-platform",
+    "method": "GET",
+    "path": "/api/v1/developer-platform/records",
+    "description": "Developer Platform: List records for the module.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.developer-platform.list.request",
+    "responseSchema": "mahavisphot.schema.v1.developer-platform.list.response",
+    "permissions": [
+      "developer:read",
+      "project:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 2301
+  },
+  {
+    "id": "developer-platform.create",
+    "moduleId": "developer-platform",
+    "method": "POST",
+    "path": "/api/v1/developer-platform/records",
+    "description": "Developer Platform: Create a validated module record.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.developer-platform.create.request",
+    "responseSchema": "mahavisphot.schema.v1.developer-platform.create.response",
+    "permissions": [
+      "developer:read",
+      "developer:write",
+      "project:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 2302
+  },
+  {
+    "id": "developer-platform.read",
+    "moduleId": "developer-platform",
+    "method": "GET",
+    "path": "/api/v1/developer-platform/records/{recordId}",
+    "description": "Developer Platform: Read one module record by stable id.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.developer-platform.read.request",
+    "responseSchema": "mahavisphot.schema.v1.developer-platform.read.response",
+    "permissions": [
+      "developer:read",
+      "project:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 2303
+  },
+  {
+    "id": "developer-platform.update",
+    "moduleId": "developer-platform",
+    "method": "PUT",
+    "path": "/api/v1/developer-platform/records/{recordId}",
+    "description": "Developer Platform: Replace a validated module record.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.developer-platform.update.request",
+    "responseSchema": "mahavisphot.schema.v1.developer-platform.update.response",
+    "permissions": [
+      "developer:read",
+      "developer:write",
+      "project:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 2304
+  },
+  {
+    "id": "developer-platform.delete",
+    "moduleId": "developer-platform",
+    "method": "DELETE",
+    "path": "/api/v1/developer-platform/records/{recordId}",
+    "description": "Developer Platform: Delete one module record through policy gates.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.developer-platform.delete.request",
+    "responseSchema": "mahavisphot.schema.v1.developer-platform.delete.response",
+    "permissions": [
+      "developer:read",
+      "developer:write",
+      "project:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 2305
+  },
+  {
+    "id": "developer-platform.health",
+    "moduleId": "developer-platform",
+    "method": "GET",
+    "path": "/api/v1/developer-platform/health",
+    "description": "Developer Platform: Read module readiness and evidence state.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.developer-platform.health.request",
+    "responseSchema": "mahavisphot.schema.v1.developer-platform.health.response",
+    "permissions": [
+      "developer:read",
+      "project:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 2306
+  },
+  {
+    "id": "security-recovery.list",
+    "moduleId": "security-recovery",
+    "method": "GET",
+    "path": "/api/v1/security-recovery/records",
+    "description": "Security Recovery: List records for the module.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.security-recovery.list.request",
+    "responseSchema": "mahavisphot.schema.v1.security-recovery.list.response",
+    "permissions": [
+      "security:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 2401
+  },
+  {
+    "id": "security-recovery.create",
+    "moduleId": "security-recovery",
+    "method": "POST",
+    "path": "/api/v1/security-recovery/records",
+    "description": "Security Recovery: Create a validated module record.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.security-recovery.create.request",
+    "responseSchema": "mahavisphot.schema.v1.security-recovery.create.response",
+    "permissions": [
+      "security:read",
+      "security:write",
+      "project:admin"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 2402
+  },
+  {
+    "id": "security-recovery.read",
+    "moduleId": "security-recovery",
+    "method": "GET",
+    "path": "/api/v1/security-recovery/records/{recordId}",
+    "description": "Security Recovery: Read one module record by stable id.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.security-recovery.read.request",
+    "responseSchema": "mahavisphot.schema.v1.security-recovery.read.response",
+    "permissions": [
+      "security:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 2403
+  },
+  {
+    "id": "security-recovery.update",
+    "moduleId": "security-recovery",
+    "method": "PUT",
+    "path": "/api/v1/security-recovery/records/{recordId}",
+    "description": "Security Recovery: Replace a validated module record.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.security-recovery.update.request",
+    "responseSchema": "mahavisphot.schema.v1.security-recovery.update.response",
+    "permissions": [
+      "security:read",
+      "security:write",
+      "project:admin"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 2404
+  },
+  {
+    "id": "security-recovery.delete",
+    "moduleId": "security-recovery",
+    "method": "DELETE",
+    "path": "/api/v1/security-recovery/records/{recordId}",
+    "description": "Security Recovery: Delete one module record through policy gates.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.security-recovery.delete.request",
+    "responseSchema": "mahavisphot.schema.v1.security-recovery.delete.response",
+    "permissions": [
+      "security:read",
+      "security:write",
+      "project:admin"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 2405
+  },
+  {
+    "id": "security-recovery.health",
+    "moduleId": "security-recovery",
+    "method": "GET",
+    "path": "/api/v1/security-recovery/health",
+    "description": "Security Recovery: Read module readiness and evidence state.",
+    "status": "scaffold",
+    "requestSchema": "mahavisphot.schema.v1.security-recovery.health.request",
+    "responseSchema": "mahavisphot.schema.v1.security-recovery.health.response",
+    "permissions": [
+      "security:read"
+    ],
+    "planAvailability": [
+      "free",
+      "trial",
+      "pro",
+      "studio",
+      "enterprise"
+    ],
+    "runtimeModes": [
+      "local",
+      "cloud",
+      "hybrid"
+    ],
+    "order": 2406
+  }
+]

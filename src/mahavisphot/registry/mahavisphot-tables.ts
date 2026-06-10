@@ -1,0 +1,4204 @@
+import type { MahavisphotDatabaseTable } from "../types/mahavisphot-types";
+
+export const MAHAVISPHOT_DATABASE_TABLES = [
+  {
+    "name": "mahavisphot_editor_records",
+    "moduleId": "editor",
+    "description": "Editor: Stable module records and serialized domain state.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_editor_records_project_id",
+      "idx_editor_records_status"
+    ],
+    "order": 1
+  },
+  {
+    "name": "mahavisphot_editor_events",
+    "moduleId": "editor",
+    "description": "Editor: Append-only module events, decisions, and audit evidence references.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_editor_events_project_id",
+      "idx_editor_events_status"
+    ],
+    "order": 2
+  },
+  {
+    "name": "mahavisphot_editor_settings",
+    "moduleId": "editor",
+    "description": "Editor: User, workspace, and project-scoped module settings.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_editor_settings_project_id",
+      "idx_editor_settings_status"
+    ],
+    "order": 3
+  },
+  {
+    "name": "mahavisphot_compositor_records",
+    "moduleId": "compositor",
+    "description": "Compositor: Stable module records and serialized domain state.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_compositor_records_project_id",
+      "idx_compositor_records_status"
+    ],
+    "order": 11
+  },
+  {
+    "name": "mahavisphot_compositor_events",
+    "moduleId": "compositor",
+    "description": "Compositor: Append-only module events, decisions, and audit evidence references.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_compositor_events_project_id",
+      "idx_compositor_events_status"
+    ],
+    "order": 12
+  },
+  {
+    "name": "mahavisphot_compositor_settings",
+    "moduleId": "compositor",
+    "description": "Compositor: User, workspace, and project-scoped module settings.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_compositor_settings_project_id",
+      "idx_compositor_settings_status"
+    ],
+    "order": 13
+  },
+  {
+    "name": "mahavisphot_vfx_studio_records",
+    "moduleId": "vfx-studio",
+    "description": "VFX Studio: Stable module records and serialized domain state.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_vfx_studio_records_project_id",
+      "idx_vfx_studio_records_status"
+    ],
+    "order": 21
+  },
+  {
+    "name": "mahavisphot_vfx_studio_events",
+    "moduleId": "vfx-studio",
+    "description": "VFX Studio: Append-only module events, decisions, and audit evidence references.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_vfx_studio_events_project_id",
+      "idx_vfx_studio_events_status"
+    ],
+    "order": 22
+  },
+  {
+    "name": "mahavisphot_vfx_studio_settings",
+    "moduleId": "vfx-studio",
+    "description": "VFX Studio: User, workspace, and project-scoped module settings.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_vfx_studio_settings_project_id",
+      "idx_vfx_studio_settings_status"
+    ],
+    "order": 23
+  },
+  {
+    "name": "mahavisphot_particle_studio_records",
+    "moduleId": "particle-studio",
+    "description": "Particle Studio: Stable module records and serialized domain state.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_particle_studio_records_project_id",
+      "idx_particle_studio_records_status"
+    ],
+    "order": 31
+  },
+  {
+    "name": "mahavisphot_particle_studio_events",
+    "moduleId": "particle-studio",
+    "description": "Particle Studio: Append-only module events, decisions, and audit evidence references.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_particle_studio_events_project_id",
+      "idx_particle_studio_events_status"
+    ],
+    "order": 32
+  },
+  {
+    "name": "mahavisphot_particle_studio_settings",
+    "moduleId": "particle-studio",
+    "description": "Particle Studio: User, workspace, and project-scoped module settings.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_particle_studio_settings_project_id",
+      "idx_particle_studio_settings_status"
+    ],
+    "order": 33
+  },
+  {
+    "name": "mahavisphot_digital_makeup_studio_records",
+    "moduleId": "digital-makeup-studio",
+    "description": "Digital Makeup Studio: Stable module records and serialized domain state.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_digital_makeup_studio_records_project_id",
+      "idx_digital_makeup_studio_records_status"
+    ],
+    "order": 41
+  },
+  {
+    "name": "mahavisphot_digital_makeup_studio_events",
+    "moduleId": "digital-makeup-studio",
+    "description": "Digital Makeup Studio: Append-only module events, decisions, and audit evidence references.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_digital_makeup_studio_events_project_id",
+      "idx_digital_makeup_studio_events_status"
+    ],
+    "order": 42
+  },
+  {
+    "name": "mahavisphot_digital_makeup_studio_settings",
+    "moduleId": "digital-makeup-studio",
+    "description": "Digital Makeup Studio: User, workspace, and project-scoped module settings.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_digital_makeup_studio_settings_project_id",
+      "idx_digital_makeup_studio_settings_status"
+    ],
+    "order": 43
+  },
+  {
+    "name": "mahavisphot_costume_studio_records",
+    "moduleId": "costume-studio",
+    "description": "Costume Studio: Stable module records and serialized domain state.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_costume_studio_records_project_id",
+      "idx_costume_studio_records_status"
+    ],
+    "order": 51
+  },
+  {
+    "name": "mahavisphot_costume_studio_events",
+    "moduleId": "costume-studio",
+    "description": "Costume Studio: Append-only module events, decisions, and audit evidence references.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_costume_studio_events_project_id",
+      "idx_costume_studio_events_status"
+    ],
+    "order": 52
+  },
+  {
+    "name": "mahavisphot_costume_studio_settings",
+    "moduleId": "costume-studio",
+    "description": "Costume Studio: User, workspace, and project-scoped module settings.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_costume_studio_settings_project_id",
+      "idx_costume_studio_settings_status"
+    ],
+    "order": 53
+  },
+  {
+    "name": "mahavisphot_props_studio_records",
+    "moduleId": "props-studio",
+    "description": "Props Studio: Stable module records and serialized domain state.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_props_studio_records_project_id",
+      "idx_props_studio_records_status"
+    ],
+    "order": 61
+  },
+  {
+    "name": "mahavisphot_props_studio_events",
+    "moduleId": "props-studio",
+    "description": "Props Studio: Append-only module events, decisions, and audit evidence references.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_props_studio_events_project_id",
+      "idx_props_studio_events_status"
+    ],
+    "order": 62
+  },
+  {
+    "name": "mahavisphot_props_studio_settings",
+    "moduleId": "props-studio",
+    "description": "Props Studio: User, workspace, and project-scoped module settings.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_props_studio_settings_project_id",
+      "idx_props_studio_settings_status"
+    ],
+    "order": 63
+  },
+  {
+    "name": "mahavisphot_toon_designer_studio_records",
+    "moduleId": "toon-designer-studio",
+    "description": "Toon Designer Studio: Stable module records and serialized domain state.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_toon_designer_studio_records_project_id",
+      "idx_toon_designer_studio_records_status"
+    ],
+    "order": 71
+  },
+  {
+    "name": "mahavisphot_toon_designer_studio_events",
+    "moduleId": "toon-designer-studio",
+    "description": "Toon Designer Studio: Append-only module events, decisions, and audit evidence references.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_toon_designer_studio_events_project_id",
+      "idx_toon_designer_studio_events_status"
+    ],
+    "order": 72
+  },
+  {
+    "name": "mahavisphot_toon_designer_studio_settings",
+    "moduleId": "toon-designer-studio",
+    "description": "Toon Designer Studio: User, workspace, and project-scoped module settings.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_toon_designer_studio_settings_project_id",
+      "idx_toon_designer_studio_settings_status"
+    ],
+    "order": 73
+  },
+  {
+    "name": "mahavisphot_cel_animation_studio_records",
+    "moduleId": "cel-animation-studio",
+    "description": "Cel Animation Studio: Stable module records and serialized domain state.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_cel_animation_studio_records_project_id",
+      "idx_cel_animation_studio_records_status"
+    ],
+    "order": 81
+  },
+  {
+    "name": "mahavisphot_cel_animation_studio_events",
+    "moduleId": "cel-animation-studio",
+    "description": "Cel Animation Studio: Append-only module events, decisions, and audit evidence references.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_cel_animation_studio_events_project_id",
+      "idx_cel_animation_studio_events_status"
+    ],
+    "order": 82
+  },
+  {
+    "name": "mahavisphot_cel_animation_studio_settings",
+    "moduleId": "cel-animation-studio",
+    "description": "Cel Animation Studio: User, workspace, and project-scoped module settings.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_cel_animation_studio_settings_project_id",
+      "idx_cel_animation_studio_settings_status"
+    ],
+    "order": 83
+  },
+  {
+    "name": "mahavisphot_comic_studio_records",
+    "moduleId": "comic-studio",
+    "description": "Comic Studio: Stable module records and serialized domain state.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_comic_studio_records_project_id",
+      "idx_comic_studio_records_status"
+    ],
+    "order": 91
+  },
+  {
+    "name": "mahavisphot_comic_studio_events",
+    "moduleId": "comic-studio",
+    "description": "Comic Studio: Append-only module events, decisions, and audit evidence references.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_comic_studio_events_project_id",
+      "idx_comic_studio_events_status"
+    ],
+    "order": 92
+  },
+  {
+    "name": "mahavisphot_comic_studio_settings",
+    "moduleId": "comic-studio",
+    "description": "Comic Studio: User, workspace, and project-scoped module settings.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_comic_studio_settings_project_id",
+      "idx_comic_studio_settings_status"
+    ],
+    "order": 93
+  },
+  {
+    "name": "mahavisphot_face_studio_records",
+    "moduleId": "face-studio",
+    "description": "Face Studio: Stable module records and serialized domain state.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_face_studio_records_project_id",
+      "idx_face_studio_records_status"
+    ],
+    "order": 101
+  },
+  {
+    "name": "mahavisphot_face_studio_events",
+    "moduleId": "face-studio",
+    "description": "Face Studio: Append-only module events, decisions, and audit evidence references.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_face_studio_events_project_id",
+      "idx_face_studio_events_status"
+    ],
+    "order": 102
+  },
+  {
+    "name": "mahavisphot_face_studio_settings",
+    "moduleId": "face-studio",
+    "description": "Face Studio: User, workspace, and project-scoped module settings.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_face_studio_settings_project_id",
+      "idx_face_studio_settings_status"
+    ],
+    "order": 103
+  },
+  {
+    "name": "mahavisphot_three_d_studio_records",
+    "moduleId": "three-d-studio",
+    "description": "3D Studio: Stable module records and serialized domain state.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_three_d_studio_records_project_id",
+      "idx_three_d_studio_records_status"
+    ],
+    "order": 111
+  },
+  {
+    "name": "mahavisphot_three_d_studio_events",
+    "moduleId": "three-d-studio",
+    "description": "3D Studio: Append-only module events, decisions, and audit evidence references.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_three_d_studio_events_project_id",
+      "idx_three_d_studio_events_status"
+    ],
+    "order": 112
+  },
+  {
+    "name": "mahavisphot_three_d_studio_settings",
+    "moduleId": "three-d-studio",
+    "description": "3D Studio: User, workspace, and project-scoped module settings.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_three_d_studio_settings_project_id",
+      "idx_three_d_studio_settings_status"
+    ],
+    "order": 113
+  },
+  {
+    "name": "mahavisphot_xr_studio_records",
+    "moduleId": "xr-studio",
+    "description": "XR Studio: Stable module records and serialized domain state.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_xr_studio_records_project_id",
+      "idx_xr_studio_records_status"
+    ],
+    "order": 121
+  },
+  {
+    "name": "mahavisphot_xr_studio_events",
+    "moduleId": "xr-studio",
+    "description": "XR Studio: Append-only module events, decisions, and audit evidence references.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_xr_studio_events_project_id",
+      "idx_xr_studio_events_status"
+    ],
+    "order": 122
+  },
+  {
+    "name": "mahavisphot_xr_studio_settings",
+    "moduleId": "xr-studio",
+    "description": "XR Studio: User, workspace, and project-scoped module settings.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_xr_studio_settings_project_id",
+      "idx_xr_studio_settings_status"
+    ],
+    "order": 123
+  },
+  {
+    "name": "mahavisphot_audio_studio_records",
+    "moduleId": "audio-studio",
+    "description": "Audio Studio: Stable module records and serialized domain state.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_audio_studio_records_project_id",
+      "idx_audio_studio_records_status"
+    ],
+    "order": 131
+  },
+  {
+    "name": "mahavisphot_audio_studio_events",
+    "moduleId": "audio-studio",
+    "description": "Audio Studio: Append-only module events, decisions, and audit evidence references.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_audio_studio_events_project_id",
+      "idx_audio_studio_events_status"
+    ],
+    "order": 132
+  },
+  {
+    "name": "mahavisphot_audio_studio_settings",
+    "moduleId": "audio-studio",
+    "description": "Audio Studio: User, workspace, and project-scoped module settings.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_audio_studio_settings_project_id",
+      "idx_audio_studio_settings_status"
+    ],
+    "order": 133
+  },
+  {
+    "name": "mahavisphot_color_studio_records",
+    "moduleId": "color-studio",
+    "description": "Color Studio: Stable module records and serialized domain state.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_color_studio_records_project_id",
+      "idx_color_studio_records_status"
+    ],
+    "order": 141
+  },
+  {
+    "name": "mahavisphot_color_studio_events",
+    "moduleId": "color-studio",
+    "description": "Color Studio: Append-only module events, decisions, and audit evidence references.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_color_studio_events_project_id",
+      "idx_color_studio_events_status"
+    ],
+    "order": 142
+  },
+  {
+    "name": "mahavisphot_color_studio_settings",
+    "moduleId": "color-studio",
+    "description": "Color Studio: User, workspace, and project-scoped module settings.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_color_studio_settings_project_id",
+      "idx_color_studio_settings_status"
+    ],
+    "order": 143
+  },
+  {
+    "name": "mahavisphot_render_center_records",
+    "moduleId": "render-center",
+    "description": "Render Center: Stable module records and serialized domain state.",
+    "status": "blocked",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_render_center_records_project_id",
+      "idx_render_center_records_status"
+    ],
+    "order": 151
+  },
+  {
+    "name": "mahavisphot_render_center_events",
+    "moduleId": "render-center",
+    "description": "Render Center: Append-only module events, decisions, and audit evidence references.",
+    "status": "blocked",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_render_center_events_project_id",
+      "idx_render_center_events_status"
+    ],
+    "order": 152
+  },
+  {
+    "name": "mahavisphot_render_center_settings",
+    "moduleId": "render-center",
+    "description": "Render Center: User, workspace, and project-scoped module settings.",
+    "status": "blocked",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_render_center_settings_project_id",
+      "idx_render_center_settings_status"
+    ],
+    "order": 153
+  },
+  {
+    "name": "mahavisphot_export_center_records",
+    "moduleId": "export-center",
+    "description": "Export Center: Stable module records and serialized domain state.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_export_center_records_project_id",
+      "idx_export_center_records_status"
+    ],
+    "order": 161
+  },
+  {
+    "name": "mahavisphot_export_center_events",
+    "moduleId": "export-center",
+    "description": "Export Center: Append-only module events, decisions, and audit evidence references.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_export_center_events_project_id",
+      "idx_export_center_events_status"
+    ],
+    "order": 162
+  },
+  {
+    "name": "mahavisphot_export_center_settings",
+    "moduleId": "export-center",
+    "description": "Export Center: User, workspace, and project-scoped module settings.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_export_center_settings_project_id",
+      "idx_export_center_settings_status"
+    ],
+    "order": 163
+  },
+  {
+    "name": "mahavisphot_observatory_records",
+    "moduleId": "observatory",
+    "description": "Observatory: Stable module records and serialized domain state.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_observatory_records_project_id",
+      "idx_observatory_records_status"
+    ],
+    "order": 171
+  },
+  {
+    "name": "mahavisphot_observatory_events",
+    "moduleId": "observatory",
+    "description": "Observatory: Append-only module events, decisions, and audit evidence references.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_observatory_events_project_id",
+      "idx_observatory_events_status"
+    ],
+    "order": 172
+  },
+  {
+    "name": "mahavisphot_observatory_settings",
+    "moduleId": "observatory",
+    "description": "Observatory: User, workspace, and project-scoped module settings.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_observatory_settings_project_id",
+      "idx_observatory_settings_status"
+    ],
+    "order": 173
+  },
+  {
+    "name": "mahavisphot_local_ai_mode_records",
+    "moduleId": "local-ai-mode",
+    "description": "Local AI Mode: Stable module records and serialized domain state.",
+    "status": "blocked",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_local_ai_mode_records_project_id",
+      "idx_local_ai_mode_records_status"
+    ],
+    "order": 181
+  },
+  {
+    "name": "mahavisphot_local_ai_mode_events",
+    "moduleId": "local-ai-mode",
+    "description": "Local AI Mode: Append-only module events, decisions, and audit evidence references.",
+    "status": "blocked",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_local_ai_mode_events_project_id",
+      "idx_local_ai_mode_events_status"
+    ],
+    "order": 182
+  },
+  {
+    "name": "mahavisphot_local_ai_mode_settings",
+    "moduleId": "local-ai-mode",
+    "description": "Local AI Mode: User, workspace, and project-scoped module settings.",
+    "status": "blocked",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_local_ai_mode_settings_project_id",
+      "idx_local_ai_mode_settings_status"
+    ],
+    "order": 183
+  },
+  {
+    "name": "mahavisphot_cloud_ai_mode_records",
+    "moduleId": "cloud-ai-mode",
+    "description": "Cloud AI Mode: Stable module records and serialized domain state.",
+    "status": "blocked",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_cloud_ai_mode_records_project_id",
+      "idx_cloud_ai_mode_records_status"
+    ],
+    "order": 191
+  },
+  {
+    "name": "mahavisphot_cloud_ai_mode_events",
+    "moduleId": "cloud-ai-mode",
+    "description": "Cloud AI Mode: Append-only module events, decisions, and audit evidence references.",
+    "status": "blocked",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_cloud_ai_mode_events_project_id",
+      "idx_cloud_ai_mode_events_status"
+    ],
+    "order": 192
+  },
+  {
+    "name": "mahavisphot_cloud_ai_mode_settings",
+    "moduleId": "cloud-ai-mode",
+    "description": "Cloud AI Mode: User, workspace, and project-scoped module settings.",
+    "status": "blocked",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_cloud_ai_mode_settings_project_id",
+      "idx_cloud_ai_mode_settings_status"
+    ],
+    "order": 193
+  },
+  {
+    "name": "mahavisphot_hybrid_ai_mode_records",
+    "moduleId": "hybrid-ai-mode",
+    "description": "Hybrid AI Mode: Stable module records and serialized domain state.",
+    "status": "blocked",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_hybrid_ai_mode_records_project_id",
+      "idx_hybrid_ai_mode_records_status"
+    ],
+    "order": 201
+  },
+  {
+    "name": "mahavisphot_hybrid_ai_mode_events",
+    "moduleId": "hybrid-ai-mode",
+    "description": "Hybrid AI Mode: Append-only module events, decisions, and audit evidence references.",
+    "status": "blocked",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_hybrid_ai_mode_events_project_id",
+      "idx_hybrid_ai_mode_events_status"
+    ],
+    "order": 202
+  },
+  {
+    "name": "mahavisphot_hybrid_ai_mode_settings",
+    "moduleId": "hybrid-ai-mode",
+    "description": "Hybrid AI Mode: User, workspace, and project-scoped module settings.",
+    "status": "blocked",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_hybrid_ai_mode_settings_project_id",
+      "idx_hybrid_ai_mode_settings_status"
+    ],
+    "order": 203
+  },
+  {
+    "name": "mahavisphot_admin_records",
+    "moduleId": "admin",
+    "description": "Admin: Stable module records and serialized domain state.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_admin_records_project_id",
+      "idx_admin_records_status"
+    ],
+    "order": 211
+  },
+  {
+    "name": "mahavisphot_admin_events",
+    "moduleId": "admin",
+    "description": "Admin: Append-only module events, decisions, and audit evidence references.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_admin_events_project_id",
+      "idx_admin_events_status"
+    ],
+    "order": 212
+  },
+  {
+    "name": "mahavisphot_admin_settings",
+    "moduleId": "admin",
+    "description": "Admin: User, workspace, and project-scoped module settings.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_admin_settings_project_id",
+      "idx_admin_settings_status"
+    ],
+    "order": 213
+  },
+  {
+    "name": "mahavisphot_support_records",
+    "moduleId": "support",
+    "description": "Support: Stable module records and serialized domain state.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_support_records_project_id",
+      "idx_support_records_status"
+    ],
+    "order": 221
+  },
+  {
+    "name": "mahavisphot_support_events",
+    "moduleId": "support",
+    "description": "Support: Append-only module events, decisions, and audit evidence references.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_support_events_project_id",
+      "idx_support_events_status"
+    ],
+    "order": 222
+  },
+  {
+    "name": "mahavisphot_support_settings",
+    "moduleId": "support",
+    "description": "Support: User, workspace, and project-scoped module settings.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_support_settings_project_id",
+      "idx_support_settings_status"
+    ],
+    "order": 223
+  },
+  {
+    "name": "mahavisphot_developer_platform_records",
+    "moduleId": "developer-platform",
+    "description": "Developer Platform: Stable module records and serialized domain state.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_developer_platform_records_project_id",
+      "idx_developer_platform_records_status"
+    ],
+    "order": 231
+  },
+  {
+    "name": "mahavisphot_developer_platform_events",
+    "moduleId": "developer-platform",
+    "description": "Developer Platform: Append-only module events, decisions, and audit evidence references.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_developer_platform_events_project_id",
+      "idx_developer_platform_events_status"
+    ],
+    "order": 232
+  },
+  {
+    "name": "mahavisphot_developer_platform_settings",
+    "moduleId": "developer-platform",
+    "description": "Developer Platform: User, workspace, and project-scoped module settings.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_developer_platform_settings_project_id",
+      "idx_developer_platform_settings_status"
+    ],
+    "order": 233
+  },
+  {
+    "name": "mahavisphot_security_recovery_records",
+    "moduleId": "security-recovery",
+    "description": "Security Recovery: Stable module records and serialized domain state.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_security_recovery_records_project_id",
+      "idx_security_recovery_records_status"
+    ],
+    "order": 241
+  },
+  {
+    "name": "mahavisphot_security_recovery_events",
+    "moduleId": "security-recovery",
+    "description": "Security Recovery: Append-only module events, decisions, and audit evidence references.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_security_recovery_events_project_id",
+      "idx_security_recovery_events_status"
+    ],
+    "order": 242
+  },
+  {
+    "name": "mahavisphot_security_recovery_settings",
+    "moduleId": "security-recovery",
+    "description": "Security Recovery: User, workspace, and project-scoped module settings.",
+    "status": "scaffold",
+    "primaryKey": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "description": "Deterministic record identifier."
+      },
+      {
+        "name": "project_id",
+        "type": "text",
+        "required": true,
+        "description": "Owning project identifier."
+      },
+      {
+        "name": "schema_version",
+        "type": "text",
+        "required": true,
+        "description": "Registry schema version."
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "description": "Feature or record status."
+      },
+      {
+        "name": "payload_json",
+        "type": "json",
+        "required": true,
+        "description": "Schema-validated payload."
+      },
+      {
+        "name": "created_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 creation timestamp from storage layer."
+      },
+      {
+        "name": "updated_at",
+        "type": "text",
+        "required": true,
+        "description": "ISO-8601 update timestamp from storage layer."
+      }
+    ],
+    "indexes": [
+      "idx_security_recovery_settings_project_id",
+      "idx_security_recovery_settings_status"
+    ],
+    "order": 243
+  }
+] as const satisfies ReadonlyArray<MahavisphotDatabaseTable>;
