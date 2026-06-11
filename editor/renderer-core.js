@@ -11,7 +11,8 @@ const fsp = require("node:fs/promises");
 const path = require("node:path");
 const crypto = require("node:crypto");
 const os = require("node:os");
-const { execFileSync, spawn, spawnSync } = require("node:child_process");
+const { execFileSync } = require("node:child_process");
+const runtimeBinaries = require("./runtime-binaries");
 
 const ROOT = path.resolve(__dirname, "..");
 const EXPORT_SCHEMA_VERSION = "mahavisphot.export.v1";
@@ -85,12 +86,7 @@ function resolveSafeManifestPath(manifestPath) {
 }
 
 function hasBinary(name) {
-  try {
-    execFileSync(name, ["-version"], { stdio: "ignore" });
-    return true;
-  } catch {
-    return false;
-  }
+  return runtimeBinaries.hasBinary(name);
 }
 
 function round(value, places = 6) {
@@ -206,7 +202,7 @@ function resolveRenderableClips(manifest, durationLimit) {
 
 function runFfmpeg(args, cwd = ROOT) {
   return new Promise((resolve, reject) => {
-    const child = spawn("ffmpeg", args, { cwd });
+    const child = runtimeBinaries.spawnFile("ffmpeg", args, { cwd });
     let stderr = "";
     child.stderr.on("data", (data) => {
       stderr += data.toString();
@@ -418,7 +414,7 @@ function analyzeLoudness(audioClips, durationSec, cwd) {
   args.push("-filter_complex", filters.join(";"), "-map", "[a]", "-f", "null", "-");
   let res;
   try {
-    res = spawnSync("ffmpeg", args, { cwd, encoding: "utf8", timeout: 120000, maxBuffer: 1 << 24 });
+    res = runtimeBinaries.spawnFileSync("ffmpeg", args, { cwd, encoding: "utf8", timeout: 120000, maxBuffer: 1 << 24 });
   } catch {
     return null;
   }
@@ -457,7 +453,7 @@ let _encoderListCache = null;
 function ffmpegEncoderList() {
   if (_encoderListCache !== null) return _encoderListCache;
   try {
-    _encoderListCache = execFileSync("ffmpeg", ["-hide_banner", "-encoders"], { encoding: "utf8" });
+    _encoderListCache = runtimeBinaries.execFile("ffmpeg", ["-hide_banner", "-encoders"], { encoding: "utf8" });
   } catch {
     _encoderListCache = "";
   }
@@ -618,8 +614,10 @@ class MahavisphotRenderEngine {
     // Two-pass loudness: analyze the mixed stems first so the render locks to
     // an accurate -14 LUFS (linear mode) instead of single-pass estimation.
     const measuredLoudness = audioClips.length ? analyzeLoudness(audioClips, target.durationSec, this.workspaceRoot) : null;
+    const drawtextAvailable = runtimeBinaries.ffmpegFilterAvailable("drawtext");
+    const burnedCaptionLayers = drawtextAvailable ? captionLayers : [];
     const { args: ffmpegArgs, audioGraph, encoder: videoEncoder, preset: videoPreset } = buildFfmpegArgs({
-      videoClips: video, audioClips, captionLayers, target, outputPath, measuredLoudness,
+      videoClips: video, audioClips, captionLayers: burnedCaptionLayers, target, outputPath, measuredLoudness,
     });
 
     await fsp.writeFile(manifestCopyPath, `${JSON.stringify(manifest, null, 2)}\n`, "utf8");
@@ -678,7 +676,8 @@ class MahavisphotRenderEngine {
         assetPathsVerified: video.every((clip) => fs.existsSync(clip.path)) && audioClips.every((clip) => fs.existsSync(clip.path)),
         rendererCoveredClipIds: video.map((clip) => clip.clipId),
         skippedClips: skipped,
-        captionsBurnedIn: captionLayers.length,
+        captionsBurnedIn: burnedCaptionLayers.length,
+        captionBurnInBlocked: captionLayers.length > 0 && !drawtextAvailable ? "ffmpeg drawtext filter unavailable" : null,
         audioStemsPanned: audioGraph ? audioGraph.stems.length : 0,
         loudnessEnforced: Boolean(audioGraph),
       },
@@ -688,9 +687,13 @@ class MahavisphotRenderEngine {
         concurrentPairs: captionLayers.filter((layer) => layer.tier === "secondary").length,
         fontDevanagariAvailable: captionFonts.devanagari.available,
         fontLatinAvailable: captionFonts.latin.available,
-        note: captionFonts.devanagari.available
-          ? "Devanagari + Latin fonts resolved; both layers rasterize."
-          : "No Devanagari font on this host: the Hindi drawtext layer is emitted correctly but its glyphs will not rasterize here. Install fonts-noto-devanagari (or set a Devanagari fontfile) for full glyph coverage.",
+        drawtextAvailable,
+        burnedInLayerCount: burnedCaptionLayers.length,
+        note: !drawtextAvailable
+          ? "Caption layers are present in the manifest, but this ffmpeg build has no drawtext filter, so the preview render skips rasterized caption burn-in."
+          : captionFonts.devanagari.available
+            ? "Devanagari + Latin fonts resolved; both layers rasterize."
+            : "No Devanagari font on this host: the Hindi drawtext layer is emitted correctly but its glyphs will not rasterize here. Install fonts-noto-devanagari (or set a Devanagari fontfile) for full glyph coverage.",
         layers: captionLayers.map((layer) => ({ lang: layer.lang, tier: layer.tier, text: layer.text, y: layer.y, start: layer.start, end: layer.end })),
       },
       audioMix: {

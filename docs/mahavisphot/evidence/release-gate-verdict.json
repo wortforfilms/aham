@@ -1,7 +1,7 @@
 {
   "schemaVersion": "mahavisphot.release-gate.v1",
-  "timestamp": "2026-06-11T10:44:06.786Z",
-  "elapsedMs": 11251,
+  "timestamp": "2026-06-11T17:25:56.877Z",
+  "elapsedMs": 10936,
   "gate": {
     "green": true,
     "check": true,
@@ -173,18 +173,18 @@
   },
   "telemetry": {
     "host": {
-      "cores": 4,
-      "cpuUsagePct": 0,
-      "loadAvg1": 0.22,
-      "memTotalMB": 3904,
-      "memUsedMB": 557,
-      "memUsagePct": 14.27,
-      "rssMB": 53.2,
-      "heapUsedMB": 5.2,
+      "cores": 12,
+      "cpuUsagePct": 19.44,
+      "loadAvg1": 5.84,
+      "memTotalMB": 18432,
+      "memUsedMB": 18157,
+      "memUsagePct": 98.51,
+      "rssMB": 48.2,
+      "heapUsedMB": 5.1,
       "uptimeSec": 10
     },
     "gpu": {
-      "status": "unavailable"
+      "status": "name_only"
     },
     "loudness": {
       "integratedLUFS": -13.8,

@@ -1,9 +1,9 @@
 {
   "schemaVersion": "mahavisphot.launch-evidence.v1",
-  "generatedAt": "2026-06-11T10:43:58.374Z",
+  "generatedAt": "2026-06-11T17:25:48.573Z",
   "host": {
-    "platform": "linux arm64",
-    "node": "v22.22.3"
+    "platform": "darwin arm64",
+    "node": "v22.22.2"
   },
   "note": "Headless harness: verifies the Electron boot contract (server, port, health-token, file routes, project save/load). GUI window paint is not asserted in a headless environment.",
   "checks": [
@@ -40,7 +40,7 @@
     {
       "name": "owns_expected_port",
       "ok": true,
-      "detail": "server owns the requested fixed port 43801"
+      "detail": "server owns the requested fixed port 57678"
     },
     {
       "name": "health_token_valid",

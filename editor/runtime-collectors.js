@@ -11,17 +11,12 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const os = require("node:os");
-const { execFileSync } = require("node:child_process");
+const runtimeBinaries = require("./runtime-binaries");
 
 const ROOT = path.resolve(__dirname, "..");
 
 function hasBinary(name) {
-  try {
-    execFileSync(name, ["-version"], { stdio: "ignore" });
-    return true;
-  } catch {
-    return false;
-  }
+  return runtimeBinaries.hasBinary(name);
 }
 
 function exists(rel) {
@@ -98,7 +93,7 @@ function audioRuntime() {
   let detail = "could not probe master audio duration";
   if (checks[0].ok && exists("अहं ब्रह्मास्मि.wav")) {
     try {
-      const out = execFileSync("ffprobe", ["-v", "error", "-show_entries", "format=duration", "-of", "default=noprint_wrappers=1:nokey=1", path.join(ROOT, "अहं ब्रह्मास्मि.wav")], { encoding: "utf8" });
+      const out = runtimeBinaries.execFile("ffprobe", ["-v", "error", "-show_entries", "format=duration", "-of", "default=noprint_wrappers=1:nokey=1", path.join(ROOT, "अहं ब्रह्मास्मि.wav")], { encoding: "utf8" });
       durationOk = parseFloat(out) > 0;
     } catch {}
   }
@@ -223,7 +218,7 @@ function measureLoudness(audioRel = "अहं ब्रह्मास्मि
   if (!fs.existsSync(audioPath)) {
     return { status: "unavailable", error: `audio not found: ${audioRel}` };
   }
-  const r = spawnSync("ffmpeg", ["-nostats", "-hide_banner", "-i", audioPath, "-af", "ebur128=peak=true", "-f", "null", "-"],
+  const r = runtimeBinaries.spawnFileSync("ffmpeg", ["-nostats", "-hide_banner", "-i", audioPath, "-af", "ebur128=peak=true", "-f", "null", "-"],
     { encoding: "utf8", timeout: 120000, maxBuffer: 1 << 24 });
   const text = `${r.stdout || ""}\n${r.stderr || ""}`;
   const iMatches = [...text.matchAll(/I:\s*(-?\d+(?:\.\d+)?)\s*LUFS/g)];

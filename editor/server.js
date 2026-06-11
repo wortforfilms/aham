@@ -3,7 +3,7 @@ const fs = require("node:fs");
 const fsp = require("node:fs/promises");
 const path = require("node:path");
 const crypto = require("node:crypto");
-const { spawn } = require("node:child_process");
+const runtimeBinaries = require("./runtime-binaries");
 const crud = require("./crud");
 const timeline = require("./timeline-runtime");
 const aiRuntimeMod = require("./ai-runtime");
@@ -1012,7 +1012,7 @@ function ffmpegArgs({ concatPath, audioPath, outputPath, duration, overlayWindow
 
 function runFfmpeg(args) {
   return new Promise((resolve, reject) => {
-    const child = spawn("ffmpeg", args, { cwd: ROOT });
+    const child = runtimeBinaries.spawnFile("ffmpeg", args, { cwd: ROOT });
     let stderr = "";
     child.stderr.on("data", (data) => {
       stderr += data.toString();

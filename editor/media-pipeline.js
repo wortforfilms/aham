@@ -11,8 +11,8 @@ const fs = require("node:fs");
 const fsp = require("node:fs/promises");
 const path = require("node:path");
 const crypto = require("node:crypto");
-const { execFileSync, spawnSync } = require("node:child_process");
 const timeline = require("./timeline-runtime");
+const runtimeBinaries = require("./runtime-binaries");
 
 const ROOT = path.resolve(__dirname, "..");
 const MEDIA_SCHEMA_VERSION = "mahavisphot.media.v1";
@@ -84,16 +84,11 @@ function classifyMedia(assetPath) {
 }
 
 function hasBinary(name) {
-  try {
-    execFileSync(name, ["-version"], { stdio: "ignore" });
-    return true;
-  } catch {
-    return false;
-  }
+  return runtimeBinaries.hasBinary(name);
 }
 
 function runFfprobe(filePath) {
-  const raw = execFileSync("ffprobe", [
+  const raw = runtimeBinaries.execFile("ffprobe", [
     "-v", "error",
     "-print_format", "json",
     "-show_format",
@@ -213,7 +208,7 @@ function ensureBinaries() {
 }
 
 function runFfmpeg(args, label) {
-  const r = spawnSync("ffmpeg", args, { encoding: "utf8" });
+  const r = runtimeBinaries.spawnFileSync("ffmpeg", args, { encoding: "utf8" });
   if (r.status !== 0) {
     const stderr = String(r.stderr || "").split("\n").slice(-12).join("\n");
     const err = new Error(`${label} failed: ${stderr}`);
@@ -243,7 +238,7 @@ async function generateWaveformJson(filePath, outPath, durationSec) {
     "-f", "s16le",
     "pipe:1",
   ];
-  const r = spawnSync("ffmpeg", args, { encoding: null, maxBuffer: 64 * 1024 * 1024 });
+  const r = runtimeBinaries.spawnFileSync("ffmpeg", args, { encoding: null, maxBuffer: 64 * 1024 * 1024 });
   if (r.status !== 0) {
     const stderr = String(r.stderr || "").split("\n").slice(-12).join("\n");
     throw new Error(`waveform extraction failed: ${stderr}`);
