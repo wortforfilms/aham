@@ -18,6 +18,7 @@
     "mahavisphot:media": "node scripts/mahavisphot-media-pipeline.mjs && node --test tests/mahavisphot-media-pipeline.test.mjs",
     "mahavisphot:renderer": "node scripts/mahavisphot-renderer-parity.mjs && node --test tests/mahavisphot-renderer.test.mjs",
     "mahavisphot:renderer-av": "node --test tests/mahavisphot-renderer-av.test.mjs",
+    "mahavisphot:pipeline-e2e": "node --test tests/mahavisphot-pipeline-e2e.test.mjs",
     "mahavisphot:health": "node scripts/mahavisphot-runtime-health.mjs",
     "mahavisphot:telemetry": "node scripts/mahavisphot-telemetry.mjs --loudness",
     "mahavisphot:search-index": "node scripts/mahavisphot-search-index.mjs",

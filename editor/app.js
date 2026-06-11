@@ -5799,11 +5799,120 @@ async function exportSchemaManifest() {
   }
 }
 
+// ---- Real-time render telemetry HUD (frontend step 3) ----
+// Streams the server's /api/v1/telemetry (CPU, GPU where available via
+// nvidia-smi, viewport render-loop fps) into a live overlay while the manifest
+// compiles, then folds in the authoritative post-encode -14 LUFS verification
+// returned by the renderer report.
+const renderTelemetryState = { timer: null, rafActive: false, uiFps: 0 };
+
+function ensureTelemetryHud() {
+  let hud = document.getElementById("renderTelemetryHud");
+  if (hud) return hud;
+  hud = document.createElement("div");
+  hud.id = "renderTelemetryHud";
+  hud.setAttribute("aria-live", "polite");
+  hud.style.cssText =
+    "position:fixed;right:14px;bottom:14px;z-index:9999;min-width:250px;padding:12px 14px;" +
+    "border-radius:12px;background:rgba(18,20,28,0.95);border:1px solid #2a2f3e;color:#e7e9f0;" +
+    "font:12px/1.55 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;" +
+    "box-shadow:0 12px 40px rgba(0,0,0,0.55);display:none";
+  if (document.body) document.body.appendChild(hud);
+  return hud;
+}
+
+function startUiFpsMeter() {
+  if (renderTelemetryState.rafActive) return;
+  renderTelemetryState.rafActive = true;
+  let frames = 0;
+  let last = typeof performance !== "undefined" ? performance.now() : Date.now();
+  const loop = (now) => {
+    frames += 1;
+    if (now - last >= 500) {
+      renderTelemetryState.uiFps = Math.round((frames * 1000) / (now - last));
+      frames = 0;
+      last = now;
+    }
+    if (renderTelemetryState.rafActive) requestAnimationFrame(loop);
+  };
+  requestAnimationFrame(loop);
+}
+
+function stopUiFpsMeter() {
+  renderTelemetryState.rafActive = false;
+}
+
+function paintTelemetry(data, phase) {
+  const hud = ensureTelemetryHud();
+  hud.style.display = "block";
+  if (!data) {
+    hud.innerHTML = `<b>Render telemetry</b><div>${phase || "starting…"}</div>`;
+    return;
+  }
+  const host = data.host || {};
+  const gpu = data.gpu || {};
+  const loop = data.renderLoop || {};
+  const loud = data.loudness && data.loudness.status === "ok" ? data.loudness : null;
+  const gpuLine = gpu.status === "ok" && Array.isArray(gpu.gpus) && gpu.gpus[0]
+    ? `${gpu.gpus[0].name} · ${gpu.gpus[0].memUsagePct}% VRAM · ${gpu.gpus[0].utilizationPct}% util`
+    : `${gpu.status || "n/a"}`;
+  const rows = [
+    `<b>Render telemetry${phase ? " · " + phase : ""}</b>`,
+    `<div>CPU ${host.cpuUsagePct ?? "–"}% · MEM ${host.memUsagePct ?? "–"}%</div>`,
+    `<div>GPU ${gpuLine}</div>`,
+    `<div>Viewport ${loop.fps ?? "–"} fps (${loop.status || "–"})</div>`,
+  ];
+  if (loud) {
+    rows.push(`<div>Master ${loud.integratedLUFS} LUFS · ${loud.conforms ? "conforms −14 LUFS" : loud.verdict}</div>`);
+  }
+  hud.innerHTML = rows.join("");
+}
+
+async function pollTelemetryOnce() {
+  const query = new URLSearchParams({ loopFps: String(renderTelemetryState.uiFps || 0), loopTarget: "60" });
+  const response = await fetch(`/api/v1/telemetry?${query.toString()}`);
+  return response.json();
+}
+
+function startTelemetryStream() {
+  startUiFpsMeter();
+  paintTelemetry(null, "compiling");
+  const tick = async () => {
+    try {
+      paintTelemetry(await pollTelemetryOnce(), "compiling");
+    } catch (telemetryError) {
+      /* transient poll failure — keep streaming */
+    }
+  };
+  tick();
+  renderTelemetryState.timer = setInterval(tick, 1000);
+}
+
+async function stopTelemetryStream(report) {
+  if (renderTelemetryState.timer) {
+    clearInterval(renderTelemetryState.timer);
+    renderTelemetryState.timer = null;
+  }
+  stopUiFpsMeter();
+  let snapshot = null;
+  try {
+    snapshot = await pollTelemetryOnce();
+  } catch (telemetryError) {
+    snapshot = null;
+  }
+  if (snapshot && report && report.audioMix && report.audioMix.outputLoudness) {
+    snapshot.loudness = report.audioMix.outputLoudness;
+  }
+  paintTelemetry(snapshot, report ? "complete" : "failed");
+}
+
 async function compileSchemaRender() {
   state.exporting = true;
   renderExportState();
   setStatus("Compiling manifest renderer preview...");
   els.lastExportLink.hidden = true;
+  startTelemetryStream();
+  let compiledReport = null;
   try {
     const payload = {
       ...getProjectExportPayload(),
@@ -5831,13 +5940,17 @@ async function compileSchemaRender() {
     });
     const compileResult = await compileResponse.json();
     if (!compileResult.ok) throw new Error(compileResult.error || "Renderer compile failed");
+    compiledReport = compileResult.report || null;
     els.lastExportLink.href = compileResult.videoUrl;
     els.lastExportLink.hidden = false;
     els.lastExportLink.textContent = "Open compiled preview";
-    setStatus(`Renderer compiled ${compileResult.report.renderId}`);
+    const loud = compiledReport && compiledReport.audioMix && compiledReport.audioMix.outputLoudness;
+    const loudNote = loud && loud.status === "ok" ? ` · ${loud.integratedLUFS} LUFS` : "";
+    setStatus(`Renderer compiled ${compileResult.report.renderId}${loudNote}`);
   } catch (error) {
     setStatus(`Renderer compile failed: ${error.message}`);
   } finally {
+    await stopTelemetryStream(compiledReport);
     state.exporting = false;
     renderExportState();
   }
