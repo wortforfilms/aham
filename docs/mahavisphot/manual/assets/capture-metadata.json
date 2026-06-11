@@ -1,0 +1,108 @@
+{
+  "schemaVersion": "mahavisphot.ui-capture.v1",
+  "targetHost": "http://127.0.0.1:8177",
+  "startedAt": "2026-06-11T16:42:51.695Z",
+  "screenshots": [
+    "/Users/vesahe/Downloads/aham/docs/mahavisphot/manual/assets/01_studio_landing.png",
+    "/Users/vesahe/Downloads/aham/docs/mahavisphot/manual/assets/02_nle_timeline_workspace.png",
+    "/Users/vesahe/Downloads/aham/docs/mahavisphot/manual/assets/03_telemetry_hud_active.png",
+    "/Users/vesahe/Downloads/aham/docs/mahavisphot/manual/assets/04_render_compile_terminal_state.png"
+  ],
+  "interactionCoordinates": [
+    {
+      "label": "open editor",
+      "x": 1855,
+      "y": 29,
+      "box": {
+        "x": 1805.140625,
+        "y": 13,
+        "width": 98.859375,
+        "height": 31
+      }
+    },
+    {
+      "label": "add video layer",
+      "x": 28,
+      "y": 546,
+      "box": {
+        "x": 6,
+        "y": 534,
+        "width": 44.1875,
+        "height": 24
+      }
+    },
+    {
+      "label": "open projects panel",
+      "x": 1012,
+      "y": 20,
+      "box": {
+        "x": 980.921875,
+        "y": 8,
+        "width": 62.234375,
+        "height": 24
+      }
+    },
+    {
+      "label": "type project name",
+      "x": 1761,
+      "y": 454,
+      "box": {
+        "x": 1618,
+        "y": 442,
+        "width": 285,
+        "height": 24
+      }
+    },
+    {
+      "label": "compile render",
+      "x": 1804,
+      "y": 20,
+      "box": {
+        "x": 1775.75,
+        "y": 8,
+        "width": 56.453125,
+        "height": 24
+      }
+    }
+  ],
+  "pageErrors": [],
+  "consoleErrors": [
+    "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+  ],
+  "compile": {
+    "status": "failed_or_timed_out",
+    "statusText": "Renderer compile failed: ffmpeg not found on PATH"
+  },
+  "video": {
+    "status": "webm_and_mp4",
+    "webmPath": "/Users/vesahe/Downloads/aham/exports/automation/workspace_walkthrough.webm",
+    "mp4Path": "/Users/vesahe/Downloads/aham/exports/automation/workspace_walkthrough.mp4",
+    "conversionReason": null
+  },
+  "motionMatrix": {
+    "path": "/Users/vesahe/Downloads/aham/docs/mahavisphot/manual/assets/playhead-motion-matrix.json",
+    "samples": 6
+  },
+  "terminalState": {
+    "url": "http://127.0.0.1:8177/editor",
+    "title": "Mahavisphot Compositor",
+    "status": "Renderer compile failed: ffmpeg not found on PATH",
+    "hud": "Render telemetry · failedCPU 65.73% · MEM 99.07%GPU name_onlyViewport – fps (unknown)",
+    "playerClock": "1:36.92 / 3:21.84",
+    "playhead": {
+      "x": 6157.03,
+      "y": 523,
+      "width": 2,
+      "height": 824
+    },
+    "timelineViewport": {
+      "x": 256,
+      "y": 523,
+      "width": 1338,
+      "height": 481
+    },
+    "dynamicTracks": 3
+  },
+  "completedAt": "2026-06-11T16:42:57.790Z",
+  "capturedFailure": false
+}

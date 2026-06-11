@@ -1,0 +1,167 @@
+{
+  "schemaVersion": "mahavisphot.playhead-motion.v1",
+  "samples": [
+    {
+      "ratio": 0.05,
+      "input": {
+        "x": 511,
+        "y": 379
+      },
+      "state": {
+        "url": "http://127.0.0.1:8177/editor",
+        "title": "Mahavisphot Compositor",
+        "status": "Projects panel",
+        "hud": "",
+        "playerClock": "0:00.00 / 3:21.84",
+        "playhead": {
+          "x": 342,
+          "y": 523,
+          "width": 2,
+          "height": 824
+        },
+        "timelineViewport": {
+          "x": 256,
+          "y": 523,
+          "width": 1338,
+          "height": 481
+        },
+        "dynamicTracks": 3
+      }
+    },
+    {
+      "ratio": 0.18,
+      "input": {
+        "x": 618,
+        "y": 379
+      },
+      "state": {
+        "url": "http://127.0.0.1:8177/editor",
+        "title": "Mahavisphot Compositor",
+        "status": "Jogging timeline",
+        "hud": "",
+        "playerClock": "0:34.88 / 3:21.84",
+        "playhead": {
+          "x": 2434.52,
+          "y": 523,
+          "width": 2,
+          "height": 824
+        },
+        "timelineViewport": {
+          "x": 256,
+          "y": 523,
+          "width": 1338,
+          "height": 481
+        },
+        "dynamicTracks": 3
+      }
+    },
+    {
+      "ratio": 0.32,
+      "input": {
+        "x": 733,
+        "y": 379
+      },
+      "state": {
+        "url": "http://127.0.0.1:8177/editor",
+        "title": "Mahavisphot Compositor",
+        "status": "Jogging timeline",
+        "hud": "",
+        "playerClock": "1:03.75 / 3:21.84",
+        "playhead": {
+          "x": 4167.02,
+          "y": 523,
+          "width": 2,
+          "height": 824
+        },
+        "timelineViewport": {
+          "x": 256,
+          "y": 523,
+          "width": 1338,
+          "height": 481
+        },
+        "dynamicTracks": 3
+      }
+    },
+    {
+      "ratio": 0.48,
+      "input": {
+        "x": 865,
+        "y": 379
+      },
+      "state": {
+        "url": "http://127.0.0.1:8177/editor",
+        "title": "Mahavisphot Compositor",
+        "status": "Jogging timeline",
+        "hud": "",
+        "playerClock": "1:36.92 / 3:21.84",
+        "playhead": {
+          "x": 6157.03,
+          "y": 523,
+          "width": 2,
+          "height": 824
+        },
+        "timelineViewport": {
+          "x": 256,
+          "y": 523,
+          "width": 1338,
+          "height": 481
+        },
+        "dynamicTracks": 3
+      }
+    },
+    {
+      "ratio": 0.66,
+      "input": {
+        "x": 1013,
+        "y": 379
+      },
+      "state": {
+        "url": "http://127.0.0.1:8177/editor",
+        "title": "Mahavisphot Compositor",
+        "status": "Jogging timeline",
+        "hud": "",
+        "playerClock": "1:36.92 / 3:21.84",
+        "playhead": {
+          "x": 6157.03,
+          "y": 523,
+          "width": 2,
+          "height": 824
+        },
+        "timelineViewport": {
+          "x": 256,
+          "y": 523,
+          "width": 1338,
+          "height": 481
+        },
+        "dynamicTracks": 3
+      }
+    },
+    {
+      "ratio": 0.82,
+      "input": {
+        "x": 1144,
+        "y": 379
+      },
+      "state": {
+        "url": "http://127.0.0.1:8177/editor",
+        "title": "Mahavisphot Compositor",
+        "status": "Jogging timeline",
+        "hud": "",
+        "playerClock": "1:36.92 / 3:21.84",
+        "playhead": {
+          "x": 6157.03,
+          "y": 523,
+          "width": 2,
+          "height": 824
+        },
+        "timelineViewport": {
+          "x": 256,
+          "y": 523,
+          "width": 1338,
+          "height": 481
+        },
+        "dynamicTracks": 3
+      }
+    }
+  ]
+}
