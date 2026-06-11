@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import path from "node:path";
+import fs from "node:fs";
 import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
@@ -23,6 +24,29 @@ function manifestWithCaptions() {
   assert.equal(result.ok, true, JSON.stringify(result.errors || []));
   return result.manifest;
 }
+
+test("embedded repo Devanagari font resolves to a valid TrueType file descriptor", () => {
+  const fonts = renderer.resolveCaptionFonts();
+  assert.equal(fonts.devanagari.available, true, "embedded Devanagari font missing — run npm run bootstrap:fonts");
+  const fontPath = fonts.devanagari.path;
+  assert.ok(
+    fontPath.endsWith(path.join("assets", "fonts", "system", "NotoSansDevanagari-Bold.ttf")),
+    `expected repo-embedded font, got ${fontPath}`
+  );
+  assert.equal(fs.existsSync(fontPath), true);
+  // open a real file descriptor and confirm the sfnt/TrueType magic
+  const fd = fs.openSync(fontPath, "r");
+  try {
+    const head = Buffer.alloc(4);
+    const read = fs.readSync(fd, head, 0, 4, 0);
+    assert.equal(read, 4);
+    assert.equal(head.readUInt32BE(0), 0x00010000);
+  } finally {
+    fs.closeSync(fd);
+  }
+  // the file is a substantial, non-empty binary (not a placeholder)
+  assert.ok(fs.statSync(fontPath).size > 50 * 1024);
+});
 
 test("extractCaptionLayers stacks Hindi(primary) + English(secondary) per timecode window", () => {
   const { layers, fonts } = renderer.extractCaptionLayers(manifestWithCaptions(), target);
@@ -123,6 +147,7 @@ test("integration: executeManifestRender reports concurrent captions + panned/lo
   assert.equal(report.status, "SUCCESS");
   assert.ok(report.captions.layerCount >= 2);
   assert.ok(report.captions.languages.includes("en"));
+  assert.equal(report.captions.fontDevanagariAvailable, true);
   assert.equal(report.parity.audioStemsPanned, 1);
   assert.equal(report.parity.loudnessEnforced, true);
   // post-encode loudness verification actually ran (real ebur128) and did not breach

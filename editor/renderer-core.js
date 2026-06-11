@@ -256,9 +256,14 @@ function captionFontSize(target, tier) {
   return tier === "primary" ? base : Math.max(10, Math.round(base * 0.7));
 }
 
+// Repository-contained Devanagari binary (offline, no host-font dependency).
+// Bootstrap with: node scripts/mahavisphot-bootstrap-fonts.js
+const REPO_DEVANAGARI_FONT = path.join(__dirname, "..", "assets", "fonts", "system", "NotoSansDevanagari-Bold.ttf");
+
 function resolveCaptionFonts() {
   const candidates = {
     devanagari: [
+      REPO_DEVANAGARI_FONT, // prefer the repo-embedded font so glyphs render on any host
       "/usr/share/fonts/truetype/noto/NotoSansDevanagari-Regular.ttf",
       "/usr/share/fonts/truetype/noto/NotoSansDevanagari-Bold.ttf",
       "/usr/share/fonts/truetype/lohit-devanagari/Lohit-Devanagari.ttf",
