@@ -1,7 +1,7 @@
 {
   "schemaVersion": "mahavisphot.release-gate.v1",
-  "timestamp": "2026-06-11T10:39:14.372Z",
-  "elapsedMs": 11037,
+  "timestamp": "2026-06-11T10:44:06.786Z",
+  "elapsedMs": 11251,
   "gate": {
     "green": true,
     "check": true,
@@ -39,6 +39,12 @@
       {
         "file": "tests/mahavisphot-export-schema.test.mjs",
         "pass": 4,
+        "fail": 0,
+        "success": true
+      },
+      {
+        "file": "tests/mahavisphot-launch-evidence.test.mjs",
+        "pass": 1,
         "fail": 0,
         "success": true
       },
@@ -110,9 +116,9 @@
       }
     ],
     "totals": {
-      "pass": 99,
+      "pass": 100,
       "fail": 0,
-      "suites": 17
+      "suites": 18
     }
   },
   "runtimeHealth": {
@@ -169,11 +175,11 @@
     "host": {
       "cores": 4,
       "cpuUsagePct": 0,
-      "loadAvg1": 0.15,
+      "loadAvg1": 0.22,
       "memTotalMB": 3904,
-      "memUsedMB": 492,
-      "memUsagePct": 12.61,
-      "rssMB": 53.1,
+      "memUsedMB": 557,
+      "memUsagePct": 14.27,
+      "rssMB": 53.2,
       "heapUsedMB": 5.2,
       "uptimeSec": 10
     },
@@ -194,6 +200,11 @@
     "oversampleRate": 192000,
     "truePeakLimiterActive": true,
     "integratedLoudnessEnforced": true
+  },
+  "electronLaunch": {
+    "passed": 14,
+    "total": 14,
+    "allPass": true
   },
   "status": {
     "PRODUCTION_READY": false,

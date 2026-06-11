@@ -1,0 +1,84 @@
+{
+  "schemaVersion": "mahavisphot.launch-evidence.v1",
+  "generatedAt": "2026-06-11T10:43:58.374Z",
+  "host": {
+    "platform": "linux arm64",
+    "node": "v22.22.3"
+  },
+  "note": "Headless harness: verifies the Electron boot contract (server, port, health-token, file routes, project save/load). GUI window paint is not asserted in a headless environment.",
+  "checks": [
+    {
+      "name": "shell_boots_editor_server",
+      "ok": true,
+      "detail": "electron/main.cjs boots editor/server.js via startServer()"
+    },
+    {
+      "name": "shell_health_probe",
+      "ok": true,
+      "detail": "main.cjs probes /api/health with the health token"
+    },
+    {
+      "name": "shell_requires_owned",
+      "ok": true,
+      "detail": "main.cjs only proceeds once health reports owned for this app id"
+    },
+    {
+      "name": "shell_loads_app_url",
+      "ok": true,
+      "detail": "main.cjs loads the editor URL into the window"
+    },
+    {
+      "name": "preload_present",
+      "ok": true,
+      "detail": "electron/preload.cjs bridge is present"
+    },
+    {
+      "name": "app_starts",
+      "ok": true,
+      "detail": "editor server is listening after startServer()"
+    },
+    {
+      "name": "owns_expected_port",
+      "ok": true,
+      "detail": "server owns the requested fixed port 43801"
+    },
+    {
+      "name": "health_token_valid",
+      "ok": true,
+      "detail": "valid health token -> owned=true for mahavisphot-compositor"
+    },
+    {
+      "name": "health_token_enforced",
+      "ok": true,
+      "detail": "missing health token -> owned=false"
+    },
+    {
+      "name": "file_route_root",
+      "ok": true,
+      "detail": "GET / serves the editor shell document"
+    },
+    {
+      "name": "file_route_studio",
+      "ok": true,
+      "detail": "GET /mahavisphot serves the studio route"
+    },
+    {
+      "name": "project_create",
+      "ok": true,
+      "detail": "create project returns a persisted record id"
+    },
+    {
+      "name": "project_save",
+      "ok": true,
+      "detail": "PUT saves the project"
+    },
+    {
+      "name": "project_load_roundtrip",
+      "ok": true,
+      "detail": "GET reloads the saved payload (save/load parity)"
+    }
+  ],
+  "passed": 14,
+  "total": 14,
+  "allPass": true
+}
