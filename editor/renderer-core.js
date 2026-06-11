@@ -11,7 +11,7 @@ const fsp = require("node:fs/promises");
 const path = require("node:path");
 const crypto = require("node:crypto");
 const os = require("node:os");
-const { execFileSync, spawn } = require("node:child_process");
+const { execFileSync, spawn, spawnSync } = require("node:child_process");
 
 const ROOT = path.resolve(__dirname, "..");
 const EXPORT_SCHEMA_VERSION = "mahavisphot.export.v1";
@@ -245,8 +245,12 @@ function targetFromRequest(input, manifest) {
 const CAPTION_PRIMARY_Y = "h-220";   // Hindi / primary script baseline
 const CAPTION_SECONDARY_Y = "h-120"; // English / secondary translation baseline
 const LOUDNESS_TARGET_LUFS = -14;
-const TRUE_PEAK_CEILING_DBTP = -1.0;
-const TRUE_PEAK_LIMIT_LINEAR = round(10 ** (TRUE_PEAK_CEILING_DBTP / 20), 5); // -1 dBTP -> 0.89125
+const TRUE_PEAK_CEILING_DBTP = -1.0;        // delivery ceiling the report measures against
+const TP_LIMITER_DBTP = -1.5;               // limiter target — headroom below the ceiling so the
+                                            // measured true peak lands safely under -1.0 dBTP
+const TRUE_PEAK_LIMIT_LINEAR = round(10 ** (TP_LIMITER_DBTP / 20), 5); // ~0.84140
+const TP_OVERSAMPLE_RATE = 192000;          // 4x of 48 kHz: inter-sample peaks become real samples
+                                            // the limiter can catch (true-peak / ISP limiting)
 
 function compactLine(value) {
   return String(value == null ? "" : value).replace(/\s+/g, " ").trim();
@@ -366,12 +370,13 @@ function resolveAudioMix(clip) {
   return { role, pan, gain };
 }
 
-function buildAudioFilterGraph(audioClips, videoInputCount) {
-  if (!audioClips.length) return null;
+// Per-stem pan/gain + mix to a single stereo bus, WITHOUT loudness/limiting.
+// Reused by both the loudness analysis pass and the final render graph.
+function buildStemMixFilters(audioClips, baseInputIndex) {
   const filters = [];
   const stems = [];
   audioClips.forEach((clip, i) => {
-    const inputIndex = videoInputCount + i;
+    const inputIndex = baseInputIndex + i;
     const { role, pan, gain } = resolveAudioMix(clip);
     filters.push(
       `[${inputIndex}:a]aresample=48000,aformat=channel_layouts=stereo,volume=${gain},pan=${pan}[a${i}]`
@@ -386,10 +391,65 @@ function buildAudioFilterGraph(audioClips, videoInputCount) {
     filters.push(`${inputs}amix=inputs=${audioClips.length}:duration=longest:normalize=0[amixraw]`);
     mixedLabel = "amixraw";
   }
+  return { filters, mixedLabel, stems };
+}
+
+// loudnorm stage string. When `measured` is supplied, runs the accurate
+// two-pass linear mode locked to the analysis measurements; otherwise falls
+// back to single-pass dynamic normalization.
+function loudnormStage(measured) {
+  const base = `loudnorm=I=${LOUDNESS_TARGET_LUFS}:TP=${TRUE_PEAK_CEILING_DBTP}:LRA=11`;
+  if (!measured) return `${base}:print_format=summary`;
+  return `${base}:measured_I=${measured.input_i}:measured_LRA=${measured.input_lra}` +
+    `:measured_TP=${measured.input_tp}:measured_thresh=${measured.input_thresh}` +
+    `:offset=${measured.target_offset}:linear=true:print_format=summary`;
+}
+
+// Audio-only loudness analysis (loudnorm pass 1). Returns the measured JSON
+// (input_i/input_tp/input_lra/input_thresh/target_offset) or null on any failure.
+function analyzeLoudness(audioClips, durationSec, cwd) {
+  if (!audioClips.length) return null;
+  const args = ["-hide_banner", "-nostats"];
+  for (const clip of audioClips) {
+    args.push("-ss", clip.in.toFixed(6), "-t", durationSec.toFixed(6), "-i", clip.path);
+  }
+  const { filters, mixedLabel } = buildStemMixFilters(audioClips, 0);
+  filters.push(`[${mixedLabel}]loudnorm=I=${LOUDNESS_TARGET_LUFS}:TP=${TRUE_PEAK_CEILING_DBTP}:print_format=json[a]`);
+  args.push("-filter_complex", filters.join(";"), "-map", "[a]", "-f", "null", "-");
+  let res;
+  try {
+    res = spawnSync("ffmpeg", args, { cwd, encoding: "utf8", timeout: 120000, maxBuffer: 1 << 24 });
+  } catch {
+    return null;
+  }
+  const text = `${res.stdout || ""}\n${res.stderr || ""}`;
+  const objects = text.match(/\{[\s\S]*?"input_i"[\s\S]*?\}/g);
+  if (!objects || !objects.length) return null;
+  try {
+    const parsed = JSON.parse(objects[objects.length - 1]);
+    // loudnorm requires all five fields; bail to single-pass if any are missing/NaN
+    for (const key of ["input_i", "input_tp", "input_lra", "input_thresh", "target_offset"]) {
+      if (parsed[key] === undefined || Number.isNaN(Number(parsed[key]))) return null;
+    }
+    return parsed;
+  } catch {
+    return null;
+  }
+}
+
+function buildAudioFilterGraph(audioClips, videoInputCount, measured) {
+  if (!audioClips.length) return null;
+  const { filters, mixedLabel, stems } = buildStemMixFilters(audioClips, videoInputCount);
+  // Accurate integrated loudness (two-pass when measured), then a TRUE-PEAK
+  // brickwall: upsample 4x so inter-sample peaks become real samples, limit at
+  // -1.5 dBTP (headroom below the -1.0 dBTP delivery ceiling), downsample back.
   filters.push(
-    `[${mixedLabel}]loudnorm=I=${LOUDNESS_TARGET_LUFS}:TP=${TRUE_PEAK_CEILING_DBTP}:LRA=11,alimiter=limit=${TRUE_PEAK_LIMIT_LINEAR}[aout]`
+    `[${mixedLabel}]${loudnormStage(measured)},` +
+    `aresample=${TP_OVERSAMPLE_RATE},` +
+    `alimiter=level_in=1:level_out=1:limit=${TRUE_PEAK_LIMIT_LINEAR}:level=disabled:asc=1,` +
+    `aresample=48000[aout]`
   );
-  return { filters, outLabel: "aout", stems };
+  return { filters, outLabel: "aout", stems, twoPass: Boolean(measured) };
 }
 
 // ---- hardware-aware video encoder selection (honest: HW only when present) ----
@@ -450,7 +510,7 @@ function parseEncodeFps(stderr) {
   return round(matches.reduce((a, b) => a + b, 0) / matches.length, 1);
 }
 
-function buildFfmpegArgs({ videoClips, audioClips, captionLayers, target, outputPath }) {
+function buildFfmpegArgs({ videoClips, audioClips, captionLayers, target, outputPath, measuredLoudness }) {
   const threads = Math.max(1, os.cpus().length);
   // Parallelize the scale/caption filter lanes across host cores so the
   // filter_complex graph does not serialize on a constrained CPU node.
@@ -479,7 +539,7 @@ function buildFfmpegArgs({ videoClips, audioClips, captionLayers, target, output
     videoOut = "[vout]";
   }
 
-  const audioGraph = buildAudioFilterGraph(audioClips || [], videoClips.length);
+  const audioGraph = buildAudioFilterGraph(audioClips || [], videoClips.length, measuredLoudness);
   if (audioGraph) filters.push(...audioGraph.filters);
 
   args.push("-filter_complex", filters.join(";"));
@@ -555,8 +615,11 @@ class MahavisphotRenderEngine {
     // All renderable audio stems (master / VO / music) for pan-matrix mixing.
     const audioClips = audio;
     const audioClip = audioClips[0] || null;
+    // Two-pass loudness: analyze the mixed stems first so the render locks to
+    // an accurate -14 LUFS (linear mode) instead of single-pass estimation.
+    const measuredLoudness = audioClips.length ? analyzeLoudness(audioClips, target.durationSec, this.workspaceRoot) : null;
     const { args: ffmpegArgs, audioGraph, encoder: videoEncoder, preset: videoPreset } = buildFfmpegArgs({
-      videoClips: video, audioClips, captionLayers, target, outputPath,
+      videoClips: video, audioClips, captionLayers, target, outputPath, measuredLoudness,
     });
 
     await fsp.writeFile(manifestCopyPath, `${JSON.stringify(manifest, null, 2)}\n`, "utf8");
@@ -634,7 +697,9 @@ class MahavisphotRenderEngine {
         stems: audioGraph ? audioGraph.stems : [],
         targetLufs: LOUDNESS_TARGET_LUFS,
         truePeakCeilingDbtp: TRUE_PEAK_CEILING_DBTP,
-        truePeakLimitLinear: TRUE_PEAK_LIMIT_LINEAR,
+        truePeakLimiterDbtp: TP_LIMITER_DBTP,
+        oversampleRate: TP_OVERSAMPLE_RATE,
+        twoPass: Boolean(audioGraph && audioGraph.twoPass),
         outputLoudness,
         conforms: outputLoudness && outputLoudness.status === "ok" ? outputLoudness.conforms : null,
       },
@@ -674,12 +739,16 @@ module.exports = {
   extractCaptionLayers,
   buildCaptionDrawtextChain,
   resolveAudioMix,
+  buildStemMixFilters,
   buildAudioFilterGraph,
+  analyzeLoudness,
   buildFfmpegArgs,
   selectVideoEncoder,
   detectHwEncoder,
   parseEncodeFps,
   LOUDNESS_TARGET_LUFS,
   TRUE_PEAK_CEILING_DBTP,
+  TP_LIMITER_DBTP,
   TRUE_PEAK_LIMIT_LINEAR,
+  TP_OVERSAMPLE_RATE,
 };

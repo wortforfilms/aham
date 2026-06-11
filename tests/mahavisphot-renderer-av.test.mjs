@@ -112,8 +112,26 @@ test("audio filtergraph pans each stem and enforces -14 LUFS / -1 dBTP ceiling",
   assert.ok(graph.filters.some((f) => f.includes("amix=inputs=2")));
   const finalFilter = graph.filters[graph.filters.length - 1];
   assert.ok(finalFilter.includes(`loudnorm=I=${renderer.LOUDNESS_TARGET_LUFS}:TP=${renderer.TRUE_PEAK_CEILING_DBTP}`));
-  assert.ok(finalFilter.includes(`alimiter=limit=${renderer.TRUE_PEAK_LIMIT_LINEAR}`));
+  // true-peak-accurate: oversample -> limit -> downsample
+  assert.ok(finalFilter.includes(`aresample=${renderer.TP_OVERSAMPLE_RATE}`), "missing oversample stage");
+  assert.ok(finalFilter.includes(`alimiter=`) && finalFilter.includes(`limit=${renderer.TRUE_PEAK_LIMIT_LINEAR}`));
+  assert.ok(finalFilter.trim().endsWith("aresample=48000[aout]"), "missing downsample-back stage");
   assert.equal(graph.outLabel, "aout");
+});
+
+test("two-pass loudnorm locks to measured values with oversampled true-peak brickwall", () => {
+  const measured = { input_i: -18, input_tp: -2.1, input_lra: 7, input_thresh: -28, target_offset: 0.5 };
+  const g = renderer.buildAudioFilterGraph([{ clipId: "m", sourceId: "a.wav", name: "A1 Master", meta: {} }], 1, measured);
+  assert.equal(g.twoPass, true);
+  const f = g.filters[g.filters.length - 1];
+  assert.ok(f.includes("measured_I=-18") && f.includes("measured_TP=-2.1") && f.includes("linear=true"));
+  assert.ok(f.includes(`aresample=${renderer.TP_OVERSAMPLE_RATE}`));
+  assert.ok(f.trim().endsWith("aresample=48000[aout]"));
+  // single-pass branch when no measurement is supplied
+  const single = renderer.buildAudioFilterGraph([{ clipId: "m", sourceId: "a.wav", name: "A1", meta: {} }], 1);
+  assert.equal(single.twoPass, false);
+  // analyzeLoudness null-guards on empty input (never throws)
+  assert.equal(renderer.analyzeLoudness([], 2, process.cwd()), null);
 });
 
 test("buildFfmpegArgs maps caption video out + panned audio out", () => {

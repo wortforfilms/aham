@@ -1,6 +1,6 @@
 {
   "schemaVersion": "mahavisphot.benchmark.v1",
-  "generatedAt": "2026-06-11T09:20:14.239Z",
+  "generatedAt": "2026-06-11T09:35:33.561Z",
   "host": {
     "cpus": 4,
     "cpuModel": "unknown",
@@ -21,17 +21,17 @@
       "audioStems": 1,
       "durationSec": 3,
       "framesRendered": 72,
-      "wallSec": 1.24,
-      "effectiveEncodeFps": 58.1,
+      "wallSec": 1.2,
+      "effectiveEncodeFps": 60,
       "reportedEncodeFps": null,
-      "realtimeFactor": 2.419,
+      "realtimeFactor": 2.5,
       "throughput": "realtime+",
       "loudness": {
-        "integratedLUFS": -14.5,
-        "conforms": true,
+        "integratedLUFS": -15.1,
+        "conforms": false,
         "abort": false
       },
-      "compiledOutput": "exports/render-core/bench-preview/render_6435d2a7883d8be0/mahavisphot_manifest_preview.mp4"
+      "compiledOutput": "exports/render-core/bench-preview/render_2fc354759ad5c708/mahavisphot_manifest_preview.mp4"
     },
     {
       "profile": "uhd",
@@ -44,17 +44,17 @@
       "audioStems": 2,
       "durationSec": 6,
       "framesRendered": 144,
-      "wallSec": 4.77,
-      "effectiveEncodeFps": 30.2,
-      "reportedEncodeFps": 37.2,
-      "realtimeFactor": 1.258,
+      "wallSec": 4.62,
+      "effectiveEncodeFps": 31.2,
+      "reportedEncodeFps": 39.3,
+      "realtimeFactor": 1.299,
       "throughput": "realtime+",
       "loudness": {
-        "integratedLUFS": -12.7,
-        "conforms": false,
+        "integratedLUFS": -14,
+        "conforms": true,
         "abort": false
       },
-      "compiledOutput": "exports/render-core/bench-uhd/render_70788c1053d65500/mahavisphot_manifest_preview.mp4"
+      "compiledOutput": "exports/render-core/bench-uhd/render_b44b293f2a97d6dc/mahavisphot_manifest_preview.mp4"
     },
     {
       "profile": "stress",
@@ -67,32 +67,32 @@
       "audioStems": 2,
       "durationSec": 15,
       "framesRendered": 360,
-      "wallSec": 5.88,
-      "effectiveEncodeFps": 61.2,
-      "reportedEncodeFps": 65.3,
-      "realtimeFactor": 2.551,
+      "wallSec": 5.87,
+      "effectiveEncodeFps": 61.3,
+      "reportedEncodeFps": 71.8,
+      "realtimeFactor": 2.555,
       "throughput": "realtime+",
       "loudness": {
-        "integratedLUFS": -11.9,
-        "conforms": false,
+        "integratedLUFS": -14,
+        "conforms": true,
         "abort": false
       },
-      "compiledOutput": "exports/render-core/bench-preview/render_e91efb92e5b60dc8/mahavisphot_manifest_preview.mp4"
+      "compiledOutput": "exports/render-core/bench-preview/render_81d51dde8c200cfe/mahavisphot_manifest_preview.mp4"
     }
   ],
   "deltas": {
     "light->uhd": {
-      "wallSecDelta": 3.53,
-      "encodeFpsDelta": -27.9
+      "wallSecDelta": 3.42,
+      "encodeFpsDelta": -28.8
     },
     "uhd->stress": {
-      "wallSecDelta": 1.11,
-      "encodeFpsDelta": 31
+      "wallSecDelta": 1.25,
+      "encodeFpsDelta": 30.1
     }
   },
   "bottleneck": {
     "profile": "uhd",
-    "realtimeFactor": 1.258,
+    "realtimeFactor": 1.299,
     "throughput": "realtime+"
   }
 }
