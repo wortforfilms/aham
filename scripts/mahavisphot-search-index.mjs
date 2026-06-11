@@ -79,6 +79,27 @@ for (const entity of crud.ENTITIES) {
   });
 }
 
+// --- Live runtime endpoints (implemented outside registry scaffold rows) ---
+const liveEndpoints = [
+  ["live.editor-doc", "GET/PUT /api/v1/editor/doc", "/api/v1/editor/doc", "Timeline document save/load"],
+  ["live.media-ingest", "POST /api/v1/media/ingest", "/api/v1/media/ingest", "Safe media ingest, metadata, proxy, waveform"],
+  ["live.render-compile", "POST /api/v1/render/compile", "/api/v1/render/compile", "Manifest-native renderer compile"],
+  ["live.export-schema", "POST /api/export/schema", "/api/export/schema", "Export schema parity manifest"],
+  ["live.search", "GET /api/v1/search", "/api/v1/search", "Global search index"],
+  ["live.runtime-health", "GET /api/v1/health/runtimes", "/api/v1/health/runtimes", "Runtime health collectors"],
+];
+for (const [id, title, endpointPath, description] of liveEndpoints) {
+  push({
+    kind: "live_endpoint",
+    id,
+    title,
+    path: endpointPath,
+    module: "runtime",
+    status: "preview",
+    keywords: `${id} ${title} ${endpointPath} ${description}`.toLowerCase(),
+  });
+}
+
 // --- Workflows (module-level) ---
 const modules = schema.modules || [];
 for (const m of modules) {

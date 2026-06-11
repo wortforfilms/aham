@@ -6,6 +6,9 @@ const crypto = require("node:crypto");
 const { spawn } = require("node:child_process");
 const crud = require("./crud");
 const timeline = require("./timeline-runtime");
+const exportSchema = require("./export-schema");
+const mediaPipeline = require("./media-pipeline");
+const rendererCore = require("./renderer-core");
 
 const ROOT = path.resolve(__dirname, "..");
 const EDITOR_DIR = __dirname;
@@ -16,6 +19,7 @@ const AUTH_FILE = path.join(DATA_DIR, "auth.json");
 const PROJECTS_DIR = path.join(DATA_DIR, "projects");
 const CRUD_DIR = path.join(DATA_DIR, "crud");
 const crudStore = crud.createStore(CRUD_DIR);
+const renderEngine = new rendererCore.MahavisphotRenderEngine(ROOT);
 const EDITOR_DOCS_DIR = path.join(DATA_DIR, "editor");
 const SESSION_COOKIE = "mahavisphot_session";
 const SESSION_MAX_AGE_SECONDS = 60 * 60 * 24 * 14;
@@ -1024,6 +1028,17 @@ async function handleExport(req, res) {
   try {
     const raw = await readBody(req);
     const payload = JSON.parse(raw || "{}");
+    const manifestResult = exportSchema.buildExportManifest(payload, {
+      mode: "preview-mp4",
+    });
+    if (!manifestResult.ok) {
+      sendJson(res, 422, {
+        ok: false,
+        error: "Invalid export schema payload",
+        details: manifestResult.errors,
+      });
+      return;
+    }
     const scenes = (payload.scenes || []).map(coerceScene).sort((a, b) => a.start - b.start);
     if (!scenes.length) throw new Error("No scenes to export");
 
@@ -1041,13 +1056,14 @@ async function handleExport(req, res) {
     const rubabPath = safeMediaAssetPath(String(payload.rubabPath || RUBAB_FRAME));
     const outputPath = path.join(exportDir, "mahavisphot_editor_export.mp4");
     const projectPath = path.join(exportDir, "project.json");
+    const schemaPath = path.join(exportDir, "export-schema.json");
     const captionsRendered = await attachCaptionFiles(exportDir, scenes);
 
     const overlayWindows = scenes
       .filter((scene) => scene.rubabOverlay)
       .map((scene) => ({ start: scene.start, end: scene.end }));
-    const schema = exportSchemaPayload(payload, scenes);
-    const vfxWindowsRendered = schema.vfx.some((scene) => scene.effects?.vignette);
+    const schema = manifestResult.manifest;
+    const vfxWindowsRendered = schema.vfx.some((scene) => scene.effects?.includes?.("vignette"));
 
     const project = {
       createdAt: new Date().toISOString(),
@@ -1057,11 +1073,13 @@ async function handleExport(req, res) {
       scenes,
       overlayWindows,
       schema,
-      parity: exportParityReport(schema, scenes, {
+      parity: {
+        ...schema.parity,
         captionsRendered: captionsRendered === schema.captions.length,
         vfxWindowsRendered,
-      }),
+      },
     };
+    await fsp.writeFile(schemaPath, JSON.stringify(schema, null, 2), "utf8");
     await fsp.writeFile(projectPath, JSON.stringify(project, null, 2), "utf8");
 
     let advancedFilters = true;
@@ -1100,6 +1118,7 @@ async function handleExport(req, res) {
       exportName,
       video: fileUrl(path.relative(ROOT, outputPath)),
       project: fileUrl(path.relative(ROOT, projectPath)),
+      schemaUrl: fileUrl(path.relative(ROOT, schemaPath)),
       concat: fileUrl(path.relative(ROOT, concatPath)),
       overlayWindows,
       schema,
@@ -1111,6 +1130,82 @@ async function handleExport(req, res) {
       ok: false,
       error: error.message || String(error),
     });
+  }
+}
+
+async function handleExportSchema(req, res) {
+  try {
+    const payload = await parseJsonBody(req);
+    const stamp = new Date().toISOString().replace(/[-:]/g, "").replace(/\..+/, "");
+    const exportName = `schema_export_${stamp}`;
+    const exportRelDir = path.join("exports", exportName);
+    const exportDir = path.join(ROOT, exportRelDir);
+    await fsp.mkdir(exportDir, { recursive: true });
+    const result = exportSchema.buildExportManifest(payload, {
+      mode: payload.exportMode || "manifest",
+    });
+    if (!result.ok) {
+      sendJson(res, 422, {
+        ok: false,
+        error: "Invalid export schema payload",
+        details: result.errors,
+      });
+      return;
+    }
+    const schemaPath = path.join(exportDir, "export-schema.json");
+    const evidencePath = path.join(exportDir, "export-parity-evidence.json");
+    const evidence = {
+      schemaVersion: exportSchema.EXPORT_SCHEMA_EVIDENCE_VERSION,
+      generatedAt: new Date().toISOString(),
+      exportName,
+      schemaPath: path.relative(ROOT, schemaPath),
+      frameModel: "timeline-runtime-v2",
+      productionReady: false,
+      parity: result.manifest.parity,
+      renderStatus: result.manifest.renderPlan.status,
+      blockers: result.manifest.renderPlan.unsupportedPreviewVfx.length
+        ? [`preview renderer does not visually cover VFX: ${result.manifest.renderPlan.unsupportedPreviewVfx.join(", ")}`]
+        : ["production render readiness still requires renderer integration evidence"],
+    };
+    await fsp.writeFile(schemaPath, JSON.stringify(result.manifest, null, 2), "utf8");
+    await fsp.writeFile(evidencePath, JSON.stringify(evidence, null, 2), "utf8");
+    sendJson(res, 200, {
+      ok: true,
+      exportName,
+      schema: result.manifest,
+      parity: result.manifest.parity,
+      schemaUrl: fileUrl(path.relative(ROOT, schemaPath)),
+      evidenceUrl: fileUrl(path.relative(ROOT, evidencePath)),
+    });
+  } catch (error) {
+    sendJson(res, 400, { ok: false, error: error.message || String(error) });
+  }
+}
+
+async function handleRenderCompile(req, res) {
+  if (req.method !== "POST") {
+    sendJson(res, 405, { ok: false, error: "Method not allowed" });
+    return;
+  }
+  try {
+    const payload = await parseJsonBody(req);
+    const report = await renderEngine.executeManifestRender(payload);
+    sendJson(res, 200, {
+      ok: true,
+      report,
+      videoUrl: report.compiledOutputUrl,
+      reportUrl: fileUrl(report.reportPath),
+    });
+  } catch (error) {
+    if (error.code === "renderer_validation_failed" || error.code === "renderer_manifest_invalid" || error.code === "renderer_no_video") {
+      sendJson(res, 422, { ok: false, error: error.message, details: error.errors || [] });
+      return;
+    }
+    if (error.code === "renderer_runtime_blocked") {
+      sendJson(res, 503, { ok: false, error: error.message, missing: error.missing || [] });
+      return;
+    }
+    sendJson(res, 500, { ok: false, error: error.message || String(error) });
   }
 }
 
@@ -1186,6 +1281,77 @@ async function handleSearch(req, res, url) {
 async function handleRuntimeHealth(req, res) {
   const collectors = require("./runtime-collectors");
   sendJson(res, 200, { ok: true, ...collectors.collectAll() });
+}
+
+// GET /api/v1/telemetry?loopFps=NN&includeLoudness=1&audioPath=...
+// Sovereign engine telemetry: host CPU/mem, honest GPU probe, viewport loop,
+// and real BS.1770 LUFS. Defensive: never throws; surfaces errors + renderSafe.
+async function handleTelemetry(req, res, url) {
+  try {
+    const collectors = require("./runtime-collectors");
+    const includeLoudness = ["1", "true", "yes"].includes(String(url.searchParams.get("includeLoudness") || "").toLowerCase());
+    let audioPath;
+    if (url.searchParams.get("audioPath")) {
+      // resolve through the safe-media policy so paths cannot escape the workspace
+      audioPath = safeMediaAssetPath(String(url.searchParams.get("audioPath")));
+    }
+    const report = await collectors.telemetry({
+      loopFps: url.searchParams.get("loopFps"),
+      loopTarget: Number(url.searchParams.get("loopTarget")) || 60,
+      includeLoudness,
+      audioPath,
+    });
+    sendJson(res, report.status === "abort" ? 503 : 200, { ok: report.status !== "abort", ...report });
+  } catch (error) {
+    sendJson(res, 400, { ok: false, status: "error", error: error.message || String(error) });
+  }
+}
+
+async function handleMediaIngest(req, res) {
+  const auth = await requireUser(req, res);
+  if (!auth) return;
+  if (req.method !== "POST") {
+    sendJson(res, 405, { ok: false, error: "Method not allowed" });
+    return;
+  }
+  const body = await parseJsonBody(req);
+  try {
+    const ingest = await mediaPipeline.ingestMedia(body);
+    if (!ingest.ok) {
+      sendJson(res, 422, { ok: false, error: "Media ingest validation failed", details: ingest.errors });
+      return;
+    }
+    const projectId = sanitizeProjectId(body.projectId || "default") || "default";
+    const record = await mediaPipeline.registerAssetRecord(crudStore, auth.user.id, ingest, projectId);
+    let timelineLink = null;
+    if (body.linkTimeline === true) {
+      const docPath = editorDocPath(auth.user.id, projectId);
+      const existing = await readJsonFile(docPath, null);
+      const linked = mediaPipeline.linkAssetToTimelineDoc(existing || timeline.newDoc({ name: projectId }), ingest, {
+        projectId,
+        start: Number(body.timelineStart || 0),
+        durationSec: Number(body.durationSec) || undefined,
+      });
+      await writeJsonFile(docPath, linked.doc);
+      timelineLink = {
+        projectId,
+        trackId: linked.track.id,
+        clipId: linked.clip.id,
+      };
+    }
+    sendJson(res, 201, {
+      ok: true,
+      asset: ingest.asset,
+      record,
+      timelineLink,
+    });
+  } catch (error) {
+    if (error.code === "media_runtime_blocked") {
+      sendJson(res, 503, { ok: false, error: error.message, missing: error.missing || [] });
+      return;
+    }
+    sendJson(res, 400, { ok: false, error: error.message || String(error) });
+  }
 }
 
 function editorDocPath(userId, projectId) {
@@ -1318,8 +1484,20 @@ const server = http.createServer(async (req, res) => {
       await handleSearch(req, res, url);
       return;
     }
+    if (req.method === "GET" && url.pathname === "/api/v1/telemetry") {
+      await handleTelemetry(req, res, url);
+      return;
+    }
     if (req.method === "GET" && url.pathname === "/api/v1/health/runtimes") {
       await handleRuntimeHealth(req, res);
+      return;
+    }
+    if (url.pathname === "/api/v1/media/ingest") {
+      await handleMediaIngest(req, res);
+      return;
+    }
+    if (url.pathname === "/api/v1/render/compile") {
+      await handleRenderCompile(req, res);
       return;
     }
     if (url.pathname === "/api/v1/editor/doc") {
@@ -1353,6 +1531,10 @@ const server = http.createServer(async (req, res) => {
     } catch (error) {
       sendJson(res, 500, { ok: false, error: error.message || String(error) });
     }
+    return;
+  }
+  if (req.method === "POST" && url.pathname === "/api/export/schema") {
+    await handleExportSchema(req, res);
     return;
   }
   if (req.method === "POST" && url.pathname === "/api/export") {

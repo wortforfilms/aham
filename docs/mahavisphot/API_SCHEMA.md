@@ -1,6 +1,19 @@
 # Mahavisphot API Schema
 
-This document describes the deterministic scaffolded API contract registry. These contracts are not runtime claims; endpoint execution remains blocked until handlers, adapters, and evidence are implemented.
+This document describes the deterministic scaffolded API contract registry. Registry rows are not runtime claims unless listed below as implemented local runtime endpoints.
+
+## Implemented Local Runtime Endpoints
+
+| Method | Path | Status | Purpose | Evidence |
+| --- | --- | --- | --- | --- |
+| GET/PUT/POST | `/api/v1/editor/doc` | verified | Load, migrate, validate, and persist the timeline-runtime v2 document per user/project. | `npm run mahavisphot:editor` |
+| CRUD | `/api/v1/<entity>` | verified | Schema-validated local CRUD for 13 production domains. | `npm run mahavisphot:crud` |
+| GET | `/api/v1/search` | verified | 666-item global search over routes, APIs, tables, CRUD, workflows, and runtimes. | `npm run mahavisphot:search-index` |
+| GET | `/api/v1/health/runtimes` | verified | Runtime health collector surface for editor, media, render, audio, local AI, cloud AI, and hybrid AI. | `npm run mahavisphot:health` |
+| POST | `/api/v1/media/ingest` | verified | Auth-gated safe-root media ingest. Extracts metadata, writes proxy/waveform/spectrogram derivatives, creates an `assets` CRUD record, and can link the asset into the saved timeline document. | `npm run mahavisphot:media` |
+| POST | `/api/v1/render/compile` | verified | Compiles a safe `mahavisphot.export.v1` manifest into a local ffmpeg preview and writes renderer parity evidence. | `npm run mahavisphot:renderer` |
+| POST | `/api/export/schema` | verified | Builds and writes `mahavisphot.export.v1` manifest/evidence from the verified timeline document model without invoking ffmpeg. | `npm run mahavisphot:export-parity` |
+| POST | `/api/export` | preview | Writes the same export schema manifest beside a preview MP4 package; full visual render parity remains blocked until renderer evidence exists. | Runtime smoke evidence |
 
 | ID | Method | Path | Status | Request Schema | Response Schema |
 | --- | --- | --- | --- | --- | --- |

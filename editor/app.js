@@ -421,6 +421,8 @@ const els = {
   spatialTelemetry: document.getElementById("spatialTelemetry"),
   statusText: document.getElementById("statusText"),
   lastExportLink: document.getElementById("lastExportLink"),
+  exportSchemaBtn: document.getElementById("exportSchemaBtn"),
+  compileRenderBtn: document.getElementById("compileRenderBtn"),
   exportVideoBtn: document.getElementById("exportVideoBtn"),
   loadGeneratedTimelineBtn: document.getElementById("loadGeneratedTimelineBtn"),
   loadDenseTimelineBtn: document.getElementById("loadDenseTimelineBtn"),
@@ -5121,6 +5123,8 @@ function renderKeyframes() {
 function renderExportState() {
   document.body.classList.toggle("exporting", state.exporting);
   els.exportVideoBtn.textContent = state.exporting ? "Exporting..." : "Export MP4";
+  if (els.exportSchemaBtn) els.exportSchemaBtn.textContent = state.exporting ? "Schema..." : "Schema";
+  if (els.compileRenderBtn) els.compileRenderBtn.textContent = state.exporting ? "Compiling..." : "Compile";
 }
 
 function render() {
@@ -5766,6 +5770,79 @@ async function exportVideo() {
   }
 }
 
+async function exportSchemaManifest() {
+  state.exporting = true;
+  renderExportState();
+  setStatus("Exporting schema...");
+  els.lastExportLink.hidden = true;
+  try {
+    const payload = {
+      ...getProjectExportPayload(),
+      exportMode: "manifest",
+    };
+    const response = await fetch("/api/export/schema", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    const result = await response.json();
+    if (!result.ok) throw new Error(result.error || "Schema export failed");
+    els.lastExportLink.href = result.schemaUrl;
+    els.lastExportLink.hidden = false;
+    els.lastExportLink.textContent = "Open export schema";
+    setStatus(`Schema exported ${result.exportName}`);
+  } catch (error) {
+    setStatus(`Schema export failed: ${error.message}`);
+  } finally {
+    state.exporting = false;
+    renderExportState();
+  }
+}
+
+async function compileSchemaRender() {
+  state.exporting = true;
+  renderExportState();
+  setStatus("Compiling manifest renderer preview...");
+  els.lastExportLink.hidden = true;
+  try {
+    const payload = {
+      ...getProjectExportPayload(),
+      exportMode: "manifest",
+    };
+    const schemaResponse = await fetch("/api/export/schema", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    const schemaResult = await schemaResponse.json();
+    if (!schemaResult.ok) throw new Error(schemaResult.error || "Schema export failed");
+
+    const compileResponse = await fetch("/api/v1/render/compile", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        manifest: schemaResult.schema,
+        profile: "preview",
+        width: 1280,
+        height: 720,
+        fps: 24,
+        maxDurationSec: 30,
+      }),
+    });
+    const compileResult = await compileResponse.json();
+    if (!compileResult.ok) throw new Error(compileResult.error || "Renderer compile failed");
+    els.lastExportLink.href = compileResult.videoUrl;
+    els.lastExportLink.hidden = false;
+    els.lastExportLink.textContent = "Open compiled preview";
+    setStatus(`Renderer compiled ${compileResult.report.renderId}`);
+  } catch (error) {
+    setStatus(`Renderer compile failed: ${error.message}`);
+  } finally {
+    state.exporting = false;
+    renderExportState();
+  }
+}
+
 function setWorkspaceMode(mode) {
   state.workspaceMode = mode;
   const panelByMode = {
@@ -5972,6 +6049,8 @@ function commandActions() {
     { label: "Fit timeline", run: fitTimelineView },
     { label: "Timeline zoom reset", shortcut: "Fit", run: resetTimelineView },
     { label: "Reset panel layout", run: resetLayout },
+    { label: "Export schema manifest", shortcut: "Schema export", run: exportSchemaManifest },
+    { label: "Compile schema-native render", shortcut: "Render core", run: compileSchemaRender },
     { label: "Export MP4", shortcut: "Ctrl+Shift+E", run: exportVideo },
   ];
 }
@@ -6638,6 +6717,8 @@ function bindEvents() {
     downloadBlob("mahavisphot_compositor_timeline.tsv", toTsv(), "text/tab-separated-values");
   });
   els.downloadBoardBtn.addEventListener("click", exportStoryboardPng);
+  els.exportSchemaBtn.addEventListener("click", exportSchemaManifest);
+  els.compileRenderBtn.addEventListener("click", compileSchemaRender);
   els.exportVideoBtn.addEventListener("click", exportVideo);
   els.loadGeneratedTimelineBtn.addEventListener("click", () => loadFirstGeneratedTimeline());
   els.loadDenseTimelineBtn.addEventListener("click", () => loadDenseShotTimeline());

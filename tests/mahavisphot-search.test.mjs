@@ -20,6 +20,7 @@ test("index covers every surface category", () => {
   assert.equal(idx.byKind.api, 150);
   assert.equal(idx.byKind.table, 75);
   assert.equal(idx.byKind.crud, 13);
+  assert.equal(idx.byKind.live_endpoint, 6);
   assert.equal(idx.byKind.runtime, 3);
   assert.ok(idx.byKind.workflow >= 1);
   assert.equal(idx.total, idx.items.length);
@@ -47,6 +48,15 @@ test("live CRUD surfaces are present and marked preview", () => {
   const surfaces = idx.items.filter((it) => it.kind === "crud");
   assert.equal(surfaces.length, crud.ENTITIES.length);
   assert.ok(surfaces.every((s) => s.status === "preview" && s.path.startsWith("/api/v1/")));
+});
+
+test("implemented runtime endpoints are searchable", () => {
+  const idx = loadIndex();
+  const live = idx.items.filter((it) => it.kind === "live_endpoint");
+  assert.equal(live.length, 6);
+  assert.ok(live.some((item) => item.path === "/api/v1/render/compile"));
+  assert.ok(live.some((item) => item.path === "/api/v1/media/ingest"));
+  assert.ok(live.every((item) => item.status === "preview"));
 });
 
 test("HTTP /api/v1/search filters by query, kind, and status", async () => {
