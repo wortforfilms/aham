@@ -134,6 +134,32 @@ test("buildFfmpegArgs maps caption video out + panned audio out", () => {
   assert.equal(audioGraph.stems.length, 1);
 });
 
+test("video encoder selection is hardware-aware with optimized software fallback", () => {
+  const enc = renderer.selectVideoEncoder({ profile: "uhd", width: 3840, height: 2160, fps: 24 });
+  assert.ok(["libx264", "h264_nvenc", "h264_videotoolbox"].includes(enc.encoder));
+  // on a host with no HW encoder we must land on optimized libx264 veryfast
+  if (enc.encoder === "libx264") {
+    assert.equal(enc.preset, "veryfast");
+    assert.ok(enc.args.includes("-threads"));
+    assert.ok(enc.args.includes("-crf"));
+  }
+  // hw probe must never throw and returns null or a known kind
+  const hw = renderer.detectHwEncoder();
+  assert.ok(hw === null || ["nvenc", "videotoolbox"].includes(hw.kind));
+});
+
+test("buildFfmpegArgs parallelizes filter lanes and uses the selected encoder", () => {
+  const { args, encoder } = renderer.buildFfmpegArgs({
+    videoClips: [{ mediaKind: "image", duration: 1, in: 0, path: "/x/a.jpg" }],
+    audioClips: [], captionLayers: [],
+    target: { profile: "uhd", width: 3840, height: 2160, fps: 24, durationSec: 1 },
+    outputPath: "/x/o.mp4",
+  });
+  assert.ok(args.includes("-filter_complex_threads"));
+  assert.ok(args.includes("-filter_threads"));
+  assert.ok(args.includes(encoder)); // chosen -c:v value is present in the arg vector
+});
+
 test("parseEncodeFps averages ffmpeg fps samples", () => {
   assert.equal(renderer.parseEncodeFps("frame=1 fps= 30 q=1\nframe=2 fps= 50 q=1"), 40);
   assert.equal(renderer.parseEncodeFps("no fps here"), null);

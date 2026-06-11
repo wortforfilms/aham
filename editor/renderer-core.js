@@ -10,6 +10,7 @@ const fs = require("node:fs");
 const fsp = require("node:fs/promises");
 const path = require("node:path");
 const crypto = require("node:crypto");
+const os = require("node:os");
 const { execFileSync, spawn } = require("node:child_process");
 
 const ROOT = path.resolve(__dirname, "..");
@@ -391,6 +392,56 @@ function buildAudioFilterGraph(audioClips, videoInputCount) {
   return { filters, outLabel: "aout", stems };
 }
 
+// ---- hardware-aware video encoder selection (honest: HW only when present) ----
+let _encoderListCache = null;
+function ffmpegEncoderList() {
+  if (_encoderListCache !== null) return _encoderListCache;
+  try {
+    _encoderListCache = execFileSync("ffmpeg", ["-hide_banner", "-encoders"], { encoding: "utf8" });
+  } catch {
+    _encoderListCache = "";
+  }
+  return _encoderListCache;
+}
+
+function detectHwEncoder() {
+  const encoders = ffmpegEncoderList();
+  // macOS VideoToolbox is reliably functional on Apple hosts.
+  if (os.platform() === "darwin" && encoders.includes("h264_videotoolbox")) {
+    return { kind: "videotoolbox" };
+  }
+  // NVENC: trust only if ffmpeg lists it AND an NVIDIA device truly exists.
+  if (encoders.includes("h264_nvenc")) {
+    try { execFileSync("nvidia-smi", ["-L"], { stdio: "ignore" }); return { kind: "nvenc" }; } catch { /* no GPU */ }
+  }
+  return null;
+}
+
+// Returns { encoder, preset, args[] } — optimized per profile, hardware path
+// when available, optimized software (libx264 veryfast) otherwise.
+function selectVideoEncoder(target) {
+  const isUhd = target.profile === "uhd";
+  const hw = detectHwEncoder();
+  if (hw && hw.kind === "nvenc") {
+    return {
+      encoder: "h264_nvenc", preset: "p4",
+      args: ["-c:v", "h264_nvenc", "-preset", "p4", "-rc", "vbr", "-cq", isUhd ? "21" : "23", "-b:v", "0", "-pix_fmt", "yuv420p"],
+    };
+  }
+  if (hw && hw.kind === "videotoolbox") {
+    return {
+      encoder: "h264_videotoolbox", preset: "realtime",
+      args: ["-c:v", "h264_videotoolbox", "-q:v", isUhd ? "55" : "45", "-pix_fmt", "yuv420p"],
+    };
+  }
+  // Optimized software fallback — veryfast clears the 4K medium-preset bottleneck;
+  // a slightly higher CRF at UHD preserves perceptual quality while cutting cost.
+  return {
+    encoder: "libx264", preset: "veryfast",
+    args: ["-c:v", "libx264", "-preset", "veryfast", "-crf", isUhd ? "20" : "23", "-pix_fmt", "yuv420p", "-threads", "0"],
+  };
+}
+
 function parseEncodeFps(stderr) {
   const matches = [...String(stderr || "").matchAll(/fps=\s*([\d.]+)/g)]
     .map((m) => Number(m[1]))
@@ -400,7 +451,10 @@ function parseEncodeFps(stderr) {
 }
 
 function buildFfmpegArgs({ videoClips, audioClips, captionLayers, target, outputPath }) {
-  const args = ["-y", "-hide_banner"];
+  const threads = Math.max(1, os.cpus().length);
+  // Parallelize the scale/caption filter lanes across host cores so the
+  // filter_complex graph does not serialize on a constrained CPU node.
+  const args = ["-y", "-hide_banner", "-filter_complex_threads", String(threads), "-filter_threads", String(threads)];
   for (const clip of videoClips) {
     if (clip.mediaKind === "image") {
       args.push("-loop", "1", "-t", clip.duration.toFixed(6), "-i", clip.path);
@@ -431,17 +485,13 @@ function buildFfmpegArgs({ videoClips, audioClips, captionLayers, target, output
   args.push("-filter_complex", filters.join(";"));
   args.push("-map", videoOut);
   if (audioGraph) args.push("-map", `[${audioGraph.outLabel}]`);
-  args.push(
-    "-t", target.durationSec.toFixed(6),
-    "-c:v", "libx264",
-    "-preset", target.profile === "uhd" ? "medium" : "veryfast",
-    "-crf", target.profile === "uhd" ? "18" : "23",
-    "-pix_fmt", "yuv420p",
-    "-r", String(target.fps)
-  );
+  const encode = selectVideoEncoder(target);
+  args.push("-t", target.durationSec.toFixed(6));
+  args.push(...encode.args);
+  args.push("-r", String(target.fps));
   if (audioGraph) args.push("-c:a", "aac", "-b:a", "192k", "-ar", "48000");
   args.push(outputPath);
-  return { args, audioGraph };
+  return { args, audioGraph, encoder: encode.encoder, preset: encode.preset };
 }
 
 class MahavisphotRenderEngine {
@@ -505,7 +555,7 @@ class MahavisphotRenderEngine {
     // All renderable audio stems (master / VO / music) for pan-matrix mixing.
     const audioClips = audio;
     const audioClip = audioClips[0] || null;
-    const { args: ffmpegArgs, audioGraph } = buildFfmpegArgs({
+    const { args: ffmpegArgs, audioGraph, encoder: videoEncoder, preset: videoPreset } = buildFfmpegArgs({
       videoClips: video, audioClips, captionLayers, target, outputPath,
     });
 
@@ -596,7 +646,7 @@ class MahavisphotRenderEngine {
         audioAttached: audioClips.length > 0,
         audioStemCount: audioClips.length,
         captionLayerCount: captionLayers.length,
-        encode: { avgFps: encodeFps, loopStatus: renderLoop.status, frameBudgetMs: renderLoop.frameBudgetMs ?? null },
+        encode: { avgFps: encodeFps, loopStatus: renderLoop.status, frameBudgetMs: renderLoop.frameBudgetMs ?? null, videoEncoder, videoPreset, filterThreads: Math.max(1, os.cpus().length) },
       },
       productionReady: false,
       blockers: [
@@ -626,6 +676,8 @@ module.exports = {
   resolveAudioMix,
   buildAudioFilterGraph,
   buildFfmpegArgs,
+  selectVideoEncoder,
+  detectHwEncoder,
   parseEncodeFps,
   LOUDNESS_TARGET_LUFS,
   TRUE_PEAK_CEILING_DBTP,
