@@ -234,7 +234,167 @@ function targetFromRequest(input, manifest) {
   return { profile, width, height, fps, maxDurationSec };
 }
 
-function buildFfmpegArgs({ videoClips, audioClip, target, outputPath }) {
+/* =====================================================================
+ * CONCURRENT MULTI-LINGUAL CAPTION BURN-IN
+ * Builds a single-pass, stacked drawtext chain so the primary (Hindi /
+ * Devanagari) and secondary (English) caption layers burn simultaneously
+ * over the exact same timecode window — one filtergraph pass, no duplicate
+ * source reads, no dropped frames.
+ * ===================================================================== */
+const CAPTION_PRIMARY_Y = "h-220";   // Hindi / primary script baseline
+const CAPTION_SECONDARY_Y = "h-120"; // English / secondary translation baseline
+const LOUDNESS_TARGET_LUFS = -14;
+const TRUE_PEAK_CEILING_DBTP = -1.0;
+const TRUE_PEAK_LIMIT_LINEAR = round(10 ** (TRUE_PEAK_CEILING_DBTP / 20), 5); // -1 dBTP -> 0.89125
+
+function compactLine(value) {
+  return String(value == null ? "" : value).replace(/\s+/g, " ").trim();
+}
+
+function captionFontSize(target, tier) {
+  const base = target.height >= 1440 ? 64 : target.height >= 720 ? 38 : 20;
+  return tier === "primary" ? base : Math.max(10, Math.round(base * 0.7));
+}
+
+function resolveCaptionFonts() {
+  const candidates = {
+    devanagari: [
+      "/usr/share/fonts/truetype/noto/NotoSansDevanagari-Regular.ttf",
+      "/usr/share/fonts/truetype/noto/NotoSansDevanagari-Bold.ttf",
+      "/usr/share/fonts/truetype/lohit-devanagari/Lohit-Devanagari.ttf",
+      "/usr/share/fonts/truetype/ttf-devanagari/gargi.ttf",
+    ],
+    latin: [
+      "/usr/share/fonts/truetype/lato/Lato-Bold.ttf",
+      "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+      "/usr/share/fonts/truetype/noto/NotoSans-Bold.ttf",
+    ],
+  };
+  const pick = (list) => list.find((p) => { try { return fs.existsSync(p); } catch { return false; } }) || null;
+  const devanagari = pick(candidates.devanagari);
+  const latin = pick(candidates.latin);
+  return {
+    devanagari: { path: devanagari || latin, available: Boolean(devanagari) },
+    latin: { path: latin || devanagari, available: Boolean(latin) },
+  };
+}
+
+function escapeDrawtext(value) {
+  // Args are passed via spawn (no shell): escape only filtergraph-significant
+  // characters. Straight apostrophes are converted to a typographic apostrophe
+  // so they can never terminate the single-quoted text token.
+  return String(value == null ? "" : value)
+    .replace(/\\/g, "\\\\")
+    .replace(/:/g, "\\:")
+    .replace(/%/g, "\\%")
+    .replace(/'/g, "’");
+}
+
+function extractCaptionLayers(manifest, target) {
+  const fonts = resolveCaptionFonts();
+  const captions = Array.isArray(manifest.captions) ? manifest.captions : [];
+  const layers = [];
+  for (const cap of captions) {
+    const start = round(Math.max(0, Number(cap.start) || 0));
+    const rawEnd = Number(cap.end ?? (start + (Number(cap.duration) || 1)));
+    const end = round(Math.min(Number.isFinite(rawEnd) ? rawEnd : start + 1, target.durationSec));
+    if (!(end > start)) continue;
+    const enable = `between(t,${start},${end})`;
+    const hi = compactLine(cap.titleHi);
+    const en = compactLine(cap.titleEn ?? cap.text);
+    if (hi) {
+      layers.push({ lang: "hi", tier: "primary", text: hi, font: fonts.devanagari.path,
+        y: CAPTION_PRIMARY_Y, fontSize: captionFontSize(target, "primary"), start, end, enable });
+    }
+    if (en && en !== hi) {
+      layers.push({ lang: "en", tier: "secondary", text: en, font: fonts.latin.path,
+        y: CAPTION_SECONDARY_Y, fontSize: captionFontSize(target, "secondary"), start, end, enable });
+    }
+  }
+  return { layers, fonts };
+}
+
+function buildCaptionDrawtextChain(layers) {
+  return layers.map((layer) => [
+    `drawtext=fontfile=${layer.font}`,
+    `text='${escapeDrawtext(layer.text)}'`,
+    "x=(w-text_w)/2",
+    `y=${layer.y}`,
+    `fontsize=${layer.fontSize}`,
+    "fontcolor=white",
+    "borderw=2",
+    "bordercolor=black@0.85",
+    "box=1",
+    "boxcolor=black@0.45",
+    "boxborderw=14",
+    `enable='${layer.enable}'`,
+  ].join(":"));
+}
+
+/* =====================================================================
+ * MULTI-CHANNEL AUDIO BALANCING & PANNING
+ * Each stem is normalized to stereo, role-panned via an explicit pan matrix
+ * (preventing phase cancellation), weighted, then summed and constrained to
+ * -14 LUFS integrated with a hard -1.0 dBTP true-peak ceiling.
+ * ===================================================================== */
+function resolveAudioMix(clip) {
+  const mix = (clip && clip.meta && clip.meta.audioMix) || {};
+  const name = String(clip.name || clip.sourceId || "").toLowerCase();
+  let role = typeof mix.role === "string" ? mix.role : null;
+  if (!role) {
+    if (/(^|[^a-z])(vo|voice|vox|dialog|narrat)/.test(name)) role = "vo";
+    else if (/(music|score|bgm|song|theme)/.test(name)) role = "music";
+    else role = "master";
+  }
+  let pan = typeof mix.pan === "string" && mix.pan.trim() ? mix.pan.trim() : null;
+  if (!pan) {
+    if (role === "vo") pan = "stereo|c0=0.85*c0+0.15*c1|c1=0.15*c0+0.85*c1";
+    else if (role === "music") pan = "stereo|c0=0.92*c0+0.08*c1|c1=0.08*c0+0.92*c1";
+    else pan = "stereo|c0=0.5*c0+0.5*c1|c1=0.5*c0+0.5*c1";
+  }
+  let gain = Number(mix.gain);
+  if (!Number.isFinite(gain) || gain < 0) {
+    const gainDb = Number(mix.gainDb);
+    gain = Number.isFinite(gainDb) ? round(10 ** (gainDb / 20), 5) : (role === "music" ? 0.7 : 1.0);
+  }
+  return { role, pan, gain };
+}
+
+function buildAudioFilterGraph(audioClips, videoInputCount) {
+  if (!audioClips.length) return null;
+  const filters = [];
+  const stems = [];
+  audioClips.forEach((clip, i) => {
+    const inputIndex = videoInputCount + i;
+    const { role, pan, gain } = resolveAudioMix(clip);
+    filters.push(
+      `[${inputIndex}:a]aresample=48000,aformat=channel_layouts=stereo,volume=${gain},pan=${pan}[a${i}]`
+    );
+    stems.push({ clipId: clip.clipId, sourceId: clip.sourceId, role, pan, gain });
+  });
+  let mixedLabel;
+  if (audioClips.length === 1) {
+    mixedLabel = "a0";
+  } else {
+    const inputs = audioClips.map((_, i) => `[a${i}]`).join("");
+    filters.push(`${inputs}amix=inputs=${audioClips.length}:duration=longest:normalize=0[amixraw]`);
+    mixedLabel = "amixraw";
+  }
+  filters.push(
+    `[${mixedLabel}]loudnorm=I=${LOUDNESS_TARGET_LUFS}:TP=${TRUE_PEAK_CEILING_DBTP}:LRA=11,alimiter=limit=${TRUE_PEAK_LIMIT_LINEAR}[aout]`
+  );
+  return { filters, outLabel: "aout", stems };
+}
+
+function parseEncodeFps(stderr) {
+  const matches = [...String(stderr || "").matchAll(/fps=\s*([\d.]+)/g)]
+    .map((m) => Number(m[1]))
+    .filter((n) => Number.isFinite(n) && n > 0);
+  if (!matches.length) return null;
+  return round(matches.reduce((a, b) => a + b, 0) / matches.length, 1);
+}
+
+function buildFfmpegArgs({ videoClips, audioClips, captionLayers, target, outputPath }) {
   const args = ["-y", "-hide_banner"];
   for (const clip of videoClips) {
     if (clip.mediaKind === "image") {
@@ -243,16 +403,29 @@ function buildFfmpegArgs({ videoClips, audioClip, target, outputPath }) {
       args.push("-ss", clip.in.toFixed(6), "-t", clip.duration.toFixed(6), "-i", clip.path);
     }
   }
-  if (audioClip) args.push("-ss", audioClip.in.toFixed(6), "-t", target.durationSec.toFixed(6), "-i", audioClip.path);
+  for (const clip of audioClips) {
+    args.push("-ss", clip.in.toFixed(6), "-t", target.durationSec.toFixed(6), "-i", clip.path);
+  }
 
   const filters = videoClips.map((_, index) => (
     `[${index}:v]scale=${target.width}:${target.height}:force_original_aspect_ratio=increase,crop=${target.width}:${target.height},fps=${target.fps},setsar=1,setpts=PTS-STARTPTS[v${index}]`
   ));
   const concatInputs = videoClips.map((_, index) => `[v${index}]`).join("");
   filters.push(`${concatInputs}concat=n=${videoClips.length}:v=1:a=0[baseTimeline]`);
+
+  let videoOut = "[baseTimeline]";
+  const drawtextChain = buildCaptionDrawtextChain(captionLayers || []);
+  if (drawtextChain.length) {
+    filters.push(`[baseTimeline]${drawtextChain.join(",")}[vout]`);
+    videoOut = "[vout]";
+  }
+
+  const audioGraph = buildAudioFilterGraph(audioClips || [], videoClips.length);
+  if (audioGraph) filters.push(...audioGraph.filters);
+
   args.push("-filter_complex", filters.join(";"));
-  args.push("-map", "[baseTimeline]");
-  if (audioClip) args.push("-map", `${videoClips.length}:a:0`, "-shortest");
+  args.push("-map", videoOut);
+  if (audioGraph) args.push("-map", `[${audioGraph.outLabel}]`);
   args.push(
     "-t", target.durationSec.toFixed(6),
     "-c:v", "libx264",
@@ -261,9 +434,9 @@ function buildFfmpegArgs({ videoClips, audioClip, target, outputPath }) {
     "-pix_fmt", "yuv420p",
     "-r", String(target.fps)
   );
-  if (audioClip) args.push("-c:a", "aac", "-b:a", "160k");
+  if (audioGraph) args.push("-c:a", "aac", "-b:a", "192k", "-ar", "48000");
   args.push(outputPath);
-  return args;
+  return { args, audioGraph };
 }
 
 class MahavisphotRenderEngine {
@@ -322,12 +495,41 @@ class MahavisphotRenderEngine {
     const reportPath = path.join(outputDir, "renderer-parity-report.json");
     const manifestCopyPath = path.join(outputDir, "export-schema.json");
     const filterArgsPath = path.join(outputDir, "ffmpeg-args.json");
-    const audioClip = audio[0] || null;
-    const ffmpegArgs = buildFfmpegArgs({ videoClips: video, audioClip, target, outputPath });
+    // Concurrent multi-lingual caption layers (Hindi primary + English secondary).
+    const { layers: captionLayers, fonts: captionFonts } = extractCaptionLayers(manifest, target);
+    // All renderable audio stems (master / VO / music) for pan-matrix mixing.
+    const audioClips = audio;
+    const audioClip = audioClips[0] || null;
+    const { args: ffmpegArgs, audioGraph } = buildFfmpegArgs({
+      videoClips: video, audioClips, captionLayers, target, outputPath,
+    });
 
     await fsp.writeFile(manifestCopyPath, `${JSON.stringify(manifest, null, 2)}\n`, "utf8");
     await fsp.writeFile(filterArgsPath, `${JSON.stringify({ args: ffmpegArgs }, null, 2)}\n`, "utf8");
-    await runFfmpeg(ffmpegArgs, this.workspaceRoot);
+
+    // Run the encode, piping ffmpeg telemetry through the render-loop analyzer.
+    const collectors = require("./runtime-collectors");
+    const encodeStderr = await runFfmpeg(ffmpegArgs, this.workspaceRoot);
+    const encodeFps = parseEncodeFps(encodeStderr);
+    const renderLoop = collectors.evaluateRenderLoop(encodeFps, target.fps);
+
+    // Post-encode loudness verification — halt + clean up before any corrupt
+    // master is published if the true-peak ceiling is breached.
+    let outputLoudness = null;
+    if (audioGraph) {
+      try {
+        outputLoudness = collectors.measureLoudness(outputPath);
+      } catch (loudnessError) {
+        outputLoudness = { status: "error", error: loudnessError.message || String(loudnessError) };
+      }
+      if (outputLoudness && outputLoudness.status === "ok" && outputLoudness.overCeiling) {
+        try { await fsp.rm(outputPath, { force: true }); } catch (_cleanupError) { /* unlink may be blocked; report still aborts */ }
+        const err = new Error(`Rendered master breaches loudness ceiling and was discarded: ${outputLoudness.verdict}`);
+        err.code = "renderer_loudness_breach";
+        err.loudness = outputLoudness;
+        throw err;
+      }
+    }
 
     const report = {
       schemaVersion: RENDERER_EVIDENCE_SCHEMA_VERSION,
@@ -355,20 +557,45 @@ class MahavisphotRenderEngine {
         videoWindowsRead: Array.isArray(manifest.renderPlan?.videoWindows) ? manifest.renderPlan.videoWindows.length : 0,
         audioWindowsRead: Array.isArray(manifest.renderPlan?.audioWindows) ? manifest.renderPlan.audioWindows.length : 0,
         clipTableRead: Array.isArray(manifest.clips),
-        assetPathsVerified: video.every((clip) => fs.existsSync(clip.path)) && (!audioClip || fs.existsSync(audioClip.path)),
+        assetPathsVerified: video.every((clip) => fs.existsSync(clip.path)) && audioClips.every((clip) => fs.existsSync(clip.path)),
         rendererCoveredClipIds: video.map((clip) => clip.clipId),
         skippedClips: skipped,
+        captionsBurnedIn: captionLayers.length,
+        audioStemsPanned: audioGraph ? audioGraph.stems.length : 0,
+        loudnessEnforced: Boolean(audioGraph),
+      },
+      captions: {
+        layerCount: captionLayers.length,
+        languages: [...new Set(captionLayers.map((layer) => layer.lang))],
+        concurrentPairs: captionLayers.filter((layer) => layer.tier === "secondary").length,
+        fontDevanagariAvailable: captionFonts.devanagari.available,
+        fontLatinAvailable: captionFonts.latin.available,
+        note: captionFonts.devanagari.available
+          ? "Devanagari + Latin fonts resolved; both layers rasterize."
+          : "No Devanagari font on this host: the Hindi drawtext layer is emitted correctly but its glyphs will not rasterize here. Install fonts-noto-devanagari (or set a Devanagari fontfile) for full glyph coverage.",
+        layers: captionLayers.map((layer) => ({ lang: layer.lang, tier: layer.tier, text: layer.text, y: layer.y, start: layer.start, end: layer.end })),
+      },
+      audioMix: {
+        stems: audioGraph ? audioGraph.stems : [],
+        targetLufs: LOUDNESS_TARGET_LUFS,
+        truePeakCeilingDbtp: TRUE_PEAK_CEILING_DBTP,
+        truePeakLimitLinear: TRUE_PEAK_LIMIT_LINEAR,
+        outputLoudness,
+        conforms: outputLoudness && outputLoudness.status === "ok" ? outputLoudness.conforms : null,
       },
       telemetry: {
         fpsTarget: target.fps,
         durationSec: target.durationSec,
         totalFramesRendered: Math.round(target.durationSec * target.fps),
         videoClipCount: video.length,
-        audioAttached: Boolean(audioClip),
+        audioAttached: audioClips.length > 0,
+        audioStemCount: audioClips.length,
+        captionLayerCount: captionLayers.length,
+        encode: { avgFps: encodeFps, loopStatus: renderLoop.status, frameBudgetMs: renderLoop.frameBudgetMs ?? null },
       },
       productionReady: false,
       blockers: [
-        "Renderer core verifies manifest-native preview compilation only.",
+        "Renderer core verifies manifest-native preview compilation with concurrent multi-lingual caption burn-in and multi-channel pan/loudness enforcement.",
         "Full UHD visual parity for VFX, particles, 3D, motion tracking, face passes, and AI passes still requires dedicated renderer evidence.",
       ],
     };
@@ -386,4 +613,16 @@ module.exports = {
   resolveSafeManifestPath,
   resolveSafeMediaPath,
   MahavisphotRenderEngine,
+  // AV filtergraph builders (concurrent caption burn-in + pan matrices)
+  resolveCaptionFonts,
+  escapeDrawtext,
+  extractCaptionLayers,
+  buildCaptionDrawtextChain,
+  resolveAudioMix,
+  buildAudioFilterGraph,
+  buildFfmpegArgs,
+  parseEncodeFps,
+  LOUDNESS_TARGET_LUFS,
+  TRUE_PEAK_CEILING_DBTP,
+  TRUE_PEAK_LIMIT_LINEAR,
 };
