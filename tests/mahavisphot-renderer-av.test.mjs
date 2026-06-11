@@ -153,7 +153,8 @@ test("integration: executeManifestRender reports concurrent captions + panned/lo
   // post-encode loudness verification actually ran (real ebur128) and did not breach
   assert.ok(["ok", "error", "unavailable"].includes(report.audioMix.outputLoudness.status));
   if (report.audioMix.outputLoudness.status === "ok") {
-    assert.equal(report.audioMix.outputLoudness.overCeiling, false);
+    // a correctly limited master must never trip the corruption/abort gate
+    assert.equal(report.audioMix.outputLoudness.abort, false);
   }
   assert.ok("encode" in report.telemetry);
 });

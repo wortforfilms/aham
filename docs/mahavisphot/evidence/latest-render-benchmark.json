@@ -1,0 +1,98 @@
+{
+  "schemaVersion": "mahavisphot.benchmark.v1",
+  "generatedAt": "2026-06-11T09:06:02.346Z",
+  "host": {
+    "cpus": 4,
+    "cpuModel": "unknown",
+    "memTotalMB": 3904,
+    "platform": "linux arm64",
+    "node": "v22.22.3"
+  },
+  "quick": false,
+  "profiles": [
+    {
+      "profile": "light",
+      "label": "Light 1080p",
+      "status": "ok",
+      "resolution": "1920x1080",
+      "fps": 24,
+      "clips": 3,
+      "captionLayers": 6,
+      "audioStems": 1,
+      "durationSec": 3,
+      "framesRendered": 72,
+      "wallSec": 1.21,
+      "effectiveEncodeFps": 59.5,
+      "reportedEncodeFps": null,
+      "realtimeFactor": 2.479,
+      "throughput": "realtime+",
+      "loudness": {
+        "integratedLUFS": -14.5,
+        "conforms": true,
+        "abort": false
+      },
+      "compiledOutput": "exports/render-core/bench-preview/render_d1fdddd301a11028/mahavisphot_manifest_preview.mp4"
+    },
+    {
+      "profile": "uhd",
+      "label": "Standard UHD 4K",
+      "status": "ok",
+      "resolution": "3840x2160",
+      "fps": 24,
+      "clips": 12,
+      "captionLayers": 24,
+      "audioStems": 2,
+      "durationSec": 6,
+      "framesRendered": 144,
+      "wallSec": 7.67,
+      "effectiveEncodeFps": 18.8,
+      "reportedEncodeFps": 26.8,
+      "realtimeFactor": 0.782,
+      "throughput": "below-realtime",
+      "loudness": {
+        "integratedLUFS": -12.7,
+        "conforms": false,
+        "abort": false
+      },
+      "compiledOutput": "exports/render-core/bench-uhd/render_b34b672f6a9ed02e/mahavisphot_manifest_preview.mp4"
+    },
+    {
+      "profile": "stress",
+      "label": "Stress Matrix 1080p",
+      "status": "ok",
+      "resolution": "1920x1080",
+      "fps": 24,
+      "clips": 50,
+      "captionLayers": 100,
+      "audioStems": 2,
+      "durationSec": 15,
+      "framesRendered": 360,
+      "wallSec": 5.65,
+      "effectiveEncodeFps": 63.7,
+      "reportedEncodeFps": 70.8,
+      "realtimeFactor": 2.655,
+      "throughput": "realtime+",
+      "loudness": {
+        "integratedLUFS": -11.9,
+        "conforms": false,
+        "abort": false
+      },
+      "compiledOutput": "exports/render-core/bench-preview/render_1bfa9168660fc53f/mahavisphot_manifest_preview.mp4"
+    }
+  ],
+  "deltas": {
+    "light->uhd": {
+      "wallSecDelta": 6.46,
+      "encodeFpsDelta": -40.7
+    },
+    "uhd->stress": {
+      "wallSecDelta": -2.02,
+      "encodeFpsDelta": 44.9
+    }
+  },
+  "bottleneck": {
+    "profile": "uhd",
+    "realtimeFactor": 0.782,
+    "throughput": "below-realtime"
+  }
+}

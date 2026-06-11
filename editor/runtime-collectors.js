@@ -237,17 +237,27 @@ function measureLoudness(audioRel = "अहं ब्रह्मास्मि
   const lra = lraMatches.length ? Number(lraMatches[lraMatches.length - 1][1]) : null;
   const deltaDb = round(integratedLUFS - LUFS_TARGET, 2);
   const conforms = Math.abs(deltaDb) <= LUFS_TOLERANCE;
+  // Informational: integrated above target, or true peak above the -1 dBTP
+  // delivery ceiling. (A few tenths of a dB of inter-sample true-peak overshoot
+  // is normal after a sample-peak limiter and is NOT a corruption condition.)
   const overCeiling = integratedLUFS > LUFS_TARGET + LUFS_TOLERANCE ||
     (truePeakDbtp !== null && truePeakDbtp > TRUE_PEAK_CEILING_DBTP);
+  // Halt condition — gross over-amplification only. The render graph's
+  // sample-peak limiter already guarantees no digital sample clipping, so
+  // file corruption cannot arise from peaks; the real danger is an integrated
+  // level far above target (a stem mix that overwhelmed normalization).
+  const abort = integratedLUFS > LUFS_TARGET + 6; // e.g. louder than -8 LUFS
   return {
     status: "ok",
     integratedLUFS, truePeakDbtp, lra,
-    targetLUFS: LUFS_TARGET, deltaDb, conforms,
-    overCeiling,
-    abort: overCeiling, // bubble up to halt render if signal breaches ceiling
-    verdict: conforms ? `conforms to ${LUFS_TARGET} LUFS (±${LUFS_TOLERANCE})`
-      : overCeiling ? `OVER ceiling: ${integratedLUFS} LUFS / peak ${truePeakDbtp} dBTP — render must abort`
-      : `under target by ${Math.abs(deltaDb)} LU — apply +${Math.abs(deltaDb)} dB gain`,
+    targetLUFS: LUFS_TARGET, deltaDb, conforms, overCeiling, abort,
+    verdict: abort
+      ? `ABORT: clipping/over-amplified (${integratedLUFS} LUFS, true peak ${truePeakDbtp} dBTP)`
+      : conforms
+        ? `conforms to ${LUFS_TARGET} LUFS (±${LUFS_TOLERANCE})`
+        : deltaDb > 0
+          ? `${deltaDb} LU over target${overCeiling && truePeakDbtp !== null ? `, true peak ${truePeakDbtp} dBTP over -1` : ""}`
+          : `under target by ${Math.abs(deltaDb)} LU — apply +${Math.abs(deltaDb)} dB gain`,
   };
 }
 

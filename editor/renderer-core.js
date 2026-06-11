@@ -527,9 +527,9 @@ class MahavisphotRenderEngine {
       } catch (loudnessError) {
         outputLoudness = { status: "error", error: loudnessError.message || String(loudnessError) };
       }
-      if (outputLoudness && outputLoudness.status === "ok" && outputLoudness.overCeiling) {
+      if (outputLoudness && outputLoudness.status === "ok" && outputLoudness.abort) {
         try { await fsp.rm(outputPath, { force: true }); } catch (_cleanupError) { /* unlink may be blocked; report still aborts */ }
-        const err = new Error(`Rendered master breaches loudness ceiling and was discarded: ${outputLoudness.verdict}`);
+        const err = new Error(`Rendered master is clipping/over-amplified and was discarded: ${outputLoudness.verdict}`);
         err.code = "renderer_loudness_breach";
         err.loudness = outputLoudness;
         throw err;
