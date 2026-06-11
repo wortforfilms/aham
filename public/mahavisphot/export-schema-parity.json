@@ -1,0 +1,1092 @@
+{
+  "schemaVersion": "mahavisphot.export.v1",
+  "generatedAt": "2026-06-10T00:00:00.000Z",
+  "mode": "manifest",
+  "source": {
+    "projectId": "mahavisphot-step-6-export-parity",
+    "title": "Mahavisphot Step 6 Export Parity Fixture",
+    "sourceSchemaVersion": "mahavisphot.editor.project.v3",
+    "timelineDocumentVersion": 2,
+    "sourceTimeline": {
+      "id": "verified-timeline-doc",
+      "type": "timeline-runtime-v2"
+    }
+  },
+  "timelineDocument": {
+    "id": "project_mahavisphot_step_6_export_parity",
+    "name": "Mahavisphot Step 6 Export Parity Fixture",
+    "fps": 24,
+    "duration": 18,
+    "valid": true,
+    "hash": "516dfec893fc29c9"
+  },
+  "resolution": {
+    "width": 1920,
+    "height": 1080
+  },
+  "tracks": [
+    {
+      "id": "comp_comp_intro_video",
+      "compositionId": "comp_comp_intro",
+      "kind": "video",
+      "name": "VIDEO 1",
+      "index": 0,
+      "locked": false,
+      "muted": false,
+      "dynamic": false,
+      "clipCount": 1,
+      "meta": {
+        "compositionTrack": true
+      }
+    },
+    {
+      "id": "comp_comp_intro_audio",
+      "compositionId": "comp_comp_intro",
+      "kind": "audio",
+      "name": "AUDIO 1",
+      "index": 1,
+      "locked": false,
+      "muted": false,
+      "dynamic": false,
+      "clipCount": 1,
+      "meta": {
+        "compositionTrack": true
+      }
+    },
+    {
+      "id": "track_scene_video",
+      "compositionId": "comp_main",
+      "kind": "video",
+      "name": "V1 Scene Plate",
+      "index": 0,
+      "locked": false,
+      "muted": false,
+      "dynamic": false,
+      "clipCount": 2,
+      "meta": {
+        "system": true,
+        "role": "scene_plate"
+      }
+    },
+    {
+      "id": "track_compositions",
+      "compositionId": "comp_main",
+      "kind": "video",
+      "name": "VC Nested Compositions",
+      "index": 1,
+      "locked": false,
+      "muted": false,
+      "dynamic": false,
+      "clipCount": 1,
+      "meta": {
+        "system": true,
+        "role": "composition_instances"
+      }
+    },
+    {
+      "id": "track_captions",
+      "compositionId": "comp_main",
+      "kind": "caption",
+      "name": "CC Captions",
+      "index": 2,
+      "locked": false,
+      "muted": false,
+      "dynamic": false,
+      "clipCount": 2,
+      "meta": {
+        "system": true,
+        "role": "captions"
+      }
+    },
+    {
+      "id": "track_vfx",
+      "compositionId": "comp_main",
+      "kind": "vfx",
+      "name": "FX VFX Windows",
+      "index": 3,
+      "locked": false,
+      "muted": false,
+      "dynamic": false,
+      "clipCount": 2,
+      "meta": {
+        "system": true,
+        "role": "vfx"
+      }
+    },
+    {
+      "id": "track_markers",
+      "compositionId": "comp_main",
+      "kind": "marker",
+      "name": "M Markers",
+      "index": 4,
+      "locked": false,
+      "muted": false,
+      "dynamic": false,
+      "clipCount": 2,
+      "meta": {
+        "system": true,
+        "role": "markers"
+      }
+    },
+    {
+      "id": "track_master_audio",
+      "compositionId": "comp_main",
+      "kind": "audio",
+      "name": "A1 Master Audio",
+      "index": 5,
+      "locked": false,
+      "muted": false,
+      "dynamic": false,
+      "clipCount": 1,
+      "meta": {
+        "system": true,
+        "role": "master_audio"
+      }
+    },
+    {
+      "id": "track_dynamic_v3",
+      "compositionId": "comp_main",
+      "kind": "video",
+      "name": "Rubab Picture-in-Picture",
+      "index": 10,
+      "locked": false,
+      "muted": false,
+      "dynamic": true,
+      "clipCount": 1,
+      "meta": {
+        "dynamic": true,
+        "sourceId": "V3",
+        "label": "V3"
+      }
+    },
+    {
+      "id": "track_dynamic_a2",
+      "compositionId": "comp_main",
+      "kind": "audio",
+      "name": "Rubab Stem",
+      "index": 11,
+      "locked": false,
+      "muted": false,
+      "dynamic": true,
+      "clipCount": 1,
+      "meta": {
+        "dynamic": true,
+        "sourceId": "A2",
+        "label": "A2"
+      }
+    }
+  ],
+  "clips": [
+    {
+      "id": "clip_comp_child_comp_comp_intro_comp_audio_1",
+      "trackId": "comp_comp_intro_audio",
+      "compositionId": "comp_comp_intro",
+      "kind": "audio",
+      "name": "Master Audio Nested",
+      "start": 0,
+      "end": 12,
+      "duration": 12,
+      "in": null,
+      "out": null,
+      "sourceType": "asset",
+      "sourceId": "media/varg_ka_khel/varg_ka_khel.mp3",
+      "renderable": true,
+      "meta": {
+        "sourceType": "master-audio",
+        "sceneId": null,
+        "sourceCompositionId": "comp-intro"
+      }
+    },
+    {
+      "id": "clip_comp_child_comp_comp_intro_comp_scene_1",
+      "trackId": "comp_comp_intro_video",
+      "compositionId": "comp_comp_intro",
+      "kind": "video",
+      "name": "The Long Road Nested",
+      "start": 0,
+      "end": 6,
+      "duration": 6,
+      "in": null,
+      "out": null,
+      "sourceType": "asset",
+      "sourceId": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0001.jpg",
+      "renderable": true,
+      "meta": {
+        "sourceType": "scene",
+        "sceneId": 1,
+        "sourceCompositionId": "comp-intro"
+      }
+    },
+    {
+      "id": "clip_caption_1",
+      "trackId": "track_captions",
+      "compositionId": "comp_main",
+      "kind": "caption",
+      "name": "Caption 1",
+      "start": 0,
+      "end": 6,
+      "duration": 6,
+      "in": null,
+      "out": null,
+      "sourceType": "asset",
+      "sourceId": "caption:1",
+      "renderable": true,
+      "meta": {
+        "sceneId": "1",
+        "text": "द लॉन्ग रोड The Long Road",
+        "titleHi": "द लॉन्ग रोड",
+        "titleEn": "The Long Road"
+      }
+    },
+    {
+      "id": "clip_comp_comp_comp_intro",
+      "trackId": "track_compositions",
+      "compositionId": "comp_main",
+      "kind": "video",
+      "name": "Intro Nested Comp",
+      "start": 0,
+      "end": 12,
+      "duration": 12,
+      "in": null,
+      "out": null,
+      "sourceType": "composition",
+      "sourceId": "comp_comp_intro",
+      "renderable": true,
+      "meta": {
+        "compositionId": "comp_comp_intro",
+        "sourceId": "comp-intro"
+      }
+    },
+    {
+      "id": "clip_marker_m_intro",
+      "trackId": "track_markers",
+      "compositionId": "comp_main",
+      "kind": "marker",
+      "name": "Intro",
+      "start": 0,
+      "end": 0.001,
+      "duration": 0.001,
+      "in": null,
+      "out": null,
+      "sourceType": "asset",
+      "sourceId": "marker:m-intro",
+      "renderable": false,
+      "meta": {
+        "id": "m-intro",
+        "time": 0,
+        "label": "Intro"
+      }
+    },
+    {
+      "id": "clip_master_audio",
+      "trackId": "track_master_audio",
+      "compositionId": "comp_main",
+      "kind": "audio",
+      "name": "media/varg_ka_khel/varg_ka_khel.mp3",
+      "start": 0,
+      "end": 18,
+      "duration": 18,
+      "in": 0,
+      "out": 18,
+      "sourceType": "asset",
+      "sourceId": "media/varg_ka_khel/varg_ka_khel.mp3",
+      "renderable": true,
+      "meta": {
+        "audioMix": {
+          "loudnessTarget": -14,
+          "limiter": true,
+          "masterGain": 1
+        },
+        "path": "media/varg_ka_khel/varg_ka_khel.mp3"
+      }
+    },
+    {
+      "id": "clip_scene_1",
+      "trackId": "track_scene_video",
+      "compositionId": "comp_main",
+      "kind": "video",
+      "name": "The Long Road",
+      "start": 0,
+      "end": 6,
+      "duration": 6,
+      "in": 0,
+      "out": 6,
+      "sourceType": "asset",
+      "sourceId": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0001.jpg",
+      "renderable": true,
+      "meta": {
+        "sceneId": "1",
+        "imagePath": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0001.jpg",
+        "transition": {
+          "type": "cut",
+          "duration": 0
+        },
+        "composite": {},
+        "effects": {
+          "grain": true,
+          "vignette": true,
+          "dust": false,
+          "sonic": false
+        }
+      }
+    },
+    {
+      "id": "clip_vfx_1",
+      "trackId": "track_vfx",
+      "compositionId": "comp_main",
+      "kind": "vfx",
+      "name": "VFX 1",
+      "start": 0,
+      "end": 6,
+      "duration": 6,
+      "in": null,
+      "out": null,
+      "sourceType": "asset",
+      "sourceId": "vfx:1",
+      "renderable": true,
+      "meta": {
+        "sceneId": "1",
+        "effects": [
+          "grain",
+          "vignette"
+        ],
+        "rubabOverlay": true
+      }
+    },
+    {
+      "id": "clip_dynamic_v3_rubab_pip_1",
+      "trackId": "track_dynamic_v3",
+      "compositionId": "comp_main",
+      "kind": "video",
+      "name": "Rubab Solo Window",
+      "start": 3,
+      "end": 9,
+      "duration": 6,
+      "in": 0,
+      "out": 6,
+      "sourceType": "asset",
+      "sourceId": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0004.jpg",
+      "renderable": true,
+      "meta": {
+        "dynamicTrackId": "V3",
+        "sourceType": "asset",
+        "sceneId": null,
+        "frameIndex": null
+      }
+    },
+    {
+      "id": "clip_caption_2",
+      "trackId": "track_captions",
+      "compositionId": "comp_main",
+      "kind": "caption",
+      "name": "Caption 2",
+      "start": 6,
+      "end": 12,
+      "duration": 6,
+      "in": null,
+      "out": null,
+      "sourceType": "asset",
+      "sourceId": "caption:2",
+      "renderable": true,
+      "meta": {
+        "sceneId": "2",
+        "text": "संस्कृत नाद Sanskrit Blast",
+        "titleHi": "संस्कृत नाद",
+        "titleEn": "Sanskrit Blast"
+      }
+    },
+    {
+      "id": "clip_dynamic_a2_rubab_audio_1",
+      "trackId": "track_dynamic_a2",
+      "compositionId": "comp_main",
+      "kind": "audio",
+      "name": "Rubab Solo Stem",
+      "start": 6,
+      "end": 12,
+      "duration": 6,
+      "in": 0,
+      "out": 6,
+      "sourceType": "asset",
+      "sourceId": "build_audio_separation/rubab.wav",
+      "renderable": true,
+      "meta": {
+        "dynamicTrackId": "A2",
+        "sourceType": "audio",
+        "sceneId": null,
+        "frameIndex": null
+      }
+    },
+    {
+      "id": "clip_marker_m_drop",
+      "trackId": "track_markers",
+      "compositionId": "comp_main",
+      "kind": "marker",
+      "name": "Beat Drop",
+      "start": 6,
+      "end": 6.001,
+      "duration": 0.001,
+      "in": null,
+      "out": null,
+      "sourceType": "asset",
+      "sourceId": "marker:m-drop",
+      "renderable": false,
+      "meta": {
+        "id": "m-drop",
+        "time": 6,
+        "label": "Beat Drop"
+      }
+    },
+    {
+      "id": "clip_scene_2",
+      "trackId": "track_scene_video",
+      "compositionId": "comp_main",
+      "kind": "video",
+      "name": "Sanskrit Blast",
+      "start": 6,
+      "end": 12,
+      "duration": 6,
+      "in": 0,
+      "out": 6,
+      "sourceType": "asset",
+      "sourceId": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0002.jpg",
+      "renderable": true,
+      "meta": {
+        "sceneId": "2",
+        "imagePath": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0002.jpg",
+        "transition": {
+          "type": "cut",
+          "duration": 0
+        },
+        "composite": {},
+        "effects": {
+          "grain": true,
+          "vignette": false,
+          "dust": true,
+          "sonic": true
+        }
+      }
+    },
+    {
+      "id": "clip_vfx_2",
+      "trackId": "track_vfx",
+      "compositionId": "comp_main",
+      "kind": "vfx",
+      "name": "VFX 2",
+      "start": 6,
+      "end": 12,
+      "duration": 6,
+      "in": null,
+      "out": null,
+      "sourceType": "asset",
+      "sourceId": "vfx:2",
+      "renderable": true,
+      "meta": {
+        "sceneId": "2",
+        "effects": [
+          "grain",
+          "dust",
+          "sonic"
+        ],
+        "rubabOverlay": false
+      }
+    }
+  ],
+  "dynamicTracks": [
+    {
+      "id": "track_dynamic_v3",
+      "compositionId": "comp_main",
+      "kind": "video",
+      "name": "Rubab Picture-in-Picture",
+      "index": 10,
+      "locked": false,
+      "muted": false,
+      "dynamic": true,
+      "clipCount": 1,
+      "meta": {
+        "dynamic": true,
+        "sourceId": "V3",
+        "label": "V3"
+      }
+    },
+    {
+      "id": "track_dynamic_a2",
+      "compositionId": "comp_main",
+      "kind": "audio",
+      "name": "Rubab Stem",
+      "index": 11,
+      "locked": false,
+      "muted": false,
+      "dynamic": true,
+      "clipCount": 1,
+      "meta": {
+        "dynamic": true,
+        "sourceId": "A2",
+        "label": "A2"
+      }
+    }
+  ],
+  "compositions": [
+    {
+      "id": "comp_main",
+      "name": "Mahavisphot Step 6 Export Parity Fixture",
+      "parentId": null,
+      "root": true,
+      "width": 1920,
+      "height": 1080,
+      "start": 0,
+      "duration": 18,
+      "trackCount": 8,
+      "clipCount": 12
+    },
+    {
+      "id": "comp_comp_intro",
+      "name": "Intro Nested Comp",
+      "parentId": "comp_main",
+      "root": false,
+      "width": 1920,
+      "height": 1080,
+      "start": 0,
+      "duration": 12,
+      "trackCount": 2,
+      "clipCount": 2
+    }
+  ],
+  "captions": [
+    {
+      "clipId": "clip_caption_1",
+      "sceneId": "1",
+      "start": 0,
+      "end": 6,
+      "text": "द लॉन्ग रोड The Long Road",
+      "titleHi": "द लॉन्ग रोड",
+      "titleEn": "The Long Road"
+    },
+    {
+      "clipId": "clip_caption_2",
+      "sceneId": "2",
+      "start": 6,
+      "end": 12,
+      "text": "संस्कृत नाद Sanskrit Blast",
+      "titleHi": "संस्कृत नाद",
+      "titleEn": "Sanskrit Blast"
+    }
+  ],
+  "vfx": [
+    {
+      "clipId": "clip_vfx_1",
+      "sceneId": "1",
+      "start": 0,
+      "end": 6,
+      "effects": [
+        "grain",
+        "vignette"
+      ],
+      "rubabOverlay": true
+    },
+    {
+      "clipId": "clip_vfx_2",
+      "sceneId": "2",
+      "start": 6,
+      "end": 12,
+      "effects": [
+        "grain",
+        "dust",
+        "sonic"
+      ],
+      "rubabOverlay": false
+    }
+  ],
+  "audio": {
+    "tracks": [
+      "comp_comp_intro_audio",
+      "track_master_audio",
+      "track_dynamic_a2"
+    ],
+    "clips": [
+      {
+        "id": "clip_comp_child_comp_comp_intro_comp_audio_1",
+        "trackId": "comp_comp_intro_audio",
+        "compositionId": "comp_comp_intro",
+        "kind": "audio",
+        "name": "Master Audio Nested",
+        "start": 0,
+        "end": 12,
+        "duration": 12,
+        "in": null,
+        "out": null,
+        "sourceType": "asset",
+        "sourceId": "media/varg_ka_khel/varg_ka_khel.mp3",
+        "renderable": true,
+        "meta": {
+          "sourceType": "master-audio",
+          "sceneId": null,
+          "sourceCompositionId": "comp-intro"
+        }
+      },
+      {
+        "id": "clip_master_audio",
+        "trackId": "track_master_audio",
+        "compositionId": "comp_main",
+        "kind": "audio",
+        "name": "media/varg_ka_khel/varg_ka_khel.mp3",
+        "start": 0,
+        "end": 18,
+        "duration": 18,
+        "in": 0,
+        "out": 18,
+        "sourceType": "asset",
+        "sourceId": "media/varg_ka_khel/varg_ka_khel.mp3",
+        "renderable": true,
+        "meta": {
+          "audioMix": {
+            "loudnessTarget": -14,
+            "limiter": true,
+            "masterGain": 1
+          },
+          "path": "media/varg_ka_khel/varg_ka_khel.mp3"
+        }
+      },
+      {
+        "id": "clip_dynamic_a2_rubab_audio_1",
+        "trackId": "track_dynamic_a2",
+        "compositionId": "comp_main",
+        "kind": "audio",
+        "name": "Rubab Solo Stem",
+        "start": 6,
+        "end": 12,
+        "duration": 6,
+        "in": 0,
+        "out": 6,
+        "sourceType": "asset",
+        "sourceId": "build_audio_separation/rubab.wav",
+        "renderable": true,
+        "meta": {
+          "dynamicTrackId": "A2",
+          "sourceType": "audio",
+          "sceneId": null,
+          "frameIndex": null
+        }
+      }
+    ],
+    "mix": {
+      "loudnessTarget": -14,
+      "limiter": true,
+      "masterGain": 1
+    }
+  },
+  "markers": [
+    {
+      "id": "clip_marker_m_intro",
+      "trackId": "track_markers",
+      "compositionId": "comp_main",
+      "kind": "marker",
+      "name": "Intro",
+      "start": 0,
+      "end": 0.001,
+      "duration": 0.001,
+      "in": null,
+      "out": null,
+      "sourceType": "asset",
+      "sourceId": "marker:m-intro",
+      "renderable": false,
+      "meta": {
+        "id": "m-intro",
+        "time": 0,
+        "label": "Intro"
+      }
+    },
+    {
+      "id": "clip_marker_m_drop",
+      "trackId": "track_markers",
+      "compositionId": "comp_main",
+      "kind": "marker",
+      "name": "Beat Drop",
+      "start": 6,
+      "end": 6.001,
+      "duration": 0.001,
+      "in": null,
+      "out": null,
+      "sourceType": "asset",
+      "sourceId": "marker:m-drop",
+      "renderable": false,
+      "meta": {
+        "id": "m-drop",
+        "time": 6,
+        "label": "Beat Drop"
+      }
+    }
+  ],
+  "scenes": [
+    {
+      "id": "1",
+      "start": 0,
+      "end": 6,
+      "titleHi": "द लॉन्ग रोड",
+      "titleEn": "The Long Road",
+      "imagePath": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0001.jpg",
+      "rubabOverlay": true
+    },
+    {
+      "id": "2",
+      "start": 6,
+      "end": 12,
+      "titleHi": "संस्कृत नाद",
+      "titleEn": "Sanskrit Blast",
+      "imagePath": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0002.jpg",
+      "rubabOverlay": false
+    }
+  ],
+  "assets": [
+    {
+      "id": "media/varg_ka_khel/varg_ka_khel.mp3",
+      "firstClipId": "clip_master_audio",
+      "kind": "audio"
+    },
+    {
+      "id": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0001.jpg",
+      "firstClipId": "clip_scene_1",
+      "kind": "video"
+    },
+    {
+      "id": "caption:1",
+      "firstClipId": "clip_caption_1",
+      "kind": "caption"
+    },
+    {
+      "id": "marker:m-intro",
+      "firstClipId": "clip_marker_m_intro",
+      "kind": "marker"
+    },
+    {
+      "id": "vfx:1",
+      "firstClipId": "clip_vfx_1",
+      "kind": "vfx"
+    },
+    {
+      "id": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0004.jpg",
+      "firstClipId": "clip_dynamic_v3_rubab_pip_1",
+      "kind": "video"
+    },
+    {
+      "id": "caption:2",
+      "firstClipId": "clip_caption_2",
+      "kind": "caption"
+    },
+    {
+      "id": "build_audio_separation/rubab.wav",
+      "firstClipId": "clip_dynamic_a2_rubab_audio_1",
+      "kind": "audio"
+    },
+    {
+      "id": "marker:m-drop",
+      "firstClipId": "clip_marker_m_drop",
+      "kind": "marker"
+    },
+    {
+      "id": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0002.jpg",
+      "firstClipId": "clip_scene_2",
+      "kind": "video"
+    },
+    {
+      "id": "vfx:2",
+      "firstClipId": "clip_vfx_2",
+      "kind": "vfx"
+    }
+  ],
+  "renderPlan": {
+    "status": "ready",
+    "duration": 18,
+    "fps": 24,
+    "videoWindows": [
+      {
+        "id": "clip_comp_child_comp_comp_intro_comp_scene_1",
+        "trackId": "comp_comp_intro_video",
+        "compositionId": "comp_comp_intro",
+        "kind": "video",
+        "name": "The Long Road Nested",
+        "start": 0,
+        "end": 6,
+        "duration": 6,
+        "in": null,
+        "out": null,
+        "sourceType": "asset",
+        "sourceId": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0001.jpg",
+        "renderable": true,
+        "meta": {
+          "sourceType": "scene",
+          "sceneId": 1,
+          "sourceCompositionId": "comp-intro"
+        }
+      },
+      {
+        "id": "clip_comp_comp_comp_intro",
+        "trackId": "track_compositions",
+        "compositionId": "comp_main",
+        "kind": "video",
+        "name": "Intro Nested Comp",
+        "start": 0,
+        "end": 12,
+        "duration": 12,
+        "in": null,
+        "out": null,
+        "sourceType": "composition",
+        "sourceId": "comp_comp_intro",
+        "renderable": true,
+        "meta": {
+          "compositionId": "comp_comp_intro",
+          "sourceId": "comp-intro"
+        }
+      },
+      {
+        "id": "clip_scene_1",
+        "trackId": "track_scene_video",
+        "compositionId": "comp_main",
+        "kind": "video",
+        "name": "The Long Road",
+        "start": 0,
+        "end": 6,
+        "duration": 6,
+        "in": 0,
+        "out": 6,
+        "sourceType": "asset",
+        "sourceId": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0001.jpg",
+        "renderable": true,
+        "meta": {
+          "sceneId": "1",
+          "imagePath": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0001.jpg",
+          "transition": {
+            "type": "cut",
+            "duration": 0
+          },
+          "composite": {},
+          "effects": {
+            "grain": true,
+            "vignette": true,
+            "dust": false,
+            "sonic": false
+          }
+        }
+      },
+      {
+        "id": "clip_dynamic_v3_rubab_pip_1",
+        "trackId": "track_dynamic_v3",
+        "compositionId": "comp_main",
+        "kind": "video",
+        "name": "Rubab Solo Window",
+        "start": 3,
+        "end": 9,
+        "duration": 6,
+        "in": 0,
+        "out": 6,
+        "sourceType": "asset",
+        "sourceId": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0004.jpg",
+        "renderable": true,
+        "meta": {
+          "dynamicTrackId": "V3",
+          "sourceType": "asset",
+          "sceneId": null,
+          "frameIndex": null
+        }
+      },
+      {
+        "id": "clip_scene_2",
+        "trackId": "track_scene_video",
+        "compositionId": "comp_main",
+        "kind": "video",
+        "name": "Sanskrit Blast",
+        "start": 6,
+        "end": 12,
+        "duration": 6,
+        "in": 0,
+        "out": 6,
+        "sourceType": "asset",
+        "sourceId": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0002.jpg",
+        "renderable": true,
+        "meta": {
+          "sceneId": "2",
+          "imagePath": "build_frames/lineup_unique_art2/frames_1080p_jpg/frame_0002.jpg",
+          "transition": {
+            "type": "cut",
+            "duration": 0
+          },
+          "composite": {},
+          "effects": {
+            "grain": true,
+            "vignette": false,
+            "dust": true,
+            "sonic": true
+          }
+        }
+      }
+    ],
+    "audioWindows": [
+      {
+        "id": "clip_comp_child_comp_comp_intro_comp_audio_1",
+        "trackId": "comp_comp_intro_audio",
+        "compositionId": "comp_comp_intro",
+        "kind": "audio",
+        "name": "Master Audio Nested",
+        "start": 0,
+        "end": 12,
+        "duration": 12,
+        "in": null,
+        "out": null,
+        "sourceType": "asset",
+        "sourceId": "media/varg_ka_khel/varg_ka_khel.mp3",
+        "renderable": true,
+        "meta": {
+          "sourceType": "master-audio",
+          "sceneId": null,
+          "sourceCompositionId": "comp-intro"
+        }
+      },
+      {
+        "id": "clip_master_audio",
+        "trackId": "track_master_audio",
+        "compositionId": "comp_main",
+        "kind": "audio",
+        "name": "media/varg_ka_khel/varg_ka_khel.mp3",
+        "start": 0,
+        "end": 18,
+        "duration": 18,
+        "in": 0,
+        "out": 18,
+        "sourceType": "asset",
+        "sourceId": "media/varg_ka_khel/varg_ka_khel.mp3",
+        "renderable": true,
+        "meta": {
+          "audioMix": {
+            "loudnessTarget": -14,
+            "limiter": true,
+            "masterGain": 1
+          },
+          "path": "media/varg_ka_khel/varg_ka_khel.mp3"
+        }
+      },
+      {
+        "id": "clip_dynamic_a2_rubab_audio_1",
+        "trackId": "track_dynamic_a2",
+        "compositionId": "comp_main",
+        "kind": "audio",
+        "name": "Rubab Solo Stem",
+        "start": 6,
+        "end": 12,
+        "duration": 6,
+        "in": 0,
+        "out": 6,
+        "sourceType": "asset",
+        "sourceId": "build_audio_separation/rubab.wav",
+        "renderable": true,
+        "meta": {
+          "dynamicTrackId": "A2",
+          "sourceType": "audio",
+          "sceneId": null,
+          "frameIndex": null
+        }
+      }
+    ],
+    "captionWindows": [
+      {
+        "clipId": "clip_caption_1",
+        "sceneId": "1",
+        "start": 0,
+        "end": 6,
+        "text": "द लॉन्ग रोड The Long Road",
+        "titleHi": "द लॉन्ग रोड",
+        "titleEn": "The Long Road"
+      },
+      {
+        "clipId": "clip_caption_2",
+        "sceneId": "2",
+        "start": 6,
+        "end": 12,
+        "text": "संस्कृत नाद Sanskrit Blast",
+        "titleHi": "संस्कृत नाद",
+        "titleEn": "Sanskrit Blast"
+      }
+    ],
+    "vfxWindows": [
+      {
+        "clipId": "clip_vfx_1",
+        "sceneId": "1",
+        "start": 0,
+        "end": 6,
+        "effects": [
+          "grain",
+          "vignette"
+        ],
+        "rubabOverlay": true
+      },
+      {
+        "clipId": "clip_vfx_2",
+        "sceneId": "2",
+        "start": 6,
+        "end": 12,
+        "effects": [
+          "grain",
+          "dust",
+          "sonic"
+        ],
+        "rubabOverlay": false
+      }
+    ],
+    "unsupportedPreviewVfx": [
+      "grain",
+      "dust",
+      "sonic"
+    ],
+    "mp4PreviewRenderer": null
+  },
+  "parity": {
+    "fullSchemaRead": true,
+    "timelineDocument": {
+      "read": true,
+      "valid": true,
+      "schemaVersion": 2,
+      "hash": "516dfec893fc29c9"
+    },
+    "dynamicTracks": {
+      "read": true,
+      "count": 2,
+      "clipCount": 2
+    },
+    "compositions": {
+      "read": true,
+      "count": 2,
+      "clipCount": 14,
+      "rootCount": 1
+    },
+    "captions": {
+      "read": true,
+      "count": 2,
+      "manifestCovered": true
+    },
+    "vfx": {
+      "read": true,
+      "nodeCount": 2,
+      "manifestCovered": true,
+      "unsupportedPreviewVfx": [
+        "grain",
+        "dust",
+        "sonic"
+      ]
+    },
+    "audio": {
+      "read": true,
+      "trackCount": 3,
+      "clipCount": 3,
+      "mixKeys": [
+        "limiter",
+        "loudnessTarget",
+        "masterGain"
+      ]
+    },
+    "render": {
+      "read": true,
+      "mode": "manifest",
+      "status": "ready",
+      "previewMp4Parity": false,
+      "schemaParity": true
+    }
+  }
+}

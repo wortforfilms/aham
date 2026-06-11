@@ -1,0 +1,158 @@
+{
+  "schemaVersion": "mahavisphot.media.evidence.v1",
+  "generatedAt": "2026-06-10T20:37:50.876Z",
+  "projectId": "mahavisphot-step-5-media-pipeline",
+  "mediaSchemaVersion": "mahavisphot.media.v1",
+  "timelineDocumentVersion": 2,
+  "exportSchemaVersion": "mahavisphot.export.v1",
+  "derivativeRoot": "exports/media-pipeline-step5",
+  "contactSheet": {
+    "path": "public/mahavisphot/media-pipeline-contact-sheet.jpg",
+    "count": 2,
+    "labels": [
+      "1. varg_ka_khel.mp3",
+      "2. frame_0001.jpg"
+    ]
+  },
+  "assets": [
+    {
+      "label": "Varg Ka Khel Master Audio",
+      "sourcePath": "media/varg_ka_khel/varg_ka_khel.mp3",
+      "assetId": "asset_a92be5c357b764df",
+      "kind": "audio",
+      "metadata": {
+        "schemaVersion": "mahavisphot.media.v1",
+        "path": "media/varg_ka_khel/varg_ka_khel.mp3",
+        "kind": "audio",
+        "sizeBytes": 5565760,
+        "mtimeMs": 1780992195218,
+        "formatName": "mp3",
+        "durationSec": 234.559979,
+        "bitrate": 189828,
+        "video": {
+          "codec": "mjpeg",
+          "width": 360,
+          "height": 360,
+          "fps": null,
+          "pixelFormat": "yuvj420p"
+        },
+        "audio": {
+          "codec": "mp3",
+          "channels": 2,
+          "channelLayout": "stereo",
+          "sampleRate": 48000
+        }
+      },
+      "derivatives": {
+        "schemaVersion": "mahavisphot.media.v1",
+        "assetId": "asset_a92be5c357b764df",
+        "sourcePath": "media/varg_ka_khel/varg_ka_khel.mp3",
+        "derivativeRoot": "exports/media-pipeline-step5/asset_a92be5c357b764df",
+        "thumbnailPath": "exports/media-pipeline-step5/asset_a92be5c357b764df/asset_a92be5c357b764df_varg_ka_khel_waveform.png",
+        "proxyPath": "exports/media-pipeline-step5/asset_a92be5c357b764df/asset_a92be5c357b764df_varg_ka_khel_proxy.m4a",
+        "waveformPath": "exports/media-pipeline-step5/asset_a92be5c357b764df/asset_a92be5c357b764df_varg_ka_khel_waveform.json",
+        "spectrogramPath": "exports/media-pipeline-step5/asset_a92be5c357b764df/asset_a92be5c357b764df_varg_ka_khel_spectrogram.png",
+        "manifestPath": "exports/media-pipeline-step5/asset_a92be5c357b764df/asset_a92be5c357b764df_varg_ka_khel_derivatives.json"
+      },
+      "derivativeFilesVerified": {
+        "thumbnail": true,
+        "proxy": true,
+        "waveform": true,
+        "spectrogram": true
+      },
+      "waveformBuckets": 128,
+      "timelineLink": {
+        "trackId": "track_audio_246b1945",
+        "clipId": "clip_asset_a92be5c357b764df",
+        "start": 0,
+        "duration": 234.559979
+      }
+    },
+    {
+      "label": "Varg Ka Khel Frame 0001",
+      "sourcePath": "media/varg_ka_khel/frames/frame_0001.jpg",
+      "assetId": "asset_964f4344f6048152",
+      "kind": "image",
+      "metadata": {
+        "schemaVersion": "mahavisphot.media.v1",
+        "path": "media/varg_ka_khel/frames/frame_0001.jpg",
+        "kind": "image",
+        "sizeBytes": 366557,
+        "mtimeMs": 1780993318812,
+        "formatName": "image2",
+        "durationSec": 0.04,
+        "bitrate": 73311400,
+        "video": {
+          "codec": "mjpeg",
+          "width": 1920,
+          "height": 1080,
+          "fps": 25,
+          "pixelFormat": "yuvj422p"
+        },
+        "audio": null
+      },
+      "derivatives": {
+        "schemaVersion": "mahavisphot.media.v1",
+        "assetId": "asset_964f4344f6048152",
+        "sourcePath": "media/varg_ka_khel/frames/frame_0001.jpg",
+        "derivativeRoot": "exports/media-pipeline-step5/asset_964f4344f6048152",
+        "thumbnailPath": "exports/media-pipeline-step5/asset_964f4344f6048152/asset_964f4344f6048152_frame_0001_thumbnail.jpg",
+        "proxyPath": "exports/media-pipeline-step5/asset_964f4344f6048152/asset_964f4344f6048152_frame_0001_proxy.jpg",
+        "waveformPath": null,
+        "spectrogramPath": null,
+        "manifestPath": "exports/media-pipeline-step5/asset_964f4344f6048152/asset_964f4344f6048152_frame_0001_derivatives.json"
+      },
+      "derivativeFilesVerified": {
+        "thumbnail": true,
+        "proxy": true,
+        "waveform": null,
+        "spectrogram": null
+      },
+      "waveformBuckets": 0,
+      "timelineLink": {
+        "trackId": "track_video_ce7fd9e8",
+        "clipId": "clip_asset_964f4344f6048152",
+        "start": 0,
+        "duration": 5
+      }
+    }
+  ],
+  "timeline": {
+    "id": "mahavisphot-step-5-media-pipeline",
+    "name": "Mahavisphot Step 5 Media Pipeline",
+    "fps": 24,
+    "duration": 234.559979,
+    "trackCount": 2,
+    "clipCount": 2,
+    "clips": [
+      {
+        "id": "clip_asset_a92be5c357b764df",
+        "trackId": "track_audio_246b1945",
+        "sourceType": "asset",
+        "sourceId": "media/varg_ka_khel/varg_ka_khel.mp3",
+        "start": 0,
+        "duration": 234.559979
+      },
+      {
+        "id": "clip_asset_964f4344f6048152",
+        "trackId": "track_video_ce7fd9e8",
+        "sourceType": "asset",
+        "sourceId": "media/varg_ka_khel/frames/frame_0001.jpg",
+        "start": 0,
+        "duration": 5
+      }
+    ]
+  },
+  "exportParity": {
+    "fullSchemaRead": true,
+    "schemaParity": true,
+    "assetReferenceCount": 2,
+    "renderStatus": "ready"
+  },
+  "productionReady": false,
+  "blockers": [
+    "Step 5 verifies ingest, metadata, proxies, waveforms, contact sheet, and timeline/export linkage only.",
+    "Production visual renderer parity remains blocked until full renderer integration evidence exists.",
+    "Local, cloud, and hybrid AI runtimes remain blocked until model/runtime/credential evidence exists."
+  ]
+}

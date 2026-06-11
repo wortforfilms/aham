@@ -1,0 +1,41 @@
+{
+  "generatedAt": "2026-06-11T03:04:50.500Z",
+  "host": {
+    "cores": 4,
+    "cpuUsagePct": 0,
+    "loadAvg1": 0,
+    "memTotalMB": 3904,
+    "memUsedMB": 435,
+    "memUsagePct": 11.14,
+    "rssMB": 44.5,
+    "heapUsedMB": 4.5,
+    "uptimeSec": 0
+  },
+  "gpu": {
+    "status": "unavailable",
+    "gpus": [],
+    "note": "No GPU telemetry source (nvidia-smi/system_profiler) on PATH."
+  },
+  "renderLoop": {
+    "status": "ok",
+    "fps": 58,
+    "target": 60,
+    "frameBudgetMs": 17.24,
+    "note": "viewport loop within budget"
+  },
+  "loudness": {
+    "status": "ok",
+    "integratedLUFS": -13.8,
+    "truePeakDbtp": -3.4,
+    "lra": 6,
+    "targetLUFS": -14,
+    "deltaDb": 0.2,
+    "conforms": true,
+    "overCeiling": false,
+    "abort": false,
+    "verdict": "conforms to -14 LUFS (±1)"
+  },
+  "renderSafe": true,
+  "status": "ok",
+  "errors": []
+}

@@ -1,11 +1,12 @@
 {
-  "generatedAt": "2026-06-10T13:38:19.296Z",
-  "total": 666,
+  "generatedAt": "2026-06-10T20:34:19.075Z",
+  "total": 672,
   "byKind": {
     "route": 400,
     "api": 150,
     "table": 75,
     "crud": 13,
+    "live_endpoint": 6,
     "workflow": 25,
     "runtime": 3
   },
@@ -13,7 +14,7 @@
     "scaffold": 486,
     "blocked": 103,
     "planned": 64,
-    "preview": 13
+    "preview": 19
   },
   "items": [
     {
@@ -7618,6 +7619,60 @@
       "module": "crud",
       "status": "preview",
       "keywords": "crud evidence_artifacts create read update delete persistence /api/v1/evidence_artifacts"
+    },
+    {
+      "kind": "live_endpoint",
+      "id": "live.editor-doc",
+      "title": "GET/PUT /api/v1/editor/doc",
+      "path": "/api/v1/editor/doc",
+      "module": "runtime",
+      "status": "preview",
+      "keywords": "live.editor-doc get/put /api/v1/editor/doc /api/v1/editor/doc timeline document save/load"
+    },
+    {
+      "kind": "live_endpoint",
+      "id": "live.media-ingest",
+      "title": "POST /api/v1/media/ingest",
+      "path": "/api/v1/media/ingest",
+      "module": "runtime",
+      "status": "preview",
+      "keywords": "live.media-ingest post /api/v1/media/ingest /api/v1/media/ingest safe media ingest, metadata, proxy, waveform"
+    },
+    {
+      "kind": "live_endpoint",
+      "id": "live.render-compile",
+      "title": "POST /api/v1/render/compile",
+      "path": "/api/v1/render/compile",
+      "module": "runtime",
+      "status": "preview",
+      "keywords": "live.render-compile post /api/v1/render/compile /api/v1/render/compile manifest-native renderer compile"
+    },
+    {
+      "kind": "live_endpoint",
+      "id": "live.export-schema",
+      "title": "POST /api/export/schema",
+      "path": "/api/export/schema",
+      "module": "runtime",
+      "status": "preview",
+      "keywords": "live.export-schema post /api/export/schema /api/export/schema export schema parity manifest"
+    },
+    {
+      "kind": "live_endpoint",
+      "id": "live.search",
+      "title": "GET /api/v1/search",
+      "path": "/api/v1/search",
+      "module": "runtime",
+      "status": "preview",
+      "keywords": "live.search get /api/v1/search /api/v1/search global search index"
+    },
+    {
+      "kind": "live_endpoint",
+      "id": "live.runtime-health",
+      "title": "GET /api/v1/health/runtimes",
+      "path": "/api/v1/health/runtimes",
+      "module": "runtime",
+      "status": "preview",
+      "keywords": "live.runtime-health get /api/v1/health/runtimes /api/v1/health/runtimes runtime health collectors"
     },
     {
       "kind": "workflow",

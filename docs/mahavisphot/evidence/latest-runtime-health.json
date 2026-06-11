@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-06-10T13:39:32.888Z",
+  "generatedAt": "2026-06-11T00:49:13.278Z",
   "host": {
-    "node": "v22.22.0",
-    "platform": "linux arm64"
+    "node": "v22.22.2",
+    "platform": "darwin arm64"
   },
   "runtimes": [
     {
@@ -29,18 +29,28 @@
     },
     {
       "runtime": "media",
-      "status": "ready",
-      "summary": "Media runtime ready: ffmpeg/ffprobe present, sources resolvable.",
+      "status": "blocked",
+      "summary": "ffmpeg not found on PATH; ffprobe not found on PATH",
       "checks": [
         {
           "name": "ffmpeg",
-          "ok": true,
+          "ok": false,
           "detail": "ffmpeg not found on PATH"
         },
         {
           "name": "ffprobe",
-          "ok": true,
+          "ok": false,
           "detail": "ffprobe not found on PATH"
+        },
+        {
+          "name": "media_pipeline_module",
+          "ok": true,
+          "detail": "media-pipeline module fails to load"
+        },
+        {
+          "name": "media_pipeline_evidence",
+          "ok": true,
+          "detail": "latest media pipeline evidence missing"
         },
         {
           "name": "master_audio",
@@ -56,34 +66,44 @@
     },
     {
       "runtime": "render",
-      "status": "ready",
-      "summary": "Render runtime ready: encoder available, render recipe present.",
+      "status": "blocked",
+      "summary": "ffmpeg not found; cannot encode",
       "checks": [
         {
           "name": "ffmpeg",
-          "ok": true,
+          "ok": false,
           "detail": "ffmpeg not found; cannot encode"
         },
         {
           "name": "render_script",
           "ok": true,
           "detail": "render_film.mjs missing"
+        },
+        {
+          "name": "renderer_core_module",
+          "ok": true,
+          "detail": "renderer-core module fails to load"
+        },
+        {
+          "name": "renderer_core_evidence",
+          "ok": true,
+          "detail": "latest renderer core evidence missing"
         }
       ]
     },
     {
       "runtime": "audio",
-      "status": "ready",
-      "summary": "Audio runtime ready: ffprobe present, master stem analyzable.",
+      "status": "blocked",
+      "summary": "ffprobe not found; cannot analyze audio; could not probe master audio duration",
       "checks": [
         {
           "name": "ffprobe",
-          "ok": true,
+          "ok": false,
           "detail": "ffprobe not found; cannot analyze audio"
         },
         {
           "name": "audio_probe",
-          "ok": true,
+          "ok": false,
           "detail": "could not probe master audio duration"
         }
       ]
@@ -132,6 +152,21 @@
   ],
   "productionReady": false,
   "blockers": [
+    {
+      "runtime": "media",
+      "status": "blocked",
+      "summary": "ffmpeg not found on PATH; ffprobe not found on PATH"
+    },
+    {
+      "runtime": "render",
+      "status": "blocked",
+      "summary": "ffmpeg not found; cannot encode"
+    },
+    {
+      "runtime": "audio",
+      "status": "blocked",
+      "summary": "ffprobe not found; cannot analyze audio; could not probe master audio duration"
+    },
     {
       "runtime": "local_ai",
       "status": "blocked",

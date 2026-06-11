@@ -1,0 +1,76 @@
+{
+  "schemaVersion": "mahavisphot.renderer.evidence.v1",
+  "rendererSchemaVersion": "mahavisphot.renderer.v1",
+  "generatedAt": "2026-06-10T20:35:53.381Z",
+  "renderId": "render_b0290ce0f46dccf6",
+  "projectId": "mahavisphot-renderer-core-fixture",
+  "status": "SUCCESS",
+  "mode": "manifest-preview",
+  "source": {
+    "manifestPath": "exports/render-core-fixture/export-schema.json",
+    "manifestCopyPath": "exports/render-core/mahavisphot-renderer-core-fixture/render_b0290ce0f46dccf6/export-schema.json",
+    "exportSchemaVersion": "mahavisphot.export.v1",
+    "timelineDocumentVersion": 2,
+    "timelineDocumentHash": "281fc02bf86e0b90"
+  },
+  "compiledOutput": "exports/render-core/mahavisphot-renderer-core-fixture/render_b0290ce0f46dccf6/mahavisphot_manifest_preview.mp4",
+  "compiledOutputUrl": "/assets/exports/render-core/mahavisphot-renderer-core-fixture/render_b0290ce0f46dccf6/mahavisphot_manifest_preview.mp4",
+  "reportPath": "exports/render-core/mahavisphot-renderer-core-fixture/render_b0290ce0f46dccf6/renderer-parity-report.json",
+  "target": {
+    "profile": "preview",
+    "width": 640,
+    "height": 360,
+    "fps": 12,
+    "maxDurationSec": 4,
+    "durationSec": 4
+  },
+  "parity": {
+    "manifestRead": true,
+    "exportSchemaVersion": "mahavisphot.export.v1",
+    "renderPlanStatus": "ready",
+    "videoWindowsRead": 2,
+    "audioWindowsRead": 1,
+    "clipTableRead": true,
+    "assetPathsVerified": true,
+    "rendererCoveredClipIds": [
+      "clip_scene_1",
+      "clip_scene_2"
+    ],
+    "skippedClips": [
+      {
+        "clipId": "clip_caption_1",
+        "sourceId": "caption:1",
+        "reason": "Asset path is outside safe media roots"
+      },
+      {
+        "clipId": "clip_vfx_1",
+        "sourceId": "vfx:1",
+        "reason": "Asset path is outside safe media roots"
+      },
+      {
+        "clipId": "clip_caption_2",
+        "sourceId": "caption:2",
+        "reason": "Asset path is outside safe media roots"
+      },
+      {
+        "clipId": "clip_vfx_2",
+        "sourceId": "vfx:2",
+        "reason": "Asset path is outside safe media roots"
+      }
+    ]
+  },
+  "telemetry": {
+    "fpsTarget": 12,
+    "durationSec": 4,
+    "totalFramesRendered": 48,
+    "videoClipCount": 2,
+    "audioAttached": true
+  },
+  "productionReady": false,
+  "blockers": [
+    "Renderer core verifies manifest-native preview compilation only.",
+    "Full UHD visual parity for VFX, particles, 3D, motion tracking, face passes, and AI passes still requires dedicated renderer evidence."
+  ],
+  "evidencePath": "docs/mahavisphot/evidence/latest-renderer-core-evidence.json",
+  "publicEvidencePath": "public/mahavisphot/renderer-core-evidence.json"
+}

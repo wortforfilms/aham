@@ -1,0 +1,21 @@
+{
+  "schemaVersion": "mahavisphot.export.evidence.v1",
+  "generatedAt": "2026-06-10T20:37:49.574Z",
+  "sampleSchemaPath": "public/mahavisphot/export-schema-parity.json",
+  "timelineDocumentVersion": 2,
+  "exportSchemaVersion": "mahavisphot.export.v1",
+  "dynamicTrackCount": 2,
+  "dynamicClipCount": 2,
+  "compositionCount": 2,
+  "captionCount": 2,
+  "vfxNodeCount": 2,
+  "audioClipCount": 3,
+  "fullSchemaRead": true,
+  "schemaParity": true,
+  "renderStatus": "ready",
+  "productionReady": false,
+  "blockers": [
+    "Production readiness still requires full renderer integration evidence beyond manifest schema parity.",
+    "Local, cloud, and hybrid AI runtimes remain blocked until model and credential evidence exists."
+  ]
+}
