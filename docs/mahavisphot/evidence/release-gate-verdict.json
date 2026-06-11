@@ -1,0 +1,202 @@
+{
+  "schemaVersion": "mahavisphot.release-gate.v1",
+  "timestamp": "2026-06-11T10:39:14.372Z",
+  "elapsedMs": 11037,
+  "gate": {
+    "green": true,
+    "check": true,
+    "suites": [
+      {
+        "file": "tests/mahavisphot-ai-runtime.test.mjs",
+        "pass": 7,
+        "fail": 0,
+        "success": true
+      },
+      {
+        "file": "tests/mahavisphot-all-frames-board.test.mjs",
+        "pass": 1,
+        "fail": 0,
+        "success": true
+      },
+      {
+        "file": "tests/mahavisphot-benchmark.test.mjs",
+        "pass": 3,
+        "fail": 0,
+        "success": true
+      },
+      {
+        "file": "tests/mahavisphot-crud.test.mjs",
+        "pass": 8,
+        "fail": 0,
+        "success": true
+      },
+      {
+        "file": "tests/mahavisphot-editor-runtime.test.mjs",
+        "pass": 9,
+        "fail": 0,
+        "success": true
+      },
+      {
+        "file": "tests/mahavisphot-export-schema.test.mjs",
+        "pass": 4,
+        "fail": 0,
+        "success": true
+      },
+      {
+        "file": "tests/mahavisphot-media-pipeline.test.mjs",
+        "pass": 7,
+        "fail": 0,
+        "success": true
+      },
+      {
+        "file": "tests/mahavisphot-pipeline-e2e.test.mjs",
+        "pass": 1,
+        "fail": 0,
+        "success": true
+      },
+      {
+        "file": "tests/mahavisphot-reference-extraction.test.mjs",
+        "pass": 5,
+        "fail": 0,
+        "success": true
+      },
+      {
+        "file": "tests/mahavisphot-registry.test.mjs",
+        "pass": 8,
+        "fail": 0,
+        "success": true
+      },
+      {
+        "file": "tests/mahavisphot-renderer-av.test.mjs",
+        "pass": 12,
+        "fail": 0,
+        "success": true
+      },
+      {
+        "file": "tests/mahavisphot-renderer.test.mjs",
+        "pass": 5,
+        "fail": 0,
+        "success": true
+      },
+      {
+        "file": "tests/mahavisphot-route-shell.test.mjs",
+        "pass": 6,
+        "fail": 0,
+        "success": true
+      },
+      {
+        "file": "tests/mahavisphot-runtime-health.test.mjs",
+        "pass": 5,
+        "fail": 0,
+        "success": true
+      },
+      {
+        "file": "tests/mahavisphot-search.test.mjs",
+        "pass": 6,
+        "fail": 0,
+        "success": true
+      },
+      {
+        "file": "tests/mahavisphot-studio-scaffolds.test.mjs",
+        "pass": 5,
+        "fail": 0,
+        "success": true
+      },
+      {
+        "file": "tests/mahavisphot-telemetry.test.mjs",
+        "pass": 7,
+        "fail": 0,
+        "success": true
+      }
+    ],
+    "totals": {
+      "pass": 99,
+      "fail": 0,
+      "suites": 17
+    }
+  },
+  "runtimeHealth": {
+    "productionReady": false,
+    "runtimes": [
+      {
+        "runtime": "editor",
+        "status": "ready"
+      },
+      {
+        "runtime": "media",
+        "status": "ready"
+      },
+      {
+        "runtime": "render",
+        "status": "ready"
+      },
+      {
+        "runtime": "audio",
+        "status": "ready"
+      },
+      {
+        "runtime": "local_ai",
+        "status": "blocked"
+      },
+      {
+        "runtime": "cloud_ai",
+        "status": "blocked"
+      },
+      {
+        "runtime": "hybrid_ai",
+        "status": "blocked"
+      }
+    ],
+    "blockers": [
+      {
+        "runtime": "local_ai",
+        "status": "blocked",
+        "summary": "no local model runtime configured (set MAHAVISPHOT_MODEL_DIR to a populated model directory)"
+      },
+      {
+        "runtime": "cloud_ai",
+        "status": "blocked",
+        "summary": "no provider credentials (set MAHAVISPHOT_CLOUD_API_KEY)"
+      },
+      {
+        "runtime": "hybrid_ai",
+        "status": "blocked",
+        "summary": "local AI leg not ready; cloud AI leg not ready"
+      }
+    ]
+  },
+  "telemetry": {
+    "host": {
+      "cores": 4,
+      "cpuUsagePct": 0,
+      "loadAvg1": 0.15,
+      "memTotalMB": 3904,
+      "memUsedMB": 492,
+      "memUsagePct": 12.61,
+      "rssMB": 53.1,
+      "heapUsedMB": 5.2,
+      "uptimeSec": 10
+    },
+    "gpu": {
+      "status": "unavailable"
+    },
+    "loudness": {
+      "integratedLUFS": -13.8,
+      "truePeakDbtp": -3.4,
+      "overCeiling": false,
+      "conforms": true
+    }
+  },
+  "systemConstraints": {
+    "embeddedDevanagariFontFunctional": true,
+    "integratedLoudnessTargetLufs": -14,
+    "truePeakCeilingDbtp": -1,
+    "oversampleRate": 192000,
+    "truePeakLimiterActive": true,
+    "integratedLoudnessEnforced": true
+  },
+  "status": {
+    "PRODUCTION_READY": false,
+    "PHKD_VERDICT": "GATE_GREEN__AI_RUNTIMES_HONESTLY_GATED__NOT_PRODUCTION_READY"
+  }
+}
