@@ -6,6 +6,8 @@ const crypto = require("node:crypto");
 const { spawn } = require("node:child_process");
 const crud = require("./crud");
 const timeline = require("./timeline-runtime");
+const aiRuntimeMod = require("./ai-runtime");
+const aiRuntime = aiRuntimeMod.createDefaultRuntime();
 const exportSchema = require("./export-schema");
 const mediaPipeline = require("./media-pipeline");
 const rendererCore = require("./renderer-core");
@@ -1354,6 +1356,45 @@ async function handleMediaIngest(req, res) {
   }
 }
 
+// AI runtime (Step 8): capabilities are public; job submission is auth-gated.
+// Real local/cloud/hybrid modes return status "blocked" until configured; the
+// reference mode runs a deterministic stub (not trained-model inference).
+async function handleAi(req, res, url) {
+  if (req.method === "GET" && url.pathname === "/api/v1/ai/capabilities") {
+    sendJson(res, 200, { ok: true, ...aiRuntime.capabilities() });
+    return;
+  }
+  const auth = await requireUser(req, res);
+  if (!auth) return;
+  const userId = auth.user.id;
+  if (req.method === "POST" && url.pathname === "/api/v1/ai/jobs") {
+    try {
+      const job = await parseJsonBody(req);
+      const outcome = await aiRuntime.submit(job, { userId });
+      sendJson(res, outcome.status === "blocked" ? 200 : 201, { ok: outcome.status !== "rejected", ...outcome });
+    } catch (error) {
+      if (error instanceof aiRuntimeMod.AiRuntimeError && error.code === "ai_validation_failed") {
+        sendJson(res, 422, { ok: false, error: error.message, details: error.details || [] });
+        return;
+      }
+      sendJson(res, 400, { ok: false, error: error.message || String(error) });
+    }
+    return;
+  }
+  if (req.method === "GET" && url.pathname === "/api/v1/ai/audit") {
+    sendJson(res, 200, { ok: true, entries: aiRuntime.audit({ userId }) });
+    return;
+  }
+  const jobMatch = url.pathname.match(/^\/api\/v1\/ai\/jobs\/([^/]+)$/);
+  if (req.method === "GET" && jobMatch) {
+    const entries = aiRuntime.audit({ userId, id: jobMatch[1] });
+    if (entries.length) sendJson(res, 200, { ok: true, entry: entries[0] });
+    else sendJson(res, 404, { ok: false, error: "Job not found" });
+    return;
+  }
+  sendJson(res, 404, { ok: false, error: "Unknown AI route" });
+}
+
 function editorDocPath(userId, projectId) {
   const u = String(userId).replace(/[^a-zA-Z0-9_-]/g, "_").slice(0, 80) || "anon";
   const p = sanitizeProjectId(projectId) || "default";
@@ -1502,6 +1543,11 @@ const server = http.createServer(async (req, res) => {
     }
     if (url.pathname === "/api/v1/editor/doc") {
       await handleEditorDoc(req, res, url);
+      return;
+    }
+    if (url.pathname === "/api/v1/ai/capabilities" || url.pathname === "/api/v1/ai/jobs" ||
+        url.pathname === "/api/v1/ai/audit" || url.pathname.startsWith("/api/v1/ai/jobs/")) {
+      await handleAi(req, res, url);
       return;
     }
     if (url.pathname === "/api/v1" || url.pathname.startsWith("/api/v1/")) {

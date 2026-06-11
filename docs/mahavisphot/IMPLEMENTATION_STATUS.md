@@ -18,12 +18,14 @@
 | Safe media path policy | verified | Latest evidence verifies traversal rejection and allowed media serving under `/assets/*`. |
 | Export endpoint smoke render | verified with blockers | Latest evidence verifies full-schema read and MP4 creation; advanced caption/VFX parity remains blocked when required filters are unavailable. |
 | Runtime render engine | preview with blockers | Preview MP4 render is available for scene montage packages, and manifest-native preview compilation is verified. Full visual parity for all VFX, 3D, particles, AI passes, and UHD render queues remains blocked until dedicated renderer evidence exists. |
-| Local AI execution | blocked until model runtime evidence | No verified local model runtime evidence in this scaffold. |
-| Cloud AI execution | blocked until provider credentials and adapter evidence | No provider credential or adapter execution evidence in this scaffold. |
+| AI adapter layer + job lifecycle | implemented (interfaces only) | `editor/ai-runtime.js`: capability registry, adapter interface, job validation, privacy-tier routing (local-only never routes to cloud), privacy-preserving audit (digests, never raw input), `/api/v1/ai/*`. Verified by deterministic reference adapter. `npm run mahavisphot:ai` (7/7). NO trained-model inference is claimed. |
+| Local AI execution | blocked until model runtime evidence | Adapter present; returns status `blocked` (no model runtime). No verified local model inference. |
+| Cloud AI execution | blocked until provider credentials and adapter evidence | Adapter present; returns status `blocked` (no credentials / no provider execution adapter). No network inference performed. |
+| Hybrid AI execution | blocked until both legs ready | Planner present + privacy-tier enforced; blocked until a ready local/cloud leg exists. |
 | Export parity | schema and manifest-preview parity implemented, full visual parity blocked | Export manifest parity is verified from the timeline document model, and renderer core compiles safe manifest clip tables into preview MP4. Production visual parity remains blocked for advanced VFX/3D/particle/AI passes until dedicated renderer integration evidence exists. |
 | Security hardening | planned | This registry does not prove hardened runtime enforcement. |
 
 PRODUCTION_READY=false
 PHKD_VERDICT=BLOCKED_UNTIL_RUNTIME_EVIDENCE
-NEXT_GATE=AI runtime evidence (Step 8) + Electron packaging/release gate (Steps 9/10) + advanced VFX/3D/particle visual parity
+NEXT_GATE=real model/credential evidence for AI execution (Step 8 runtime) + Electron packaging/release gate (Steps 9/10) + advanced VFX/3D/particle visual parity
 PROGRESS=Steps 1 (freeze), 2 (search), 3 (CRUD), 4 (editor runtime engine), 5 (media ingest pipeline), 6 (render/export schema parity), 7 (runtime collectors), and manifest-native renderer preview core done. Remaining: deeper editor UI binding for all runtime operations, Step 8 AI runtimes, Step 9 Electron packaging evidence, Step 10 release gate. Honest blockers: local_ai/cloud_ai/hybrid_ai=blocked (no model runtime / credentials); production visual render parity for advanced passes remains blocked until dedicated renderer evidence.
