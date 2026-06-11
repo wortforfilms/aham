@@ -1215,7 +1215,9 @@ async function serveStatic(req, res) {
   try {
     const url = new URL(req.url, `http://${req.headers.host}`);
     let filePath;
-    if (url.pathname === "/" || url.pathname === "/editor") {
+    if (url.pathname === "/") {
+      filePath = path.join(PUBLIC_DIR, "mahavisphot", "index.html");
+    } else if (url.pathname === "/editor") {
       filePath = path.join(EDITOR_DIR, "index.html");
     } else if (url.pathname === "/mahavisphot" || url.pathname === "/mahavisphot/") {
       filePath = path.join(PUBLIC_DIR, "mahavisphot", "index.html");

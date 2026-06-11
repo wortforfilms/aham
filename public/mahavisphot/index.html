@@ -1003,7 +1003,7 @@
   </head>
   <body>
     <header class="topbar">
-      <a class="brand" href="/mahavisphot" data-route-link>
+      <a class="brand" href="/" data-route-link>
         <span class="mark" aria-hidden="true"></span>
         <span>
           <strong>MAHAVISPHOT STUDIO</strong>
@@ -1035,7 +1035,7 @@
           label: "Core",
           routes: [
             {
-              path: "/mahavisphot",
+              path: "/",
               nav: "Landing",
               title: "Mahavisphot Studio",
               subtitle: "AI-powered cinematic production, VFX, animation, toon, cel, audio, XR, and render operating system.",
@@ -1399,7 +1399,8 @@
 
       const routes = routeGroups.flatMap((group) => group.routes.map((route) => ({ ...route, group: group.label })));
       const routeMap = new Map(routes.map((route) => [route.path, route]));
-      routeMap.set("/mahavisphot/", routeMap.get("/mahavisphot"));
+      routeMap.set("/mahavisphot", routeMap.get("/"));
+      routeMap.set("/mahavisphot/", routeMap.get("/"));
       routeMap.set("/mahavisphot/launch", routeMap.get("/mahavisphot/launchpad"));
       routeMap.set("/mahavisphot/launch/", routeMap.get("/mahavisphot/launchpad"));
       const moduleHeroImages = new Map(routes.filter((route) => route.heroImage).map((route) => [route.path.split("/")[2], route.heroImage]));
@@ -1423,7 +1424,8 @@
 
       function normalizePath() {
         let pathname = window.location.pathname.replace(/\/+$/, "");
-        if (!pathname || pathname === "/mahavisphot/index.html") pathname = "/mahavisphot";
+        if (!pathname || pathname === "/mahavisphot/index.html") pathname = "/";
+        if (pathname === "/mahavisphot") pathname = "/";
         if (pathname === "/mahavisphot/launch") pathname = "/mahavisphot/launchpad";
         return pathname;
       }
@@ -1505,14 +1507,14 @@
 
       function currentRoute() {
         const pathname = normalizePath();
-        return routeMap.get(pathname) || dynamicRouteForPath(pathname) || routeMap.get("/mahavisphot");
+        return routeMap.get(pathname) || dynamicRouteForPath(pathname) || routeMap.get("/");
       }
 
       function navigate(event) {
         const link = event.target.closest("a[data-route-link]");
         if (!link) return;
         const url = new URL(link.href);
-        if (url.origin !== window.location.origin || !url.pathname.startsWith("/mahavisphot")) return;
+        if (url.origin !== window.location.origin || (url.pathname !== "/" && !url.pathname.startsWith("/mahavisphot"))) return;
         if (url.pathname === "/mahavisphot/launch") return;
         event.preventDefault();
         window.history.pushState({}, "", url.pathname);
@@ -1520,7 +1522,7 @@
       }
 
       function renderNav(route) {
-        const topItems = ["/mahavisphot", "/mahavisphot/freeze-current-scaffold", "/mahavisphot/scaffolds", "/mahavisphot/compositor", "/mahavisphot/particle-studio/overview", "/mahavisphot/observatory/overview"];
+        const topItems = ["/", "/mahavisphot/freeze-current-scaffold", "/mahavisphot/scaffolds", "/mahavisphot/compositor", "/mahavisphot/particle-studio/overview", "/mahavisphot/observatory/overview"];
         topNav.innerHTML = topItems.map((path) => {
           const item = routeMap.get(path);
           const current = item.path === route.path ? ' aria-current="page"' : "";
@@ -1537,7 +1539,7 @@
       }
 
       function routeCards() {
-        return routes.filter((route) => route.path !== "/mahavisphot").map((route) => `
+        return routes.filter((route) => route.path !== "/").map((route) => `
           <a class="module-tile" href="${route.path}" data-route-link>
             <div class="module-head">
               <strong>${escapeHtml(route.title)}</strong>
@@ -2325,7 +2327,7 @@
               </div>
               <div class="hero-actions">
                 <a class="button primary" href="${escapeHtml(route.ctaHref || route.path)}"${route.ctaHref ? "" : " data-route-link"}>${escapeHtml(route.ctaLabel || "Stay On Route")}</a>
-                <a class="button" href="/mahavisphot" data-route-link>Studio Home</a>
+                <a class="button" href="/" data-route-link>Studio Home</a>
                 <a class="button" href="/mahavisphot/observatory/overview" data-route-link>Observatory</a>
               </div>
             </div>
